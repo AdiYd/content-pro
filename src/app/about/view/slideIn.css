@@ -1,0 +1,14 @@
+.slide-in {
+  /* Initial State: Hidden offscreen */
+  transform: translateX(100%); /* Start to the right */
+  opacity: 0;
+  transition:
+    transform 0.5s ease-in-out,
+    opacity 0.5s ease-in-out;
+}
+
+.slide-in.active {
+  /* Active State: Slide in and become visible */
+  transform: translateX(0);
+  opacity: 1;
+}
