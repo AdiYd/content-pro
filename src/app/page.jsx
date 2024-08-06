@@ -11,7 +11,7 @@ import { AboutVision } from './about/about-vision';
 
 export default function Page() {
   return (
-    <Box>
+    <Box sx={{ direction: 'rtl' }}>
       <ColorPicker />
       <AboutHero />
       <AboutWhat contentType="aboutCourse" />
