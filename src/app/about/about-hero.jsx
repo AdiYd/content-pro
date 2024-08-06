@@ -43,8 +43,8 @@ export function AboutHero() {
         textAlign: 'justify',
         direction: 'rtl',
         backgroundImage: {
-          md: `url(${CONFIG.site.basePath}/assets/images/about/heroSection2.webp)`,
-          xs: `url(${CONFIG.site.basePath}/assets/background/overlay.svg), url(${CONFIG.site.basePath}/assets/images/about/heroSection2.webp)`,
+          md: `url(${CONFIG.site.basePath}/assets/images/about/hero.webp)`,
+          xs: `url(${CONFIG.site.basePath}/assets/background/overlay.svg), url(${CONFIG.site.basePath}/assets/images/about/hero.webp)`,
         },
       }}
     >
