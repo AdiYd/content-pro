@@ -13,6 +13,7 @@ export const secondaryFont = setFont('Rubik');
 export const typography = {
   fontFamily: primaryFont,
   fontSecondaryFamily: secondaryFont,
+  direction: 'rtl',
   fontWeightLight: '300',
   fontWeightRegular: '400',
   fontWeightMedium: '500',
