@@ -4,12 +4,12 @@ import 'src/global.css';
 
 import Link from 'next/link';
 import { m } from 'framer-motion';
-import { useState, useEffect, useContext } from 'react';
+import { useRef, useState, useEffect, useContext } from 'react';
 
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import { Stack, Button, useTheme, useColorScheme } from '@mui/material';
+import { Stack, Button, useTheme } from '@mui/material';
 
 import { CONFIG } from 'src/config-global';
 import { ColorContext } from 'src/context/colorMain';
@@ -22,14 +22,15 @@ import { varFade, varSlide, AnimateText, MotionContainer } from 'src/components/
 export function AboutHero() {
   const theme = useTheme();
   const [update, setUpdate] = useState(false);
-  const { mode, setMode } = useColorScheme();
   const { mainColor } = useContext(ColorContext);
   const colorName = `${mainColor}.main`;
-  console.log('This is mode and mainColor: ', mode, mainColor, colorName);
+  const waveVector = useRef();
+  console.log('This is mode and mainColor: ', theme.palette.mode, mainColor, colorName);
 
   useEffect(() => {
+    waveVector.current = `${CONFIG.site.basePath}/assets/background/waveVector_${theme.palette.mode}.svg`;
     setUpdate((p) => !p);
-  }, [mode, mainColor]);
+  }, [theme, mainColor]);
 
   return (
     <Box
@@ -88,7 +89,12 @@ export function AboutHero() {
             >
               קורס ליסודות יצירת סירטונים ותוכן מקצועי לרשתות החברתיות
             </Typography>
-            <Stack my={4} direction="row" spacing={2}>
+            <Stack
+              my={4}
+              direction="row"
+              sx={{ justifyContent: { md: 'inherit', xs: 'center' } }}
+              spacing={2}
+            >
               <Link
                 className="hover:opacity-80"
                 passHref
@@ -161,12 +167,14 @@ export function AboutHero() {
           </m.div>
         </Box>
       </Container>
-      <img
-        alt="wave-vector"
-        style={{ position: 'absolute', bottom: '-5px' }}
-        src={`${CONFIG.site.basePath}/assets/background/waveVector_${mode || 'dark'}.svg`}
-        className="w-full absolute bottom-0"
-      />
+      {waveVector.current && (
+        <img
+          alt="wave-vector"
+          style={{ position: 'absolute', bottom: '-5px' }}
+          src={waveVector.current}
+          className="w-full absolute bottom-0"
+        />
+      )}
     </Box>
   );
 }

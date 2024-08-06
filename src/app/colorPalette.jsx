@@ -14,7 +14,12 @@ function ColorPicker({ ...props }) {
   const { mainColor, setColor } = useContext(ColorContext);
   const { mode, setMode } = useColorScheme();
   const settings = useSettingsContext();
-  const [checkMode, setCheckMode] = useState(mode === 'dark');
+  const [checkMode, setCheckMode] = useState();
+
+  useState(() => {
+    setCheckMode(mode === 'dark');
+  }, []);
+
   return (
     <Box
       sx={{
@@ -53,7 +58,7 @@ function ColorPicker({ ...props }) {
           setCheckMode((p) => !p);
         }}
         color={mainColor}
-        value={checkMode}
+        checked={checkMode}
       />
     </Box>
   );

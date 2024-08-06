@@ -1,4 +1,5 @@
 import { m } from 'framer-motion';
+import { useContext } from 'react';
 
 import Fab from '@mui/material/Fab';
 import Box from '@mui/material/Box';
@@ -9,6 +10,7 @@ import Typography from '@mui/material/Typography';
 
 import { CONFIG } from 'src/config-global';
 import { varAlpha } from 'src/theme/styles';
+import { ColorContext } from 'src/context/colorMain';
 
 import { Image } from 'src/components/image';
 import { Iconify } from 'src/components/iconify';
@@ -18,7 +20,7 @@ import { varFade, MotionViewport } from 'src/components/animate';
 
 export function AboutVision() {
   const theme = useTheme();
-
+  const { mainColor } = useContext(ColorContext);
   const renderImg = (
     <Image
       src={`${CONFIG.site.basePath}/assets/images/about/vision.webp`}
@@ -97,9 +99,13 @@ export function AboutVision() {
         </Box>
 
         <m.div variants={varFade().inUp}>
-          <Typography variant="h3" sx={{ textAlign: 'center', maxWidth: 800, mx: 'auto' }}>
-            Our vision offering the best product nulla vehicula tortor scelerisque ultrices
-            malesuada.
+          <Typography variant="h3" sx={{ textAlign: 'center', maxWidth: 900, mx: 'auto' }}>
+            ללמוד איך לייצר תוכן איכותי, מעניין ומקורי.
+            <br />
+            איך לנהל את התוכן ברשתות חברתיות ואיך{' '}
+            <Box component="a" color={`${mainColor}.main`}>
+              לייצר הכנסה שוטפת
+            </Box>
           </Typography>
         </m.div>
       </Container>
