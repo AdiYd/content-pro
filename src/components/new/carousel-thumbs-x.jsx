@@ -14,10 +14,10 @@ export function CarouselThumbsX({ data }) {
 
   return (
     <div>
-      <Box sx={{ mb: 2.5, mx: 'auto', position: 'relative', width: { md: '60%', xs: '100%' } }}>
+      <Box sx={{ mb: 2.5, mx: 'auto', position: 'relative', width: { md: '80%', xs: '100%' } }}>
         <Carousel carousel={carousel} sx={{ borderRadius: 2 }}>
           {data.map((item, index) => (
-            <Box key={item.id} sx={{ position: 'relative' }}>
+            <Box key={index} sx={{ position: 'relative' }}>
               {/* <IndexLabel index={index + 1} /> */}
               <Image
                 visibleByDefault

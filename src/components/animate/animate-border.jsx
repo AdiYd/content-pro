@@ -9,7 +9,7 @@ import { borderGradient } from 'src/theme/styles';
 
 // ----------------------------------------------------------------------
 
-export function AnimateBorder({ animate, sx }) {
+export function AnimateBorder({ animate, sx, children }) {
   const rootRef = useRef(null);
 
   const animateRef = useRef(null);
@@ -116,7 +116,7 @@ export function AnimateBorder({ animate, sx }) {
           ...borderGradient({ padding: values.width }),
         }}
       />
-
+      {children}
       {!values.disable && !values.disableDoubleline && (
         <Box
           component={m.span}

@@ -7,6 +7,8 @@ import ImageDiv from './about/view/ImageDiv';
 import { AboutHero } from './about/about-hero';
 import { AboutWhat } from './about/about-what';
 import { AboutVision } from './about/about-vision';
+import SocialProof from './about/view/social-proof';
+import { AboutTestimonials } from './about/about-testimonials';
 // ----------------------------------------------------------------------
 
 export default function Page() {
@@ -15,12 +17,12 @@ export default function Page() {
       <ColorPicker />
       <AboutHero />
       <AboutWhat contentType="aboutCourse" />
-      <AboutVision />
       <AboutWhat contentType="aboutMe" />
       <ImageDiv />
-      <AboutWhat />
-      <AboutWhat />
-      <AboutWhat />
+      <SocialProof />
+      <AboutVision />
+      <AboutTestimonials />
+      {/* <CarouselView /> */}
     </Box>
   );
 }

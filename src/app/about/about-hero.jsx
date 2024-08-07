@@ -146,7 +146,7 @@ export function AboutHero() {
               }}
             >
               <Button
-                sx={{ fontSize: { md: '1rem', xs: '0.7rem' }, borderRadius: 15 }}
+                sx={{ fontSize: { md: '1rem', xs: '0.7rem' }, borderRadius: 1 }}
                 variant="contained"
                 color={mainColor}
               >
@@ -155,7 +155,7 @@ export function AboutHero() {
               <Button
                 sx={{
                   fontSize: { md: '1rem', xs: '0.7rem' },
-                  borderRadius: 15,
+                  borderRadius: 1,
                   display: { md: 'inherit', xs: 'none' },
                 }}
                 variant="outlined"

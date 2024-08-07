@@ -13,4 +13,5 @@ export const defaultSettings = {
   navColor: 'integrate',
   compactLayout: true,
   fontFamily: defaultFont,
+  transition: 'all 0.3s ease-in-out',
 };
