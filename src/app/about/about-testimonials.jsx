@@ -126,6 +126,7 @@ export function AboutTestimonials() {
   const theme = useTheme();
   const { mainColor } = useContext(ColorContext);
   const mdUp = useResponsive('up', 'md');
+  console.log('This is mdUp', mdUp);
 
   const renderDescription = (
     <Box sx={{ maxWidth: { md: 360 }, textAlign: { xs: 'center', md: 'unset' } }}>
@@ -159,13 +160,19 @@ export function AboutTestimonials() {
       }}
     >
       <Masonry spacing={3} columns={{ xs: 1, md: 2 }} sx={{ ml: 0 }}>
-        {testimonials.map((testimonial) => (
-          <m.div key={testimonial.name} variants={varFade().inUp}>
-            <AnimateBorder sx={{ borderRadius: 2 }} animate={{ color: theme.palette.success.dark }}>
-              <TestimonialCard testimonial={testimonial} />
-            </AnimateBorder>
-          </m.div>
-        ))}
+        {testimonials.map(
+          (testimonial, i) =>
+            ((!mdUp && i < 5) || mdUp) && (
+              <m.div key={testimonial.name} variants={varFade().inUp}>
+                <AnimateBorder
+                  sx={{ borderRadius: 2 }}
+                  animate={{ color: theme.palette.success.dark }}
+                >
+                  <TestimonialCard testimonial={testimonial} />
+                </AnimateBorder>
+              </m.div>
+            )
+        )}
       </Masonry>
     </Box>
   );
@@ -174,8 +181,8 @@ export function AboutTestimonials() {
     <Box
       sx={{
         ...bgGradient({
-          color: `0deg, ${varAlpha(theme.vars.palette.grey['900Channel'], 0.9)}, ${varAlpha(theme.vars.palette.grey['900Channel'], 0.9)}`,
-          imgUrl: `${CONFIG.site.basePath}/assets/images/about/testimonials.webp`,
+          color: `0deg, ${varAlpha(theme.vars.palette.grey['900Channel'], 0.6)}, ${varAlpha(theme.vars.palette.grey['900Channel'], 0.9)}`,
+          imgUrl: `${CONFIG.site.basePath}/assets/images/about/Eran.png`,
         }),
         overflow: 'hidden',
         height: { md: 840 },

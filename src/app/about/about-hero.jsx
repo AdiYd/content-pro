@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import { Stack, Button, useTheme } from '@mui/material';
 
 import { CONFIG } from 'src/config-global';
+import { varAlpha } from 'src/theme/styles';
 import { ColorContext } from 'src/context/colorMain';
 
 import { Iconify, SocialIcon } from 'src/components/iconify';
@@ -25,7 +26,7 @@ export function AboutHero() {
   const { mainColor } = useContext(ColorContext);
   const colorName = `${mainColor}.main`;
   const waveVector = useRef();
-  console.log('This is mode and mainColor: ', theme.palette.mode, mainColor, colorName);
+  console.log('theme: ', theme);
 
   useEffect(() => {
     waveVector.current = `${CONFIG.site.basePath}/assets/background/waveVector_${theme.palette.mode}.svg`;
@@ -92,7 +93,14 @@ export function AboutHero() {
             <Stack
               my={4}
               direction="row"
-              sx={{ justifyContent: { md: 'inherit', xs: 'center' } }}
+              sx={{
+                justifyContent: { md: 'inherit', xs: 'center' },
+                borderRadius: 4,
+                p: 1,
+                mx: { xs: 'auto', md: 'inherit' },
+                width: 'fit-content',
+                background: { xs: varAlpha('255 255 255', 0.2), md: 'transparent' },
+              }}
               spacing={2}
             >
               <Link
