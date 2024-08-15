@@ -35,9 +35,17 @@ const promoImag = {
 function ImageDiv({ ...props }) {
   const theme = useTheme();
   return (
-    <Container component={MotionViewport}>
+    <Container sx={{ my: 4, maxWidth: 1, overflow: 'hidden' }} component={MotionViewport}>
       <m.div variants={varFade({ durationIn: 2 }).inDown}>
-        <ImageList sx={{ px: 5, py: 5, display: 'flex', justifyContent: 'space-between' }}>
+        <ImageList
+          sx={{
+            px: { md: 2, xs: 1 },
+            py: 5,
+            display: 'flex',
+            overflow: 'hidden',
+            justifyContent: 'space-between',
+          }}
+        >
           {Object.keys(promoImag).map((item, index) => (
             <ImageListItem key={index} sx={{ width: '20%' }}>
               <Image

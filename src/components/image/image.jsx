@@ -49,7 +49,7 @@ export const Image = forwardRef(
       placeholder,
       wrapperProps,
       scrollPosition,
-      effect = 'blur',
+      effect = 'none',
       visibleByDefault,
       wrapperClassName,
       useIntersectionObserver,

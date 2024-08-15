@@ -22,7 +22,7 @@ import { varFade, AnimateBorder, MotionViewport } from 'src/components/animate';
 
 export const testimonials = [
   {
-    name: 'אביגיל לוי',
+    name: 'קורל דלומי',
     postedDate: '2024-07-15',
     ratingNumber: 5,
     avatarUrl: 'https://i.pravatar.cc/150?u=a8d942',
@@ -30,15 +30,15 @@ export const testimonials = [
       'ערן, אתה קוסם! הקורס שלך פתח לי עולם שלם של יצירתיות שלא ידעתי שקיים בי. בזכותך, הערוץ שלי בטיקטוק פורח, ואני מקבלת הצעות עבודה מדהימות. תודה ענקית!',
   },
   {
-    name: 'דוד כהן',
+    name: 'אבי גרינברג',
     postedDate: '2024-06-28',
     ratingNumber: 4,
     avatarUrl: 'https://i.pravatar.cc/150?u=7d4258',
     content:
-      'הקורס של ערן היה בדיוק מה שהייתי צריך כדי להבין איך לבנות נוכחות ברשתות החברתיות. התכנים ברורים, פרקטיים, והתוצאות לא איחרו לבוא! מומלץ בחום.',
+      'הקורס של ערן היה בדיוק מה שהייתי צריך כדי להבין איך לבנות נוכחות ברשתות החברתיות. התכנים ברורים ופרקטיים והתוצאות בהתאם, ממליץ בחום.',
   },
   {
-    name: 'שרה מזרחי',
+    name: 'מאור רביבו',
     postedDate: '2024-05-12',
     ratingNumber: 5,
     avatarUrl: 'https://i.pravatar.cc/150?u=a5d942',
@@ -51,15 +51,15 @@ export const testimonials = [
     ratingNumber: 5,
     avatarUrl: 'https://i.pravatar.cc/150?u=a6d942',
     content:
-      'עשיתי המון קורסים, אבל הקורס של ערן הוא פשוט ברמה אחרת. הוא לימד אותי איך לחשוב כמו יוצר תוכן אמיתי, ואיך להביא את הסיפור שלי לעולם. ממליץ בחום!',
+      'עשיתי המון קורסים, אבל הקורס של ערן הוא פשוט ברמה אחרת. הוא לימד אותי איך לחשוב כמו יוצר תוכן אמיתי, ואיך להביא את הסיפור שלי לעולם. ממליץ בחום',
   },
   {
-    name: 'רותי בר',
+    name: 'אביה קולר',
     postedDate: '2024-02-08',
     ratingNumber: 5,
     avatarUrl: 'https://i.pravatar.cc/150?u=a7d942',
     content:
-      'ערן, אתה לא רק מורה מוכשר, אתה גם בן אדם מדהים. העצות שלך והתמיכה שלך היו שווים זהב. ממליצה על הקורס שלך לכל מי שרוצה להצליח בתחום הזה!',
+      'ערן, אתה לא רק מורה מוכשר, אתה גם בן אדם מדהים. העצות שלך והתמיכה שלך היו שווים זהב. ממליצה על הקורס שלך לכל מי שרוצה להצליח בתחום הזה',
   },
   {
     name: 'משה לוי',
@@ -126,7 +126,6 @@ export function AboutTestimonials() {
   const theme = useTheme();
   const { mainColor } = useContext(ColorContext);
   const mdUp = useResponsive('up', 'md');
-  console.log('This is mdUp', mdUp);
 
   const renderDescription = (
     <Box sx={{ maxWidth: { md: 360 }, textAlign: { xs: 'center', md: 'unset' } }}>

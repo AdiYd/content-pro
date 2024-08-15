@@ -16,9 +16,9 @@ import { useRouter } from 'src/routes/hooks';
 import { isExternalLink } from 'src/routes/utils';
 
 import { useBoolean } from 'src/hooks/use-boolean';
-import { useEventListener } from 'src/hooks/use-event-listener';
 
 import { varAlpha } from 'src/theme/styles';
+import { useEventListener } from 'src/theme/styles/use-event-listener';
 
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
