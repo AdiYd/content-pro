@@ -15,24 +15,29 @@ const steps = [
     description: 'לומדים ומתרגלים את הטכניקות, הכלים והטיפים הכי חמים',
     href: '#',
     id: 'step 1',
-  },
-  {
-    name: 'תיק עבודות',
-    description: 'מתחילים להתנסות, יוצרים סירטונים ותכנים ומשתפרים',
-    href: '#',
-    id: 'step 2',
+    InnerSteps: ['לומדים', 'מפנימים', 'מתרגלים'],
   },
   {
     name: 'מצטרפים לקהילה',
     description: 'מתחברים לקהילה, משתפים עבודות ומקבלים טיפים של אלופים',
     href: '#',
-    id: 'step 3',
+    id: 'step 2',
+    InnerSteps: ['שאלות', 'טיפים', 'וובינרים'],
   },
+  {
+    name: 'תיק עבודות',
+    description: 'מתחילים להתנסות, יוצרים סירטונים ותכנים ומשתפרים',
+    href: '#',
+    id: 'step 3',
+    InnerSteps: ['משתפים רעיונות ומתחילים ליצור תוכן'],
+  },
+
   {
     name: 'הכנסה ראשונה מיצירת תוכן',
     description: 'לקהילה שלנו יש ביקוש, מי שיקח את הכלים שלנו ברצינות יקבל הצעות עבודה',
     href: '#',
     id: 'step 4',
+    InnerSteps: ['איך מרוויחים 500 ש"ח מסירטון קצר? בואו לגלות'],
   },
   {
     name: '',
@@ -183,7 +188,7 @@ function Stepper({ children }) {
                 </a>
               </>
             )}
-            {children}
+            <InnerStep steps={step.InnerSteps} itemNum={stepIdx} />
           </li>
         ))}
       </ol>
@@ -225,9 +230,7 @@ export default function StepperSection({ ...props }) {
         variants={varBounce({ durationIn: 0.1 }).inX}
         text="הקורס והקהילה שלנו ילוו אתכם מההתחלה עד לעצמאות"
       />
-      <Stepper>
-        <InnerStep />
-      </Stepper>
+      <Stepper />
     </Box>
   );
 }

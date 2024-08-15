@@ -3,8 +3,8 @@ import { useContext } from 'react';
 import { Box, useTheme, Container } from '@mui/material';
 
 import { ColorContext } from 'src/context/colorMain';
-import Steppers from 'src/assets/components/Stepper/Steppers';
 
+import StepperSection from 'src/components/stepper/Stepper';
 import { varFade, AnimateText } from 'src/components/animate';
 
 function Steps({ ...props }) {
@@ -22,7 +22,7 @@ function Steps({ ...props }) {
           variants={varFade({}).inRight}
         />
       </Container>
-      <Steppers />
+      <StepperSection />
     </Box>
   );
 }

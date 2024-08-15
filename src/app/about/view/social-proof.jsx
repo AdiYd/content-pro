@@ -125,7 +125,7 @@ const RowX = ({
             //   ratio="1/1"
             style={{
               transition: 'transform 0.7s ease-in',
-              borderRadius: !isMobile ? '52px' : '32px',
+              borderRadius: !isMobile ? '35px' : '32px',
               transform: `rotate(${even ? '-' : ''}4deg)`,
               boxShadow: `${even ? '-' : ''}30px 5px 40px ${colorPalette}`,
             }}
