@@ -2,6 +2,8 @@
 
 import { Box } from '@mui/material';
 
+import AccordionSection from 'src/layouts/components/Accordion/AccordionSection';
+
 import StepperSection from 'src/components/stepper/Stepper';
 
 import ColorPicker from './colorPalette';
@@ -21,6 +23,7 @@ export default function Page() {
       <AboutHero />
       <AboutWhat contentType="aboutCourse" />
       <AboutWhat contentType="aboutMe" />
+      <AccordionSection />
       <ImageDiv />
       <StepperSection />
       <Promotion1 />

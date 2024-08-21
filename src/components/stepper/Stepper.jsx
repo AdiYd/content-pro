@@ -6,30 +6,65 @@ import { Box, useTheme, Typography } from '@mui/material';
 
 import { ColorContext } from 'src/context/colorMain';
 
-import InnerStep from './innerSteps';
 import { varBounce, AnimateText } from '../animate';
+
+const arrowsDown = (mainColor = 'currentColor', accentColor = 'currentColor') => (
+  <svg width="28px" height="28px" viewBox="0 -960 960 960" fill="url(#gradientAnimation)">
+    <defs>
+      <linearGradient id="gradientAnimation" x1="0%" y1="0%" x2="0%" y2="100%">
+        <animateTransform
+          attributeName="transform"
+          type="translateY"
+          from="0%"
+          to="100%"
+          dur="1s"
+          repeatCount="indefinite"
+        />
+        <stop offset="0%" stopColor={accentColor} />
+        <stop offset="100%" stopColor={mainColor} />
+      </linearGradient>
+    </defs>
+    <path d="M480-200 240-440l56-56 184 183 184-183 56 56-240 240Zm0-240L240-680l56-56 184 183 184-183 56 56-240 240Z" />
+  </svg>
+);
+
+const arrowsDown2 = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    height="24px"
+    viewBox="0 -960 960 960"
+    width="24px"
+    fill="currentColor"
+  >
+    <path d="M480-200 240-440l56-56 184 183 184-183 56 56-240 240Zm0-240L240-680l56-56 184 183 184-183 56 56-240 240Z" />
+  </svg>
+);
 
 const steps = [
   {
     name: 'מתחילים מ - 0',
-    description: 'לומדים ומתרגלים את הטכניקות, הכלים והטיפים הכי חמים',
+    description: 'לומדים את הטכניקות, הכלים והטיפים הכי חמים',
     href: '#',
     id: 'step 1',
-    InnerSteps: ['לומדים', 'מפנימים', 'מתרגלים'],
+    InnerSteps: ['לומדים ממי שכבר עשו את זה', 'חוקרים, שואלים ומפנימים', 'מתרגלים ומתנסים'],
   },
   {
     name: 'מצטרפים לקהילה',
     description: 'מתחברים לקהילה, משתפים עבודות ומקבלים טיפים של אלופים',
     href: '#',
     id: 'step 2',
-    InnerSteps: ['שאלות', 'טיפים', 'וובינרים'],
+    InnerSteps: [
+      'קהילה אקסלוסיבית 🤫',
+      'המקום לשאלות, עדכונים ועזרה',
+      'תכני העשרה, מדריכים וטיפים שיקצרו לכם את הדרך 🚀',
+    ],
   },
   {
-    name: 'תיק עבודות',
+    name: 'בונים תיק עבודות',
     description: 'מתחילים להתנסות, יוצרים סירטונים ותכנים ומשתפרים',
     href: '#',
     id: 'step 3',
-    InnerSteps: ['משתפים רעיונות ומתחילים ליצור תוכן'],
+    InnerSteps: ['משקיעים בתיק מרשים', 'משתפים רעיונות ומתחילים ליצור תוכן מקורי', 'צוברים ניסיון'],
   },
 
   {
@@ -37,13 +72,18 @@ const steps = [
     description: 'לקהילה שלנו יש ביקוש, מי שיקח את הכלים שלנו ברצינות יקבל הצעות עבודה',
     href: '#',
     id: 'step 4',
-    InnerSteps: ['איך מרוויחים 500 ש"ח מסירטון קצר? בואו לגלות'],
+    InnerSteps: [
+      'הקהילה שלנו מבוקשת',
+      'יוצרים חיבורים עם לקוחות פוטנציאלים 🤝',
+      'איך מרוויחים 500 ש"ח מסירטון קצר? בואו לגלות 😉',
+    ],
   },
   {
     name: '',
     description: '',
     href: '#',
     id: 'final step',
+    InnerSteps: ['איך מרוויחים 500 ש"ח מסירטון קצר? בואו לגלות'],
   },
 ];
 
@@ -53,6 +93,7 @@ function classNames(...classes) {
 function Stepper({ children }) {
   const theme = useTheme();
   const { mainColor } = useContext(ColorContext);
+  const themeColor = theme.palette[mainColor]?.main || theme.palette.info.main;
   console.log('This is main Color: ', mainColor);
   const [activeStep, setActive] = useState(0);
   const stepsId = steps.map((item) => item.id);
@@ -76,9 +117,7 @@ function Stepper({ children }) {
                   <div
                     aria-hidden="true"
                     style={{
-                      background: mainColor
-                        ? theme.palette[mainColor].main
-                        : theme.palette.info.main,
+                      background: themeColor,
                     }}
                     className={`absolute right-4 top-4 -mr-px mt-0.5 h-full w-0.5  ${stepIdx === steps.length - 2 ? 'invisible' : ''}`}
                   />
@@ -93,9 +132,7 @@ function Stepper({ children }) {
                   <span className="flex h-9 items-center">
                     <span
                       style={{
-                        background: mainColor
-                          ? theme.palette[mainColor].main
-                          : theme.palette.info.main,
+                        background: themeColor,
                       }}
                       className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full group-hover:bg-info-dark"
                     >
@@ -108,7 +145,16 @@ function Stepper({ children }) {
                     className="mr-4 flex min-w-0 flex-col"
                   >
                     <span className="text-2xl font-medium">{step.name}</span>
-                    <span className="text-base text-gray-500">{step.description}</span>
+                    {step.InnerSteps.map((item, index) => (
+                      <div key={index}>
+                        <span className="text-base text-gray-500">{item}</span>
+                        {index !== step.InnerSteps.length - 1 &&
+                          arrowsDown(
+                            theme.palette[mainColor]?.light,
+                            theme.palette[mainColor]?.dark
+                          )}
+                      </div>
+                    ))}{' '}
                   </Typography>
                 </a>
               </>
@@ -124,17 +170,13 @@ function Stepper({ children }) {
                   <span aria-hidden="true" className="flex h-9 items-center">
                     <span
                       style={{
-                        borderColor: mainColor
-                          ? theme.palette[mainColor].main
-                          : theme.palette.info.main,
+                        borderColor: themeColor,
                       }}
                       className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full border-2 bg-white"
                     >
                       <span
                         style={{
-                          background: mainColor
-                            ? theme.palette[mainColor].main
-                            : theme.palette.info.main,
+                          background: themeColor,
                         }}
                         className={`h-2.5 w-2.5 rounded-full `}
                       />
@@ -147,13 +189,19 @@ function Stepper({ children }) {
                   >
                     <span
                       style={{
-                        color: mainColor ? theme.palette[mainColor].main : theme.palette.info.main,
+                        color: themeColor,
                       }}
                       className="text-2xl font-medium"
                     >
                       {step.name}
                     </span>
-                    <span className="text-base text-gray-500">{step.description}</span>
+                    {step.InnerSteps.map((item, index) => (
+                      <div key={index}>
+                        <span className="text-base text-gray-500">{item}</span>
+                        {index !== step.InnerSteps.length - 1 &&
+                          arrowsDown(theme.palette[mainColor]?.light)}
+                      </div>
+                    ))}
                   </Typography>
                 </a>
               </>
@@ -183,12 +231,18 @@ function Stepper({ children }) {
                     className="mr-4 flex min-w-0 flex-col"
                   >
                     <span className="text-2xl font-medium text-gray-500">{step.name}</span>
-                    <span className="text-base text-gray-500">{step.description}</span>
+                    {step.InnerSteps.map((item, index) => (
+                      <div key={index}>
+                        <span className="text-base text-gray-500">{item}</span>
+                        {index !== step.InnerSteps.length - 1 &&
+                          arrowsDown(theme.palette[mainColor]?.light)}
+                      </div>
+                    ))}{' '}
                   </Typography>
                 </a>
               </>
             )}
-            <InnerStep steps={step.InnerSteps} itemNum={stepIdx} />
+            {/* <InnerStep steps={step.InnerSteps} itemNum={stepIdx} /> */}
           </li>
         ))}
       </ol>
@@ -225,10 +279,10 @@ export default function StepperSection({ ...props }) {
   return (
     <Box sx={{ my: 8, mx: { md: 8, xs: 2 } }}>
       <AnimateText
-        variant="h2"
+        variant="h3"
         sx={{ mb: 4 }}
-        variants={varBounce({ durationIn: 0.1 }).inX}
-        text="הקורס והקהילה שלנו ילוו אתכם מההתחלה עד לעצמאות"
+        variants={varBounce({ durationIn: 0.05 }).inX}
+        text="איך הופכים תוכן מקורי למקור הכנסה?"
       />
       <Stepper />
     </Box>

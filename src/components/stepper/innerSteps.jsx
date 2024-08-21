@@ -14,20 +14,23 @@ export default function InnerStep({ steps = [], itemNum = 1, ...props }) {
       sx={{
         borderRadius: 2,
         width: 'fit-content',
+        textAlign: 'center',
         p: 1,
         mt: 4,
+        mx: 2,
         boxShadow: customShadows()?.[mainColor],
       }}
       aria-label="Breadcrumb"
       // className="flex mx-12 mt-8 mb-8"
     >
-      <ol className="flex space-x-4 rounded-md ">
+      <ol className="flex space-x-4 rounded-md  ">
         {steps.map((item, index) => (
-          <li key={index} className="flex">
+          <li key={index} className="flex justify-end mx-auto">
             <div className="flex items-center">
               <Typography sx={{ width: itemNum === 3 ? 1 : 1 }} variant={isMobile ? 'p' : 'h4'}>
                 {item}
                 {itemNum === 3 ? ' 😉' : ''}
+                {itemNum === 2 ? ' 🎉' : ''}
               </Typography>
             </div>
             {index !== steps.length - 1 && (

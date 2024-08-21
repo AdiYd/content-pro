@@ -11,7 +11,7 @@ import { CONFIG } from 'src/config-global';
 import { ColorContext } from 'src/context/colorMain';
 
 import { Image } from 'src/components/image';
-import { varFade, AnimateAvatar, MotionViewport } from 'src/components/animate';
+import { varFade, AnimateAvatar, AnimateBorder, MotionViewport } from 'src/components/animate';
 
 // ----------------------------------------------------------------------
 
@@ -22,7 +22,7 @@ export const SKILLS = [...Array(3)].map((_, index) => ({
 
 const contentDict = {
   aboutCourse: {
-    title: ['Content-Pro', 'מה זה '].reverse(),
+    title: ['Video-Pro', 'מה זה '].reverse(),
   },
   aboutMe: {
     title: ['מי אני - ', 'ערן פרקש'],
@@ -34,12 +34,29 @@ const contentDict = {
 export function AboutWhat({ contentType = 'aboutCourse' }) {
   const theme = useTheme();
   const { mainColor } = useContext(ColorContext);
+
+  const introVideo = (
+    <AnimateBorder
+      sx={{ borderRadius: 4, p: 0.5 }}
+      animate={{ color: theme.palette[mainColor]?.main || '#fff' }}
+    >
+      <div className="aspect-video overflow-hidden rounded-3xl shadow-md shadow-gray-200/10 w-full">
+        <Box overflow="hidden" borderRadius={3}>
+          <video className="relative z-20" controls>
+            <source src={`${CONFIG.site.basePath}/assets/videos/intro.mp4`} type="video/mp4" />
+            <track kind="captions" srcLang="he" label="English" />
+            Your browser does not support the video tag.
+          </video>
+        </Box>
+      </div>
+    </AnimateBorder>
+  );
   return (
     <Container
       component={MotionViewport}
       // maxWidth="lg"
       sx={{
-        py: { xs: 10, md: 15 },
+        pb: { xs: 6, md: 15 },
         alignItems: 'center',
         textAlign: { xs: 'center', md: 'unset', direction: 'rtl' },
       }}
@@ -52,28 +69,39 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
         >
           <m.div variants={varFade().inDown}>
             {contentType === 'aboutMe' && (
-              <AnimateAvatar
-                sx={{
-                  float: { md: 'left', xs: 'none' },
-                  margin: 4,
-                  // boxShadow: `-10px 10px 20px ${theme.vars.palette[mainColor]?.main}`,
-                }}
-                width={200}
-              >
-                <Image
-                  alt="Our office small"
-                  src={`${CONFIG.site.basePath}/assets/images/about/Eran.png`}
-                  ratio="1/1"
+              <>
+                <AnimateAvatar
                   sx={{
-                    '&:hover': {
-                      transform: 'scale(1.4)',
-                      transition: 'transform 0.5s ease-out',
-                    },
-                    // width: 100,
-                    // borderRadius: 20,
+                    display: { xs: 'none', md: 'flex' },
+                    float: { md: 'left', xs: 'none' },
+                    margin: 4,
+                    // boxShadow: `-10px 10px 20px ${theme.vars.palette[mainColor]?.main}`,
                   }}
-                />
-              </AnimateAvatar>
+                  width={220}
+                >
+                  <Image
+                    alt="Our office small"
+                    src={`${CONFIG.site.basePath}/assets/images/about/Eran.png`}
+                    ratio="1/1"
+                    sx={{
+                      '&:hover': {
+                        transform: 'scale(1.4)',
+                        transition: 'transform 0.5s ease-out',
+                      },
+                      // width: 100,
+                      // borderRadius: 20,
+                    }}
+                  />
+                </AnimateAvatar>
+                <Box
+                  sx={{
+                    display: { xs: 'flex', md: 'none', justifyContent: 'center' },
+                    mb: 2,
+                  }}
+                >
+                  {introVideo}
+                </Box>
+              </>
             )}
             <Typography variant="h2" sx={{ mb: 3 }}>
               {contentDict[contentType]?.title[0]}
@@ -86,26 +114,41 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
 
           <m.div variants={varFade({ distnce: 0 }).inUp}>
             {contentType === 'aboutMe' && (
-              <Typography
-                variant="p"
-                sx={{ color: 'text.dark.main', lineHeight: 1.7, opacity: 0.8 }}
-              >
-                יוצר תוכן בעל נסיון של שנים בכל הרשתות החברתיות, הקמתי והשתתפתי במספר רב של ערוצים
-                ויראלים, תצוגות, תערוכות ושיתופי פעולה דיגיטליים ברחבי העולם - חלקם הצליחו יותר
-                וחלקם פחות אבל מה שבטוח שלכולם היה מכנה משותף ואותו אני מתכוון לחשוף בפניכם. חקרתי
-                ולמדתי במשך שנים את השיטות לייצר תוכן איכותי, איך להבדיל בין יוצרי תוכן מקצועיים
-                לבין חובבנים? איך להיות מעניין וייחודי, איך לצלם ולהצטלם, איך לנצל את הרשת החברתית
-                לטובתכם ועוד. בעולם הדיגיטלי של היום תוכן איכותי הוא המפתח להצלחה. סרטונים מושקעים,
-                יצירתיים וייחודיים הם הדרך למשוך קהל, לבנות מותג אישי חזק, ולהגיע לוויראליות ברשתות
-                החברתיות. עם Content-Pro, תלמדו ליצור תוכן איכותי וברמה גבוהה, תוכן שישאיר את הצופים
-                שלכם פעורי פה וירצו עוד. אני ערן פרקש, יוצר, מפיק ועורך תוכן ברשתות בערוצי סושיאל עם
-                עשרות אלפי עוקבים, עם הזמן והניסיון פיצחתי את הנוסחה להצלחה בעולם הדיגיטלי ויצירת
-                תוכן שייחד אתכם מאחרים ויעזור לכם בדרך לייצר הכנסה קבועה ויציבה, ולהקים קהילה של
-                עוקבים שאוהבים אתכם ואת התכנים המיוחדים שלכם. בקורס Content-Pro, אני אחלוק אתכם את
-                כל הסודות שלי, את הטעויות שכדאי להימנע מהן, ואת הדרך הבטוחה להפוך את התשוקה שלכם
-                לתוכן למקצוע מניב ומשגשג. אל תפספסו את ההזדמנות לקבל טיפים של אלופים ולהגשים את
-                החלום שלכם!
-              </Typography>
+              <>
+                <Typography variant="p" component="p" sx={{ lineHeight: 1.7, opacity: 0.8 }}>
+                  יזם דיגיטלי ויוצר תוכן בעל נסיון של שנים ברשתות החברתיות, הקמתי מספר רב של ערוצי
+                  תוכן עם עשרות אלפי עוקבים, השתתפתי בתצוגות, תערוכות ושיתופי פעולה דיגיטליים ברחבי
+                  העולם - חלקם הצליחו יותר וחלקם פחות אבל מה שבטוח הוא שצברתי נסיון רב וטיפים שאותם
+                  אני מתכוון לחשוף בפניכם. חקרתי ולמדתי במשך שנים את השיטות לייצר תוכן איכותי
+                  ואותנטי שמושך אליו קהל חם שרק מחכה לעוד. אני מלווה יוצרי תוכן בתחילת דרכם, תוך דגש
+                  על יצירת נישה אישית שתגרום ללקוחות שלכם להתאהב ולחזור לעוד
+                </Typography>
+                <br />
+                {/* <br /> */}
+                <Typography
+                  variant="p"
+                  component="p"
+                  sx={{ lineHeight: 1.7, opacity: 0.8, display: { md: 'inherit', xs: 'none' } }}
+                >
+                  עם Video-Pro, תלמדו ליצור תוכן איכותי וברמה גבוהה, תוכן שישאיר את הצופים שלכם
+                  פעורי פה וירצו עוד. אני ערן פרקש, יוצר, מפיק ועורך תוכן ברשתות בערוצי סושיאל עם
+                  עשרות אלפי עוקבים, עם הזמן והניסיון פיצחתי את הנוסחה להצלחה בעולם הדיגיטלי ויצירת
+                  תוכן שייחד אתכם מאחרים ויעזור לכם בדרך לייצר הכנסה קבועה ויציבה, ולהקים קהילה של
+                  עוקבים שאוהבים אתכם ואת התכנים המיוחדים שלכם. בקורס Video-Pro, אני אחלוק אתכם את
+                  כל הסודות שלי, את הטעויות שכדאי להימנע מהן, ואת הדרך הבטוחה להפוך את התשוקה שלכם
+                  לתוכן למקצוע מניב ומשגשג. אל תפספסו את ההזדמנות לקבל טיפים של אלופים ולהגשים את
+                  החלום שלכם!
+                </Typography>
+                <Box
+                  maxWidth="70%"
+                  sx={{
+                    display: { md: 'flex', xs: 'none', justifyContent: 'center' },
+                    mt: 8,
+                  }}
+                >
+                  {introVideo}
+                </Box>
+              </>
             )}
             {contentType === 'aboutCourse' && (
               <>
@@ -113,25 +156,31 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
                   variant="p"
                   sx={{ color: 'text.dark.main', lineHeight: 1.7, opacity: 0.8, mb: 4 }}
                 >
-                  Content-Pro זאת קהילה של אנשי דיגיטל ותוכן, ניתן להצטרף ולהתחבר עם יוצרי תוכן
-                  מתחילים ומנוסים ולהתייעץ בנושאי יצירת תוכן דיגיטלי. אנחנו מציעים קורס שיגלה לכם את
-                  הסודות מאחורי התוכן שכובש את הרשת. חולמים על סרטוני טיקטוק, יוטיוב ואינסטגרם
-                  שיקפיצו לכם את העוקבים? שיכניסו לכם כסף בתור יוצרי תוכן ווידאו? רוצים לייצר תוכן
-                  יצירתי שיגרום לעולם לעצור? הגעתם למקום הנכון! בקורס Content-Pro, תלמדו את כל
-                  הסודות מאחורי יצירת תוכן שמוכר את עצמו ושבאמת עובד.
+                  Video-Pro היא הפלטפורמה המושלמת להתחיל את הדרך שלך כיוצר/ת תוכן איכותי ומקורי -
+                  לעסקים ולרשתות החברתיות. אנחנו מציעים מעטפת לימודית שכוללת קורס יסודות יצירת תוכן
+                  בדגש על וידאו, היכרות עם האלגוריתם של הרשתות החברתיות ואיך ליצור קהילה אותנטית של
+                  עוקבים/לקוחות נאמנים שאוהבים התכנים והסטייל האישי שלכם. אנחנו נלווה אתכם עד
+                  שתתחילו את הצעדים הראשונים כיוצרי תוכן בתשלום או לקהילה שלכם. סקרנים? המשיכו לקרוא
+                  😉
                 </Typography>
                 <div className="h-8" />
                 <Typography
                   variant="p"
-                  sx={{ color: 'text.dark.main', lineHeight: 1.7, opacity: 0.8, pt: 4 }}
+                  sx={{
+                    color: 'text.dark.main',
+                    lineHeight: 1.7,
+                    opacity: 0.8,
+                    pt: 4,
+                    display: { md: 'inherit', xs: 'none' },
+                  }}
                 >
-                  הקורס שלנו, בהובלת ערן שעשה את זה עם עשרות אלפי עוקבים, יקח אתכם צעד אחר צעד -
-                  מהרעיון הראשוני ועד לרגע שהסירטונים שלכם יטפסו לראש המגמות והביקוש. תלמדו את
-                  הטכניקות הכי חמות לצילום ויצירת תוכן, תגלו איך לבחור לוקיישנים מנצחים, תבינו את
-                  האלגוריתמים שמאחורי טיקטוק, יוטיוב ואינסטגרם ותקבלו טיפים ששווים זהב ליצירת תוכן
-                  ממכר שפשוט אי אפשר להתעלם ממנו. לא עוד סרטונים בינוניים! עם Content-Pro, תפתחו את
-                  הפוטנציאל האמיתי שלכם כיוצרי תוכן, תבנו קהילה תומכת, ותהפכו לכוכבים הבאים של הרשת.
-                  מוכנים לצאת לדרך?
+                  הקורס נוצר ומנוהל על ידי ערן פרקש - מנהל ערוצי תוכן עם עשרות אלפי עוקבים, קמפיינים
+                  וניהול תוכן למותגי אופנה ודיגיטל. ערן יקח אתכם צעד אחר צעד - מהרעיון הראשוני ועד
+                  לרגע שהסירטונים שלכם יטפסו לראש המגמות והביקוש. תלמדו את הטכניקות הכי חמות לצילום
+                  ויצירת תוכן, תגלו איך לבחור לוקיישנים מנצחים, תבינו את האלגוריתמים שמאחורי טיקטוק,
+                  יוטיוב ואינסטגרם ותקבלו טיפים ששווים זהב ליצירת תוכן ממכר שפשוט אי אפשר להתעלם
+                  ממנו. לא עוד סרטונים בינוניים! עם Video-Pro, תפתחו את הפוטנציאל האמיתי שלכם כיוצרי
+                  תוכן, תבנו קהילה תומכת, ותהפכו לכוכבים הבאים של הרשת. מוכנים לצאת לדרך?
                 </Typography>
               </>
             )}
@@ -154,7 +203,7 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
               <m.div variants={varFade().inUp}>
                 <Image
                   alt="Our office small"
-                  src={`${CONFIG.site.basePath}/assets/images/about/what-small.webp`}
+                  src={`${CONFIG.site.basePath}/assets/images/about/pexels-nurseryart-346885.jpg`}
                   ratio="1/1"
                   sx={{
                     '&:hover': {
@@ -172,7 +221,7 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
               <m.div variants={varFade().inUp}>
                 <Image
                   alt="Our office large"
-                  src={`${CONFIG.site.basePath}/assets/images/about/what-large.webp`}
+                  src={`${CONFIG.site.basePath}/assets/images/about/pexels-thelazyartist-1467277.jpg`}
                   ratio="3/4"
                   sx={{
                     '&:hover': {

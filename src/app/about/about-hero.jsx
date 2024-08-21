@@ -15,8 +15,15 @@ import { CONFIG } from 'src/config-global';
 import { varAlpha } from 'src/theme/styles';
 import { ColorContext } from 'src/context/colorMain';
 
+import { Image } from 'src/components/image';
 import { Iconify, SocialIcon } from 'src/components/iconify';
-import { varFade, varSlide, AnimateText, MotionContainer } from 'src/components/animate';
+import {
+  varFade,
+  varSlide,
+  AnimateText,
+  AnimateAvatar,
+  MotionContainer,
+} from 'src/components/animate';
 
 // ----------------------------------------------------------------------
 
@@ -37,11 +44,12 @@ export function AboutHero() {
     <Box
       sx={{
         height: { md: 620 },
+        overflow: 'visible',
         py: { xs: 10, md: 0 },
-        overflow: 'hidden',
+        mb: { xs: 8, md: 12 },
         position: 'relative',
         backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundPosition: { md: 'center', xs: 'right' },
         textAlign: 'justify',
         direction: 'rtl',
         backgroundImage: {
@@ -64,7 +72,7 @@ export function AboutHero() {
           <AnimateText
             component="h1"
             variant="h1"
-            text="Content-Pro"
+            text="Video-Pro"
             variants={varSlide({ distance: 500 }).inDown}
             sx={{
               color: colorName,
@@ -75,7 +83,7 @@ export function AboutHero() {
           <AnimateText
             component="h2"
             variant="h2"
-            text="ליצור תוכן איכותי ולהשפיע"
+            text="ליצור תוכן מקורי ורלוונטי"
             variants={varFade().in}
             sx={{
               color: 'common.white',
@@ -88,7 +96,7 @@ export function AboutHero() {
               variant="body1"
               sx={{ color: 'common.white', mt: 3, fontWeight: 'fontWeightSemiBold', opacity: 0.8 }}
             >
-              קורס ליסודות יצירת סירטונים ותוכן מקצועי לרשתות החברתיות
+              קורס ליסודות יצירת סירטונים ותוכן מקצועי לעסקים ולרשתות החברתיות
             </Typography>
             <Stack
               my={4}
@@ -183,6 +191,25 @@ export function AboutHero() {
           className="w-full absolute bottom-0"
         />
       )}
+      <div className="absolute -bottom-8 right-10 hidden justify-center max-sm:flex">
+        <AnimateAvatar width={100}>
+          <Image
+            alt="Our office small"
+            src={`${CONFIG.site.basePath}/assets/images/about/Eran.png`}
+            ratio="1/1"
+            sx={{
+              width: 1,
+              alignSelf: 'center',
+              '&:hover': {
+                transform: 'scale(1.4)',
+                transition: 'transform 0.5s ease-out',
+              },
+              // width: 100,
+              // borderRadius: 20,
+            }}
+          />
+        </AnimateAvatar>
+      </div>
     </Box>
   );
 }
