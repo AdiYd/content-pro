@@ -1,11 +1,11 @@
 import { m } from 'framer-motion';
 import { useContext } from 'react';
 
-import { Box } from '@mui/material';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import { Box, useMediaQuery } from '@mui/material';
 
 import { CONFIG } from 'src/config-global';
 import { ColorContext } from 'src/context/colorMain';
@@ -34,19 +34,33 @@ const contentDict = {
 export function AboutWhat({ contentType = 'aboutCourse' }) {
   const theme = useTheme();
   const { mainColor } = useContext(ColorContext);
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const introVideo = (
     <AnimateBorder
       sx={{ borderRadius: 4, p: 0.5 }}
       animate={{ color: theme.palette[mainColor]?.main || '#fff' }}
     >
-      <div className="aspect-video overflow-hidden rounded-3xl shadow-md shadow-gray-200/10 w-full">
-        <Box overflow="hidden" borderRadius={3}>
-          <video className="relative z-20" controls>
-            <source src={`${CONFIG.site.basePath}/assets/videos/intro.mp4`} type="video/mp4" />
-            <track kind="captions" srcLang="he" label="English" />
+      <div
+        style={{ width: isMobile ? '90vw' : '50vw' }}
+        className="overflow-hidden rounded-3xl shadow-md shadow-green-400/30"
+      >
+        <Box overflow="hidden" width="100%" borderRadius={3}>
+          <iframe
+            title="videoIntro"
+            width={500}
+            src="https://drive.google.com/file/d/1GPVCyit_PuX4sUh5FMlAjTKVRCVdW0mY/preview"
+            className="relative z-20 w-full h-full aspect-video"
+
+            // controls
+          />
+          {/* <video width="640" height="480" controls>
+            <source
+              src="https://drive.google.com/uc?export=download&id=1OGBM8l4lhNwYmCDsHa6jCAkRkwPhmb0u"
+              type="video/mp4"
+            />
             Your browser does not support the video tag.
-          </video>
+          </video> */}
         </Box>
       </div>
     </AnimateBorder>
@@ -96,7 +110,7 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
                 <Box
                   sx={{
                     display: { xs: 'flex', md: 'none', justifyContent: 'center' },
-                    mb: 2,
+                    mb: 4,
                   }}
                 >
                   {introVideo}
@@ -141,8 +155,9 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
                 </Typography>
                 <Box
                   maxWidth="70%"
+                  minWidth="50%"
                   sx={{
-                    display: { md: 'flex', xs: 'none', justifyContent: 'center' },
+                    display: { md: 'flex', xs: 'none', justifyContent: 'justify' },
                     mt: 8,
                   }}
                 >
