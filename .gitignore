@@ -9,6 +9,7 @@ yarn-error.log*
 /node_modules
 node_modules
 /public/assets/videos
+/src/assets/videos
 .pnp
 .pnp.js
 
