@@ -8,7 +8,7 @@ yarn-error.log*
 # dependencies
 /node_modules
 node_modules
-/public/videos
+/public/assets/videos
 .pnp
 .pnp.js
 
