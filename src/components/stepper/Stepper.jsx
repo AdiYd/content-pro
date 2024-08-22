@@ -8,9 +8,14 @@ import { ColorContext } from 'src/context/colorMain';
 
 import { varBounce, AnimateText } from '../animate';
 
-const arrowsDown = (mainColor = 'currentColor', accentColor = 'currentColor') => (
-  <div className="flex justify-around">
-    <svg width="28px" height="28px" viewBox="0 -960 960 960" fill="url(#gradientAnimation)">
+export const arrowsDown = (
+  mainColor = 'currentColor',
+  accentColor = 'currentColor',
+  width = '28px',
+  className = ''
+) => (
+  <div className={`flex justify-start mr-20 ${className}`}>
+    <svg width={width} height={width} viewBox="0 -960 960 960" fill="url(#gradientAnimation)">
       <defs>
         <linearGradient id="gradientAnimation" x1="0%" y1="0%" x2="0%" y2="100%">
           <animateTransform
@@ -143,10 +148,15 @@ function Stepper({ children }) {
                     sx={{ display: 'flex', mr: 4, flexDirection: 'column', minWidth: 0 }}
                     className="mr-4 flex min-w-0 flex-col"
                   >
-                    <span className="text-2xl font-medium">{step.name}</span>
+                    <span
+                      // className="text-2xl font-medium"
+                      style={{ marginBottom: '10px' }}
+                    >
+                      {step.name}
+                    </span>
                     {step.InnerSteps.map((item, index) => (
-                      <div className="my-2" key={index}>
-                        <span className="text-base justify-start opacity-80 flex max-sm:justify-center max-sm:text-center text-start ">
+                      <div className="my-2 w-fit" key={index}>
+                        <span className="text-base justify-start opacity-80 flex max-sm:text-cente text-start ">
                           {item}
                         </span>
                         {index !== step.InnerSteps.length - 1 &&
@@ -198,8 +208,8 @@ function Stepper({ children }) {
                       {step.name}
                     </span>
                     {step.InnerSteps.map((item, index) => (
-                      <div className="my-2" key={index}>
-                        <span className="text-base justify-start opacity-80 flex max-sm:justify-center max-sm:text-center text-start ">
+                      <div className="my-2 w-fit" key={index}>
+                        <span className="text-base justify-start opacity-80 flex max-sm:text-cente text-start ">
                           {item}
                         </span>
                         {index !== step.InnerSteps.length - 1 &&
@@ -234,10 +244,14 @@ function Stepper({ children }) {
                     sx={{ display: 'flex', mr: 4, flexDirection: 'column', minWidth: 0 }}
                     className="mr-4 flex min-w-0 flex-col"
                   >
-                    <span className="text-2xl font-medium ">{step.name}</span>
+                    <span
+                    // className="text-2xl font-medium "
+                    >
+                      {step.name}
+                    </span>
                     {step.InnerSteps.map((item, index) => (
-                      <div className="my-2" key={index}>
-                        <span className="text-base justify-start opacity-80 flex max-sm:justify-center max-sm:text-center text-start ">
+                      <div className="my-2 w-fit" key={index}>
+                        <span className="text-base justify-start opacity-80 flex max-sm:text-cente text-start ">
                           {item}
                         </span>
                         {index !== step.InnerSteps.length - 1 &&

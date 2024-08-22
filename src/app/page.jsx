@@ -25,11 +25,14 @@ export default function Page() {
       <AboutWhat contentType="aboutCourse" />
       <AboutWhat contentType="aboutMe" />
       <AccordionSection />
+      <Considering buttonBefore="סקרנים?! לחצו כאן 😉" />
       <ImageDiv />
       <StepperSection />
-      <Considering />
       <SocialProof />
-      <Considering />
+      <Considering
+        color="success"
+        buttonAfter="🎉 עוד כמה צעדים ואתם מתחילים ליצור את הקהילה שתמיד חלמתם  🎉"
+      />
       <Promotion1 />
       <AboutVision />
       <AboutTestimonials />

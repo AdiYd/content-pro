@@ -105,7 +105,7 @@ const RowX = ({
   const theme = useTheme();
   const { mainColor } = useContext(ColorContext);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const colorPalette = Object.values(theme.palette)[index]?.dark || `${mainColor}.lighter`;
+  const colorPalette = Object.values(theme.palette)[index + 1]?.dark || `${mainColor}.light`;
   const bulletsList = (
     <m.div variants={varFade().inLeft} sx={{ width: 'auto' }}>
       <Typography variant="h3" component="h3" sx={{ color: `${mainColor}.main` }}>
@@ -115,7 +115,7 @@ const RowX = ({
         {bullets.map((item, indx) => (
           <ListItem key={indx} sx={{ padding: 0, textAlign: 'justify' }}>
             <Iconify icon="lets-icons:check-fill" width={20} />
-            <Typography sx={{ mx: { md: 4, xs: 2 } }} variant="h4">
+            <Typography sx={{ fontSize: '1rem', mx: { md: 4, xs: 2 } }} variant="h4">
               {item}
             </Typography>
           </ListItem>
@@ -153,7 +153,7 @@ const RowX = ({
               transition: 'transform 0.7s ease-in',
               borderRadius: !isMobile ? '35px' : '32px',
               transform: `rotate(${even ? '-' : ''}4deg)`,
-              boxShadow: `${even ? '-' : ''}30px 5px 40px ${colorPalette}`,
+              boxShadow: `${even ? '-' : ''}10px 5px 20px ${colorPalette}`,
             }}
           />
         </Box>
