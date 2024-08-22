@@ -31,7 +31,7 @@ export default function Page() {
       <SocialProof />
       <Considering
         color="success"
-        buttonAfter="🎉 עוד כמה צעדים ואתם מתחילים ליצור את הקהילה שתמיד חלמתם  🎉"
+        buttonAfter="🎉 עוד כמה צעדים ואתם מתחילים ליצור את הקהילה שתמיד חלמתם עליה  🎉"
       />
       <Promotion1 />
       <AboutVision />

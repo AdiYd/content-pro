@@ -9,7 +9,7 @@ import { varFade, MotionContainer } from 'src/components/animate';
 
 import { AccordionView } from './view';
 
-const defaultTitle = 'רק רגע, זה מתאים לי? למה דווקא Video-Pro?';
+const defaultTitle = 'רק רגע, זה מתאים לי בכלל? למה דווקא Video-Pro?';
 
 function AccordionSection({ title = defaultTitle, accordions = [], ...props }) {
   const { mainColor } = useContext(ColorContext);
@@ -27,7 +27,7 @@ function AccordionSection({ title = defaultTitle, accordions = [], ...props }) {
             sx={{
               pb: 2,
               textAlign: { md: 'justify', xs: 'center' },
-              color: theme.palette[mainColor]?.main,
+              //   color: theme.palette[mainColor]?.main,
             }}
             variant="h3"
             component="h3"

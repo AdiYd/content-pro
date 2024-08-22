@@ -1,11 +1,11 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { CheckIcon } from 'lucide-react';
 import { useState, useEffect, useContext } from 'react';
 
 import { Box, useTheme, Typography } from '@mui/material';
 
 import { ColorContext } from 'src/context/colorMain';
 
+import { Iconify } from '../iconify';
 import { varBounce, AnimateText } from '../animate';
 
 export const arrowsDown = (
@@ -53,6 +53,7 @@ const steps = [
     description: 'לומדים את הטכניקות, הכלים והטיפים הכי חמים',
     href: '#',
     id: 'step 1',
+    iconName: 'bi:laptop',
     InnerSteps: ['לומדים ממי שכבר עשו את זה', 'חוקרים, שואלים ומפנימים', 'מתרגלים ומתנסים'],
   },
   {
@@ -60,6 +61,7 @@ const steps = [
     description: 'מתחברים לקהילה, משתפים עבודות ומקבלים טיפים של אלופים',
     href: '#',
     id: 'step 2',
+    iconName: 'iconoir:community',
     InnerSteps: [
       'קהילה אקסלוסיבית 🤫',
       'המקום לשאלות, עדכונים ועזרה',
@@ -71,18 +73,20 @@ const steps = [
     description: 'מתחילים להתנסות, יוצרים סירטונים ותכנים ומשתפרים',
     href: '#',
     id: 'step 3',
+    iconName: 'dashicons:portfolio', // 'bytesize:portfolio'
     InnerSteps: ['משקיעים בתיק מרשים', 'משתפים רעיונות ומתחילים ליצור תוכן מקורי', 'צוברים ניסיון'],
   },
 
   {
-    name: 'הכנסה ראשונה מיצירת תוכן',
+    name: 'הכנסה מיצירת תוכן',
     description: 'לקהילה שלנו יש ביקוש, מי שיקח את הכלים שלנו ברצינות יקבל הצעות עבודה',
     href: '#',
     id: 'step 4',
+    iconName: 'game-icons:money-stack',
     InnerSteps: [
       'הקהילה שלנו מבוקשת',
+      'יוצרים שיתופי פעולה עם יוצרי תוכן אחרים ',
       'יוצרים חיבורים עם לקוחות פוטנציאלים 🤝',
-      'איך מרוויחים 500 ש"ח מסירטון קצר? בואו לגלות 😉',
     ],
   },
   {
@@ -90,7 +94,9 @@ const steps = [
     description: '',
     href: '#',
     id: 'final step',
-    InnerSteps: ['איך מרוויחים 500 ש"ח מסירטון קצר? בואו לגלות'],
+    final: true,
+    iconName: 'solar:cup-star-linear',
+    InnerSteps: ['איך מרוויחים 500 ש"ח מסירטון קצר? בואו לגלות 😉'],
   },
 ];
 
@@ -113,7 +119,7 @@ function Stepper({ children }) {
           <li
             key={step.name}
             id={step.id}
-            className={classNames(stepIdx !== steps.length - 1 ? 'pb-8' : ' invisible', 'relative')}
+            className={classNames(stepIdx !== steps.length ? 'pb-8' : ' invisible', 'relative')}
           >
             {stepIdx < activeStep ? (
               <>
@@ -123,7 +129,7 @@ function Stepper({ children }) {
                     style={{
                       background: themeColor,
                     }}
-                    className={`absolute right-4 top-4 -mr-px mt-0.5 h-full w-0.5  ${stepIdx === steps.length - 2 ? 'invisible' : ''}`}
+                    className={`absolute right-4 top-4 -mr-px mt-0.5 h-full w-0.5  ${stepIdx === steps.length - 1 ? 'invisible' : ''}`}
                   />
                 ) : null}
                 <a
@@ -140,7 +146,8 @@ function Stepper({ children }) {
                       }}
                       className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full group-hover:bg-info-dark"
                     >
-                      <CheckIcon aria-hidden="true" className="h-5 w-5 text-white" />
+                      {/* <CheckIcon aria-hidden="true" className="h-5 w-5 text-white" /> */}
+                      <Iconify width={20} icon={step.iconName} />
                     </span>
                   </span>
                   <Typography
@@ -176,7 +183,7 @@ function Stepper({ children }) {
                 {stepIdx !== steps.length - 1 ? (
                   <div
                     aria-hidden="true"
-                    className={`absolute right-4 top-4 -mr-px mt-0.5 h-full w-0.5 bg-gray-300 ${stepIdx === steps.length - 2 ? 'invisible' : ''}`}
+                    className={`absolute right-4 top-4 -mr-px mt-0.5 h-full w-0.5 bg-gray-300 ${stepIdx === steps.length - 1 ? 'invisible' : ''}`}
                   />
                 ) : null}
                 <a aria-current="step" className="group relative flex items-start">
@@ -187,12 +194,16 @@ function Stepper({ children }) {
                       }}
                       className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full border-2 bg-white"
                     >
-                      <span
-                        style={{
-                          background: themeColor,
-                        }}
-                        className={`h-2.5 w-2.5 rounded-full `}
-                      />
+                      {stepIdx === steps.length - 1 ? (
+                        <Iconify color={themeColor} icon={step.iconName} />
+                      ) : (
+                        <span
+                          style={{
+                            background: themeColor,
+                          }}
+                          className={`h-2.5 w-2.5 rounded-full `}
+                        />
+                      )}
                     </span>
                   </span>
                   <Typography
@@ -223,10 +234,10 @@ function Stepper({ children }) {
               </>
             ) : (
               <>
-                {stepIdx !== steps.length - 1 ? (
+                {stepIdx !== steps.length ? (
                   <div
                     aria-hidden="true"
-                    className={`absolute right-4 top-4 -mr-px mt-0.5 h-full w-0.5 bg-gray-300 ${stepIdx === steps.length - 2 ? 'invisible' : ''}`}
+                    className={`absolute right-4 top-4 -mr-px mt-0.5 h-full w-0.5 bg-gray-300 ${stepIdx === steps.length - 1 ? 'invisible' : ''}`}
                   />
                 ) : null}
                 <a // not Active steps

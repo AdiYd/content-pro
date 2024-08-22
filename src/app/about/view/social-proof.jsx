@@ -40,7 +40,7 @@ function SocialProof({ title, bullets = [], ...props }) {
   const { mainColor } = useContext(ColorContext);
   const themeColor = theme.palette[mainColor]?.main || theme.palette.info.main;
   return (
-    <Box my={8} mx={{ md: 8, xs: 4 }}>
+    <Box my={2} mx={{ md: 8, xs: 4 }}>
       <Container maxWidth={500}>
         <AnimateText
           className={animateTextClasses.word}
@@ -52,7 +52,7 @@ function SocialProof({ title, bullets = [], ...props }) {
               color: themeColor,
             },
           }}
-          text="האם נלמד דברים יחודיים רק לקורס?"
+          text="האם נלמד דברים יחודיים בקורס?"
           variants={varFade({}).inLeft}
         />
         <Typography
@@ -139,10 +139,7 @@ const RowX = ({
     >
       {even && bulletsList}
 
-      <m.div
-        style={{ borderRadius: '250px', display: 'flex', justifyContent: 'center' }}
-        variants={varFade().inLeft}
-      >
+      <m.div style={{ display: 'flex', justifyContent: 'center' }} variants={varFade().inLeft}>
         <Box sx={{ width: { xs: '70%', md: '90%' } }}>
           <Image
             loading="lazy"
@@ -154,7 +151,7 @@ const RowX = ({
             //   ratio="1/1"
             style={{
               transition: 'transform 0.7s ease-in',
-              borderRadius: !isMobile ? '35px' : '32px',
+              borderRadius: !isMobile ? '32px' : '25px',
               transform: `rotate(${even ? '-' : ''}4deg)`,
               boxShadow: `${even ? '-' : ''}10px 5px 20px ${colorPalette}`,
             }}

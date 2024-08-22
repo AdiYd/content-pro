@@ -156,13 +156,13 @@ export function AboutHero() {
               sx={{
                 display: 'flex',
                 gap: 4,
-                mt: 10,
+                mt: { md: 10, xs: 8 },
                 pr: { md: 0, xs: 'auto' },
                 justifyContent: { md: 'inherit', xs: 'center' },
               }}
             >
               <Button
-                sx={{ fontSize: { md: '1rem', xs: '0.7rem' }, borderRadius: 1 }}
+                sx={{ fontSize: { md: '1rem', xs: '1rem' }, borderRadius: 1 }}
                 variant="contained"
                 color={mainColor}
               >
@@ -170,7 +170,7 @@ export function AboutHero() {
               </Button>
               <Button
                 sx={{
-                  fontSize: { md: '1rem', xs: '0.7rem' },
+                  fontSize: { md: '1rem', xs: '1rem' },
                   borderRadius: 1,
                   display: { md: 'inherit', xs: 'none' },
                 }}
@@ -191,7 +191,7 @@ export function AboutHero() {
           className="w-full absolute bottom-0"
         />
       )}
-      <div className="absolute -bottom-8 right-10 hidden justify-center max-sm:flex">
+      <div className="absolute -bottom-8 right-10 rounded-full shadow-md shadow-zinc-300/20 hidden justify-center max-md:flex">
         <AnimateAvatar width={100}>
           <Image
             alt="Our office small"

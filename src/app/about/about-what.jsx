@@ -43,7 +43,7 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
     >
       <div
         style={{ width: isMobile ? '90vw' : '50vw' }}
-        className="overflow-hidden rounded-3xl shadow-md shadow-green-400/30"
+        className="overflow-hidden rounded-3xl shadow-md shadow-green-500/30"
       >
         <Box overflow="hidden" width="100%" borderRadius={3}>
           <iframe

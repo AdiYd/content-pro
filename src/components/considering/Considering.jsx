@@ -42,8 +42,8 @@ function Considering({
           </div>
         )}
         <Container component={MotionContainer}>
-          <m.div variants={varBounce().in}>
-            <div className="flex justify-center">
+          <m.div variants={varBounce({ durationIn: 1 }).in}>
+            <div className="flex justify-center animate-pulse">
               <Button
                 sx={{
                   // alignSelf: 'center',
