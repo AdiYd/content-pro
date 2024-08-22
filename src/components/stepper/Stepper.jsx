@@ -9,23 +9,25 @@ import { ColorContext } from 'src/context/colorMain';
 import { varBounce, AnimateText } from '../animate';
 
 const arrowsDown = (mainColor = 'currentColor', accentColor = 'currentColor') => (
-  <svg width="28px" height="28px" viewBox="0 -960 960 960" fill="url(#gradientAnimation)">
-    <defs>
-      <linearGradient id="gradientAnimation" x1="0%" y1="0%" x2="0%" y2="100%">
-        <animateTransform
-          attributeName="transform"
-          type="translateY"
-          from="0%"
-          to="100%"
-          dur="1s"
-          repeatCount="indefinite"
-        />
-        <stop offset="0%" stopColor={accentColor} />
-        <stop offset="100%" stopColor={mainColor} />
-      </linearGradient>
-    </defs>
-    <path d="M480-200 240-440l56-56 184 183 184-183 56 56-240 240Zm0-240L240-680l56-56 184 183 184-183 56 56-240 240Z" />
-  </svg>
+  <div className="flex justify-around">
+    <svg width="28px" height="28px" viewBox="0 -960 960 960" fill="url(#gradientAnimation)">
+      <defs>
+        <linearGradient id="gradientAnimation" x1="0%" y1="0%" x2="0%" y2="100%">
+          <animateTransform
+            attributeName="transform"
+            type="translateY"
+            from="0%"
+            to="100%"
+            dur="1s"
+            repeatCount="indefinite"
+          />
+          <stop offset="0%" stopColor={accentColor} />
+          <stop offset="100%" stopColor={mainColor} />
+        </linearGradient>
+      </defs>
+      <path d="M480-200 240-440l56-56 184 183 184-183 56 56-240 240Zm0-240L240-680l56-56 184 183 184-183 56 56-240 240Z" />
+    </svg>
+  </div>
 );
 
 const arrowsDown2 = (
@@ -106,10 +108,7 @@ function Stepper({ children }) {
           <li
             key={step.name}
             id={step.id}
-            className={classNames(
-              stepIdx !== steps.length - 1 ? 'pb-10' : ' invisible',
-              'relative'
-            )}
+            className={classNames(stepIdx !== steps.length - 1 ? 'pb-8' : ' invisible', 'relative')}
           >
             {stepIdx < activeStep ? (
               <>
@@ -140,14 +139,16 @@ function Stepper({ children }) {
                     </span>
                   </span>
                   <Typography
-                    variant="h2"
+                    variant="h3"
                     sx={{ display: 'flex', mr: 4, flexDirection: 'column', minWidth: 0 }}
                     className="mr-4 flex min-w-0 flex-col"
                   >
                     <span className="text-2xl font-medium">{step.name}</span>
                     {step.InnerSteps.map((item, index) => (
-                      <div key={index}>
-                        <span className="text-base text-gray-500">{item}</span>
+                      <div className="my-2" key={index}>
+                        <span className="text-base justify-start opacity-80 flex max-sm:justify-center max-sm:text-center text-start ">
+                          {item}
+                        </span>
                         {index !== step.InnerSteps.length - 1 &&
                           arrowsDown(
                             theme.palette[mainColor]?.light,
@@ -183,21 +184,24 @@ function Stepper({ children }) {
                     </span>
                   </span>
                   <Typography
-                    variant="h2"
+                    variant="h3"
                     sx={{ display: 'flex', mr: 4, flexDirection: 'column', minWidth: 0 }}
                     className="mr-4 flex min-w-0 flex-col"
                   >
                     <span
                       style={{
                         color: themeColor,
+                        marginBottom: '10px',
                       }}
-                      className="text-2xl font-medium"
+                      // className="text-2xl font-medium"
                     >
                       {step.name}
                     </span>
                     {step.InnerSteps.map((item, index) => (
-                      <div key={index}>
-                        <span className="text-base text-gray-500">{item}</span>
+                      <div className="my-2" key={index}>
+                        <span className="text-base justify-start opacity-80 flex max-sm:justify-center max-sm:text-center text-start ">
+                          {item}
+                        </span>
                         {index !== step.InnerSteps.length - 1 &&
                           arrowsDown(theme.palette[mainColor]?.light)}
                       </div>
@@ -226,14 +230,16 @@ function Stepper({ children }) {
                     </span>
                   </span>
                   <Typography
-                    variant="h2"
+                    variant="h3"
                     sx={{ display: 'flex', mr: 4, flexDirection: 'column', minWidth: 0 }}
                     className="mr-4 flex min-w-0 flex-col"
                   >
-                    <span className="text-2xl font-medium text-gray-500">{step.name}</span>
+                    <span className="text-2xl font-medium ">{step.name}</span>
                     {step.InnerSteps.map((item, index) => (
-                      <div key={index}>
-                        <span className="text-base text-gray-500">{item}</span>
+                      <div className="my-2" key={index}>
+                        <span className="text-base justify-start opacity-80 flex max-sm:justify-center max-sm:text-center text-start ">
+                          {item}
+                        </span>
                         {index !== step.InnerSteps.length - 1 &&
                           arrowsDown(theme.palette[mainColor]?.light)}
                       </div>

@@ -8,46 +8,72 @@ import { CONFIG } from 'src/config-global';
 import { ColorContext } from 'src/context/colorMain';
 
 import { Iconify } from 'src/components/iconify';
-import { varFade, AnimateText, MotionContainer } from 'src/components/animate';
+import { varFade, AnimateText, MotionContainer, animateTextClasses } from 'src/components/animate';
 
 const mockUps = ['analysis', 'creative', 'followers', 'views'];
 
 const learningTopics = {
   'ניתוח נתונים ברשתות החברתיות': [
-    'איך לנתח ולקרוא את המספרים מאחורי התוכן שאני מייצר',
-    'איך להמיר נותני צפיות ועוקבים להכנסה',
-    'איך להמיר יצירת תוכן להכנסה',
+    'איך לנתח ולקרוא את המספרים מאחורי התוכן שלנו',
+    'איך להשתמש בנתונים כדי להסיק מסקנות ולהשתפר',
+    'איך להמיר נתוני צפיות ועוקבים להכנסה',
   ],
   'למה חשוב "לשבור את הקרח" עם העוקבים שלך': [
     'מה חשוב לכל העוקבים (וגם לך) כשבוחרים להוסיף עוקב',
     'איך לייצר סרטונים קצרים עם תוכן שיווקי סמוי',
-    'איך לשלב את האופי שלך עם המטרות של הערוץ',
+    'איך לשלב את האופי שלך עם בערוץ - ולמה זה כ"כ חשוב',
   ],
-  'למשוך לייקים ושיתופים בלי הרבה עוקבים': [
+  'לא חייב המון עוקבים בשביל הצלחות, לייקים ושיתופים': [
     'איך לגרום לרשת החברתית לקדם אותי',
-    'איך לייצר תוכן בייתי שייראה מקצועי',
-    'איך להיות עקבי ולייחד את הערוץ',
+    'איך לייצר תוכן אותנטי וגם מקצועי',
+    'מספר עוקבים הוא רק תוצר לוואי של תוכן מעניין',
   ],
   'מתחילים מ - 0': [
     'בניית ערוץ תוכן ודגשים לקידום הערוץ',
-    'איך ללמוד ולהשתפר יחד עם הנתונים',
-    'תוכן שנראה אותנטי ומקצועי בו זמנית',
+    'טעויות נפוצות שיחסכו לכם זמן יקר בדרך אל ההצלחה',
+    'איך ליצור קהילה שלכם שאוהבת ומעריכה את היצירות שלכם',
   ],
 };
 
 function SocialProof({ title, bullets = [], ...props }) {
   const theme = useTheme();
   const { mainColor } = useContext(ColorContext);
+  const themeColor = theme.palette[mainColor]?.main || theme.palette.info.main;
   return (
     <Box my={8} mx={{ md: 8, xs: 4 }}>
       <Container maxWidth={500}>
         <AnimateText
-          variant="h2"
-          component="h2"
-          sx={{ textAlign: 'start' }}
-          text="מה נלמד בקורס?"
+          className={animateTextClasses.word}
+          variant="h3"
+          component="h3"
+          sx={{
+            textAlign: 'start',
+            '& .animate-text-word[data-index="2"]': {
+              color: themeColor,
+            },
+          }}
+          text="נלמד דברים יחודיים רק לקורס?"
           variants={varFade({}).inLeft}
         />
+        <Typography
+          variant="body1"
+          sx={{
+            textAlign: 'start',
+            opacity: 0.8,
+          }}
+        >
+          כמובן! אנחנו שמים דגש על הפרטים הקטנים שעושים את ההבדל - היצירתיות, הייחודיות והדגשים שרק
+          המקצוענים שמים לב אליהם
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{
+            textAlign: 'start',
+            opacity: 0.8,
+          }}
+        >
+          ובנינו? גם הלקוחות והעוקבים שלכם ירגישו את הבדל, הנה כמה נקודות קטנות שיתנו לכם יתרון גדול
+        </Typography>
       </Container>
       {Object.keys(learningTopics).map((item, indx) => (
         <RowX
@@ -88,7 +114,7 @@ const RowX = ({
       <List>
         {bullets.map((item, indx) => (
           <ListItem key={indx} sx={{ padding: 0, textAlign: 'justify' }}>
-            <Iconify icon="lets-icons:check-fill" width={30} />
+            <Iconify icon="lets-icons:check-fill" width={20} />
             <Typography sx={{ mx: { md: 4, xs: 2 } }} variant="h4">
               {item}
             </Typography>
@@ -118,8 +144,8 @@ const RowX = ({
           <Image
             loading="lazy"
             alt="Social reference"
-            width={250}
-            height={200}
+            width={200}
+            height={150}
             className="hover:scale-150  transition-transform max-sm:w-2/3"
             src={`${CONFIG.site.basePath}/assets/images/socialProof/${picName}.png`}
             //   ratio="1/1"

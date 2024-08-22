@@ -5,6 +5,7 @@ import { Box } from '@mui/material';
 import AccordionSection from 'src/layouts/components/Accordion/AccordionSection';
 
 import StepperSection from 'src/components/stepper/Stepper';
+import Considering from 'src/components/considering/Considering';
 
 import ColorPicker from './colorPalette';
 import ImageDiv from './about/view/ImageDiv';
@@ -26,8 +27,10 @@ export default function Page() {
       <AccordionSection />
       <ImageDiv />
       <StepperSection />
-      <Promotion1 />
+      <Considering />
       <SocialProof />
+      <Considering />
+      <Promotion1 />
       <AboutVision />
       <AboutTestimonials />
       {/* <CarouselView /> */}
