@@ -48,11 +48,11 @@ function SocialProof({ title, bullets = [], ...props }) {
           component="h3"
           sx={{
             textAlign: 'start',
-            '& .animate-text-word[data-index="2"]': {
+            '& .animate-text-word[data-index="3"]': {
               color: themeColor,
             },
           }}
-          text="נלמד דברים יחודיים רק לקורס?"
+          text="האם נלמד דברים יחודיים רק לקורס?"
           variants={varFade({}).inLeft}
         />
         <Typography
@@ -139,7 +139,10 @@ const RowX = ({
     >
       {even && bulletsList}
 
-      <m.div style={{ borderRadius: '250px' }} variants={varFade().inLeft}>
+      <m.div
+        style={{ borderRadius: '250px', display: 'flex', justifyContent: 'center' }}
+        variants={varFade().inLeft}
+      >
         <Box sx={{ width: { xs: '70%', md: '90%' } }}>
           <Image
             loading="lazy"

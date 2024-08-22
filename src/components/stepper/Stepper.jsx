@@ -14,7 +14,7 @@ export const arrowsDown = (
   width = '28px',
   className = ''
 ) => (
-  <div className={`flex justify-start mr-20 ${className}`}>
+  <div className={`flex justify-start ${className}`}>
     <svg width={width} height={width} viewBox="0 -960 960 960" fill="url(#gradientAnimation)">
       <defs>
         <linearGradient id="gradientAnimation" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -162,7 +162,9 @@ function Stepper({ children }) {
                         {index !== step.InnerSteps.length - 1 &&
                           arrowsDown(
                             theme.palette[mainColor]?.light,
-                            theme.palette[mainColor]?.dark
+                            theme.palette[mainColor]?.dark,
+                            '28px',
+                            'mr-20'
                           )}
                       </div>
                     ))}{' '}
@@ -213,7 +215,7 @@ function Stepper({ children }) {
                           {item}
                         </span>
                         {index !== step.InnerSteps.length - 1 &&
-                          arrowsDown(theme.palette[mainColor]?.light)}
+                          arrowsDown(theme.palette[mainColor]?.light, undefined, '28px', 'mr-20')}
                       </div>
                     ))}
                   </Typography>
@@ -255,7 +257,7 @@ function Stepper({ children }) {
                           {item}
                         </span>
                         {index !== step.InnerSteps.length - 1 &&
-                          arrowsDown(theme.palette[mainColor]?.light)}
+                          arrowsDown(theme.palette[mainColor]?.light, undefined, '28px', 'mr-20')}
                       </div>
                     ))}{' '}
                   </Typography>
