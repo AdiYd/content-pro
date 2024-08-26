@@ -19,6 +19,7 @@ import { basePalette } from 'src/theme/core';
 import { ColorContext } from 'src/context/colorMain';
 
 import { AnimateBorder } from 'src/components/animate';
+import { ScrollComponent } from 'src/components/considering/Considering';
 
 import { ComponentBlock } from './component-block';
 
@@ -167,7 +168,7 @@ export function AccordionView({ title, accordions = _accordions }) {
                     <Button
                       sx={{ zIndex: 40, fontSize: { md: '1rem', xs: '1rem' }, borderRadius: 1 }}
                       variant="outlined"
-                      // size="large"
+                      onClick={() => ScrollComponent('signUp')}
                       color={mainColor}
                     >
                       {accordion.button}

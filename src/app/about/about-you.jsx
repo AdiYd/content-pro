@@ -103,9 +103,16 @@ export function AboutYou({ contentType = 'aboutCourse' }) {
         </ToggleButton>
         <Typography variant="h5">{text}</Typography>
       </Stack>
-      <Stack mr={6} mt={2} justifyContent="center" direction="row" spacing={2}>
+      <Stack
+        sx={{ maxWidth: { md: '40%', xs: '100%' } }}
+        mr={6}
+        mt={2}
+        justifyContent="center"
+        direction="row"
+        spacing={2}
+      >
         {icons.map((item, index) => (
-          <Iconify key={index} size={30} icon={item} />
+          <Iconify key={index} size={50} icon={item} />
         ))}
       </Stack>
     </m.div>

@@ -51,7 +51,7 @@ export const varBounce = (props) => {
       },
     },
     inLeft: {
-      initial: {},
+      initial: { opacity: 0 },
       animate: {
         x: [-720, 24, -12, 4, 0],
         scaleX: [3, 1, 0.98, 0.995, 1],

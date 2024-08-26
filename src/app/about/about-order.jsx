@@ -28,7 +28,7 @@ export function AboutOrder({ contentType = 'aboutCourse' }) {
         style={{ width: isMobile ? '90vw' : '50vw' }}
         className="overflow-hidden rounded-3xl shadow-md shadow-warning-lighter/40"
       >
-        <Box overflow="hidden" width="100%" borderRadius={3}>
+        <Box sx={{ position: 'relative' }} overflow="hidden" width="100%" borderRadius={3}>
           <iframe
             title="videoIntro"
             width={500}
@@ -37,6 +37,7 @@ export function AboutOrder({ contentType = 'aboutCourse' }) {
 
             // controls
           />
+          <div className="absolute z-20 top-0 right-0 bg-transparent w-1/4 h-1/4" />
           {/* <video width="640" height="480" controls>
             <source
               src="https://drive.google.com/uc?export=download&id=1OGBM8l4lhNwYmCDsHa6jCAkRkwPhmb0u"
@@ -72,9 +73,9 @@ export function AboutOrder({ contentType = 'aboutCourse' }) {
           <Box component="a" mx={1} color={`${mainColor}.main`}>
             סדר
           </Box>
-          ואלמד אותך לעבוד באופן שיטתי ומסודר כדי לפתח את הנישה שלך
+          ואלמד אותך לעבוד באופן שיטתי ומסודר ובכך להגדיל את
           <Box component="a" mx={1} color={`${mainColor}.main`}>
-            שתתאים לאופי שלך
+            סיכויי ההצלחה שלך
           </Box>
         </Typography>
       </m.div>
@@ -98,7 +99,10 @@ export function AboutOrder({ contentType = 'aboutCourse' }) {
           פשוט ללמוד ממי שכבר עשה את זה ולהתחיל לייצר תוכן איכותי שעשוי ומצולם נכון, סירטוני וידאו
           כאלה ששמים את הדגש על הפרטים הקטנים ועושים את ההבדל בין יוצר תוכן מקצועי לחובבן.
           <br />
-          אחרי שתלמדו את הסודות, כבר לא תסתכלו על סרטוני טיקטוק ויוטיוב באותו האופן...
+          אחרי שתלמדו את הסודות, כבר לא תסתכלו על סרטוני טיקטוק ויוטיוב באותו האופן ותתחילו לבנות את
+          <Box component="a" mx={1} color={theme.palette[mainColor]?.main}>
+            הנישה הפרטית שלכם שמתאימה לאופי שלכם
+          </Box>
         </Typography>
       </m.div>
     </Container>

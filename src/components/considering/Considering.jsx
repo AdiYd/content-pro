@@ -30,6 +30,13 @@ import { ComponentContainer } from '../new/component-block';
 
 const NumOfMinutes = 15;
 
+export const ScrollComponent = (id = 'signUp') => {
+  const element = document.getElementById(id);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+};
+
 function Considering({
   color,
   buttonBefore = ' אהבתם?! תנו לייק 👍',
@@ -66,14 +73,20 @@ function Considering({
 
   const countdownSection = counting && (
     <ComponentContainer
+      title="לחצו למעבר להרשמה"
+      onClick={() => ScrollComponent('signUp')}
       sx={{
         border: '0.1px solid',
+        cursor: 'pointer',
         borderRadius: 1,
         borderColor: theme.palette[mainColor]?.main,
         width: 'fit-content',
         textAlign: 'center',
         my: 3,
         px: 2,
+        '&:hover': {
+          transform: 'scale(1.1)',
+        },
       }}
     >
       <Typography height={8} variant="h5">

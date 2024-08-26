@@ -4,6 +4,7 @@ import { Box } from '@mui/material';
 
 import AccordionSection from 'src/layouts/components/Accordion/AccordionSection';
 
+import SignUp from 'src/components/signUp/SignUp';
 import StepperSection from 'src/components/stepper/Stepper';
 import Considering from 'src/components/considering/Considering';
 
@@ -29,6 +30,7 @@ export default function Page() {
       <AboutOrder />
       <Considering buttonBefore="סקרנים?! לחצו כאן 😉" />
       <ImageDiv />
+      <SignUp />
       <AccordionSection />
       <StepperSection />
       <SocialProof />

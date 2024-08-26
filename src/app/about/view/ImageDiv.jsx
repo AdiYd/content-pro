@@ -35,7 +35,7 @@ const promoImag = {
 function ImageDiv({ ...props }) {
   const theme = useTheme();
   return (
-    <Container sx={{ my: 4, maxWidth: 1, overflow: 'hidden' }} component={MotionViewport}>
+    <Container sx={{ my: 8, maxWidth: 1, overflow: 'hidden' }} component={MotionViewport}>
       <m.div variants={varFade({ durationIn: 2 }).inDown}>
         <ImageList
           sx={{

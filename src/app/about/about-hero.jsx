@@ -16,6 +16,7 @@ import { ColorContext } from 'src/context/colorMain';
 
 import { Image } from 'src/components/image';
 import { Iconify, SocialIcon } from 'src/components/iconify';
+import { ScrollComponent } from 'src/components/considering/Considering';
 import {
   varFade,
   varSlide,
@@ -178,7 +179,7 @@ export function AboutHero() {
             />
             <m.div
               // className="animate-bounce"
-              variants={varBounce({ delay: 2 }).inLeft}
+              variants={varBounce({ durationIn: 2, delay: 2 }).inLeft}
             >
               <Box sx={{ display: 'flex', justifyContent: { md: 'inherit', xs: 'center' } }}>
                 {emph(theme.palette[mainColor])}
@@ -261,6 +262,7 @@ export function AboutHero() {
                 sx={{ fontSize: { md: '1rem', xs: '1rem' }, borderRadius: 1 }}
                 variant={isMobile ? 'contained' : 'contained'}
                 color={mainColor}
+                onClick={() => ScrollComponent('signUp')}
               >
                 הצטרפו לקהילת יוצרי תוכן
               </Button>

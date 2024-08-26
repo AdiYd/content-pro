@@ -83,7 +83,7 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
         style={{ width: isMobile ? '90vw' : '50vw' }}
         className="overflow-hidden rounded-3xl shadow-md shadow-warning-lighter/40"
       >
-        <Box overflow="hidden" width="100%" borderRadius={3}>
+        <Box sx={{ position: 'relative' }} overflow="hidden" width="100%" borderRadius={3}>
           <iframe
             title="videoIntro"
             width={500}
@@ -92,6 +92,7 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
 
             // controls
           />
+          <div className="absolute z-20 top-0 right-0 bg-transparent w-1/4 h-1/4" />
           {/* <video width="640" height="480" controls>
             <source
               src="https://drive.google.com/uc?export=download&id=1OGBM8l4lhNwYmCDsHa6jCAkRkwPhmb0u"
