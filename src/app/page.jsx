@@ -12,6 +12,7 @@ import { AboutYou } from './about/about-you';
 import ImageDiv from './about/view/ImageDiv';
 import { AboutWhat } from './about/about-what';
 import { AboutHero } from './about/about-hero';
+import { AboutOrder } from './about/about-order';
 import SocialProof from './about/view/social-proof';
 import { AboutTestimonials } from './about/about-testimonials';
 // ----------------------------------------------------------------------
@@ -25,6 +26,7 @@ export default function Page() {
       <AboutWhat contentType="aboutMe" />
       {/* <IconSection /> */}
       <AboutYou />
+      <AboutOrder />
       <Considering buttonBefore="סקרנים?! לחצו כאן 😉" />
       <ImageDiv />
       <AccordionSection />

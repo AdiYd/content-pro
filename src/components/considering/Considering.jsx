@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import Cookies from 'js-cookie';
 import { m } from 'framer-motion';
 import { useRef, useState, useContext } from 'react';
 
@@ -42,12 +44,19 @@ function Considering({
   const { countdown, startCountdown, counting } = useCountdownSeconds(60 * NumOfMinutes);
   const buttonMsg = useRef(buttonBefore);
   color = color || mainColor || 'info';
-  console.log('Counting? : ', counting);
+
+  const setCookie = (name = 'counting', value = 'true', numOfSec = NumOfMinutes * 60) => {
+    const expirationDate = new Date(new Date().getTime() + numOfSec * 1000);
+    Cookies.set(name, value, { expires: expirationDate });
+  };
+
   const startConfetti = () => {
     buttonMsg.current = buttonAfter;
     setConfetti((p) => !p);
-    setActive(true);
-
+    const isCounting = Cookies.get('counting');
+    if (!isCounting) {
+      setActive(true);
+    }
     if (!confetti) {
       setTimeout(() => {
         setConfetti(false);
@@ -134,14 +143,18 @@ function Considering({
           direction: 'rtl',
           textAlign: 'center',
         }}
-        open={active}
+        open={!counting && active}
         onClose={() => setActive(false)}
       >
         <DialogTitle>
           הסקרנות שלכם משתלמת!
           <IconButton
             aria-label="close"
-            onClick={() => setActive(false)}
+            onClick={() => {
+              startCountdown();
+              setCookie();
+              setActive(false);
+            }}
             sx={{
               position: 'absolute',
               right: 8,
@@ -156,7 +169,7 @@ function Considering({
         <DialogContent dividers sx={{ color: 'text.secondary' }}>
           <Typography variant="h4">{buttonMsg.current}</Typography>
           <br />
-          <Typography variant="p">
+          <Typography color="text.primary" variant="p">
             קבלו קוד הנחה של 10% בתוקף ל {NumOfMinutes} דקות הקרובות
           </Typography>
           <br />
@@ -186,13 +199,14 @@ function Considering({
           </Stack>
         </DialogContent>
 
-        <DialogActions sx={{ display: 'flex', gap: 2, justifyContent: 'center' }}>
+        <DialogActions sx={{ display: 'flex', gap: 3, justifyContent: 'center' }}>
           <Button
             color={mainColor}
             size="small"
             variant="contained"
             onClick={() => {
               startCountdown();
+              setCookie();
               setActive(false);
             }}
             autoFocus
@@ -200,14 +214,14 @@ function Considering({
             תודה
           </Button>
 
-          <Button
+          {/* <Button
             color={mainColor}
             size="small"
             variant="outlined"
             onClick={() => setActive(false)}
           >
             לא תודה
-          </Button>
+          </Button> */}
         </DialogActions>
       </Dialog>
       {buttonAfter === buttonMsg.current && (

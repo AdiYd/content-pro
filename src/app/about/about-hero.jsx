@@ -19,6 +19,7 @@ import { Iconify, SocialIcon } from 'src/components/iconify';
 import {
   varFade,
   varSlide,
+  varBounce,
   AnimateText,
   AnimateAvatar,
   MotionContainer,
@@ -177,7 +178,7 @@ export function AboutHero() {
             />
             <m.div
               // className="animate-bounce"
-              variants={varSlide({ delay: 2, distance: -160 }).inRight}
+              variants={varBounce({ delay: 2 }).inLeft}
             >
               <Box sx={{ display: 'flex', justifyContent: { md: 'inherit', xs: 'center' } }}>
                 {emph(theme.palette[mainColor])}

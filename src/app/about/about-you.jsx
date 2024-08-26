@@ -11,7 +11,7 @@ import { Box, ToggleButton, useMediaQuery } from '@mui/material';
 import { ColorContext } from 'src/context/colorMain';
 
 import { Iconify } from 'src/components/iconify';
-import { varFade, AnimateBorder, MotionViewport } from 'src/components/animate';
+import { varFade, MotionViewport } from 'src/components/animate';
 
 // ----------------------------------------------------------------------
 
@@ -27,10 +27,7 @@ const bullets = [
 const bulletsWithIcons = [
   {
     text: 'מקצוע דיגיטלי מבוקש, ללא קשר לפלטפורמה המועדפת עליכם',
-    icons: [
-      'fluent:desktop-24-regular', // A general icon for digital professions
-      'fluent:app-generic-20-filled', // An icon that represents platforms or applications
-    ],
+    icons: ['logos:youtube-icon', 'logos:tiktok-icon', 'skill-icons:instagram', 'logos:facebook'],
   },
   {
     text: 'ליצור ולהרוויח כסף מכל מקום ובכל זמן',
@@ -41,21 +38,20 @@ const bulletsWithIcons = [
     ],
   },
   {
-    text: 'ליצור קהילה משלכם שתהווה עבורכם מקור הכנסה או קהל שאוהב אתכם',
+    text: 'ליצור קהילה משלכם שתהווה עבורכם מקור הכנסה וקהל שאוהב אתכם',
     icons: [
       'mdi:account-group-outline', // An icon representing a community or group
-      'mdi:cash-register', // An icon representing income or monetization
     ],
   },
   {
-    text: 'מקבלים פרויקט ראשון בתשלום לאחר הכנת תיק עבודות',
+    text: 'ההשקעה חוזרת - מקבלים פרויקט ראשון בתשלום לאחר הכנת תיק עבודות',
     icons: [
       'mdi:briefcase-check-outline', // An icon representing a successful project or job
-      'mdi:folder-account-outline', // An icon representing a portfolio or project folder
+      'game-icons:money-stack',
     ],
   },
   {
-    text: 'קבוצת וואטצאפ עם תכני העשרה, טיפים והדרכות להמשך הדרך',
+    text: 'קבוצת וואטצאפ של יוצרי תוכן עם תכני העשרה, טיפים והדרכות להמשך הדרך',
     icons: [
       'logos:whatsapp-icon', // The WhatsApp icon for communication
       'emojione:books', // An icon representing guides or tips
@@ -65,7 +61,7 @@ const bulletsWithIcons = [
     text: 'לא אהבתם ? תקבלו את כספכם בחזרה',
     icons: [
       'mdi:cash-refund', // An icon representing a refund or money back
-      'mdi:thumb-down-outline', // An icon representing dissatisfaction or dislike
+      'gala:secure',
     ],
   },
 ];
@@ -84,17 +80,18 @@ export function AboutYou({ contentType = 'aboutCourse' }) {
     icons = [],
   }) => (
     <m.div style={{ marginBottom: 2 }} variants={varFade({ delay, distance: 400 }).inLeft}>
-      <Stack alignItems="center" direction="row" spacing={2}>
+      <Stack alignItems="top" direction="row" spacing={2}>
         <ToggleButton
           value="checked"
           sx={{
-            borderRadius: 3,
-            // width: { md: 10, xs: 4 },
-            // height: { md: 10, xs: 4 },
+            borderRadius: 1,
+            height: 'fit-content',
             color: 'text.primary',
-            backgroundColor: `${color}.main`,
-            borderColor: 'text.secondary',
+            // color: theme.palette[mainColor]?.main,
+            // backgroundColor: `${color}.main`,
+            borderColor: `${color}.main`,
             '&:hover': {
+              color: 'text.primary',
               backgroundColor: `${color}.dark`,
             },
           }}
@@ -114,35 +111,6 @@ export function AboutYou({ contentType = 'aboutCourse' }) {
     </m.div>
   );
 
-  const introVideo = (
-    <AnimateBorder
-      sx={{ borderRadius: 4, p: 0.5 }}
-      animate={{ color: theme.palette[mainColor]?.main || '#fff' }}
-    >
-      <div
-        style={{ width: isMobile ? '90vw' : '50vw' }}
-        className="overflow-hidden rounded-3xl shadow-md shadow-warning-lighter/40"
-      >
-        <Box overflow="hidden" width="100%" borderRadius={3}>
-          <iframe
-            title="videoIntro"
-            width={500}
-            src="https://drive.google.com/file/d/1GPVCyit_PuX4sUh5FMlAjTKVRCVdW0mY/preview"
-            className="relative z-20 w-full h-full aspect-video"
-
-            // controls
-          />
-          {/* <video width="640" height="480" controls>
-            <source
-              src="https://drive.google.com/uc?export=download&id=1OGBM8l4lhNwYmCDsHa6jCAkRkwPhmb0u"
-              type="video/mp4"
-            />
-            Your browser does not support the video tag.
-          </video> */}
-        </Box>
-      </div>
-    </AnimateBorder>
-  );
   return (
     <Container
       component={MotionViewport}

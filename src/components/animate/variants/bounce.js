@@ -12,7 +12,7 @@ export const varBounce = (props) => {
   return {
     // IN
     in: {
-      initial: {},
+      initial: { opacity: 0 },
       animate: {
         scale: [0.3, 1.1, 0.9, 1.03, 0.97, 1],
         opacity: [0, 1, 1, 1, 1, 1],
@@ -26,7 +26,7 @@ export const varBounce = (props) => {
         y: [720, -24, 12, -4, 0],
         scaleY: [4, 0.9, 0.95, 0.985, 1],
         opacity: [0, 1, 1, 1, 1],
-        transition: { ...varTranEnter({ durationIn, easeIn }) },
+        transition: { ...varTranEnter({ durationIn, easeIn, delay }) },
       },
       exit: {
         y: [12, -24, 720],
@@ -41,7 +41,7 @@ export const varBounce = (props) => {
         y: [-720, 24, -12, 4, 0],
         scaleY: [4, 0.9, 0.95, 0.985, 1],
         opacity: [0, 1, 1, 1, 1],
-        transition: varTranEnter({ durationIn, easeIn }),
+        transition: varTranEnter({ durationIn, easeIn, delay }),
       },
       exit: {
         y: [-12, 24, -720],
@@ -56,7 +56,7 @@ export const varBounce = (props) => {
         x: [-720, 24, -12, 4, 0],
         scaleX: [3, 1, 0.98, 0.995, 1],
         opacity: [0, 1, 1, 1, 1],
-        transition: varTranEnter({ durationIn, easeIn }),
+        transition: varTranEnter({ durationIn, easeIn, delay }),
       },
       exit: {
         x: [0, 24, -720],
@@ -71,7 +71,7 @@ export const varBounce = (props) => {
         x: [720, -24, 12, -4, 0],
         scaleX: [3, 1, 0.98, 0.995, 1],
         opacity: [0, 1, 1, 1, 1],
-        transition: varTranEnter({ durationIn, easeIn }),
+        transition: varTranEnter({ durationIn, easeIn, delay }),
       },
       exit: {
         x: [0, -24, 720],
