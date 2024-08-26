@@ -1,9 +1,9 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 function IconSection({ ...props }) {
   return (
     <Box>
-      <span className="icon-[svg-spinners--wifi] text-blue-200" />
+      <Typography variant="h2">מה צריך כדי ללמוד איתכם?</Typography>
     </Box>
   );
 }

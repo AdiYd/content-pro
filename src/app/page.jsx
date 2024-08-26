@@ -2,13 +2,13 @@
 
 import { Box } from '@mui/material';
 
-import IconSection from 'src/layouts/components/IconsSection/IconSection';
 import AccordionSection from 'src/layouts/components/Accordion/AccordionSection';
 
 import StepperSection from 'src/components/stepper/Stepper';
 import Considering from 'src/components/considering/Considering';
 
 import ColorPicker from './colorPalette';
+import { AboutYou } from './about/about-you';
 import ImageDiv from './about/view/ImageDiv';
 import { AboutWhat } from './about/about-what';
 import { AboutHero } from './about/about-hero';
@@ -23,7 +23,8 @@ export default function Page() {
       <AboutHero />
       <AboutWhat contentType="aboutCourse" />
       <AboutWhat contentType="aboutMe" />
-      <IconSection />
+      {/* <IconSection /> */}
+      <AboutYou />
       <AccordionSection />
       <Considering buttonBefore="סקרנים?! לחצו כאן 😉" />
       <ImageDiv />

@@ -24,7 +24,7 @@ import {
   MotionContainer,
 } from 'src/components/animate';
 
-const emph = (
+const emph = (colorPalette) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="160"
@@ -35,13 +35,13 @@ const emph = (
     <path
       d="M12 57.6013C33.1048 53.7342 53.856 49.6152 75.2573 45.995C135.912 35.7348 196.175 28.0455 260.642 22.62C307.691 18.6604 354.925 14.3217 402.971 12.7992C417.848 12.3278 433.689 12.9964 448.271 11.5818C462.601 10.1916 482.505 13.3363 495 10.8513"
       stroke="url(#paint0_linear_10_21)"
-      strokeWidth="15"
+      strokeWidth="12"
       strokeLinecap="round"
     />
     <path
       d="M90 84.1352C183.036 69.927 274.401 53.7617 371.004 44.7233C385.381 43.3781 399.984 41.9993 414.661 41.4673C422.768 41.1734 431.556 41.7502 439.482 40.8355C444.72 40.2309 448.433 40.151 453 38.6487"
       stroke="url(#paint1_linear_10_21)"
-      strokeWidth="15"
+      strokeWidth="12"
       strokeLinecap="round"
     />
     <defs>
@@ -54,7 +54,17 @@ const emph = (
         gradientUnits="userSpaceOnUse"
       >
         {/* <stop stopColor="#020D20" /> */}
-        <stop offset="0.44" stopColor="#EAF2FF" />
+        {colorPalette ? (
+          <>
+            <stop offset="0" stopColor={colorPalette?.lighter} />
+            <stop offset="0.3" stopColor={colorPalette?.light} />
+            <stop offset="0.6" stopColor={colorPalette?.main} />
+            <stop offset="0.9" stopColor={colorPalette?.dark} />
+            <stop offset="1" stopColor={colorPalette?.darker} />
+          </>
+        ) : (
+          <stop offset="0.44" stopColor="#EAF2FF" />
+        )}
         {/* <stop offset="1" stopColor="#9BC1FF" /> */}
       </linearGradient>
       <linearGradient
@@ -65,8 +75,22 @@ const emph = (
         y2="61.3919"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stopColor="#414E64" />
-        <stop offset="1" stopColor="#E8EEF7" />
+        {colorPalette ? (
+          <>
+            <stop offset="0" stopColor={colorPalette?.lighter} />
+            <stop offset="0.3" stopColor={colorPalette?.light} />
+            <stop offset="0.6" stopColor={colorPalette?.main} />
+            <stop offset="0.9" stopColor={colorPalette?.dark} />
+            <stop offset="1" stopColor={colorPalette?.darker} />
+          </>
+        ) : (
+          <>
+            <stop stopColor="#414E64" />
+            <stop offset="1" stopColor="#E8EEF7" />
+          </>
+        )}
+        {/* <stop stopColor="#414E64" />
+        <stop offset="1" stopColor="#E8EEF7" /> */}
       </linearGradient>
     </defs>
   </svg>
@@ -81,7 +105,7 @@ export function AboutHero() {
   const { mainColor } = useContext(ColorContext);
   const colorName = `${mainColor}.main`;
   const waveVector = useRef();
-  console.log('theme: ', theme);
+  // console.log('theme: ', theme);
 
   useEffect(() => {
     waveVector.current = `${CONFIG.site.basePath}/assets/background/waveVector_${theme.palette.mode}.svg`;
@@ -93,7 +117,7 @@ export function AboutHero() {
       sx={{
         height: { md: 650 },
         overflow: 'visible',
-        pt: { xs: 5, md: 2 },
+        pt: { xs: 8, md: 2 },
         pb: { xs: 10, md: 0 },
         mb: { xs: 8, md: 12 },
         position: 'relative',
@@ -127,6 +151,7 @@ export function AboutHero() {
               color: colorName,
               direction: 'ltr',
               textAlign: { md: 'end', xs: 'unset' },
+              pb: 2,
             }}
           />
           {/* <AnimateText
@@ -155,7 +180,7 @@ export function AboutHero() {
               variants={varSlide({ delay: 2, distance: -160 }).inRight}
             >
               <Box sx={{ display: 'flex', justifyContent: { md: 'inherit', xs: 'center' } }}>
-                {emph}
+                {emph(theme.palette[mainColor])}
               </Box>
             </m.div>
           </div>
@@ -233,7 +258,7 @@ export function AboutHero() {
             >
               <Button
                 sx={{ fontSize: { md: '1rem', xs: '1rem' }, borderRadius: 1 }}
-                variant="contained"
+                variant={isMobile ? 'contained' : 'contained'}
                 color={mainColor}
               >
                 הצטרפו לקהילת יוצרי תוכן

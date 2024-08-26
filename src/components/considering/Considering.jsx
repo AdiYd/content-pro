@@ -6,13 +6,15 @@ import { Button, useTheme, Container, Typography } from '@mui/material';
 import { ColorContext } from 'src/context/colorMain';
 
 import Confettis from './Confettis';
+import { Iconify } from '../iconify';
 import { arrowsDown } from '../stepper/Stepper';
 import { varBounce, MotionContainer } from '../animate';
 
 function Considering({
   color,
   buttonBefore = ' אהבתם?! תנו לייק 👍',
-  buttonAfter = '👏 אתם בדרך הנכונה - להפוך ליוצרי תוכן מבוקשים 👏',
+  buttonAfter = 'אתם בדרך הנכונה  להפוך ליוצרי תוכן מבוקשים 👏👏',
+  afterText = 'ממשיכים לגלות',
   ...props
 }) {
   const theme = useTheme();
@@ -43,11 +45,13 @@ function Considering({
         )}
         <Container component={MotionContainer}>
           <m.div variants={varBounce({ durationIn: 1 }).in}>
-            <div className="flex justify-center animate-pulse">
+            <div className="flex justify-center ">
               <Button
                 sx={{
                   // alignSelf: 'center',
                   // mx: 8,
+                  px: 4,
+                  borderRadius: 25,
                   transition: 'all 0.3s ease-in',
                   maxWidth: '80vw',
                   '&:hover': {
@@ -59,6 +63,7 @@ function Considering({
                 color={color}
               >
                 {buttonMsg.current}
+                {!active && <Iconify icon="fluent-emoji:party-popper" />}
               </Button>
             </div>
           </m.div>
@@ -68,7 +73,7 @@ function Considering({
         <div className="w-full mx-auto">
           <Typography width={1} textAlign="center" variant="h4">
             {' '}
-            ממשיכים לגלות
+            {afterText}
           </Typography>
           {arrowsDown(
             theme.palette[mainColor]?.main,
