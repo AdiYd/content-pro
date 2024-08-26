@@ -26,21 +26,22 @@ const bullets = [
 
 const bulletsWithIcons = [
   {
-    text: 'מקצוע דיגיטלי ומבוקש ללא קשר לפלטפורמה המועדפת עליכם',
+    text: 'מקצוע דיגיטלי מבוקש, ללא קשר לפלטפורמה המועדפת עליכם',
     icons: [
       'fluent:desktop-24-regular', // A general icon for digital professions
       'fluent:app-generic-20-filled', // An icon that represents platforms or applications
     ],
   },
   {
-    text: 'לעבוד ולהרוויח כסף מכל מקום ובכל זמן',
+    text: 'ליצור ולהרוויח כסף מכל מקום ובכל זמן',
     icons: [
       'svg-spinners:wifi', // An icon representing money or earnings
-      'tabler:clock', // An icon representing time, indicating flexibility
+      'twemoji:laptop', // An icon representing time, indicating flexibility
+      'flat-color-icons:globe', // An icon representing time, indicating flexibility
     ],
   },
   {
-    text: 'ללמוד איך ליצור קהילה משלכם, שתהווה עבורכם מקור הכנסה',
+    text: 'ליצור קהילה משלכם שתהווה עבורכם מקור הכנסה או קהל שאוהב אתכם',
     icons: [
       'mdi:account-group-outline', // An icon representing a community or group
       'mdi:cash-register', // An icon representing income or monetization
@@ -54,10 +55,10 @@ const bulletsWithIcons = [
     ],
   },
   {
-    text: 'קבוצת וואטצאפ פרטים עם תכנים, טיפים ומדריכים להמשך הדרך',
+    text: 'קבוצת וואטצאפ עם תכני העשרה, טיפים והדרכות להמשך הדרך',
     icons: [
-      'mdi:whatsapp', // The WhatsApp icon for communication
-      'mdi:book-open-variant', // An icon representing guides or tips
+      'logos:whatsapp-icon', // The WhatsApp icon for communication
+      'emojione:books', // An icon representing guides or tips
     ],
   },
   {
@@ -105,9 +106,9 @@ export function AboutYou({ contentType = 'aboutCourse' }) {
         </ToggleButton>
         <Typography variant="h5">{text}</Typography>
       </Stack>
-      <Stack justifyContent="center" direction="row" spacing={2}>
+      <Stack mr={6} mt={2} justifyContent="center" direction="row" spacing={2}>
         {icons.map((item, index) => (
-          <Iconify key={index} size={20} icon={item} />
+          <Iconify key={index} size={30} icon={item} />
         ))}
       </Stack>
     </m.div>
@@ -147,7 +148,7 @@ export function AboutYou({ contentType = 'aboutCourse' }) {
       component={MotionViewport}
       // maxWidth="lg"
       sx={{
-        pb: { xs: 6, md: 15 },
+        pb: { xs: 4, md: 4 },
         alignItems: 'center',
         textAlign: { xs: 'center', md: 'unset', direction: 'rtl' },
       }}

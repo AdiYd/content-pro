@@ -25,9 +25,9 @@ export default function Page() {
       <AboutWhat contentType="aboutMe" />
       {/* <IconSection /> */}
       <AboutYou />
-      <AccordionSection />
       <Considering buttonBefore="סקרנים?! לחצו כאן 😉" />
       <ImageDiv />
+      <AccordionSection />
       <StepperSection />
       <SocialProof />
       <Considering

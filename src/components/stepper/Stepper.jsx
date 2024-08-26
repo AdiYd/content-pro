@@ -320,7 +320,7 @@ function useScrollTrigger(elementIds, callback) {
         const element = document.getElementById(id);
         if (element) {
           const rect = element.getBoundingClientRect();
-          const isActive = rect.top <= window.innerHeight - 250 && rect.bottom >= 0;
+          const isActive = rect.top <= window.innerHeight - 150 && rect.bottom >= 0;
 
           if (isActive) {
             callback(index);

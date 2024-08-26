@@ -115,7 +115,7 @@ export function AboutHero() {
   return (
     <Box
       sx={{
-        height: { md: 650 },
+        height: { md: 680, xs: 640 },
         overflow: 'visible',
         pt: { xs: 8, md: 2 },
         pb: { xs: 10, md: 0 },
@@ -251,7 +251,7 @@ export function AboutHero() {
               sx={{
                 display: 'flex',
                 gap: 4,
-                mt: { md: 2, xs: 6 },
+                mt: { md: 6, xs: 6 },
                 pr: { md: 0, xs: 'auto' },
                 justifyContent: { md: 'inherit', xs: 'center' },
               }}
