@@ -10,8 +10,9 @@ export const varTranHover = (props) => {
 export const varTranEnter = (props) => {
   const duration = props?.durationIn || 0.64;
   const ease = props?.easeIn || [0.43, 0.13, 0.23, 0.96];
+  const delay = props.delay || 0;
 
-  return { duration, ease };
+  return { duration, ease, delay };
 };
 
 export const varTranExit = (props) => {

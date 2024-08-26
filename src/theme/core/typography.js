@@ -58,6 +58,11 @@ export const typography = {
     fontSize: pxToRem(17),
     ...responsiveFontSizes({ sm: 18, md: 18, lg: 18 }),
   },
+  p: {
+    fontWeight: 500,
+    lineHeight: 1.5,
+    fontSize: pxToRem(18),
+  },
   subtitle1: {
     fontWeight: 600,
     lineHeight: 1.5,

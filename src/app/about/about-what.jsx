@@ -36,6 +36,44 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
   const { mainColor } = useContext(ColorContext);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
+  const imageDiv = (
+    <Container sx={{ display: { md: 'none', xs: 'flex' }, gap: 2, alignItems: 'center' }}>
+      <m.div variants={varFade().inRight}>
+        <Image
+          alt="Our office small"
+          src={`${CONFIG.site.basePath}/assets/images/about/pexels-nurseryart-346885.jpg`}
+          ratio="1/1"
+          sx={{
+            '&:hover': {
+              boxShadow: `-40px 40px 80px ${theme.vars.palette.secondary.light}`,
+            },
+            transition: 'transform 0.7s ease-in',
+            borderRadius: 1.5,
+            width: { xs: '100%', md: 'inherit' },
+            // boxShadow: `-40px 40px 80px ${theme.vars.palette.secondary.main}`,
+          }}
+        />
+      </m.div>
+      <m.div variants={varFade().inLeft}>
+        <Image
+          alt="Our office large"
+          src={`${CONFIG.site.basePath}/assets/images/about/pexels-thelazyartist-1467277.jpg`}
+          ratio="3/4"
+          sx={{
+            '&:hover': {
+              boxShadow: `-40px 40px 80px ${theme.vars.palette.primary.light}`,
+            },
+            transition: 'transform 0.7s ease-in',
+            borderRadius: 1.5,
+            width: { xs: '100%', md: 'inherit' },
+            transform: 'rotate(-5deg)',
+            // boxShadow: `-40px 40px 80px ${theme.vars.palette.primary.dark}`,
+          }}
+        />
+      </m.div>
+    </Container>
+  );
+
   const introVideo = (
     <AnimateBorder
       sx={{ borderRadius: 4, p: 0.5 }}
@@ -43,7 +81,7 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
     >
       <div
         style={{ width: isMobile ? '90vw' : '50vw' }}
-        className="overflow-hidden rounded-3xl shadow-md shadow-green-500/30"
+        className="overflow-hidden rounded-3xl shadow-md shadow-warning-lighter/40"
       >
         <Box overflow="hidden" width="100%" borderRadius={3}>
           <iframe
@@ -83,8 +121,9 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
         >
           <m.div variants={varFade().inDown}>
             {contentType === 'aboutMe' && (
-              <>
+              <Container sx={{ display: { md: 'inherit', xs: 'flex' }, flexDirection: 'column' }}>
                 <AnimateAvatar
+                  alt="Eran Farkash"
                   sx={{
                     display: { xs: 'none', md: 'flex' },
                     float: { md: 'left', xs: 'none' },
@@ -107,15 +146,18 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
                     }}
                   />
                 </AnimateAvatar>
-                <Box
-                  sx={{
-                    display: { xs: 'flex', md: 'none', justifyContent: 'center' },
-                    mb: 4,
-                  }}
-                >
-                  {introVideo}
-                </Box>
-              </>
+              </Container>
+            )}
+            {contentType === 'aboutMe' && (
+              <Box
+                sx={{
+                  display: { xs: 'flex', md: 'none' },
+                  justifyContent: { md: 'justify', xs: 'center' },
+                  mb: 4,
+                }}
+              >
+                {introVideo}
+              </Box>
             )}
             <Typography variant="h2" sx={{ mb: 3 }}>
               {contentDict[contentType]?.title[0]}
@@ -129,7 +171,7 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
           <m.div variants={varFade({ distnce: 0 }).inUp}>
             {contentType === 'aboutMe' && (
               <>
-                <Typography variant="p" component="p" sx={{ lineHeight: 1.7, opacity: 0.8 }}>
+                <Typography variant="p" sx={{ lineHeight: 1.7, opacity: 0.8 }}>
                   יזם דיגיטלי ויוצר תוכן בעל נסיון של שנים ברשתות החברתיות, הקמתי מספר רב של ערוצי
                   תוכן עם עשרות אלפי עוקבים, השתתפתי בתצוגות, תערוכות ושיתופי פעולה דיגיטליים ברחבי
                   העולם - חלקם הצליחו יותר וחלקם פחות אבל מה שבטוח הוא שצברתי נסיון רב וטיפים שאותם
@@ -138,7 +180,7 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
                   על יצירת נישה אישית שתגרום ללקוחות שלכם להתאהב ולחזור לעוד
                 </Typography>
                 <br />
-                {/* <br /> */}
+                <br />
                 <Typography
                   variant="p"
                   component="p"
@@ -154,15 +196,17 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
                   החלום שלכם!
                 </Typography>
                 <Box
-                  maxWidth="70%"
-                  minWidth="50%"
+                  // maxWidth="70%"
+                  // minWidth="50%"
                   sx={{
-                    display: { md: 'flex', xs: 'none', justifyContent: 'justify' },
+                    display: { md: 'flex', xs: 'none' },
+                    justifyContent: 'justify',
                     mt: 8,
                   }}
                 >
                   {introVideo}
                 </Box>
+                {imageDiv}
               </>
             )}
             {contentType === 'aboutCourse' && (
@@ -178,8 +222,9 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
                   שתתחילו את הצעדים הראשונים כיוצרי תוכן בתשלום או לקהילה שלכם. סקרנים? המשיכו לקרוא
                   😉
                 </Typography>
-                <div className="h-8" />
-                <Typography
+                <br />
+                <br />
+                {/* <Typography
                   variant="p"
                   sx={{
                     color: 'text.dark.main',
@@ -196,7 +241,7 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
                   יוטיוב ואינסטגרם ותקבלו טיפים ששווים זהב ליצירת תוכן ממכר שפשוט אי אפשר להתעלם
                   ממנו. לא עוד סרטונים בינוניים! עם Video-Pro, תפתחו את הפוטנציאל האמיתי שלכם כיוצרי
                   תוכן, תבנו קהילה תומכת, ותהפכו לכוכבים הבאים של הרשת. מוכנים לצאת לדרך?
-                </Typography>
+                </Typography> */}
               </>
             )}
           </m.div>
@@ -211,7 +256,7 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
             alignItems="center"
             sx={{
               pr: { md: 7 },
-              display: { xs: 'none', md: 'flex' },
+              display: { md: 'flex', xs: 'none' },
             }}
           >
             <Grid xs={6}>
@@ -226,7 +271,8 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
                     },
                     transition: 'transform 0.7s ease-in',
                     borderRadius: 3,
-                    boxShadow: `-40px 40px 80px ${theme.vars.palette.secondary.main}`,
+                    width: { xs: '80%', md: 'inherit' },
+                    // boxShadow: `-40px 40px 80px ${theme.vars.palette.secondary.main}`,
                   }}
                 />
               </m.div>
@@ -244,8 +290,9 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
                     },
                     transition: 'transform 0.7s ease-in',
                     borderRadius: 3,
+                    width: { xs: '80%', md: 'inherit' },
                     transform: 'rotate(-5deg)',
-                    boxShadow: `-40px 40px 80px ${theme.vars.palette.primary.dark}`,
+                    // boxShadow: `-40px 40px 80px ${theme.vars.palette.primary.dark}`,
                   }}
                 />
               </m.div>

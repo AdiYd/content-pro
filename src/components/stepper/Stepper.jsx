@@ -15,6 +15,36 @@ export const arrowsDown = (
   className = ''
 ) => (
   <div className={`flex justify-start ${className}`}>
+    <svg width={width} height={width} viewBox="0 -960 960 960">
+      <defs>
+        <linearGradient id="gradientAnimation" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="currentColor" />
+          <stop offset="20%" stopColor={mainColor} />
+          {/* <stop offset="80%" stopColor="#000" /> */}
+          <stop offset="100%" stopColor={accentColor} />
+          <animateTransform
+            attributeName="gradientTransform"
+            type="translate"
+            values="1 0; 0 1"
+            dur="0.8s"
+            repeatCount="indefinite"
+          />
+        </linearGradient>
+      </defs>
+      <path
+        fill="url(#gradientAnimation)"
+        d="M480-200 240-440l56-56 184 183 184-183 56 56-240 240Zm0-240L240-680l56-56 184 183 184-183 56 56-240 240Z"
+      />
+    </svg>
+  </div>
+);
+export const arrowsDown2 = (
+  mainColor = 'currentColor',
+  accentColor = 'currentColor',
+  width = '28px',
+  className = ''
+) => (
+  <div className={`flex justify-start ${className}`}>
     <svg width={width} height={width} viewBox="0 -960 960 960" fill="url(#gradientAnimation)">
       <defs>
         <linearGradient id="gradientAnimation" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -35,7 +65,7 @@ export const arrowsDown = (
   </div>
 );
 
-const arrowsDown2 = (
+const arrowsDown3 = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     height="24px"
@@ -54,7 +84,7 @@ const steps = [
     href: '#',
     id: 'step 1',
     iconName: 'bi:laptop',
-    InnerSteps: ['לומדים ממי שכבר עשו את זה', 'חוקרים, שואלים ומפנימים', 'מתרגלים ומתנסים'],
+    InnerSteps: ['לומדים ממי שכבר עשו את זה', 'מתרגלים, שואלים ומתנסים'],
   },
   {
     name: 'מצטרפים לקהילה',
@@ -290,7 +320,7 @@ function useScrollTrigger(elementIds, callback) {
         const element = document.getElementById(id);
         if (element) {
           const rect = element.getBoundingClientRect();
-          const isActive = rect.top <= window.innerHeight && rect.bottom >= 0;
+          const isActive = rect.top <= window.innerHeight - 250 && rect.bottom >= 0;
 
           if (isActive) {
             callback(index);

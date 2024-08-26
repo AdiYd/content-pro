@@ -2,6 +2,7 @@
 
 import { Box } from '@mui/material';
 
+import IconSection from 'src/layouts/components/IconsSection/IconSection';
 import AccordionSection from 'src/layouts/components/Accordion/AccordionSection';
 
 import StepperSection from 'src/components/stepper/Stepper';
@@ -11,8 +12,6 @@ import ColorPicker from './colorPalette';
 import ImageDiv from './about/view/ImageDiv';
 import { AboutWhat } from './about/about-what';
 import { AboutHero } from './about/about-hero';
-import Promotion1 from './about/about-promotion';
-import { AboutVision } from './about/about-vision';
 import SocialProof from './about/view/social-proof';
 import { AboutTestimonials } from './about/about-testimonials';
 // ----------------------------------------------------------------------
@@ -24,17 +23,18 @@ export default function Page() {
       <AboutHero />
       <AboutWhat contentType="aboutCourse" />
       <AboutWhat contentType="aboutMe" />
+      <IconSection />
       <AccordionSection />
       <Considering buttonBefore="סקרנים?! לחצו כאן 😉" />
       <ImageDiv />
       <StepperSection />
       <SocialProof />
       <Considering
-        color="success"
+        color="primary"
         buttonAfter="🎉 עוד כמה צעדים ואתם מתחילים ליצור את הקהילה שתמיד חלמתם עליה  🎉"
       />
-      <Promotion1 />
-      <AboutVision />
+      {/* <Promotion1 /> */}
+      {/* <AboutVision /> */}
       <AboutTestimonials />
       {/* <CarouselView /> */}
     </Box>

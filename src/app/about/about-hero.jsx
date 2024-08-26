@@ -9,10 +9,9 @@ import { useRef, useState, useEffect, useContext } from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import { Stack, Button, useTheme } from '@mui/material';
+import { Stack, Button, useTheme, useMediaQuery } from '@mui/material';
 
 import { CONFIG } from 'src/config-global';
-import { varAlpha } from 'src/theme/styles';
 import { ColorContext } from 'src/context/colorMain';
 
 import { Image } from 'src/components/image';
@@ -25,11 +24,60 @@ import {
   MotionContainer,
 } from 'src/components/animate';
 
+const emph = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="160"
+    height="inherit"
+    viewBox="0 0 507 98"
+    fill="none"
+  >
+    <path
+      d="M12 57.6013C33.1048 53.7342 53.856 49.6152 75.2573 45.995C135.912 35.7348 196.175 28.0455 260.642 22.62C307.691 18.6604 354.925 14.3217 402.971 12.7992C417.848 12.3278 433.689 12.9964 448.271 11.5818C462.601 10.1916 482.505 13.3363 495 10.8513"
+      stroke="url(#paint0_linear_10_21)"
+      strokeWidth="15"
+      strokeLinecap="round"
+    />
+    <path
+      d="M90 84.1352C183.036 69.927 274.401 53.7617 371.004 44.7233C385.381 43.3781 399.984 41.9993 414.661 41.4673C422.768 41.1734 431.556 41.7502 439.482 40.8355C444.72 40.2309 448.433 40.151 453 38.6487"
+      stroke="url(#paint1_linear_10_21)"
+      strokeWidth="15"
+      strokeLinecap="round"
+    />
+    <defs>
+      <linearGradient
+        id="paint0_linear_10_21"
+        x1="12"
+        y1="34.2263"
+        x2="495"
+        y2="34.2263"
+        gradientUnits="userSpaceOnUse"
+      >
+        {/* <stop stopColor="#020D20" /> */}
+        <stop offset="0.44" stopColor="#EAF2FF" />
+        {/* <stop offset="1" stopColor="#9BC1FF" /> */}
+      </linearGradient>
+      <linearGradient
+        id="paint1_linear_10_21"
+        x1="90"
+        y1="61.3919"
+        x2="453"
+        y2="61.3919"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#414E64" />
+        <stop offset="1" stopColor="#E8EEF7" />
+      </linearGradient>
+    </defs>
+  </svg>
+);
+
 // ----------------------------------------------------------------------
 
 export function AboutHero() {
   const theme = useTheme();
   const [update, setUpdate] = useState(false);
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const { mainColor } = useContext(ColorContext);
   const colorName = `${mainColor}.main`;
   const waveVector = useRef();
@@ -43,12 +91,13 @@ export function AboutHero() {
   return (
     <Box
       sx={{
-        height: { md: 620 },
+        height: { md: 650 },
         overflow: 'visible',
-        py: { xs: 10, md: 0 },
+        pt: { xs: 5, md: 2 },
+        pb: { xs: 10, md: 0 },
         mb: { xs: 8, md: 12 },
         position: 'relative',
-        backgroundSize: 'cover',
+        backgroundSize: { md: 'cover', xs: 'auto' },
         backgroundPosition: { md: 'center', xs: 'right' },
         textAlign: 'justify',
         direction: 'rtl',
@@ -80,7 +129,7 @@ export function AboutHero() {
               textAlign: { md: 'end', xs: 'unset' },
             }}
           />
-          <AnimateText
+          {/* <AnimateText
             component="h2"
             variant="h2"
             text="ליצור תוכן מקורי ורלוונטי"
@@ -89,17 +138,38 @@ export function AboutHero() {
               color: 'common.white',
               direction: 'rtl',
             }}
-          />
+          /> */}
+          <div className="w-fit h-fit relative max-sm:mx-auto">
+            <AnimateText
+              component="h2"
+              variant="h2"
+              text={['בואו להפוך ליוצרי תוכן', 'מצליחים']}
+              variants={varFade({ durationIn: 0.01 }).in}
+              sx={{
+                color: 'common.white',
+                direction: 'rtl',
+              }}
+            />
+            <m.div
+              // className="animate-bounce"
+              variants={varSlide({ delay: 2, distance: -160 }).inRight}
+            >
+              <Box sx={{ display: 'flex', justifyContent: { md: 'inherit', xs: 'center' } }}>
+                {emph}
+              </Box>
+            </m.div>
+          </div>
 
           <m.div variants={varFade({ distance: 240, duration: 0.5 }).inDown}>
             <Typography
-              variant="body1"
+              variant="h5"
               sx={{ color: 'common.white', mt: 3, fontWeight: 'fontWeightSemiBold', opacity: 0.8 }}
             >
-              קורס ליסודות יצירת סירטונים ותוכן מקצועי לעסקים ולרשתות החברתיות
+              קורס ליצירת וידאו ותוכן מקצועי לעסקים ולרשתות החברתיות
             </Typography>
             <Stack
-              my={4}
+              mt={4}
+              mb={1}
               direction="row"
               sx={{
                 justifyContent: { md: 'inherit', xs: 'center' },
@@ -107,7 +177,7 @@ export function AboutHero() {
                 p: 1,
                 mx: { xs: 'auto', md: 'inherit' },
                 width: 'fit-content',
-                background: { xs: varAlpha('255 255 255', 0.2), md: 'transparent' },
+                // background: { xs: varAlpha('255 255 255', 0.2), md: 'transparent' },
               }}
               spacing={2}
             >
@@ -156,7 +226,7 @@ export function AboutHero() {
               sx={{
                 display: 'flex',
                 gap: 4,
-                mt: { md: 10, xs: 8 },
+                mt: { md: 2, xs: 6 },
                 pr: { md: 0, xs: 'auto' },
                 justifyContent: { md: 'inherit', xs: 'center' },
               }}
@@ -166,7 +236,7 @@ export function AboutHero() {
                 variant="contained"
                 color={mainColor}
               >
-                הצטרפות לקהילת יוצרי תוכן
+                הצטרפו לקהילת יוצרי תוכן
               </Button>
               <Button
                 sx={{
@@ -186,7 +256,7 @@ export function AboutHero() {
       {waveVector.current && (
         <img
           alt="wave-vector"
-          style={{ position: 'absolute', bottom: '-5px' }}
+          style={{ position: 'absolute', bottom: isMobile ? '-5px' : '-20px' }}
           src={waveVector.current}
           className="w-full absolute bottom-0"
         />

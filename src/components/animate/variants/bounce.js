@@ -6,6 +6,7 @@ export const varBounce = (props) => {
   const durationIn = props?.durationIn;
   const durationOut = props?.durationOut;
   const easeIn = props?.easeIn;
+  const delay = props?.delay;
   const easeOut = props?.easeOut;
 
   return {
@@ -15,7 +16,7 @@ export const varBounce = (props) => {
       animate: {
         scale: [0.3, 1.1, 0.9, 1.03, 0.97, 1],
         opacity: [0, 1, 1, 1, 1, 1],
-        transition: varTranEnter({ durationIn, easeIn }),
+        transition: varTranEnter({ durationIn, easeIn, delay }),
       },
       exit: { scale: [0.9, 1.1, 0.3], opacity: [1, 1, 0] },
     },

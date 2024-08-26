@@ -153,7 +153,7 @@ const RowX = ({
               transition: 'transform 0.7s ease-in',
               borderRadius: !isMobile ? '32px' : '25px',
               transform: `rotate(${even ? '-' : ''}4deg)`,
-              boxShadow: `${even ? '-' : ''}10px 5px 20px ${colorPalette}`,
+              // boxShadow: `${even ? '-' : ''}10px 5px 20px ${colorPalette}`,
             }}
           />
         </Box>
