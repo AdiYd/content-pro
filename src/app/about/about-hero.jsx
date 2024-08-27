@@ -166,7 +166,7 @@ export function AboutHero() {
               direction: 'rtl',
             }}
           /> */}
-          <div className="w-fit h-fit relative max-sm:mx-auto">
+          <div className="w-fit h-fit relative max-md:mx-auto">
             <AnimateText
               component="h2"
               variant="h2"

@@ -15,10 +15,8 @@ import {
   AccordionDetails,
 } from '@mui/material';
 
-import { basePalette } from 'src/theme/core';
 import { ColorContext } from 'src/context/colorMain';
 
-import { AnimateBorder } from 'src/components/animate';
 import { ScrollComponent } from 'src/components/considering/Considering';
 
 import { ComponentBlock } from './component-block';
@@ -119,7 +117,7 @@ export function AccordionView({ title, accordions = _accordions }) {
     <ComponentBlock
       sx={{ mx: 0, px: { md: 2, xs: 0.8 }, width: 1, maxWidth: { md: '70%', xs: '100%' } }}
     >
-      <div className=" z-10 mx-0 px-0">
+      {/* <div className=" z-10 mx-0 px-0">
         {accordions.map((accordion, index) => (
           <AnimateBorder
             sx={{ borderRadius: 1, mb: 2, zIndex: 50 }}
@@ -179,6 +177,54 @@ export function AccordionView({ title, accordions = _accordions }) {
             </Accordion>
             {!expanded[accordion.value] && <hr className="border-gray-700/50" />}
           </AnimateBorder>
+        ))}
+      </div> */}
+      <div className=" z-10 mx-0 px-0">
+        {accordions.map((accordion, index) => (
+          <Accordion
+            // expanded={expanded[accordion.value] || true}
+            // onChange={() =>
+            //   setExpanded((p) => ({
+            //     ...p,
+            //     [accordion.value]: p[accordion.value] ? !p[accordion.value] : true,
+            //   }))
+            // }
+            defaultExpanded={accordion.defaultOpen}
+            onChange={() =>
+              setExpanded((p) => ({
+                ...p,
+                [accordion.value]: p[accordion.value] ? !p[accordion.value] : true,
+              }))
+            }
+            key={index}
+            id={accordion.value}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMore />}
+              sx={{ zIndex: 10 }}
+              // expandIcon={<Iconify icon="eva:arrow-ios-downward-fill" />}
+              // expandIcon={<ExpandMoreRounded />}
+            >
+              <Typography variant="subtitle1">{accordion.heading}</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography sx={{ opacity: 0.8 }} lineHeight={2}>
+                {accordion.detail}
+              </Typography>
+              {accordion.button && (
+                <Container sx={{ width: 1, my: 2, display: 'flex', justifyContent: 'center' }}>
+                  <Button
+                    sx={{ zIndex: 40, fontSize: { md: '1rem', xs: '1rem' }, borderRadius: 1 }}
+                    variant="outlined"
+                    onClick={() => ScrollComponent('signUp')}
+                    color={mainColor}
+                  >
+                    {accordion.button}
+                  </Button>
+                </Container>
+              )}
+            </AccordionDetails>
+          </Accordion>
         ))}
       </div>
     </ComponentBlock>

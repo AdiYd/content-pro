@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import Box from '@mui/material/Box';
 import Step from '@mui/material/Step';
 import Button from '@mui/material/Button';
@@ -5,16 +7,15 @@ import MuiStepper from '@mui/material/Stepper';
 import StepLabel from '@mui/material/StepLabel';
 import Typography from '@mui/material/Typography';
 import {
-  Chip,
   styled,
   Select,
   MenuItem,
-  TextField,
+  Checkbox,
+  useTheme,
   InputLabel,
   FormControl,
   StepConnector,
-  OutlinedInput,
-  FormHelperText,
+  FormControlLabel,
 } from '@mui/material';
 
 import { Field } from 'src/components/hook-form';
@@ -86,8 +87,10 @@ export function Stepper({ steps, activeStep }) {
 
 export function StepOne() {
   return (
-    <>
-      <Typography variant="p">הפרטים אליהם נשלח את הקישור לקורס ולקהילה</Typography>
+    <div className="z-30 flex flex-col gap-6">
+      <Typography mb={2} variant="p">
+        הפרטים אליהם נשלח את הקישור לקורס ולקהילה:
+      </Typography>
       <Field.Text
         name="stepOne.fullName"
         label="שם מלא"
@@ -108,65 +111,138 @@ export function StepOne() {
         InputLabelProps={{
           shrink: true,
           sx: {
+            zIndex: 26,
             width: '125%',
             textAlign: 'right', // Aligns the label to the right
             // width: '100%', // Ensure the label takes up the full width
           },
         }}
       />
-    </>
+    </div>
   );
 }
 
 export function StepTwo() {
+  const theme = useTheme();
+  const [goals, setGoals] = useState({});
+  const onChangeHandler = (e) => {
+    console.log('I want to : ', e.target.name);
+    setGoals((p) => ({
+      ...p,
+      [e.target.name]: p[e.target.name] ? !p[e.target.name] : true,
+    }));
+  };
+
   return (
-    <>
-      <Typography mb={0} variant="p">
-        פרטים נוספים - כדי שנכיר אתכם טוב יותר (לא חובה)
+    <div className="z-30 flex flex-col gap-6">
+      <Typography mb={2} variant="p">
+        פרטים נוספים - כדי שנכיר אתכם טוב יותר: (לא חובה)
       </Typography>
-      {/* <Typography variant="body2">(לא חובה)</Typography> */}
 
-      <div style={{ marginBottom: '16px', width: '100px' }}>
-        <TextField
-          label="Age"
-          type="number"
-          // value={age}
-          // onChange={handleAgeChange}
-          // error={!!ageError}
-          // helperText={ageError}
-          fullWidth
-          variant="outlined"
-          inputProps={{ min: 16, max: 120 }}
-        />
+      <div className="z-30 mb-4 w-full flex flex-col gap-4">
+        <Typography textAlign="start" variant="body1">
+          מה המטרות שלכם מהקורס?
+        </Typography>
+        <div className="flex flex-wrap max-md:flex-col gap-4">
+          <FormControlLabel
+            control={
+              <Checkbox
+                name="learn"
+                checked={goals.learn ?? true}
+                color="info"
+                onChange={onChangeHandler}
+              />
+            }
+            label="ללמוד ולהתמקצע"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                name="make-money"
+                checked={goals['make-money'] || false}
+                color="success"
+                onChange={onChangeHandler}
+              />
+            }
+            label="לעבוד בתחום"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                name="make-comunity"
+                checked={goals['make-comunity'] || false}
+                color="error"
+                onChange={onChangeHandler}
+              />
+            }
+            label="ליצור קהילה"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                name="make-people"
+                checked={goals['make-people'] || false}
+                color="secondary"
+                onChange={onChangeHandler}
+              />
+            }
+            label="להכיר יוצרי תוכן"
+          />
+        </div>
       </div>
 
-      <div style={{ marginBottom: '16px' }}>
-        <FormControl fullWidth variant="outlined">
-          <InputLabel id="multiple-select-label">Options</InputLabel>
-          <Select
-            labelId="multiple-select-label"
-            multiple
-            value={[]}
-            // onChange={handleOptionsChange}
-            input={<OutlinedInput label="Options" />}
-            renderValue={(selected) => (
-              <div>
-                {selected.map((value) => (
-                  <Chip key={value} label={value} />
-                ))}
-              </div>
-            )}
-          >
-            {['אפשרות 1', 'אפשרות 2', 'אפשרות 3'].map((option) => (
-              <MenuItem key={option} value={option}>
-                {option}
-              </MenuItem>
-            ))}
-          </Select>
-          <FormHelperText>Select multiple options</FormHelperText>
-        </FormControl>
+      <div className="flex max-md:flex-col w-full justify-around">
+        <div className="z-30 mb-4  max-w-28">
+          {/* <Typography variant="body1"> </Typography> */}
+          <Field.Text
+            label="גיל"
+            type="number"
+            name="stepTwo.age"
+            fullWidth
+            variant="filled"
+            InputLabelProps={{
+              shrink: true,
+              sx: {
+                width: '125%',
+                textAlign: 'right', // Aligns the label to the right
+                // width: '100%', // Ensure the label takes up the full width
+              },
+            }}
+            inputProps={{ min: 14, max: 120 }}
+          />
+        </div>
+
+        <div className="z-30 mb-4 max-w-28">
+          <FormControl sx={{ textAlign: 'center' }} fullWidth variant="outlined">
+            <InputLabel>מין</InputLabel>
+            <Select
+              variant="filled"
+              defaultValue=""
+              sx={{ textAlign: 'center', width: { md: 90, xs: 111 } }}
+              itemProp={{ textAlign: 'center' }}
+              // value={}
+              // onChange={handleOptionsChange}
+              // input={<OutlinedInput label="מין" />}
+            >
+              {['זכר', 'נקבה', 'אחר'].map((option) => (
+                <MenuItem
+                  sx={{
+                    textAlign: 'center',
+                    mx: 'auto',
+                    display: 'flex',
+                    justifyContent: 'center',
+                  }}
+                  key={option}
+                  value={option}
+                >
+                  {option}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
       </div>
-    </>
+    </div>
   );
 }
 

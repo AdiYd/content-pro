@@ -6,7 +6,7 @@ import { useState, useContext, useCallback } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { useTheme, Container } from '@mui/material';
+import { Card, useTheme, Container } from '@mui/material';
 
 import { customShadows } from 'src/theme/core';
 import { ColorContext } from 'src/context/colorMain';
@@ -29,14 +29,11 @@ const StepOneSchema = zod.object({
     .email({ message: 'נא למלא כתובת אימייל תקינה' }),
 });
 
-const StepTwoSchema = zod.object({});
-
-const StepThreeSchema = zod.object({
-  email: zod
-    .string()
-    .min(1, { message: 'Email is required!' })
-    .email({ message: 'Email must be a valid email address!' }),
+const StepTwoSchema = zod.object({
+  age: zod.number(),
 });
+
+const StepThreeSchema = zod.object({});
 
 const WizardSchema = zod.object({
   stepOne: StepOneSchema,
@@ -48,11 +45,11 @@ const WizardSchema = zod.object({
 
 const defaultValues = {
   stepOne: { fullName: '', email: '' },
-  stepTwo: { age: '' },
+  stepTwo: { age: 0 },
 };
 
 export function FormWizard() {
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(1);
   const theme = useTheme();
   const { mainColor } = useContext(ColorContext);
 
@@ -108,35 +105,58 @@ export function FormWizard() {
   const completedStep = activeStep === steps.length;
 
   return (
-    <Container
-      sx={{
-        boxShadow: customShadows().z12,
-        p: 2,
-        width: 1,
-        borderRadius: 2,
-        border: 'none',
-        mx: 'auto',
-        maxWidth: 720,
+    <AnimateBorder
+      sx={{ borderRadius: 2, borderWidth: 0 }}
+      animate={{
+        angle: 225,
+        outline: '',
+        // disableDoubleline: true,
+        length: 10,
+        color: theme.palette.error.main,
+        // width: '1px',
       }}
     >
-      <Form methods={methods} onSubmit={onSubmit}>
-        <Stepper steps={steps} activeStep={activeStep} />
-        <AnimateBorder
-          sx={{ maxWidth: { md: '60%', xs: '100%' }, borderRadius: 2, mx: 'auto' }}
-          animate={{ color: theme.palette.primary.main, borderRadius: 2 }}
-        >
-          <Box
+      <Container
+        sx={{
+          boxShadow: customShadows().card,
+          p: 2,
+          width: 1,
+          borderRadius: 2,
+          border: theme.palette.mode === 'dark' ? `1px dashed ${theme.palette.divider}` : '',
+          mx: 'auto',
+          maxWidth: 720,
+        }}
+      >
+        <Form methods={methods} onSubmit={onSubmit}>
+          <Stepper steps={steps} activeStep={activeStep} />
+          {/* <AnimateBorder
+            sx={{ zIndex: 10, maxWidth: { md: '60%', xs: '100%' }, borderRadius: 2, mx: 'auto' }}
+            animate={{
+              disable: true,
+              color: theme.palette.success.main,
+              // outline: '',
+              disableDoubleline: true,
+              width: '1px',
+              length: 30,
+            }}
+          > */}
+          <Card
             gap={3}
-            display="flex"
-            flexDirection="column"
+            // display="flex"
+            // flexDirection="column"
             sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 3,
               p: 3,
               zIndex: 25,
               mb: 3,
-              // maxWidth: { md: '60%', xs: '100%' },
+              maxWidth: { md: '60%', xs: '100%' },
               minHeight: 240,
-              borderRadius: 1.5,
-              border: `dashed 1px ${theme.vars.palette.divider}`,
+              mx: 'auto',
+              borderRadius: 2,
+              border: theme.palette.mode === 'light' && `solid 1px ${theme.vars.palette.divider}`,
+              // background: theme.palette.background.paper,
             }}
           >
             {activeStep === 0 && <StepOne />}
@@ -145,8 +165,12 @@ export function FormWizard() {
             {completedStep && <StepCompleted onReset={handleReset} />}
 
             {!completedStep && (
-              <Box display="flex" width={1} justifyContent="center">
-                {activeStep !== 0 && <Button onClick={handleBack}>חזרה</Button>}
+              <Box zIndex={26} display="flex" width={1} justifyContent="center">
+                {activeStep !== 0 && (
+                  <Button color={mainColor} onClick={handleBack}>
+                    חזרה
+                  </Button>
+                )}
 
                 <Box sx={{ flex: 'auto 1 1' }} />
 
@@ -160,7 +184,11 @@ export function FormWizard() {
                   </Button>
                 )}
                 {activeStep === 1 && (
-                  <Button variant="contained" onClick={() => handleNext('stepTwo')}>
+                  <Button
+                    color={mainColor}
+                    variant="contained"
+                    onClick={() => handleNext('stepTwo')}
+                  >
                     הבא
                   </Button>
                 )}
@@ -171,9 +199,10 @@ export function FormWizard() {
                 )}
               </Box>
             )}
-          </Box>
-        </AnimateBorder>
-      </Form>
-    </Container>
+          </Card>
+          {/* </AnimateBorder> */}
+        </Form>
+      </Container>
+    </AnimateBorder>
   );
 }
