@@ -29,16 +29,19 @@ const StepOneSchema = zod.object({
     .email({ message: 'נא למלא כתובת אימייל תקינה' }),
 });
 
-const StepTwoSchema = zod.object({
-  age: zod.number(),
-});
+const StepTwoSchema = zod.object({});
 
 const StepThreeSchema = zod.object({});
 
 const WizardSchema = zod.object({
-  stepOne: StepOneSchema,
-  stepTwo: StepTwoSchema,
-  stepThree: StepThreeSchema,
+  email: zod
+    .string()
+    .min(1, { message: 'נא למלא כתובת אימייל' })
+    .email({ message: 'נא למלא כתובת אימייל תקינה' }),
+  name: zod.string().min(2, { message: 'נא למלא שם מלא' }),
+  // stepOne: StepOneSchema,
+  // stepTwo: StepTwoSchema,
+  // stepThree: StepThreeSchema,
 });
 
 // ----------------------------------------------------------------------
@@ -49,7 +52,7 @@ const defaultValues = {
 };
 
 export function FormWizard() {
-  const [activeStep, setActiveStep] = useState(1);
+  const [activeStep, setActiveStep] = useState(0);
   const theme = useTheme();
   const { mainColor } = useContext(ColorContext);
 
@@ -108,7 +111,7 @@ export function FormWizard() {
     <AnimateBorder
       sx={{ borderRadius: 2, borderWidth: 0 }}
       animate={{
-        angle: 225,
+        angle: 250,
         outline: '',
         // disableDoubleline: true,
         length: 10,
@@ -118,11 +121,12 @@ export function FormWizard() {
     >
       <Container
         sx={{
-          boxShadow: customShadows().card,
-          p: 2,
+          boxShadow: customShadows().z16,
+          py: 4,
+          px: 2,
           width: 1,
           borderRadius: 2,
-          border: theme.palette.mode === 'dark' ? `1px dashed ${theme.palette.divider}` : '',
+          border: `1px dashed ${theme.palette.divider}`,
           mx: 'auto',
           maxWidth: 720,
         }}
@@ -155,7 +159,7 @@ export function FormWizard() {
               minHeight: 240,
               mx: 'auto',
               borderRadius: 2,
-              border: theme.palette.mode === 'light' && `solid 1px ${theme.vars.palette.divider}`,
+              // border: theme.palette.mode === 'light' && `solid 1px ${theme.vars.palette.divider}`,
               // background: theme.palette.background.paper,
             }}
           >

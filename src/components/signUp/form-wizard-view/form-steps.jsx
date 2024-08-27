@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Step from '@mui/material/Step';
@@ -88,11 +88,12 @@ export function Stepper({ steps, activeStep }) {
 export function StepOne() {
   return (
     <div className="z-30 flex flex-col gap-6">
-      <Typography mb={2} variant="p">
+      <Typography mb={2} variant="h6">
         הפרטים אליהם נשלח את הקישור לקורס ולקהילה:
       </Typography>
       <Field.Text
-        name="stepOne.fullName"
+        name="name"
+        type="text"
         label="שם מלא"
         variant="filled"
         InputLabelProps={{
@@ -105,9 +106,11 @@ export function StepOne() {
         }}
       />
       <Field.Text
-        name="stepOne.email"
+        name="email"
         label="אימייל"
         variant="filled"
+        sx={{ direction: 'ltr' }}
+        inputProps={{ dir: 'ltr', autocomplete: 'on' }}
         InputLabelProps={{
           shrink: true,
           sx: {
@@ -117,6 +120,7 @@ export function StepOne() {
             // width: '100%', // Ensure the label takes up the full width
           },
         }}
+        autoComplete="on"
       />
     </div>
   );
@@ -135,8 +139,10 @@ export function StepTwo() {
 
   return (
     <div className="z-30 flex flex-col gap-6">
-      <Typography mb={2} variant="p">
-        פרטים נוספים - כדי שנכיר אתכם טוב יותר: (לא חובה)
+      <Typography mb={2} variant="h6">
+        נשמח להכיר אתכם טוב יותר:
+        <br />
+        (לא חובה)
       </Typography>
 
       <div className="z-30 mb-4 w-full flex flex-col gap-4">
@@ -191,13 +197,14 @@ export function StepTwo() {
         </div>
       </div>
 
-      <div className="flex max-md:flex-col w-full justify-around">
+      <div className="flex flex-wrap w-full justify-around">
         <div className="z-30 mb-4  max-w-28">
           {/* <Typography variant="body1"> </Typography> */}
           <Field.Text
             label="גיל"
             type="number"
             name="stepTwo.age"
+            sx={{ width: { md: 90, xs: 111 } }}
             fullWidth
             variant="filled"
             InputLabelProps={{
@@ -247,13 +254,44 @@ export function StepTwo() {
 }
 
 export function StepThree() {
+  const [coupon, setCoupon] = useState(false);
+  const totalPrice = useRef(499);
   return (
-    <Field.Text
-      name="stepThree.email"
-      label="Email"
-      variant="filled"
-      InputLabelProps={{ shrink: true }}
-    />
+    <>
+      <Typography variant="h6">
+        החבילה שלנו כוללת את הקורס, קישור לקהילה ועזרה בבניית תיק עבודות
+      </Typography>
+      <Typography variant="h6">ב - 499 במקום 749</Typography>
+      <div className="flex justify-center">
+        {!coupon && (
+          <Button onClick={() => setCoupon(true)} variant="outlined" size="small">
+            יש לי קוד קופון
+          </Button>
+        )}
+        {coupon && (
+          <Field.Text
+            name="coupon"
+            fullWidth
+            label="קופון"
+            variant="filled"
+            sx={{ direction: 'ltr' }}
+            inputProps={{ dir: 'ltr' }}
+            InputLabelProps={{
+              shrink: true,
+              sx: {
+                zIndex: 26,
+                width: '125%',
+                textAlign: 'right', // Aligns the label to the right
+                // width: '100%', // Ensure the label takes up the full width
+              },
+            }}
+          />
+        )}
+      </div>
+      <Typography variant="p">
+        {'סה"כ לתשלום : '} {totalPrice.current}
+      </Typography>
+    </>
   );
 }
 

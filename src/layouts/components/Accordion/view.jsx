@@ -3,7 +3,6 @@
 import { useState, useContext } from 'react';
 
 // import AccordionSummary from '@mui/material/AccordionSummary';
-import { ExpandMore } from '@mui/icons-material';
 import Typography from '@mui/material/Typography';
 // import AccordionDetails from '@mui/material/AccordionDetails';
 import {
@@ -17,6 +16,7 @@ import {
 
 import { ColorContext } from 'src/context/colorMain';
 
+import { Iconify } from 'src/components/iconify';
 import { ScrollComponent } from 'src/components/considering/Considering';
 
 import { ComponentBlock } from './component-block';
@@ -115,7 +115,14 @@ export function AccordionView({ title, accordions = _accordions }) {
     //   animate={{ color: theme.palette.success.main || '#fff' }}
     // >
     <ComponentBlock
-      sx={{ mx: 0, px: { md: 2, xs: 0.8 }, width: 1, maxWidth: { md: '70%', xs: '100%' } }}
+      sx={{
+        my: 0,
+        pt: 2,
+        mx: 0,
+        px: { md: 2, xs: 0.8 },
+        width: 1,
+        maxWidth: { md: '70%', xs: '100%' },
+      }}
     >
       {/* <div className=" z-10 mx-0 px-0">
         {accordions.map((accordion, index) => (
@@ -198,23 +205,35 @@ export function AccordionView({ title, accordions = _accordions }) {
             }
             key={index}
             id={accordion.value}
+            sx={{ mt: index === accordion.length ? 0 : 4 }}
           >
             <AccordionSummary
-              expandIcon={<ExpandMore />}
+              expandIcon={
+                <Iconify
+                  icon={expanded[accordion.value] ? 'ic:round-minus' : 'mingcute:add-fill'}
+                />
+              }
               sx={{ zIndex: 10 }}
               // expandIcon={<Iconify icon="eva:arrow-ios-downward-fill" />}
               // expandIcon={<ExpandMoreRounded />}
             >
-              <Typography variant="subtitle1">{accordion.heading}</Typography>
+              <Typography ml={8} variant="p">
+                {accordion.heading}
+              </Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography sx={{ opacity: 0.8 }} lineHeight={2}>
                 {accordion.detail}
               </Typography>
               {accordion.button && (
-                <Container sx={{ width: 1, my: 2, display: 'flex', justifyContent: 'center' }}>
+                <Container sx={{ width: 1, display: 'flex', justifyContent: 'center' }}>
                   <Button
-                    sx={{ zIndex: 40, fontSize: { md: '1rem', xs: '1rem' }, borderRadius: 1 }}
+                    sx={{
+                      zIndex: 40,
+                      fontSize: { md: '1rem', xs: '1rem' },
+                      my: 2,
+                      borderRadius: 1,
+                    }}
                     variant="outlined"
                     onClick={() => ScrollComponent('signUp')}
                     color={mainColor}
