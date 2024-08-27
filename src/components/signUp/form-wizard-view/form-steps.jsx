@@ -87,18 +87,32 @@ export function Stepper({ steps, activeStep }) {
 export function StepOne() {
   return (
     <>
-      <Typography variant="body2">הפרטים אליהם ישלח את הקישור לקורס ול - WhatsApp</Typography>
+      <Typography variant="p">הפרטים אליהם נשלח את הקישור לקורס ולקהילה</Typography>
       <Field.Text
         name="stepOne.fullName"
         label="שם מלא"
         variant="filled"
-        InputLabelProps={{ shrink: true }}
+        InputLabelProps={{
+          shrink: true,
+          sx: {
+            width: '125%',
+            textAlign: 'right', // Aligns the label to the right
+            // width: '100%', // Ensure the label takes up the full width
+          },
+        }}
       />
       <Field.Text
         name="stepOne.email"
         label="אימייל"
         variant="filled"
-        InputLabelProps={{ shrink: true }}
+        InputLabelProps={{
+          shrink: true,
+          sx: {
+            width: '125%',
+            textAlign: 'right', // Aligns the label to the right
+            // width: '100%', // Ensure the label takes up the full width
+          },
+        }}
       />
     </>
   );
@@ -107,65 +121,51 @@ export function StepOne() {
 export function StepTwo() {
   return (
     <>
-      <Typography mb={0} variant="body2">
-        פרטים נוספים - כדי שנכיר אתכם טוב יותר
+      <Typography mb={0} variant="p">
+        פרטים נוספים - כדי שנכיר אתכם טוב יותר (לא חובה)
       </Typography>
-      <Typography variant="body2">(לא חובה)</Typography>
-      <form noValidate autoComplete="off">
-        <div style={{ marginBottom: '16px' }}>
-          <TextField
-            label="Email"
-            type="email"
-            // value={email}
-            // onChange={handleEmailChange}
-            // error={!!emailError}
-            // helperText={emailError}
-            fullWidth
-            variant="outlined"
-          />
-        </div>
+      {/* <Typography variant="body2">(לא חובה)</Typography> */}
 
-        <div style={{ marginBottom: '16px', width: '100px' }}>
-          <TextField
-            label="Age"
-            type="number"
-            // value={age}
-            // onChange={handleAgeChange}
-            // error={!!ageError}
-            // helperText={ageError}
-            fullWidth
-            variant="outlined"
-            inputProps={{ min: 16, max: 120 }}
-          />
-        </div>
+      <div style={{ marginBottom: '16px', width: '100px' }}>
+        <TextField
+          label="Age"
+          type="number"
+          // value={age}
+          // onChange={handleAgeChange}
+          // error={!!ageError}
+          // helperText={ageError}
+          fullWidth
+          variant="outlined"
+          inputProps={{ min: 16, max: 120 }}
+        />
+      </div>
 
-        <div style={{ marginBottom: '16px' }}>
-          <FormControl fullWidth variant="outlined">
-            <InputLabel id="multiple-select-label">Options</InputLabel>
-            <Select
-              labelId="multiple-select-label"
-              multiple
-              value={[]}
-              // onChange={handleOptionsChange}
-              input={<OutlinedInput label="Options" />}
-              renderValue={(selected) => (
-                <div>
-                  {selected.map((value) => (
-                    <Chip key={value} label={value} />
-                  ))}
-                </div>
-              )}
-            >
-              {['אפשרות 1', 'אפשרות 2', 'אפשרות 3'].map((option) => (
-                <MenuItem key={option} value={option}>
-                  {option}
-                </MenuItem>
-              ))}
-            </Select>
-            <FormHelperText>Select multiple options</FormHelperText>
-          </FormControl>
-        </div>
-      </form>
+      <div style={{ marginBottom: '16px' }}>
+        <FormControl fullWidth variant="outlined">
+          <InputLabel id="multiple-select-label">Options</InputLabel>
+          <Select
+            labelId="multiple-select-label"
+            multiple
+            value={[]}
+            // onChange={handleOptionsChange}
+            input={<OutlinedInput label="Options" />}
+            renderValue={(selected) => (
+              <div>
+                {selected.map((value) => (
+                  <Chip key={value} label={value} />
+                ))}
+              </div>
+            )}
+          >
+            {['אפשרות 1', 'אפשרות 2', 'אפשרות 3'].map((option) => (
+              <MenuItem key={option} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+          </Select>
+          <FormHelperText>Select multiple options</FormHelperText>
+        </FormControl>
+      </div>
     </>
   );
 }

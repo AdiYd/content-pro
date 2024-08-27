@@ -107,8 +107,9 @@ const RowX = ({
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const colorPalette = Object.values(theme.palette)[index + 1]?.dark || `${mainColor}.light`;
   const bulletsList = (
-    <m.div variants={varFade().inLeft} sx={{ width: 'auto' }}>
-      <Typography variant="h3" component="h3" sx={{ color: `${mainColor}.main` }}>
+    // <m.div variants={varFade().inLeft} sx={{ width: 'auto' }}>
+    <div className="w-auto">
+      <Typography variant="h4" component="h4" sx={{ color: `${mainColor}.main` }}>
         {title}
       </Typography>
       <List>
@@ -121,12 +122,13 @@ const RowX = ({
           </ListItem>
         ))}
       </List>
-    </m.div>
+    </div>
+    // </m.div>
   );
   return (
     <Container
       component={MotionContainer}
-      className="check"
+      // className="check"
       sx={{
         mx: { md: 4, xs: 2 },
         my: 4,

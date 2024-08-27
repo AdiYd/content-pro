@@ -30,28 +30,31 @@ const bulletsWithIcons = [
     icons: ['logos:youtube-icon', 'logos:tiktok-icon', 'skill-icons:instagram', 'logos:facebook'],
   },
   {
-    text: 'ליצור ולהרוויח כסף מכל מקום ובכל זמן',
+    text: 'ליצור תוכן ולהרוויח כסף מכל מקום ובכל זמן',
     icons: [
-      'svg-spinners:wifi', // An icon representing money or earnings
+      'fa6-solid:wifi', // An icon representing money or earnings
       'twemoji:laptop', // An icon representing time, indicating flexibility
       'flat-color-icons:globe', // An icon representing time, indicating flexibility
     ],
   },
   {
-    text: 'ליצור קהילה משלכם שתהווה עבורכם מקור הכנסה וקהל שאוהב אתכם',
+    text: 'לבנות קהילה אותנטית שתהווה עבורכם מקור הכנסה וקהל שאוהב אתכם',
     icons: [
       'mdi:account-group-outline', // An icon representing a community or group
+      'material-symbols:animated-images',
     ],
   },
   {
-    text: 'ההשקעה חוזרת - מקבלים פרויקט ראשון בתשלום לאחר הכנת תיק עבודות',
+    text: 'ההשקעה חוזרת - נחבר אתכם לפרויקט ראשון בתשלום לאחר הכנת תיק עבודות',
     icons: [
-      'mdi:briefcase-check-outline', // An icon representing a successful project or job
+      // 'mdi:briefcase-check-outline', // An icon representing a successful project or job
+      'bytesize:portfolio',
       'game-icons:money-stack',
+      'mdi:film-open-star-outline',
     ],
   },
   {
-    text: 'קבוצת וואטצאפ של יוצרי תוכן עם תכני העשרה, טיפים והדרכות להמשך הדרך',
+    text: 'קבוצת פרטית של יוצרי תוכן עם תכני העשרה, טיפים והדרכות להמשך הדרך',
     icons: [
       'logos:whatsapp-icon', // The WhatsApp icon for communication
       'emojione:books', // An icon representing guides or tips
@@ -61,7 +64,8 @@ const bulletsWithIcons = [
     text: 'לא אהבתם ? תקבלו את כספכם בחזרה',
     icons: [
       'mdi:cash-refund', // An icon representing a refund or money back
-      'gala:secure',
+      'pajamas:partner-verified',
+      // 'gala:secure',
     ],
   },
 ];
@@ -91,7 +95,7 @@ export function AboutYou({ contentType = 'aboutCourse' }) {
             // backgroundColor: `${color}.main`,
             borderColor: `${color}.main`,
             '&:hover': {
-              color: 'text.primary',
+              color: 'white',
               backgroundColor: `${color}.dark`,
             },
           }}
@@ -112,7 +116,7 @@ export function AboutYou({ contentType = 'aboutCourse' }) {
         spacing={2}
       >
         {icons.map((item, index) => (
-          <Iconify key={index} size={50} icon={item} />
+          <Iconify key={index} size={100} icon={item} />
         ))}
       </Stack>
     </m.div>
@@ -130,9 +134,9 @@ export function AboutYou({ contentType = 'aboutCourse' }) {
     >
       <m.div variants={varFade().inDown}>
         <Typography variant="h2" sx={{ mb: 3 }}>
-          למה זה הכי
+          למה זה
           <Box component="a" mx={1} color={`${mainColor}.main`}>
-            משתלם לך
+            ישתלם לך
           </Box>
           ?
         </Typography>

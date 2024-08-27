@@ -104,7 +104,11 @@ const steps = [
     href: '#',
     id: 'step 3',
     iconName: 'dashicons:portfolio', // 'bytesize:portfolio'
-    InnerSteps: ['משקיעים בתיק מרשים', 'משתפים רעיונות ומתחילים ליצור תוכן מקורי', 'צוברים ניסיון'],
+    InnerSteps: [
+      'משקיעים בתיק מרשים',
+      'משתפים רעיונות ומתחילים ליצור תוכן מקורי',
+      'צוברים ניסיון, ידע וקשרים',
+    ],
   },
 
   {
@@ -137,7 +141,6 @@ function Stepper({ children }) {
   const theme = useTheme();
   const { mainColor } = useContext(ColorContext);
   const themeColor = theme.palette[mainColor]?.main || theme.palette.info.main;
-  console.log('This is main Color: ', mainColor);
   const [activeStep, setActive] = useState(0);
   const stepsId = steps.map((item) => item.id);
   useScrollTrigger(stepsId, (index) => setActive(index));
@@ -159,7 +162,7 @@ function Stepper({ children }) {
                     style={{
                       background: themeColor,
                     }}
-                    className={`absolute right-4 top-4 -mr-px mt-0.5 h-full w-0.5  ${stepIdx === steps.length - 1 ? 'invisible' : ''}`}
+                    className={`absolute right-5 top-4 -mr-px mt-0.5 h-full w-0.5  ${stepIdx === steps.length - 1 ? 'invisible' : ''}`}
                   />
                 ) : null}
                 <a
@@ -169,15 +172,15 @@ function Stepper({ children }) {
                   }}
                   className="group relative flex items-start"
                 >
-                  <span className="flex h-9 items-center">
+                  <span className="flex h-12 items-center">
                     <span
                       style={{
                         background: themeColor,
                       }}
-                      className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full group-hover:bg-info-dark"
+                      className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full group-hover:bg-info-dark"
                     >
                       {/* <CheckIcon aria-hidden="true" className="h-5 w-5 text-white" /> */}
-                      <Iconify width={20} icon={step.iconName} />
+                      <Iconify width={30} color="white" icon={step.iconName} />
                     </span>
                   </span>
                   <Typography
@@ -213,16 +216,16 @@ function Stepper({ children }) {
                 {stepIdx !== steps.length - 1 ? (
                   <div
                     aria-hidden="true"
-                    className={`absolute right-4 top-4 -mr-px mt-0.5 h-full w-0.5 bg-gray-300 ${stepIdx === steps.length - 1 ? 'invisible' : ''}`}
+                    className={`absolute right-5 top-4 -mr-px mt-0.5 h-full w-0.5 bg-gray-300 ${stepIdx === steps.length - 1 ? 'invisible' : ''}`}
                   />
                 ) : null}
                 <a aria-current="step" className="group relative flex items-start">
-                  <span aria-hidden="true" className="flex h-9 items-center">
+                  <span aria-hidden="true" className="flex h-10 items-center">
                     <span
                       style={{
                         borderColor: themeColor,
                       }}
-                      className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full border-2 bg-white"
+                      className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 bg-white"
                     >
                       {stepIdx === steps.length - 1 ? (
                         <Iconify color={themeColor} icon={step.iconName} />
@@ -267,7 +270,7 @@ function Stepper({ children }) {
                 {stepIdx !== steps.length ? (
                   <div
                     aria-hidden="true"
-                    className={`absolute right-4 top-4 -mr-px mt-0.5 h-full w-0.5 bg-gray-300 ${stepIdx === steps.length - 1 ? 'invisible' : ''}`}
+                    className={`absolute right-5 top-4 -mr-px mt-0.5 h-full w-0.5 bg-gray-300 ${stepIdx === steps.length - 1 ? 'invisible' : ''}`}
                   />
                 ) : null}
                 <a // not Active steps
@@ -277,8 +280,8 @@ function Stepper({ children }) {
                   }}
                   className="group relative flex items-start"
                 >
-                  <span aria-hidden="true" className="flex h-9 items-center">
-                    <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-300 bg-white group-hover:border-gray-400">
+                  <span aria-hidden="true" className="flex h-10 items-center">
+                    <span className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 border-gray-300 bg-white group-hover:border-gray-400">
                       <span className="h-2.5 w-2.5 rounded-full bg-transparent group-hover:bg-gray-300" />
                     </span>
                   </span>

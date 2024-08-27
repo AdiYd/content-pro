@@ -87,6 +87,8 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
           <iframe
             title="videoIntro"
             width={500}
+            allowFullScreen
+            allow="fullscreen"
             src="https://drive.google.com/file/d/1GPVCyit_PuX4sUh5FMlAjTKVRCVdW0mY/preview"
             className="relative z-20 w-full h-full aspect-video"
 

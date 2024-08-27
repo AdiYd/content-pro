@@ -32,6 +32,8 @@ export function AboutOrder({ contentType = 'aboutCourse' }) {
           <iframe
             title="videoIntro"
             width={500}
+            allowFullScreen
+            allow="fullscreen"
             src="https://drive.google.com/file/d/1OGBM8l4lhNwYmCDsHa6jCAkRkwPhmb0u/preview"
             className="relative z-20 w-full h-full aspect-video"
 
@@ -63,7 +65,8 @@ export function AboutOrder({ contentType = 'aboutCourse' }) {
         <Typography variant="h4" sx={{ mb: 3 }}>
           עולם הדיגיטל, הסושיאל ויצירת התוכן הוא
           <Box component="a" mx={1} color={`${mainColor}.main*`}>
-            עצום ומלא אכזבות
+            עצום ומלא אפשרויות (ואכזבות), זאת גם הסיבה שכדי להצליח חשוב מאוד לבנות את עצמכם בצורה
+            נכונה ולספק תוכן איכותי ומקורי.
           </Box>
         </Typography>
       </m.div>
@@ -92,8 +95,8 @@ export function AboutOrder({ contentType = 'aboutCourse' }) {
       </div>
       <m.div variants={varFade({ delay: 0.5 }).inRight}>
         <Typography variant="p" sx={{ mb: 3 }}>
-          אני יודע כמה זה מתסכל לנסות ליצור תוכן מעניין ומקצועי ובסוף לגלות שיש עוד 1000 כמוכם שעשו
-          את זה כבר לפניכם.
+          אני יודע כמה זה מתסכל לנסות ליצור תוכן איכותי ובסוף לגלות שיש עוד 1000 כמוכם שעשו את זה
+          כבר לפניכם.
           <br />
           אבל תנו לי לגלות לכם סוד - גם אתם יכולים להצליח,ובגדול! אתם לא צריכים להמציא את הגלגל -
           פשוט ללמוד ממי שכבר עשה את זה ולהתחיל לייצר תוכן איכותי שעשוי ומצולם נכון, סירטוני וידאו

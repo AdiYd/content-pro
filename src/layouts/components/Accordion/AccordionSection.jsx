@@ -16,13 +16,8 @@ function AccordionSection({ title = defaultTitle, accordions = [], ...props }) {
   const theme = useTheme();
   return (
     <section dir="rtl" className="px-2">
-      <Container component={MotionContainer}>
-        <m.div
-          variants={varFade({ duration: 0.5 }).inRight}
-          sx={{
-            py: 1,
-          }}
-        >
+      <Container sx={{ py: 1 }} component={MotionContainer}>
+        <m.div variants={varFade({ duration: 0.5 }).inRight}>
           <Typography
             sx={{
               pb: 2,
