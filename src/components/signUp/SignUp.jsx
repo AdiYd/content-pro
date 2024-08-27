@@ -8,7 +8,7 @@ import { ColorContext } from 'src/context/colorMain';
 import { FormWizardView } from './form-wizard-view';
 import { varSlide, MotionContainer } from '../animate';
 
-function SignUp({ ...props }) {
+function SignUp({ coursePrice, ...props }) {
   const theme = useTheme();
   const { mainColor } = useContext(ColorContext);
   return (
@@ -48,7 +48,7 @@ function SignUp({ ...props }) {
         }}
       /> */}
       <m.div variants={varSlide().in}>
-        <FormWizardView />
+        <FormWizardView coursePrice={coursePrice} />
       </m.div>
       {/* <Divider
         sx={{

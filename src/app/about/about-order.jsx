@@ -6,6 +6,7 @@ import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import { Box, useMediaQuery } from '@mui/material';
 
+import { customShadows } from 'src/theme/core';
 import { ColorContext } from 'src/context/colorMain';
 
 import { varFade, AnimateBorder, MotionViewport } from 'src/components/animate';
@@ -21,21 +22,21 @@ export function AboutOrder({ contentType = 'aboutCourse' }) {
 
   const promoVideo = (
     <AnimateBorder
-      sx={{ borderRadius: 4, p: 0.5 }}
-      animate={{ color: theme.palette.secondary?.main || '#fff' }}
+      sx={{ borderRadius: 4 }}
+      animate={{ distance: 40, outline: '', color: theme.palette.secondary?.main || '#fff' }}
     >
       <div
-        style={{ width: isMobile ? '90vw' : '50vw' }}
+        style={{ width: isMobile ? '90vw' : '70vw', boxShadow: customShadows().z12 }}
         className="overflow-hidden rounded-3xl shadow-md shadow-warning-lighter/40"
       >
-        <Box sx={{ position: 'relative' }} overflow="hidden" width="100%" borderRadius={3}>
+        <Box sx={{ position: 'relative' }} overflow="hidden" width="100%" p={0.4} borderRadius={4}>
           <iframe
             title="videoIntro"
             width={500}
             allowFullScreen
             allow="fullscreen"
             src="https://drive.google.com/file/d/1OGBM8l4lhNwYmCDsHa6jCAkRkwPhmb0u/preview"
-            className="relative z-20 w-full h-full aspect-video"
+            className="relative z-20 w-full rounded-3xl h-full aspect-video"
 
             // controls
           />

@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import { Box, useMediaQuery } from '@mui/material';
 
 import { CONFIG } from 'src/config-global';
+import { customShadows } from 'src/theme/core';
 import { ColorContext } from 'src/context/colorMain';
 
 import { Image } from 'src/components/image';
@@ -76,21 +77,21 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
 
   const introVideo = (
     <AnimateBorder
-      sx={{ borderRadius: 4, p: 0.5 }}
-      animate={{ color: theme.palette[mainColor]?.main || '#fff' }}
+      sx={{ borderRadius: 4 }}
+      animate={{ distance: 40, outline: '', color: theme.palette[mainColor]?.main || '#fff' }}
     >
       <div
-        style={{ width: isMobile ? '90vw' : '50vw' }}
-        className="overflow-hidden rounded-3xl shadow-md shadow-warning-lighter/40"
+        style={{ width: isMobile ? '90vw' : '70vw', boxShadow: customShadows().z12 }}
+        className="overflow-hidden shadow-md rounded-3xl shadow-warning-lighter/40"
       >
-        <Box sx={{ position: 'relative' }} overflow="hidden" width="100%" borderRadius={3}>
+        <Box sx={{ position: 'relative' }} p={0.4} overflow="hidden" width={1} borderRadius={4}>
           <iframe
             title="videoIntro"
             width={500}
             allowFullScreen
             allow="fullscreen"
             src="https://drive.google.com/file/d/1GPVCyit_PuX4sUh5FMlAjTKVRCVdW0mY/preview"
-            className="relative z-20 w-full h-full aspect-video"
+            className="relative rounded-3xl z-20 w-full h-full aspect-video"
 
             // controls
           />

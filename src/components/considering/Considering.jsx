@@ -29,6 +29,7 @@ import { varBounce, MotionContainer } from '../animate';
 import { ComponentContainer } from '../new/component-block';
 
 const NumOfMinutes = 15;
+export const NumOfDiscount = 10;
 
 export const ScrollComponent = (id = 'signUp') => {
   const element = document.getElementById(id);
@@ -183,7 +184,7 @@ function Considering({
           <Typography variant="h4">{buttonMsg.current}</Typography>
           <br />
           <Typography color="text.primary" variant="p">
-            קבלו קוד הנחה של 10% בתוקף ל {NumOfMinutes} דקות הקרובות
+            קבלו קוד הנחה של {NumOfDiscount}% בתוקף ל {NumOfMinutes} דקות הקרובות
           </Typography>
           <br />
           <br />
@@ -192,7 +193,7 @@ function Considering({
               title="העתק ללוח"
               onClick={() => {
                 toast.success('הועתק!');
-                navigator.clipboard.writeText(`xtraPro_${NumOfMinutes}`);
+                navigator.clipboard.writeText(`xtraPro_${NumOfDiscount}`);
               }}
               sx={{ cursor: 'pointer', '&:hover': { color: 'text.primary' } }}
               mx={2}

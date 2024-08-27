@@ -13,7 +13,7 @@ import { FormWizard } from './form-wizard';
 
 // ----------------------------------------------------------------------
 
-export function FormWizardView() {
+export function FormWizardView({ coursePrice }) {
   const theme = useTheme();
   const { mainColor } = useContext(ColorContext);
   return (
@@ -30,7 +30,7 @@ export function FormWizardView() {
         תהליך ההרשמה פשוט מהיר ומאובטח, מיד בסיום ההרשמה תקבלו מייל עם כל הפרטים והקישורים להמשך
       </Typography>
       <ComponentContainer sx={{ m: 0, p: 0 }}>
-        <FormWizard />
+        <FormWizard coursePrice={coursePrice} />
       </ComponentContainer>
     </>
   );

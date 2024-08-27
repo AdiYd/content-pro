@@ -208,12 +208,18 @@ export function AccordionView({ title, accordions = _accordions }) {
             sx={{ mt: index === accordion.length ? 0 : 4 }}
           >
             <AccordionSummary
+              // expandIcon={expanded[accordion.value] ? <RemoveIcon /> : <AddIcon />}
               expandIcon={
                 <Iconify
                   icon={expanded[accordion.value] ? 'ic:round-minus' : 'mingcute:add-fill'}
                 />
               }
-              sx={{ zIndex: 10 }}
+              sx={{
+                zIndex: 10,
+                '& .MuiAccordionSummary-expandIconWrapper': {
+                  transition: 'transform 0.4s ease-in-out', // Adjust the duration and easing of the animation
+                },
+              }}
               // expandIcon={<Iconify icon="eva:arrow-ios-downward-fill" />}
               // expandIcon={<ExpandMoreRounded />}
             >
