@@ -19,6 +19,8 @@ import {
 
 import { useCountdownSeconds } from 'src/hooks/use-countdown';
 
+import { trackEvent, trackButtonClick } from 'src/utils/GAEvents';
+
 import { ColorContext } from 'src/context/colorMain';
 
 import Confettis from './Confettis';
@@ -104,6 +106,7 @@ function Considering({
   const startConfetti = () => {
     buttonMsg.current = buttonAfter;
     setConfetti((p) => !p);
+    trackButtonClick(confettiOnly ? 'confetti' : '10% OFF');
     const isCounting = Cookies.get('counting');
     const payed = localStorage.getItem('payed');
     if (!isCounting && !payed && !confettiOnly) {
@@ -183,7 +186,7 @@ function Considering({
                     },
                   }}
                   onClick={startConfetti}
-                  variant={active ? 'text' : 'outlined'}
+                  variant={active || confettiOnly ? 'text' : 'outlined'}
                   color={color}
                 >
                   {buttonMsg.current}
@@ -238,12 +241,15 @@ function Considering({
               title="העתק ללוח"
               onClick={() => {
                 toast.success('הועתק!');
-                navigator.clipboard.writeText(`xtraPro_${NumOfDiscount}`);
+                navigator.clipboard.writeText(`ExtraPro_${NumOfDiscount}`);
               }}
               sx={{ cursor: 'pointer', '&:hover': { color: 'text.primary' } }}
               mx={2}
             >
-              <Iconify icon="ion:copy-outline" />
+              <Iconify
+                onClick={() => trackEvent('Coupon clipboard', 'Coupons', `${NumOfDiscount}%`)}
+                icon="ion:copy-outline"
+              />
             </Box>
             <Typography
               variant="h4"
@@ -253,7 +259,7 @@ function Considering({
                 WebkitTextFillColor: 'transparent',
               }}
             >
-              ExtraPro_{NumOfMinutes}
+              ExtraPro_{NumOfDiscount}
             </Typography>
           </Stack>
         </DialogContent>

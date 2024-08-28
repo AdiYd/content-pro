@@ -22,10 +22,12 @@ export function AboutOrder({ contentType = 'aboutCourse' }) {
 
   const promoVideo = (
     <AnimateBorder
+      onClick={() => console.log('Video clicked! :)')}
       sx={{ borderRadius: 4 }}
       animate={{ distance: 40, outline: '', color: theme.palette.secondary?.main || '#fff' }}
     >
       <div
+        // onClick={() => console.log('Video clicked!')}
         style={{ width: isMobile ? '90vw' : '70vw', boxShadow: customShadows().z12 }}
         className="overflow-hidden aspect-video rounded-3xl shadow-md shadow-warning-lighter/40"
       >

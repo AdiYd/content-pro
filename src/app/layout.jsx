@@ -2,8 +2,15 @@ import 'src/global.css';
 
 // ----------------------------------------------------------------------
 
+
+// eslint-disable-next-line import/no-extraneous-dependencies
+
+// eslint-disable-next-line import/no-extraneous-dependencies
+// eslint-disable-next-line import/no-extraneous-dependencies
+
+import Script from 'next/script';
+
 import { CONFIG } from 'src/config-global';
-import { primary } from 'src/theme/core/palette';
 import ColorProvider from 'src/context/colorMain';
 import { ThemeProvider } from 'src/theme/theme-provider';
 import { getInitColorSchemeScript } from 'src/theme/color-scheme-script';
@@ -17,11 +24,8 @@ import { AuthProvider } from 'src/auth/context/jwt';
 
 // ----------------------------------------------------------------------
 
-export const viewport = {
-  width: 'device-width',
-  initialScale: 1,
-  themeColor: primary.main,
-};
+
+
 
 export default async function RootLayout({ children }) {
   const settings = CONFIG.isStaticExport ? defaultSettings : await detectSettings();
@@ -30,6 +34,7 @@ export default async function RootLayout({ children }) {
     <html lang="en" suppressHydrationWarning>
       <head>
         {/* <title>Video-pro: האקדמיה המקצועית ליצירת תוכן וידאו</title> */}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta
           name="description"
           content="הצטרף לוידאו-פרו, האקדמיה המקצועית ליצירת תוכן וידאו. למד ליצור תוכן איכותי, הצטרף לקהילה תומכת, והרוויח מתוכן דיגיטלי."
@@ -108,12 +113,58 @@ export default async function RootLayout({ children }) {
           content="https://videopro.webly.digital/assets/images/Eran.png"
         />
 
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'http://schema.org',
+              '@type': 'Course',
+              name: 'Video-pro',
+              description:
+                'קורס אונליין ליצירת תוכן וידאו ומדיה חברתית של ערן פרקש. האקדמיה כוללת קורס אונליין, קהילה בלעדית והדרכות ליצירת הכנסה מתוכן דיגיטלי.',
+              provider: {
+                '@type': 'Organization',
+                name: 'ערן פרקש',
+                sameAs: 'https://yourwebsite.com',
+              },
+              offers: {
+                '@type': 'Offer',
+                url: 'https://yourwebsite.com',
+                priceCurrency: 'ILS',
+                price: 'XXXX', // replace with actual price
+                availability: 'http://schema.org/InStock',
+                validFrom: '2024-08-01',
+              },
+              inLanguage: 'he',
+              audience: {
+                '@type': 'EducationalAudience',
+                educationalRole: 'Student',
+                audienceType: 'Professional',
+              },
+            }),
+          }}
+        />
+
         <link rel="canonical" href="https://videopro.webly.digital" />
+
+        {/* Google Analytics */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}');
+          `}
+        </Script>
       </head>
 
       <body>
         {getInitColorSchemeScript}
-
         <AuthProvider>
           <SettingsProvider
             settings={settings}

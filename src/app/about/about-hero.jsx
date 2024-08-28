@@ -290,13 +290,14 @@ export function AboutHero() {
         />
       )}
       <div className="absolute -bottom-8 right-10 rounded-full shadow-md shadow-zinc-300/20 hidden justify-center max-md:flex">
-        <AnimateAvatar width={100}>
+        <AnimateAvatar width={115}>
           <Image
             alt="קורס Video-pro של ערן פרקש"
-            src={`${CONFIG.site.basePath}/assets/images/about/Eran.png`}
+            src={`${CONFIG.site.basePath}/assets/images/about/Eran2.png`}
             ratio="1/1"
             sx={{
               width: 1,
+              objectPosition: 'top',
               alignSelf: 'center',
               '&:hover': {
                 transform: 'scale(1.4)',

@@ -1,5 +1,6 @@
 'use client';
 
+
 import { Box } from '@mui/material';
 
 import { useCountdownSeconds } from 'src/hooks/use-countdown';
@@ -20,7 +21,7 @@ import SocialProof from './about/view/social-proof';
 import { AboutTestimonials } from './about/about-testimonials';
 // ----------------------------------------------------------------------
 
-const CoursePrice = 499;
+export const CoursePrice = 499;
 
 export default function Page() {
   const countDownObj = useCountdownSeconds(NumOfMinutes * 60);

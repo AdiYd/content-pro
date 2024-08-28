@@ -1,4 +1,7 @@
+'use client';
+
 import { z as zod } from 'zod';
+import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState, useContext, useCallback } from 'react';
@@ -7,14 +10,15 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { Card, useTheme, Container } from '@mui/material';
 
+import { trackEvent, trackFormSubmission } from 'src/utils/GAEvents';
+
 import { customShadows } from 'src/theme/core';
 import { ColorContext } from 'src/context/colorMain';
 
-import { toast } from 'src/components/snackbar';
 import { Form } from 'src/components/hook-form';
 import { AnimateBorder } from 'src/components/animate';
 
-import { Stepper, StepOne, StepTwo, StepThree, StepCompleted } from './form-steps';
+import { Stepper, StepOne, StepTwo, StepThree } from './form-steps';
 
 // ----------------------------------------------------------------------
 
@@ -38,6 +42,13 @@ const WizardSchema = zod.object({
     .min(1, { message: 'נא למלא כתובת אימייל' })
     .email({ message: 'נא למלא כתובת אימייל תקינה' }),
   name: zod.string().min(2, { message: 'נא למלא שם מלא' }),
+  age: zod.number().optional(),
+  gender: zod.string().optional(),
+  'make-comunity': zod.boolean().optional(),
+  'make-money': zod.boolean().optional(),
+  'make-people': zod.boolean().optional(),
+  learn: zod.boolean().optional(),
+  totalPrice: zod.number().optional(),
   // stepOne: StepOneSchema,
   // stepTwo: StepTwoSchema,
   // stepThree: StepThreeSchema,
@@ -56,6 +67,11 @@ const defaultValues = {
   name: '',
   age: 0,
   gender: 'other',
+  'make-comunity': false,
+  'make-money': false,
+  'make-people': false,
+  learn: true,
+  totalPrice: 99,
 };
 
 export function FormWizard({ coursePrice }) {
@@ -72,6 +88,7 @@ export function FormWizard({ coursePrice }) {
   const {
     reset,
     trigger,
+    setValue,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
@@ -82,17 +99,29 @@ export function FormWizard({ coursePrice }) {
         let isValid = true;
         if (step === 'stepOne') {
           isValid = await trigger(['email', 'name']);
-          console.log('New user signUp: ', methods.getValues().email, methods.getValues().name);
+        } else {
+          await trigger([
+            'age',
+            'learn',
+            'make-comunity',
+            'make-people',
+            'make-money',
+            'totalPrice',
+            'gender',
+          ]);
         }
 
         if (isValid) {
+          trackFormSubmission(`New user: ${methods.getValues().email}`);
+          trackEvent('Signup', 'Signup form', `Step #${activeStep + 1}`, activeStep + 1);
           setActiveStep((prevActiveStep) => prevActiveStep + 1);
         }
       } else {
+        trackEvent('Signup', 'Signup form', `Step #${activeStep + 1}`, activeStep + 1);
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }
     },
-    [trigger, methods]
+    [trigger, activeStep, methods]
   );
 
   const handleBack = useCallback(() => {
@@ -104,13 +133,20 @@ export function FormWizard({ coursePrice }) {
     setActiveStep(0);
   }, [reset]);
 
+  // const onSubmit = (e) => {
+  //   // e.preventDefault();
+  //   console.log('data: ', e);
+  // };
+
   const onSubmit = handleSubmit(async (data) => {
+    console.log('I am here!');
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       toast.success('Create success!');
       console.info('DATA', data);
-      handleNext();
+
+      // handleNext();
     } catch (error) {
       console.error(error);
     }
@@ -145,7 +181,7 @@ export function FormWizard({ coursePrice }) {
           maxWidth: 720,
         }}
       >
-        <Form methods={methods} onSubmit={onSubmit}>
+        <Form methods={methods} onSubmit={handleSubmit(onSubmit)}>
           <Stepper steps={steps} activeStep={activeStep} />
           {/* <AnimateBorder
             sx={{ zIndex: 10, maxWidth: { md: '60%', xs: '100%' }, borderRadius: 2, mx: 'auto' }}
@@ -178,9 +214,11 @@ export function FormWizard({ coursePrice }) {
             }}
           >
             {activeStep === 0 && <StepOne />}
-            {activeStep === 1 && <StepTwo name={name} />}
-            {activeStep === 2 && <StepThree coursePrice={coursePrice} name={name} email={email} />}
-            {completedStep && <StepCompleted onReset={handleReset} />}
+            {activeStep === 1 && <StepTwo setValue={setValue} name={name} />}
+            {activeStep === 2 && (
+              <StepThree setValue={setValue} coursePrice={coursePrice} name={name} email={email} />
+            )}
+            {/* {completedStep && <StepCompleted onReset={handleReset} />} */}
           </Card>
           {!completedStep && (
             <Box zIndex={30} display="flex" width={1} justifyContent="center">

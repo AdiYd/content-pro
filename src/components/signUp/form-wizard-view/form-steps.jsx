@@ -1,4 +1,5 @@
-import { useRef, useState, useContext } from 'react';
+import Cookies from 'js-cookie';
+import { useRef, useState, useEffect, useContext } from 'react';
 
 import Box from '@mui/material/Box';
 import Step from '@mui/material/Step';
@@ -19,6 +20,8 @@ import {
   StepConnector,
   FormControlLabel,
 } from '@mui/material';
+
+import { trackEvent } from 'src/utils/GAEvents';
 
 import { ColorContext } from 'src/context/colorMain';
 
@@ -138,16 +141,11 @@ export function StepOne() {
   );
 }
 
-export function StepTwo({ name }) {
+export function StepTwo({ name, setValue }) {
   const theme = useTheme();
   const { mainColor } = useContext(ColorContext);
-  const [goals, setGoals] = useState({});
   const onChangeHandler = (e) => {
-    console.log('I want to : ', e.target.name);
-    setGoals((p) => ({
-      ...p,
-      [e.target.name]: p[e.target.name] ? !p[e.target.name] : true,
-    }));
+    setValue(e.target.name, e.target.checked);
   };
 
   return (
@@ -177,7 +175,8 @@ export function StepTwo({ name }) {
             control={
               <Checkbox
                 name="learn"
-                checked={goals.learn ?? true}
+                defaultChecked
+                // checked={goals.learn ?? true}
                 color={mainColor || 'error'}
                 onChange={onChangeHandler}
               />
@@ -188,7 +187,7 @@ export function StepTwo({ name }) {
             control={
               <Checkbox
                 name="make-money"
-                checked={goals['make-money'] || false}
+                // checked={goals['make-money'] || false}
                 color={mainColor || 'error'}
                 onChange={onChangeHandler}
               />
@@ -199,7 +198,7 @@ export function StepTwo({ name }) {
             control={
               <Checkbox
                 name="make-comunity"
-                checked={goals['make-comunity'] || false}
+                // checked={goals['make-comunity'] || false}
                 color={mainColor || 'error'}
                 onChange={onChangeHandler}
               />
@@ -210,7 +209,7 @@ export function StepTwo({ name }) {
             control={
               <Checkbox
                 name="make-people"
-                checked={goals['make-people'] || false}
+                // checked={goals['make-people'] || false}
                 color={mainColor || 'error'}
                 onChange={onChangeHandler}
               />
@@ -226,10 +225,11 @@ export function StepTwo({ name }) {
             <InputLabel>מין</InputLabel>
             <Select
               variant="filled"
-              defaultValue=""
+              name="gender"
+              onChange={(e) => setValue('gender', e.target.value)}
               sx={{ textAlign: 'center', width: { md: 90, xs: 111 } }}
               itemProp={{ textAlign: 'center' }}
-              // value={}
+              value=""
               // onChange={handleOptionsChange}
               // input={<OutlinedInput label="מין" />}
             >
@@ -255,7 +255,7 @@ export function StepTwo({ name }) {
           <Field.Text
             label="גיל"
             type="number"
-            name="stepTwo.age"
+            name="age"
             sx={{ width: { md: 90, xs: 111 } }}
             fullWidth
             variant="filled"
@@ -275,19 +275,50 @@ export function StepTwo({ name }) {
   );
 }
 
-export function StepThree({ name, email, coursePrice }) {
+export function StepThree({ name, email, coursePrice, setValue }) {
   const theme = useTheme();
   const { mainColor } = useContext(ColorContext);
+  const [update, setUpdate] = useState(false);
   const [coupon, setCoupon] = useState(false);
   const [validCoupon, setValidCoupon] = useState(false);
-  const totalPrice = useRef(coursePrice || 99);
+  const totalPrice = useRef(coursePrice || 199);
   const color = validCoupon ? theme.palette.success.main : theme.palette.error.main;
 
+  useEffect(() => {
+    setValue('totalPrice', totalPrice.current);
+  }, [setValue]);
+
   const handleCoupon = (e) => {
-    if (e.target.value === `xtraPro_${NumOfDiscount}` && !validCoupon) {
+    const isCoupon = Cookies.get('coupon');
+    if (e.target.value === `ExtraPro_${NumOfDiscount}` && !validCoupon && isCoupon) {
       totalPrice.current *= (100 - NumOfDiscount) / 100;
       totalPrice.current = Math.floor(totalPrice.current);
       setValidCoupon(true);
+      setValue('totalPrice', totalPrice.current);
+      trackEvent('Coupon Redeem', 'Coupons', `${NumOfDiscount}%`);
+    } else if (e.target.value === 'MasterPro_gift' && !validCoupon) {
+      totalPrice.current = 99;
+      setValidCoupon(true);
+      setValue('totalPrice', totalPrice.current);
+      trackEvent('Coupon Redeem', 'Coupons', `99₪`);
+    } else if (e.target.value === 'SuperPro_free' && !validCoupon) {
+      totalPrice.current = 0;
+      setValidCoupon(true);
+      setValue('totalPrice', totalPrice.current);
+      trackEvent('Coupon Redeem', 'Coupons', `free`);
+    } else if (e.target.value.includes(`AdminPro_` && !validCoupon)) {
+      const discount = Number(e.target.value.split('_')[1]);
+      if (!Number.isNaN(discount) && [10, 20, 25, 50].includes(discount)) {
+        totalPrice.current *= (100 - discount) / 100;
+        totalPrice.current = Math.floor(totalPrice.current);
+        setValidCoupon(true);
+        setValue('totalPrice', totalPrice.current);
+        trackEvent('Coupon Redeem', 'Coupons', `Admin ${discount}%`);
+      }
+    }
+    if (totalPrice.current !== coursePrice) {
+      setValue('totalPrice', totalPrice.current);
+      setUpdate((p) => !p);
     }
   };
 
@@ -392,8 +423,15 @@ export function StepThree({ name, email, coursePrice }) {
         {'סה"כ לתשלום : '} {totalPrice.current} {validCoupon && `(במקום ${coursePrice})`}
       </Typography>
 
+      <Field.Text
+        sx={{ visibility: 'hidden', display: 'none' }}
+        value={totalPrice.current}
+        name="totalPrice"
+        // inputProps={{}}
+      />
+
       <div className="flex justify-center">
-        <Button variant="contained" size="large" color="success">
+        <Button type="submit" variant="contained" size="large" color="success">
           מעבר לתשלום
         </Button>
       </div>
