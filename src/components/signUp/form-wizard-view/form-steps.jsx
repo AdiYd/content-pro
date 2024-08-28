@@ -122,7 +122,7 @@ export function StepOne() {
         label="אימייל"
         variant="filled"
         sx={{ direction: 'ltr' }}
-        inputProps={{ dir: 'ltr', autocomplete: 'on' }}
+        inputProps={{ dir: 'ltr', autoComplete: 'on' }}
         InputLabelProps={{
           shrink: true,
           sx: {
@@ -286,7 +286,7 @@ export function StepThree({ name, email, coursePrice }) {
   const handleCoupon = (e) => {
     if (e.target.value === `xtraPro_${NumOfDiscount}` && !validCoupon) {
       totalPrice.current *= (100 - NumOfDiscount) / 100;
-      totalPrice.current = Math.ceil(totalPrice.current);
+      totalPrice.current = Math.floor(totalPrice.current);
       setValidCoupon(true);
     }
   };
@@ -371,7 +371,7 @@ export function StepThree({ name, email, coursePrice }) {
         )}
       </div>
       <div className="">
-        <Typography sx={{ opacity: 0.8 }} mr={2} mb={0} variant="body2">
+        <Typography textAlign="start" sx={{ opacity: 0.8 }} mr={2} mb={0} variant="body2">
           סיכום הרכישה
         </Typography>
         <Divider mt={0} sx={{ borderStyle: 'dashed' }} variant="middle" />

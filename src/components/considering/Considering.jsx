@@ -28,7 +28,40 @@ import { arrowsDown } from '../stepper/Stepper';
 import { varBounce, MotionContainer } from '../animate';
 import { ComponentContainer } from '../new/component-block';
 
-const NumOfMinutes = 15;
+const getRemainingCookieTimeInSeconds = (cookieName) => {
+  const cookieValue = Cookies.get(cookieName);
+  if (!cookieValue) {
+    // Return null if the cookie doesn't exist
+    return null;
+  }
+
+  try {
+    const parsedValue = JSON.parse(cookieValue);
+    const expirationDate = new Date(parsedValue.expires);
+
+    if (!expirationDate || Number.isNaN(expirationDate.getTime())) {
+      return null; // Invalid expiration date
+    }
+
+    const now = new Date();
+    const remainingTimeInMs = expirationDate - now;
+    if (remainingTimeInMs <= 0) {
+      return 0; // Cookie has already expired
+    }
+
+    return Math.floor(remainingTimeInMs / 1000); // Remaining time in seconds
+  } catch (error) {
+    return null; // Error parsing the cookie value
+  }
+};
+
+const setCookie = (name = 'counting', numOfSec = NumOfMinutes * 60) => {
+  const expirationDate = new Date(new Date().getTime() + numOfSec * 1000);
+  const value = JSON.stringify({ expires: expirationDate });
+  Cookies.set(name, value, { expires: expirationDate });
+};
+
+export const NumOfMinutes = 15;
 export const NumOfDiscount = 10;
 
 export const ScrollComponent = (id = 'signUp') => {
@@ -40,29 +73,40 @@ export const ScrollComponent = (id = 'signUp') => {
 
 function Considering({
   color,
+  countDownObj = {},
   buttonBefore = ' אהבתם?! תנו לייק 👍',
   buttonAfter = 'אתם בדרך הנכונה  להפוך ליוצרי תוכן מבוקשים 👏😎',
   afterText = 'ממשיכים לגלות',
+  confettiOnly = false,
   ...props
 }) {
   const theme = useTheme();
   const { mainColor } = useContext(ColorContext);
   const [confetti, setConfetti] = useState(false);
+  const { countdown, startCountdown, counting } = useCountdownSeconds(NumOfMinutes * 60);
   const [active, setActive] = useState(false);
-  const { countdown, startCountdown, counting } = useCountdownSeconds(60 * NumOfMinutes);
   const buttonMsg = useRef(buttonBefore);
   color = color || mainColor || 'info';
 
-  const setCookie = (name = 'counting', value = 'true', numOfSec = NumOfMinutes * 60) => {
-    const expirationDate = new Date(new Date().getTime() + numOfSec * 1000);
-    Cookies.set(name, value, { expires: expirationDate });
-  };
+  // useEffect(() => {
+  //   const isCounting = getRemainingCookieTimeInSeconds('counting');
+  //   const payed = localStorage.getItem('payed');
+  //   if (isCounting && !confettiOnly && !payed && !counting) {
+  //     buttonMsg.current = buttonAfter;
+  //     startCountdown();
+  //   }
+  // }, [confettiOnly, buttonAfter]);
+
+  // useEffect(() => {
+  //   Cookies.remove('counting');
+  // }, []);
 
   const startConfetti = () => {
     buttonMsg.current = buttonAfter;
     setConfetti((p) => !p);
     const isCounting = Cookies.get('counting');
-    if (!isCounting) {
+    const payed = localStorage.getItem('payed');
+    if (!isCounting && !payed && !confettiOnly) {
       setActive(true);
     }
     if (!confetti) {
@@ -83,6 +127,7 @@ function Considering({
         borderColor: theme.palette[mainColor]?.main,
         width: 'fit-content',
         textAlign: 'center',
+        transition: 'transform 0.3s ease',
         my: 3,
         px: 2,
         '&:hover': {
@@ -120,7 +165,7 @@ function Considering({
           <Confettis />
         </div>
       )}
-      {buttonAfter !== buttonMsg.current && (
+      {(buttonAfter !== buttonMsg.current || confettiOnly) && (
         <div className="my-8 flex justify-center w-full">
           <Container component={MotionContainer}>
             <m.div variants={varBounce({ durationIn: 1 }).in}>

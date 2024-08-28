@@ -27,9 +27,40 @@ export function AboutOrder({ contentType = 'aboutCourse' }) {
     >
       <div
         style={{ width: isMobile ? '90vw' : '70vw', boxShadow: customShadows().z12 }}
-        className="overflow-hidden rounded-3xl shadow-md shadow-warning-lighter/40"
+        className="overflow-hidden aspect-video rounded-3xl shadow-md shadow-warning-lighter/40"
       >
-        <Box sx={{ position: 'relative' }} overflow="hidden" width="100%" p={0.4} borderRadius={4}>
+        <Box
+          sx={{ position: 'relative', zIndex: 30 }}
+          overflow="hidden"
+          width="100%"
+          // height="100%"
+          p={0.4}
+          borderRadius={4}
+        >
+          {/* <ReactPlayer
+            style={{
+              borderRadius: '20px',
+              zIndex: 30,
+              overflow: 'hidden',
+              width: 'fit-content',
+              height: 'fill-available',
+            }}
+            config={{
+              youtube: {
+                playerVars: {
+                  showinfo: 0, // Hide video title and uploader info
+                  rel: 1, // Disable related videos at the end
+                  modestbranding: 1, // Hide YouTube logo
+                },
+              },
+            }}
+            width="100%"
+            // height="100%"
+            url="https://www.youtube.com/watch?v=YRI9f6NvxaQ"
+            controls // Show player controls
+            // muted={false} // Mute the video by default (optional)
+            // playing={true} // Start playing automatically (optional)
+          /> */}
           <iframe
             title="videoIntro"
             width={500}

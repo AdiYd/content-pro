@@ -88,7 +88,7 @@ export function AboutYou({ contentType = 'aboutCourse' }) {
         <ToggleButton
           value="checked"
           sx={{
-            borderRadius: 1,
+            borderRadius: 2,
             height: 'fit-content',
             color: 'text.primary',
             // color: theme.palette[mainColor]?.main,
@@ -134,7 +134,7 @@ export function AboutYou({ contentType = 'aboutCourse' }) {
     >
       <m.div variants={varFade().inDown}>
         <Typography variant="h2" sx={{ mb: 3 }}>
-          למה זה
+          איך זה
           <Box component="a" mx={1} color={`${mainColor}.main`}>
             ישתלם לך
           </Box>
