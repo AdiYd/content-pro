@@ -42,6 +42,9 @@ const WizardSchema = zod.object({
     .min(1, { message: 'נא למלא כתובת אימייל' })
     .email({ message: 'נא למלא כתובת אימייל תקינה' }),
   name: zod.string().min(2, { message: 'נא למלא שם מלא' }),
+  approveTerms: zod.boolean().refine((val) => val === true, {
+    message: 'יש לאשר את תנאי השימוש ותקנון האתר',
+  }),
   age: zod.number().optional(),
   gender: zod.string().optional(),
   'make-comunity': zod.boolean().optional(),
@@ -65,6 +68,7 @@ const colorSteps = {
 const defaultValues = {
   email: '',
   name: '',
+  approveTerms: false,
   age: 0,
   gender: 'other',
   'make-comunity': false,
@@ -88,9 +92,10 @@ export function FormWizard({ coursePrice }) {
   const {
     reset,
     trigger,
+    control,
     setValue,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = methods;
 
   const handleNext = useCallback(
@@ -98,7 +103,7 @@ export function FormWizard({ coursePrice }) {
       if (step) {
         let isValid = true;
         if (step === 'stepOne') {
-          isValid = await trigger(['email', 'name']);
+          isValid = await trigger(['email', 'name', 'approveTerms']);
         } else {
           await trigger([
             'age',
@@ -139,7 +144,6 @@ export function FormWizard({ coursePrice }) {
   // };
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log('I am here!');
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -213,7 +217,7 @@ export function FormWizard({ coursePrice }) {
               // background: theme.palette.background.paper,
             }}
           >
-            {activeStep === 0 && <StepOne />}
+            {activeStep === 0 && <StepOne errors={errors} control={control} setValue={setValue} />}
             {activeStep === 1 && <StepTwo setValue={setValue} name={name} />}
             {activeStep === 2 && (
               <StepThree setValue={setValue} coursePrice={coursePrice} name={name} email={email} />
