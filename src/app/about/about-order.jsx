@@ -17,7 +17,7 @@ import { varFade, AnimateBorder, MotionViewport } from 'src/components/animate';
 
 export function AboutOrder({ contentType = 'aboutCourse' }) {
   const theme = useTheme();
-  const { mainColor } = useContext(ColorContext);
+  const { mainColor, textGradient, themeColor } = useContext(ColorContext);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const promoVideo = (
@@ -98,20 +98,20 @@ export function AboutOrder({ contentType = 'aboutCourse' }) {
       <m.div variants={varFade().inLeft}>
         <Typography variant="h4" sx={{ mb: 3 }}>
           עולם הדיגיטל, הסושיאל ויצירת התוכן הוא
-          <Box component="a" mx={1} color={`${mainColor}.main*`}>
+          <Box component="a" mx={1}>
             עצום ומלא אפשרויות (ואכזבות), זאת גם הסיבה שכדי להצליח חשוב מאוד לבנות את עצמכם בצורה
             נכונה ולספק תוכן איכותי ומקורי.
           </Box>
         </Typography>
       </m.div>
-      <m.div variants={varFade({ delay: 0.5 }).inRight}>
+      <m.div variants={varFade({ delay: 0.5 }).inLeft}>
         <Typography variant="h4" sx={{ mb: 3 }}>
           אני אעשה לך
-          <Box component="a" mx={1} color={`${mainColor}.main`}>
+          <Box component="a" mx={1} sx={textGradient}>
             סדר
           </Box>
           ואלמד אותך לעבוד באופן שיטתי ומסודר ובכך להגדיל את
-          <Box component="a" mx={1} color={`${mainColor}.main`}>
+          <Box component="a" mx={1} sx={textGradient}>
             סיכויי ההצלחה שלך
           </Box>
         </Typography>
@@ -127,7 +127,7 @@ export function AboutOrder({ contentType = 'aboutCourse' }) {
           {promoVideo}
         </Box>
       </div>
-      <m.div variants={varFade({ delay: 0.5 }).inRight}>
+      <m.div variants={varFade({ delay: 0.7 }).inLeft}>
         <Typography variant="p" sx={{ mb: 3 }}>
           אני יודע כמה זה מתסכל לנסות ליצור תוכן איכותי ובסוף לגלות שיש עוד 1000 כמוכם שעשו את זה
           כבר לפניכם.
@@ -137,7 +137,7 @@ export function AboutOrder({ contentType = 'aboutCourse' }) {
           כאלה ששמים את הדגש על הפרטים הקטנים ועושים את ההבדל בין יוצר תוכן מקצועי לחובבן.
           <br />
           אחרי שתלמדו את הסודות, כבר לא תסתכלו על סרטוני טיקטוק ויוטיוב באותו האופן ותתחילו לבנות את
-          <Box component="a" mx={1} color={theme.palette[mainColor]?.main}>
+          <Box component="a" mx={1} sx={textGradient}>
             הנישה הפרטית שלכם שמתאימה לאופי שלכם
           </Box>
         </Typography>

@@ -3,7 +3,7 @@
 
 import { useContext } from 'react';
 
-import { useTheme, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 
 import { ColorContext } from 'src/context/colorMain';
 
@@ -14,13 +14,12 @@ import { FormWizard } from './form-wizard';
 // ----------------------------------------------------------------------
 
 export function FormWizardView({ coursePrice }) {
-  const theme = useTheme();
-  const { mainColor } = useContext(ColorContext);
+  const { textGradient } = useContext(ColorContext);
   return (
     <>
       <Typography variant="h2">
         איך נרשמים ל
-        <Typography mx={1} variant="h2" component="a" color={theme.palette[mainColor]?.main}>
+        <Typography mx={1} variant="h2" component="a" sx={textGradient}>
           Video-Pro
         </Typography>
         ?

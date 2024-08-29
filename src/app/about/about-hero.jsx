@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import { Stack, Button, useTheme, useMediaQuery } from '@mui/material';
 
 import { CONFIG } from 'src/config-global';
+import { textGradient } from 'src/theme/styles';
 import { ColorContext } from 'src/context/colorMain';
 
 import { Image } from 'src/components/image';
@@ -25,6 +26,8 @@ import {
   AnimateAvatar,
   MotionContainer,
 } from 'src/components/animate';
+
+import COLORS from '../../theme/core/colors.json';
 
 const emph = (colorPalette) => (
   <svg
@@ -104,15 +107,14 @@ export function AboutHero() {
   const theme = useTheme();
   const [update, setUpdate] = useState(false);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const { mainColor } = useContext(ColorContext);
-  const colorName = `${mainColor}.main`;
+  const { mainColor, mode } = useContext(ColorContext);
   const waveVector = useRef();
   // console.log('theme: ', theme);
 
   useEffect(() => {
-    waveVector.current = `${CONFIG.site.basePath}/assets/background/waveVector_${theme.palette.mode}.svg`;
+    waveVector.current = `${CONFIG.site.basePath}/assets/background/waveVector_${mode}.svg`;
     setUpdate((p) => !p);
-  }, [theme, mainColor]);
+  }, [mode]);
 
   return (
     <Box
@@ -150,7 +152,9 @@ export function AboutHero() {
             text="Video-Pro"
             variants={varSlide({ distance: 500 }).inDown}
             sx={{
-              color: colorName,
+              ...textGradient(
+                `45deg, ${COLORS[mainColor]?.dark} 25%, ${COLORS[mainColor]?.light} 40%, ${COLORS[mainColor]?.main} 50%,${COLORS[mainColor]?.light} 80%, ${COLORS[mainColor]?.main} 95%`
+              ),
               direction: 'ltr',
               textAlign: { md: 'end', xs: 'unset' },
               pb: 2,

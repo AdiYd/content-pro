@@ -1,7 +1,5 @@
 import { useContext } from 'react';
 
-import { useTheme } from '@mui/material';
-
 import { CONFIG } from 'src/config-global';
 import { ColorContext } from 'src/context/colorMain';
 
@@ -13,8 +11,7 @@ const stats = [
 ];
 
 export default function Promotion1() {
-  const theme = useTheme();
-  const { mainColor } = useContext(ColorContext);
+  const { themeColor } = useContext(ColorContext);
 
   return (
     <div
@@ -43,10 +40,7 @@ export default function Promotion1() {
           />
         </div>
         <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl">
-          <h2
-            style={{ color: theme.palette[mainColor]?.main }}
-            className="text-lg font-semibold leading-8 "
-          >
+          <h2 style={{ color: themeColor }} className="text-lg font-semibold leading-8 ">
             עם מי אנחנו עובדים?
           </h2>
           <p className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">

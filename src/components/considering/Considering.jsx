@@ -186,7 +186,7 @@ function Considering({
                     },
                   }}
                   onClick={startConfetti}
-                  variant={active || confettiOnly ? 'text' : 'outlined'}
+                  variant={active ? 'text' : 'outlined'}
                   color={color}
                 >
                   {buttonMsg.current}

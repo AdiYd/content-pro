@@ -3,7 +3,6 @@ import { useContext } from 'react';
 
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { ColorContext } from 'src/context/colorMain';
@@ -15,8 +14,7 @@ import CarouselView from './view/carouselView';
 // ----------------------------------------------------------------------
 
 export function AboutVision() {
-  const theme = useTheme();
-  const { mainColor } = useContext(ColorContext);
+  const { mainColor, textGradient } = useContext(ColorContext);
   const renderImg = <CarouselView />;
 
   return (
@@ -56,7 +54,7 @@ export function AboutVision() {
             לייצר תוכן איכותי, מעניין ומקורי מכל מקום ובמינימום מאמץ.
             <br />
             איך לנהל את התוכן ברשתות חברתיות ואיך{' '}
-            <Box component="a" color={`${mainColor}.main`}>
+            <Box component="a" sx={textGradient} color={`${mainColor}.main`}>
               לייצר הכנסה שוטפת
             </Box>
           </Typography>

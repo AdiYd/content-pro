@@ -18,7 +18,7 @@ import { ColorContext } from 'src/context/colorMain';
 import { Form } from 'src/components/hook-form';
 import { AnimateBorder } from 'src/components/animate';
 
-import { Stepper, StepOne, StepTwo, StepThree } from './form-steps';
+import { StepTwo, Stepper, StepOne, StepThree } from './form-steps';
 
 // ----------------------------------------------------------------------
 

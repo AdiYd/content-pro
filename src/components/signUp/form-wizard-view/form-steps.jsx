@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import Cookies from 'js-cookie';
 import { Controller } from 'react-hook-form';
 import { useRef, useState, useEffect, useContext } from 'react';
@@ -110,76 +111,130 @@ export function Stepper({ steps, activeStep }) {
 
 export function StepOne({ setValue, control, errors }) {
   const [active, setActive] = useState(false);
+  const { mainColor } = useContext(ColorContext);
+
+  const dialog = (
+    <Dialog
+      fullWidth
+      sx={{
+        // minWidth: '50%',
+        // width: 'fit-content',
+        // p: 15,
+        // position: 'relative',
+        direction: 'rtl',
+        textAlign: 'center',
+      }}
+      open={active}
+      onClose={() => setActive(false)}
+    >
+      <DialogTitle>
+        {terms.title}
+        {/* תנאי שימוש לקורס Video-Pro */}
+        <IconButton
+          aria-label="close"
+          onClick={() => setActive(false)}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            // color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <Iconify icon="carbon:close-filled" />
+        </IconButton>
+      </DialogTitle>
+
+      <DialogContent dividers sx={{ color: 'text.secondary' }}>
+        <Typography textAlign="start" lineHeight={1.5} color="text.secondary" variant="body2">
+          {terms.content.split('\n').map((item, index) => (
+            <div key={index}>
+              {item}
+              <br />
+            </div>
+          ))}
+        </Typography>
+
+        <Typography color="text.primary" variant="p" />
+      </DialogContent>
+
+      <DialogActions sx={{ display: 'flex', gap: 3, justifyContent: 'space-around' }}>
+        <Button
+          size="small"
+          variant="contained"
+          onClick={() => {
+            setValue('approveTerms', true);
+            setActive(false);
+          }}
+          autoFocus
+        >
+          אישור
+        </Button>
+
+        <Button
+          size="small"
+          variant="outlined"
+          onClick={() => {
+            setValue('approveTerms', false);
+            setActive(false);
+          }}
+        >
+          ביטול
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+
+  const checkBox = (
+    <div className="flex flex-col gap-2">
+      <Controller
+        name="approveTerms"
+        control={control}
+        render={({ field }) => (
+          <FormControlLabel
+            sx={{ mr: 0 }}
+            control={
+              <Checkbox
+                {...field}
+                color={mainColor}
+                checked={field.value}
+                // sx={{
+                //   border: (theme) =>
+                //     errors.approveTerms && `0.4px dashed ${theme.palette.error.main}`,
+                // }}
+              />
+            }
+            label={
+              <Typography>
+                קראתי ואישרתי את{' '}
+                <Button
+                  size="small"
+                  sx={{
+                    textDecoration: 'underline',
+                    opacity: 0.8,
+                  }}
+                  // color="text.secondary"
+                  onClick={() => setActive((p) => !p)}
+                  mx={1}
+                >
+                  תנאי השימוש
+                </Button>
+              </Typography>
+            }
+          />
+        )}
+      />
+
+      {errors.approveTerms && (
+        <Typography mr={1} variant="body2" sx={{ color: (theme) => theme.palette.error.main }}>
+          יש לאשר את תנאי השימוש
+        </Typography>
+      )}
+    </div>
+  );
+
   return (
     <div className="z-30 flex flex-col gap-6">
-      <Dialog
-        fullWidth
-        sx={{
-          // minWidth: '50%',
-          // width: 'fit-content',
-          // p: 15,
-          // position: 'relative',
-          direction: 'rtl',
-          textAlign: 'center',
-        }}
-        open={active}
-        onClose={() => setActive(false)}
-      >
-        <DialogTitle>
-          {terms.title}
-          {/* תנאי שימוש לקורס Video-Pro */}
-          <IconButton
-            aria-label="close"
-            onClick={() => setActive(false)}
-            sx={{
-              position: 'absolute',
-              right: 8,
-              top: 8,
-              // color: (theme) => theme.palette.grey[500],
-            }}
-          >
-            <Iconify icon="carbon:close-filled" />
-          </IconButton>
-        </DialogTitle>
-
-        <DialogContent dividers sx={{ color: 'text.secondary' }}>
-          <Typography textAlign="start" lineHeight={1.5} color="text.secondary" variant="body2">
-            {terms.content.split('\n').map((item, index) => (
-              <div key={index}>
-                {item}
-                <br />
-              </div>
-            ))}
-          </Typography>
-
-          <Typography color="text.primary" variant="p" />
-        </DialogContent>
-
-        <DialogActions sx={{ display: 'flex', gap: 3, justifyContent: 'space-around' }}>
-          <Button
-            size="small"
-            variant="contained"
-            onClick={() => {
-              setValue('approveTerms', true);
-              setActive(false);
-            }}
-            autoFocus
-          >
-            אישור
-          </Button>
-
-          <Button
-            size="small"
-            variant="outlined"
-            onClick={() => {
-              setValue('approveTerms', false);
-              setActive(false);
-            }}
-          >
-            ביטול
-          </Button>
-        </DialogActions>
-      </Dialog>
+      {dialog}
       <Typography mb={2} variant="h6">
         הפרטים אליהם נשלח את הקישור לקורס ולקהילה:
       </Typography>
@@ -214,42 +269,7 @@ export function StepOne({ setValue, control, errors }) {
         }}
         autoComplete="on"
       />
-      <div className="flex flex-col gap-2">
-        <Controller
-          name="approveTerms"
-          control={control}
-          render={({ field }) => (
-            <FormControlLabel
-              sx={{ mr: 0 }}
-              control={
-                <Checkbox
-                  {...field}
-                  checked={field.value}
-                  // sx={{
-                  //   border: (theme) =>
-                  //     errors.approveTerms && `0.4px dashed ${theme.palette.error.main}`,
-                  // }}
-                  color="success"
-                />
-              }
-              label={
-                <Typography>
-                  קראתי ואישרתי את{' '}
-                  <Button size="small" onClick={() => setActive((p) => !p)} mx={1}>
-                    תנאי השימוש
-                  </Button>
-                </Typography>
-              }
-            />
-          )}
-        />
-
-        {errors.approveTerms && (
-          <Typography mr={1} variant="body2" sx={{ color: (theme) => theme.palette.error.main }}>
-            יש לאשר את תנאי השימוש
-          </Typography>
-        )}
-      </div>
+      {checkBox}
     </div>
   );
 }
@@ -342,7 +362,8 @@ export function StepTwo({ name, setValue }) {
               onChange={(e) => setValue('gender', e.target.value)}
               sx={{ textAlign: 'center', width: { md: 90, xs: 111 } }}
               itemProp={{ textAlign: 'center' }}
-              value=""
+              defaultValue=""
+              // value={}
               // onChange={handleOptionsChange}
               // input={<OutlinedInput label="מין" />}
             >
@@ -514,7 +535,7 @@ export function StepThree({ name, email, coursePrice, setValue }) {
         )}
       </div>
       <Typography my={0} variant="p">
-        {'סה"כ לתשלום : '} {totalPrice.current}₪ {validCoupon && `(במקום ${coursePrice})`}
+        {'סה"כ לתשלום : '} {totalPrice.current} ₪ {validCoupon && `(במקום ${coursePrice})`}
       </Typography>
 
       <Field.Text

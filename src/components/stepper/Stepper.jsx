@@ -139,8 +139,8 @@ function classNames(...classes) {
 }
 function Stepper({ children }) {
   const theme = useTheme();
-  const { mainColor } = useContext(ColorContext);
-  const themeColor = theme.palette[mainColor]?.main || theme.palette.info.main;
+  const { mainColor, themeColor, textGradient } = useContext(ColorContext);
+  console.log('themeColor', themeColor);
   const [activeStep, setActive] = useState(0);
   const stepsId = steps.map((item) => item.id);
   useScrollTrigger(stepsId, (index) => setActive(index));
@@ -248,6 +248,7 @@ function Stepper({ children }) {
                       style={{
                         color: themeColor,
                         marginBottom: '10px',
+                        ...textGradient,
                       }}
                       // className="text-2xl font-medium"
                     >

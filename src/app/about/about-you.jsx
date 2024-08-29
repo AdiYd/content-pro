@@ -74,7 +74,7 @@ const bulletsWithIcons = [
 
 export function AboutYou({ contentType = 'aboutCourse' }) {
   const theme = useTheme();
-  const { mainColor } = useContext(ColorContext);
+  const { mainColor, textGradient } = useContext(ColorContext);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const bullet = ({
@@ -91,8 +91,6 @@ export function AboutYou({ contentType = 'aboutCourse' }) {
             borderRadius: 2,
             height: 'fit-content',
             color: 'text.primary',
-            // color: theme.palette[mainColor]?.main,
-            // backgroundColor: `${color}.main`,
             borderColor: `${color}.main`,
             '&:hover': {
               color: 'white',
@@ -135,7 +133,7 @@ export function AboutYou({ contentType = 'aboutCourse' }) {
       <m.div variants={varFade().inDown}>
         <Typography variant="h2" sx={{ mb: 3 }}>
           איך זה
-          <Box component="a" mx={1} color={`${mainColor}.main`}>
+          <Box component="a" mx={1} sx={textGradient} color={`${mainColor}.main`}>
             ישתלם לך
           </Box>
           ?

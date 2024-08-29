@@ -37,8 +37,7 @@ const learningTopics = {
 
 function SocialProof({ title, bullets = [], ...props }) {
   const theme = useTheme();
-  const { mainColor } = useContext(ColorContext);
-  const themeColor = theme.palette[mainColor]?.main || theme.palette.info.main;
+  const { mainColor, textGradient, themeColor } = useContext(ColorContext);
   return (
     <Box my={2} mx={{ md: 8, xs: 4 }}>
       <Container maxWidth={500}>
@@ -49,7 +48,7 @@ function SocialProof({ title, bullets = [], ...props }) {
           sx={{
             textAlign: 'start',
             '& .animate-text-word[data-index="3"]': {
-              color: themeColor,
+              ...textGradient,
             },
           }}
           text="האם נלמד דברים יחודיים בקורס?"
@@ -103,13 +102,12 @@ const RowX = ({
   picName = 'followers',
 }) => {
   const theme = useTheme();
-  const { mainColor } = useContext(ColorContext);
+  const { mainColor, textGradient } = useContext(ColorContext);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const colorPalette = Object.values(theme.palette)[index + 1]?.dark || `${mainColor}.light`;
   const bulletsList = (
     // <m.div variants={varFade().inLeft} sx={{ width: 'auto' }}>
     <div className="w-auto">
-      <Typography variant="h4" component="h4" sx={{ color: `${mainColor}.main` }}>
+      <Typography variant="h4" component="h4" sx={textGradient}>
         {title}
       </Typography>
       <List>
@@ -155,7 +153,6 @@ const RowX = ({
               transition: 'transform 0.7s ease-in',
               borderRadius: !isMobile ? '32px' : '25px',
               transform: `rotate(${even ? '-' : ''}4deg)`,
-              // boxShadow: `${even ? '-' : ''}10px 5px 20px ${colorPalette}`,
             }}
           />
         </Box>

@@ -34,7 +34,7 @@ const contentDict = {
 
 export function AboutWhat({ contentType = 'aboutCourse' }) {
   const theme = useTheme();
-  const { mainColor } = useContext(ColorContext);
+  const { mainColor, textGradient } = useContext(ColorContext);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const imageDiv = (
@@ -138,7 +138,7 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
                 >
                   <Image
                     alt="Our office small"
-                    src={`${CONFIG.site.basePath}/assets/images/about/Eran.png`}
+                    src={`${CONFIG.site.basePath}/assets/images/about/Eran2.png`}
                     ratio="1/1"
                     sx={{
                       '&:hover': {
@@ -165,7 +165,7 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
             )}
             <Typography variant="h2" sx={{ mb: 3 }}>
               {contentDict[contentType]?.title[0]}
-              <Box component="a" color={`${mainColor}.main`}>
+              <Box component="a" sx={textGradient} color={`${mainColor}.main`}>
                 {contentDict[contentType]?.title[1]}
               </Box>
               {contentType === 'aboutCourse' && '?'}
