@@ -22,7 +22,6 @@ export function AboutOrder({ contentType = 'aboutCourse' }) {
 
   const promoVideo = (
     <AnimateBorder
-      onClick={() => console.log('Video clicked! :)')}
       sx={{ borderRadius: 4 }}
       animate={{ distance: 40, outline: '', color: theme.palette.secondary?.main || '#fff' }}
     >
@@ -116,11 +115,12 @@ export function AboutOrder({ contentType = 'aboutCourse' }) {
           </Box>
         </Typography>
       </m.div>
-      <div className="flex">
+      <div className="flex max-lg:justify-center">
         <Box
           sx={{
             display: 'flex',
-            justifyContent: { md: 'justify', xs: 'center' },
+            justifyContent: { lg: 'center', md: 'center' },
+
             mb: 4,
           }}
         >

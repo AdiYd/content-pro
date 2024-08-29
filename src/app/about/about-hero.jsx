@@ -170,7 +170,7 @@ export function AboutHero() {
               direction: 'rtl',
             }}
           /> */}
-          <div className="w-fit h-fit relative max-md:mx-auto">
+          <div className="w-fit h-fit relative max-lg:mx-auto">
             <AnimateText
               component="h2"
               variant="h2"
@@ -185,7 +185,12 @@ export function AboutHero() {
               // className="animate-bounce"
               variants={varBounce({ durationIn: 2, delay: 2 }).inLeft}
             >
-              <Box sx={{ display: 'flex', justifyContent: { md: 'inherit', xs: 'center' } }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: { lg: 'inherit', md: 'center', xs: 'center' },
+                }}
+              >
                 {emph(theme.palette[mainColor])}
               </Box>
             </m.div>
@@ -293,7 +298,7 @@ export function AboutHero() {
           className="w-full absolute bottom-0"
         />
       )}
-      <div className="absolute -bottom-8 right-10 rounded-full shadow-md shadow-zinc-300/20 hidden justify-center max-md:flex">
+      <div className="absolute -bottom-8 right-10 rounded-full shadow-md shadow-zinc-300/20 hidden justify-center max-lg:flex">
         <AnimateAvatar width={115}>
           <Image
             alt="קורס Video-pro של ערן פרקש"

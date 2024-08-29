@@ -10,7 +10,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { Card, useTheme, Container } from '@mui/material';
 
-import { trackEvent } from 'src/utils/GAEvents';
+import { trackEvent, trackPurchase } from 'src/utils/GAEvents';
 
 import { customShadows } from 'src/theme/core';
 import { ColorContext } from 'src/context/colorMain';
@@ -144,18 +144,13 @@ export function FormWizard({ coursePrice }) {
     setActiveStep(0);
   }, [reset]);
 
-  // const onSubmit = (e) => {
-  //   // e.preventDefault();
-  //   console.log('data: ', e);
-  // };
-
   const onSubmit = handleSubmit(async (data) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       toast.success('Create success!');
       console.info('DATA', data);
-
+      trackPurchase(data.email, data.totalPrice, 'ILS', 'Course');
       // handleNext();
     } catch (error) {
       console.error(error);

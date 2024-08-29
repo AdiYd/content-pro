@@ -172,8 +172,8 @@ export function AboutTestimonials() {
     <Box
       sx={{
         ...hideScrollY,
-        py: { md: 10 },
-        height: { md: 1 },
+        // py: { md: 10 },
+        // height: { md: 1 },
         overflowY: { xs: 'unset', md: 'auto' },
       }}
     >
@@ -213,13 +213,13 @@ export function AboutTestimonials() {
           spacing={3}
           alignItems="center"
           justifyContent={{ xs: 'center', md: 'space-between' }}
-          sx={{ height: 1 }}
+          // sx={{ height: 1 }}
         >
           <Grid xs={10} md={4}>
             {renderDescription}
           </Grid>
 
-          <Grid xs={12} md={7} lg={6} alignItems="center" sx={{ height: 1 }}>
+          <Grid xs={12} md={7} lg={6} alignItems="center">
             {renderContent}
           </Grid>
         </Grid>

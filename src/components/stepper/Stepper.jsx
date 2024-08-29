@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { useState, useEffect, useContext } from 'react';
 
-import { Box, useTheme, Typography } from '@mui/material';
+import { Box, Divider, useTheme, Typography } from '@mui/material';
 
 import { ColorContext } from 'src/context/colorMain';
 
@@ -184,6 +184,7 @@ function Stepper({ children }) {
                   </span>
                   <Typography
                     variant="h3"
+                    component="div"
                     sx={{ display: 'flex', mr: 4, flexDirection: 'column', minWidth: 0 }}
                     className="mr-4 flex min-w-0 flex-col"
                   >
@@ -240,6 +241,7 @@ function Stepper({ children }) {
                   </span>
                   <Typography
                     variant="h3"
+                    component="div"
                     sx={{
                       display: 'flex',
                       mr: 4,
@@ -292,6 +294,7 @@ function Stepper({ children }) {
                   </span>
                   <Typography
                     variant="h3"
+                    component="div"
                     sx={{ display: 'flex', mr: 4, flexDirection: 'column', minWidth: 0 }}
                     className="mr-4 flex min-w-0 flex-col"
                   >
@@ -347,8 +350,34 @@ function useScrollTrigger(elementIds, callback) {
 }
 
 export default function StepperSection({ ...props }) {
+  const theme = useTheme();
   return (
-    <Box sx={{ my: 8, mx: { md: 8, xs: 2 } }}>
+    <Box sx={{ mb: 8, mx: { md: 8, xs: 2 } }}>
+      <Divider
+        sx={{
+          mt: 6,
+          mb: 4,
+          background: `linear-gradient(to right, ${theme.palette.secondary?.main},${theme.palette.warning?.main},${theme.palette.primary?.main})`,
+          width: '100%',
+          height: 1.5,
+          borderRadius: 50,
+          border: 'none',
+          backgroundSize: '200% 100%', // This makes the gradient larger than the container
+          animation: 'slide 20s linear infinite', // Define the animation timing and type
+          '@keyframes slide': {
+            '0%': {
+              backgroundPosition: '0% 50%', // Start at the beginning of the gradient
+            },
+            '50%': {
+              backgroundPosition: '100% 50%', // End at the end of the gradient
+            },
+            '100%': {
+              backgroundPosition: '0% 100%', // End at the end of the gradient
+            },
+          },
+        }}
+      />
+
       <AnimateText
         variant="h3"
         sx={{ mb: 4 }}

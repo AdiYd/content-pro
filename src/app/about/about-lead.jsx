@@ -9,7 +9,6 @@ import {
   Card,
   Button,
   Dialog,
-  Divider,
   Checkbox,
   TextField,
   IconButton,
@@ -303,23 +302,24 @@ export function AboutLead({ contentType = 'aboutCourse' }) {
               )}
 
               {checkBox}
-
-              <Button
-                type="submit"
-                variant="contained"
-                color={mainColor}
-                sx={2}
-                disabled={
-                  !formData.fullName || !formData.email || !formData.approveTerms || errors.email
-                }
-              >
-                שליחה
-              </Button>
+              <div className="w-full flex justify-center">
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color={mainColor}
+                  sx={{ my: 2 }}
+                  disabled={
+                    !formData.fullName || !formData.email || !formData.approveTerms || errors.email
+                  }
+                >
+                  שליחה
+                </Button>
+              </div>
             </form>
           </Card>
         </AnimateBorder>
 
-        <Divider
+        {/* <Divider
           sx={{
             mt: 6,
             background: `linear-gradient(to right, ${theme.palette.secondary?.main},${theme.palette.warning?.main},${theme.palette.primary?.main})`,
@@ -341,7 +341,7 @@ export function AboutLead({ contentType = 'aboutCourse' }) {
               },
             },
           }}
-        />
+        /> */}
       </m.div>
     </Container>
   );

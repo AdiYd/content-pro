@@ -424,6 +424,7 @@ export function StepThree({ name, email, coursePrice, setValue }) {
 
   const handleCoupon = (e) => {
     const isCoupon = Cookies.get('counting');
+    console.log(e.target.value, isCoupon);
     if (e.target.value === `ExtraPro_${NumOfDiscount}` && !validCoupon && isCoupon) {
       totalPrice.current *= (100 - NumOfDiscount) / 100;
       totalPrice.current = Math.floor(totalPrice.current);
@@ -440,9 +441,9 @@ export function StepThree({ name, email, coursePrice, setValue }) {
       setValidCoupon(true);
       setValue('totalPrice', totalPrice.current);
       trackEvent('Coupon Redeem', 'Coupons', `free`);
-    } else if (e.target.value.includes(`AdminPro_` && !validCoupon)) {
+    } else if (e.target.value.includes(`AdminPro_`) && !validCoupon) {
       const discount = Number(e.target.value.split('_')[1]);
-      if (!Number.isNaN(discount) && [10, 20, 25, 50].includes(discount)) {
+      if (!Number.isNaN(discount) && [10, 15, 20, 25].includes(discount)) {
         totalPrice.current *= (100 - discount) / 100;
         totalPrice.current = Math.floor(totalPrice.current);
         setValidCoupon(true);
@@ -535,7 +536,16 @@ export function StepThree({ name, email, coursePrice, setValue }) {
         )}
       </div>
       <Typography my={0} variant="p">
-        {'סה"כ לתשלום : '} {totalPrice.current} ₪ {validCoupon && `(במקום ${coursePrice})`}
+        {'סה"כ לתשלום : '} {totalPrice.current} ₪
+        <Typography
+          noWrap
+          component="a"
+          sx={{ textDecoration: 'line-through' }}
+          mx={1}
+          color="text.secondary"
+        >
+          {validCoupon && `( ₪ ${coursePrice})`}
+        </Typography>
       </Typography>
 
       <Field.Text

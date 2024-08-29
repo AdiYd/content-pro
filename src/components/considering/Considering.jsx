@@ -84,7 +84,7 @@ function Considering({
   ...props
 }) {
   const theme = useTheme();
-  const { mainColor, mode } = useContext(ColorContext);
+  const { mainColor, mode, textGradient } = useContext(ColorContext);
   const [confetti, setConfetti] = useState(false);
   const [email, setEmail] = useState('');
   const { countdown, startCountdown, counting } = useCountdownSeconds(NumOfMinutes * 60);
@@ -154,6 +154,7 @@ function Considering({
         // width: 'fit-content',
         // p: 15,
         // position: 'relative',
+        pt: 4,
         direction: 'rtl',
         textAlign: 'center',
       }}
@@ -161,7 +162,7 @@ function Considering({
       onClose={() => setActive(false)}
     >
       <DialogTitle>
-        יש לנו חוברת הדרכה שתעשה לכם סדר
+        חוברת הדרכה במתנה
         <IconButton
           aria-label="close"
           onClick={() => {
@@ -184,7 +185,7 @@ function Considering({
         </Typography>
         <br />
         <Typography color="text.primary" variant="p">
-          השאירו פרטים וקבלו קישור לחוברת
+          השאירו פרטים וקבלו קישור לחוברת חינם
         </Typography>
 
         <TextField
@@ -333,9 +334,12 @@ function Considering({
         },
       }}
     >
-      <Typography height={8} variant="h5">
-        זמן שנותר לקופון
-      </Typography>
+      <div>
+        <Typography variant="h5">זמן שנותר לקופון</Typography>
+        <Typography sx={textGradient} variant="h5">
+          ExtraPro_{NumOfDiscount}
+        </Typography>
+      </div>
       <Box
         gap={3}
         display="flex"

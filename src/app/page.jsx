@@ -42,8 +42,7 @@ export default function Page() {
       <SocialProof />
       <Considering
         booklet
-        buttonBefore="רוצים לקבל חוברת הדרכה? לחצו כאן 📖"
-        color="primary"
+        buttonBefore="רוצים לקבל חוברת הדרכה עם טיפים והסברים? לחצו כאן "
         buttonAfter="🎉 עוד כמה צעדים ואתם מתחילים ליצור את הקהילה שתמיד חלמתם עליה  🎉"
       />
       {/* <Promotion1 /> */}
