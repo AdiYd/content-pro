@@ -42,7 +42,7 @@ export default function Page() {
       <SocialProof />
       <Considering
         booklet
-        buttonBefore="רוצים לקבל חוברת הדרכה? לחצו כאן"
+        buttonBefore="רוצים לקבל חוברת הדרכה? לחצו כאן 📖"
         color="primary"
         buttonAfter="🎉 עוד כמה צעדים ואתם מתחילים ליצור את הקהילה שתמיד חלמתם עליה  🎉"
       />

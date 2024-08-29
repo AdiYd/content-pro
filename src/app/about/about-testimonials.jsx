@@ -17,6 +17,7 @@ import { CONFIG } from 'src/config-global';
 import { ColorContext } from 'src/context/colorMain';
 import { bgBlur, varAlpha, bgGradient, hideScrollY } from 'src/theme/styles';
 
+import { Image } from 'src/components/image';
 import { Iconify } from 'src/components/iconify';
 import { varFade, AnimateBorder, MotionViewport } from 'src/components/animate';
 
@@ -124,14 +125,30 @@ export const testimonials = [
 
 export function AboutTestimonials() {
   const theme = useTheme();
-  const { mainColor } = useContext(ColorContext);
+  const { textGradient } = useContext(ColorContext);
   const mdUp = useResponsive('up', 'md');
 
   const renderDescription = (
     <Box sx={{ maxWidth: { md: 360 }, textAlign: { xs: 'center', md: 'unset' } }}>
       <m.div variants={varFade().inUp}>
+        {/* <Skeleton height={100} variant="rectangular" animation="wave" /> */}
+        <Image
+          alt="קורס Video-pro של ערן פרקש"
+          src={`${CONFIG.site.basePath}/assets/images/about/Eran.png`}
+          ratio="1/1"
+          sx={{
+            width: 1,
+            borderRadius: 2,
+            // objectPosition: 'top',
+            alignSelf: 'center',
+            '&:hover': {
+              transform: 'scale(1.1)',
+              transition: 'transform 0.5s ease-out',
+            },
+          }}
+        />
         <Typography variant="h2" sx={{ my: 3, color: 'common.white' }}>
-          <Box component="a" sx={{ color: `${mainColor}.main` }}>
+          <Box component="a" sx={textGradient}>
             ממליצים{' '}
           </Box>
           <br />
@@ -180,8 +197,9 @@ export function AboutTestimonials() {
     <Box
       sx={{
         ...bgGradient({
-          color: `0deg, ${varAlpha(theme.vars.palette.grey['900Channel'], 0.6)}, ${varAlpha(theme.vars.palette.grey['900Channel'], 0.9)}`,
-          imgUrl: `${CONFIG.site.basePath}/assets/images/about/Eran.png`,
+          // color: `0deg, ${varAlpha(theme.vars.palette.grey['900Channel'], 0.6)}, ${varAlpha(theme.vars.palette.grey['900Channel'], 0.9)}`,
+          color: `0deg, transparent, #05040C,#01183A,#00407D,#01457C,#003464,#05050F ,transparent `,
+          // imgUrl: `${CONFIG.site.basePath}/assets/images/about/Eran.png`,
         }),
         overflow: 'hidden',
         height: { md: 840 },

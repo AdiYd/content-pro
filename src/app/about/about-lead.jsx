@@ -23,71 +23,17 @@ import {
 import { ColorContext } from 'src/context/colorMain';
 
 import { Iconify } from 'src/components/iconify';
-import { varFade, MotionViewport } from 'src/components/animate';
+import { varFade, AnimateBorder, MotionViewport } from 'src/components/animate';
 
 import terms from '../../utils/terms.json';
+
 // ----------------------------------------------------------------------
-
-const bullets = [
-  'מקצוע דיגיטלי ומבוקש ללא קשר לפלטפורמה המועדפת עליכם',
-  'לעבוד ולהרוויח כסף מכל מקום ובכל זמן',
-  'ללמוד איך ליצור קהילה משלכם, שתהווה עבורכם מקור הכנסה',
-  'מקבלים פרויקט ראשון בתשלום לאחר הכנת תיק עבודות',
-  'קבוצת וואטצאפ פרטים עם תכנים, טיפים ומדריכים להמשך הדרך',
-  'לא אהבתם ? תקבלו את כספכם בחזרה',
-];
-
-const bulletsWithIcons = [
-  {
-    text: 'מקצוע דיגיטלי מבוקש, ללא קשר לפלטפורמה המועדפת עליכם',
-    icons: ['logos:youtube-icon', 'logos:tiktok-icon', 'skill-icons:instagram', 'logos:facebook'],
-  },
-  {
-    text: 'ליצור תוכן ולהרוויח כסף מכל מקום ובכל זמן',
-    icons: [
-      'fa6-solid:wifi', // An icon representing money or earnings
-      'twemoji:laptop', // An icon representing time, indicating flexibility
-      'flat-color-icons:globe', // An icon representing time, indicating flexibility
-    ],
-  },
-  {
-    text: 'לבנות קהילה אותנטית שתהווה עבורכם מקור הכנסה וקהל שאוהב אתכם',
-    icons: [
-      'mdi:account-group-outline', // An icon representing a community or group
-      'material-symbols:animated-images',
-    ],
-  },
-  {
-    text: 'ההשקעה חוזרת - נחבר אתכם לפרויקט ראשון בתשלום לאחר הכנת תיק עבודות',
-    icons: [
-      // 'mdi:briefcase-check-outline', // An icon representing a successful project or job
-      'bytesize:portfolio',
-      'game-icons:money-stack',
-      'mdi:film-open-star-outline',
-    ],
-  },
-  {
-    text: 'קבוצת פרטית של יוצרי תוכן עם תכני העשרה, טיפים והדרכות להמשך הדרך',
-    icons: [
-      'logos:whatsapp-icon', // The WhatsApp icon for communication
-      'emojione:books', // An icon representing guides or tips
-    ],
-  },
-  {
-    text: 'לא אהבתם ? תקבלו את כספכם בחזרה',
-    icons: [
-      'mdi:cash-refund', // An icon representing a refund or money back
-      'pajamas:partner-verified',
-      // 'gala:secure',
-    ],
-  },
-];
 
 // ----------------------------------------------------------------------
 
 export function AboutLead({ contentType = 'aboutCourse' }) {
   const theme = useTheme();
-  const { mainColor, textGradient } = useContext(ColorContext);
+  const { mainColor, textGradient, mode } = useContext(ColorContext);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [activeTxtfield, setActiveTxtField] = useState(false);
   const [active, setActive] = useState(false);
@@ -100,6 +46,7 @@ export function AboutLead({ contentType = 'aboutCourse' }) {
 
   const [errors, setErrors] = useState({
     email: '',
+    fullName: '',
     approveTerms: '',
   });
 
@@ -118,7 +65,12 @@ export function AboutLead({ contentType = 'aboutCourse' }) {
       const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
       setErrors({
         ...errors,
-        email: emailValid ? '' : 'נא להכניס כתובת אימייל תקינה',
+        email: emailValid ? '' : 'נא למלא כתובת אימייל תקינה',
+      });
+    } else if (name === 'fullName') {
+      setErrors({
+        ...errors,
+        fullName: value.length < 2 ? 'נא למלא שם' : '',
       });
     }
   };
@@ -126,18 +78,8 @@ export function AboutLead({ contentType = 'aboutCourse' }) {
   // onSubmit handler to log form data
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!e.approveTerms) {
-      console.log('not approved');
-      setErrors((p) => ({
-        ...p,
-        approveTerms: 'נא לאשר את תנאי השימוש',
-      }));
-    }
-    if (!errors.email && formData.fullName && formData.approveTerms) {
-      console.log('Form Data:', formData);
-    } else {
-      console.log('Please fill out all required fields correctly.');
-    }
+
+    console.log('Form Data:', formData);
   };
 
   const dialog = (
@@ -189,7 +131,6 @@ export function AboutLead({ contentType = 'aboutCourse' }) {
           size="small"
           variant="contained"
           onClick={() => {
-            // setValue('approveTerms', true);
             setActive(false);
           }}
           autoFocus
@@ -272,7 +213,16 @@ export function AboutLead({ contentType = 'aboutCourse' }) {
           </Box>
         </Typography>
 
-        <Box>
+        <AnimateBorder
+          sx={{
+            maxWidth: { md: '60%', xs: '100%' },
+            borderRadius: 2,
+            mx: 'auto',
+            p: 0.1,
+            mb: 3,
+          }}
+          animate={{ color: mode === 'dark' ? 'white' : 'black' }}
+        >
           <Card
             gap={3}
             // display="flex"
@@ -281,20 +231,20 @@ export function AboutLead({ contentType = 'aboutCourse' }) {
               display: 'flex',
               flexDirection: 'column',
               gap: 3,
+              zIndex: 30,
               p: 3,
-              zIndex: 25,
-              mb: 3,
-              maxWidth: { md: '60%', xs: '100%' },
-              minHeight: 240,
+              // maxWidth: { md: '60%', xs: '100%' },
+              // width: 1,
               mx: 'auto',
               borderRadius: 2,
+              overflow: 'hidden',
               // border: theme.palette.mode === 'light' && `solid 1px ${theme.vars.palette.divider}`,
               // background: theme.palette.background.paper,
             }}
           >
             <form onSubmit={handleSubmit} noValidate>
               <Typography textAlign="center" variant="h4" gutterBottom>
-                דברו איתי
+                צרו קשר
               </Typography>
 
               <TextField
@@ -306,6 +256,8 @@ export function AboutLead({ contentType = 'aboutCourse' }) {
                 value={formData.fullName}
                 onChange={handleChange}
                 margin="normal"
+                error={Boolean(errors.fullName)}
+                helperText={errors.fullName}
               />
 
               <TextField
@@ -322,7 +274,7 @@ export function AboutLead({ contentType = 'aboutCourse' }) {
                 helperText={errors.email}
               />
               <Typography component="div" textAlign="start" mt={2} variant="body2">
-                רוצים להוסיף הערה?
+                רוצים להוסיף הודעה?
                 <Typography
                   onClick={() => setActiveTxtField((p) => !p)}
                   component="span"
@@ -352,26 +304,6 @@ export function AboutLead({ contentType = 'aboutCourse' }) {
 
               {checkBox}
 
-              {/* <FormControlLabel
-                control={
-                  <Checkbox
-                    name="approveTerms"
-                    color="primary"
-                    checked={formData.approveTerms}
-                    onChange={handleChange}
-                    required
-                  />
-                }
-                label={
-                  <>
-                    {' '}
-                    <a href="/terms-and-conditions" target="_blank" rel="noopener noreferrer">
-                      terms and conditions
-                    </a>
-                  </>
-                }
-              /> */}
-
               <Button
                 type="submit"
                 variant="contained"
@@ -385,7 +317,7 @@ export function AboutLead({ contentType = 'aboutCourse' }) {
               </Button>
             </form>
           </Card>
-        </Box>
+        </AnimateBorder>
 
         <Divider
           sx={{
