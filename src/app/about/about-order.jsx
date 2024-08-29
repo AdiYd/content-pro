@@ -17,7 +17,7 @@ import { varFade, AnimateBorder, MotionViewport } from 'src/components/animate';
 
 export function AboutOrder({ contentType = 'aboutCourse' }) {
   const theme = useTheme();
-  const { mainColor, textGradient, themeColor } = useContext(ColorContext);
+  const { mainColor, textGradient, themeColor, mode } = useContext(ColorContext);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const promoVideo = (
@@ -28,7 +28,7 @@ export function AboutOrder({ contentType = 'aboutCourse' }) {
     >
       <div
         // onClick={() => console.log('Video clicked!')}
-        style={{ width: isMobile ? '90vw' : '70vw', boxShadow: customShadows().z12 }}
+        style={{ width: isMobile ? '90vw' : '70vw', boxShadow: customShadows(mode).z12 }}
         className="overflow-hidden aspect-video rounded-3xl shadow-md shadow-warning-lighter/40"
       >
         <Box

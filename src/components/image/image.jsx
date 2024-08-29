@@ -1,7 +1,8 @@
-import { forwardRef } from 'react';
+import { Suspense, forwardRef } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 import Box from '@mui/material/Box';
+import { Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import { CONFIG } from 'src/config-global';
@@ -100,8 +101,9 @@ export const Image = forwardRef(
         {...other}
       >
         {slotProps?.overlay && <Overlay className={imageClasses.overlay} sx={slotProps?.overlay} />}
-
-        {content}
+        <Suspense fallback={<Skeleton variant="rectangular" animation="wave" />}>
+          {content}
+        </Suspense>
       </ImageWrapper>
     );
   }

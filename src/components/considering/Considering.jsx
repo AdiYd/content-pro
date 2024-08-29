@@ -186,7 +186,7 @@ function Considering({
                     },
                   }}
                   onClick={startConfetti}
-                  variant={active ? 'text' : 'outlined'}
+                  variant={active || buttonAfter === buttonMsg.current ? 'text' : 'outlined'}
                   color={color}
                 >
                   {buttonMsg.current}

@@ -10,7 +10,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { Card, useTheme, Container } from '@mui/material';
 
-import { trackEvent, trackFormSubmission } from 'src/utils/GAEvents';
+import { trackEvent } from 'src/utils/GAEvents';
 
 import { customShadows } from 'src/theme/core';
 import { ColorContext } from 'src/context/colorMain';
@@ -81,7 +81,7 @@ const defaultValues = {
 export function FormWizard({ coursePrice }) {
   const [activeStep, setActiveStep] = useState(0);
   const theme = useTheme();
-  const { mainColor } = useContext(ColorContext);
+  const { mainColor, mode } = useContext(ColorContext);
 
   const methods = useForm({
     mode: 'onChange',
@@ -117,12 +117,18 @@ export function FormWizard({ coursePrice }) {
         }
 
         if (isValid) {
-          trackFormSubmission(`New user: ${methods.getValues().email}`);
-          trackEvent('Signup', 'Signup form', `Step #${activeStep + 1}`, activeStep + 1);
+          // trackEvent(`New user: ${methods.getValues().email}`);
+          trackEvent(
+            'New user',
+            'Signup',
+            `${methods.getValues().name} ; ${methods.getValues().email}`,
+            1
+          );
+          trackEvent('Signup', `Step #${activeStep + 1}`);
           setActiveStep((prevActiveStep) => prevActiveStep + 1);
         }
       } else {
-        trackEvent('Signup', 'Signup form', `Step #${activeStep + 1}`, activeStep + 1);
+        trackEvent('Signup', `Step #${activeStep + 1}`);
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }
     },
@@ -175,12 +181,12 @@ export function FormWizard({ coursePrice }) {
       <Container
         sx={{
           zIndex: 30,
-          boxShadow: customShadows().z16,
+          boxShadow: customShadows(mode).z16,
           py: 4,
           px: 2,
           width: 1,
           borderRadius: 2,
-          border: `1px dashed ${theme.palette.divider}`,
+          border: `1px solid ${theme.palette.divider}`,
           mx: 'auto',
           maxWidth: 720,
         }}

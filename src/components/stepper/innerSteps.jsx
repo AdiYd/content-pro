@@ -6,7 +6,7 @@ import { customShadows } from 'src/theme/core';
 import { ColorContext } from 'src/context/colorMain';
 
 export default function InnerStep({ steps = [], itemNum = 1, ...props }) {
-  const { mainColor } = useContext(ColorContext);
+  const { mainColor, mode } = useContext(ColorContext);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   return (

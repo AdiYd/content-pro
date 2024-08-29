@@ -34,14 +34,14 @@ const contentDict = {
 
 export function AboutWhat({ contentType = 'aboutCourse' }) {
   const theme = useTheme();
-  const { mainColor, textGradient } = useContext(ColorContext);
+  const { mainColor, textGradient, mode } = useContext(ColorContext);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const imageDiv = (
     <Container sx={{ display: { md: 'none', xs: 'flex' }, gap: 2, alignItems: 'center' }}>
       <m.div variants={varFade().inRight}>
         <Image
-          alt="Our office small"
+          alt="מקצוע גלובלי"
           src={`${CONFIG.site.basePath}/assets/images/about/pexels-nurseryart-346885.jpg`}
           ratio="1/1"
           sx={{
@@ -51,13 +51,14 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
             transition: 'transform 0.7s ease-in',
             borderRadius: 1.5,
             width: { xs: '100%', md: 'inherit' },
+            boxShadow: customShadows(mode).dialog,
             // boxShadow: `-40px 40px 80px ${theme.vars.palette.secondary.main}`,
           }}
         />
       </m.div>
       <m.div variants={varFade().inLeft}>
         <Image
-          alt="Our office large"
+          alt="יוצרת תוכן"
           src={`${CONFIG.site.basePath}/assets/images/about/pexels-thelazyartist-1467277.jpg`}
           ratio="3/4"
           sx={{
@@ -68,6 +69,7 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
             borderRadius: 1.5,
             width: { xs: '100%', md: 'inherit' },
             transform: 'rotate(-5deg)',
+
             // boxShadow: `-40px 40px 80px ${theme.vars.palette.primary.dark}`,
           }}
         />
@@ -81,7 +83,7 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
       animate={{ distance: 40, outline: '', color: theme.palette[mainColor]?.main || '#fff' }}
     >
       <div
-        style={{ width: isMobile ? '90vw' : '70vw', boxShadow: customShadows().z12 }}
+        style={{ width: isMobile ? '90vw' : '70vw', boxShadow: customShadows(mode).z12 }}
         className="overflow-hidden shadow-md rounded-3xl shadow-warning-lighter/40"
       >
         <Box sx={{ position: 'relative' }} p={0.4} overflow="hidden" width={1} borderRadius={4}>
@@ -137,7 +139,7 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
                   width={220}
                 >
                   <Image
-                    alt="Our office small"
+                    alt="ערן פרקש - יוצר תוכן"
                     src={`${CONFIG.site.basePath}/assets/images/about/Eran2.png`}
                     ratio="1/1"
                     sx={{
@@ -266,7 +268,7 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
             <Grid xs={6}>
               <m.div variants={varFade().inUp}>
                 <Image
-                  alt="Our office small"
+                  alt="מקצוע גלובלי"
                   src={`${CONFIG.site.basePath}/assets/images/about/pexels-nurseryart-346885.jpg`}
                   ratio="1/1"
                   sx={{
@@ -276,6 +278,7 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
                     transition: 'transform 0.7s ease-in',
                     borderRadius: 3,
                     width: { xs: '80%', md: 'inherit' },
+                    boxShadow: customShadows(mode).dialog,
                     // boxShadow: `-40px 40px 80px ${theme.vars.palette.secondary.main}`,
                   }}
                 />
@@ -285,7 +288,7 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
             <Grid xs={6}>
               <m.div variants={varFade().inUp}>
                 <Image
-                  alt="Our office large"
+                  alt="יוצרת תוכן"
                   src={`${CONFIG.site.basePath}/assets/images/about/pexels-thelazyartist-1467277.jpg`}
                   ratio="3/4"
                   sx={{
@@ -296,6 +299,7 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
                     borderRadius: 3,
                     width: { xs: '80%', md: 'inherit' },
                     transform: 'rotate(-5deg)',
+                    // boxShadow: customShadows(mode).dialog,
                     // boxShadow: `-40px 40px 80px ${theme.vars.palette.primary.dark}`,
                   }}
                 />

@@ -245,7 +245,7 @@ function Stepper({ children }) {
                   >
                     <span
                       style={{
-                        color: themeColor,
+                        // color: themeColor,
                         marginBottom: '10px',
                         ...textGradient,
                       }}

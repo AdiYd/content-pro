@@ -8,7 +8,8 @@ export function createShadowColor(colorChannel) {
 }
 
 export function customShadows(colorScheme) {
-  const colorChannel = colorScheme === 'light' ? grey['500Channel'] : common.blackChannel;
+  const colorChannel = colorScheme === 'dark' ? grey['500Channel'] : common.blackChannel;
+  const customShadow = colorScheme === 'dark' ? grey['300Channel'] : grey['800Channel'];
 
   return {
     z1: `0 1px 2px 0 ${varAlpha(colorChannel, 0.16)}`,
@@ -18,6 +19,7 @@ export function customShadows(colorScheme) {
     z16: `0 16px 32px -4px ${varAlpha(colorChannel, 0.16)}`,
     z20: `0 20px 40px -4px ${varAlpha(colorChannel, 0.16)}`,
     z24: `0 24px 48px 0 ${varAlpha(colorChannel, 0.16)}`,
+    AY: `-40px 40px 80px -8px ${varAlpha(customShadow, 0.2)}`,
     //
     dialog: `-40px 40px 80px -8px ${varAlpha(common.blackChannel, 0.24)}`,
     card: `0 0 2px 0 ${varAlpha(

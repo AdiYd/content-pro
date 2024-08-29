@@ -17,7 +17,7 @@ export const ColorContext = createContext();
 const ColorProvider = ({ children }) => {
   const theme = useTheme();
   const [mainColor, setMainColor] = useState();
-  const [themeColor, setThemeColor] = useState();
+  const [themeColor, setThemeColor] = useState({ mode: 'dark' });
 
   const changeColors = (colorName) => {
     const storedColor = colorName || 'primary';
