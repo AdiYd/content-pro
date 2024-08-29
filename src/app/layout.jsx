@@ -163,7 +163,7 @@ export default async function RootLayout({ children }) {
         </Script>
       </head>
 
-      <body>
+      <body suppressHydrationWarning>
         {getInitColorSchemeScript}
         <AuthProvider>
           <SettingsProvider

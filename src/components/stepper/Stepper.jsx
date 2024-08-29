@@ -240,7 +240,12 @@ function Stepper({ children }) {
                   </span>
                   <Typography
                     variant="h3"
-                    sx={{ display: 'flex', mr: 4, flexDirection: 'column', minWidth: 0 }}
+                    sx={{
+                      display: 'flex',
+                      mr: 4,
+                      flexDirection: 'column',
+                      minWidth: 0,
+                    }}
                     className="mr-4 flex min-w-0 flex-col"
                   >
                     <span
