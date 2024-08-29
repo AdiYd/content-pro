@@ -52,13 +52,13 @@ const ColorProvider = ({ children }) => {
       const textGradientName = `to right, ${accentColor}, ${themeColors}`;
       const textGradients = textGradient(textGradientName);
       setMainColor(storedColor);
-      setThemeColor({
+      setThemeColor((p) => ({
         mode,
         gradMode,
         themeColor: themeColors,
         accentColor,
         textGradient: textGradients,
-      });
+      }));
     } catch {
       const storedColor = 'primary';
       const mode = theme.palette?.mode || 'dark';
@@ -68,15 +68,15 @@ const ColorProvider = ({ children }) => {
       const textGradientName = `to right, ${accentColor}, ${themeColors}`;
       const textGradients = textGradient(textGradientName);
       setMainColor(storedColor);
-      setThemeColor({
+      setThemeColor((p) => ({
         mode,
         gradMode,
-        themeColor,
+        themeColor: themeColors,
         accentColor,
         textGradient: textGradients,
-      });
+      }));
     }
-  }, [themeColor, theme.palette?.mode]);
+  }, [theme.palette?.mode]);
 
   const setColor = (color) => {
     console.log('Changing Theme color: ', color);

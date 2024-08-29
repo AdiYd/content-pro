@@ -140,7 +140,6 @@ function classNames(...classes) {
 function Stepper({ children }) {
   const theme = useTheme();
   const { mainColor, themeColor, textGradient } = useContext(ColorContext);
-  console.log('themeColor', themeColor);
   const [activeStep, setActive] = useState(0);
   const stepsId = steps.map((item) => item.id);
   useScrollTrigger(stepsId, (index) => setActive(index));
