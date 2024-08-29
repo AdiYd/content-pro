@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import Masonry from '@mui/lab/Masonry';
 import Stack from '@mui/material/Stack';
 import Rating from '@mui/material/Rating';
+import { useMediaQuery } from '@mui/system';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import { useTheme } from '@mui/material/styles';
@@ -19,7 +20,7 @@ import { bgBlur, varAlpha, bgGradient, hideScrollY } from 'src/theme/styles';
 
 import { Image } from 'src/components/image';
 import { Iconify } from 'src/components/iconify';
-import { varFade, AnimateBorder, MotionViewport } from 'src/components/animate';
+import { varFade, MotionViewport } from 'src/components/animate';
 
 export const testimonials = [
   {
@@ -125,6 +126,7 @@ export const testimonials = [
 
 export function AboutTestimonials() {
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { textGradient } = useContext(ColorContext);
   const mdUp = useResponsive('up', 'md');
 
@@ -180,12 +182,7 @@ export function AboutTestimonials() {
           (testimonial, i) =>
             ((!mdUp && i < 5) || mdUp) && (
               <m.div key={testimonial.name} variants={varFade().inUp}>
-                <AnimateBorder
-                  sx={{ borderRadius: 2 }}
-                  animate={{ color: theme.palette.success.dark }}
-                >
-                  <TestimonialCard testimonial={testimonial} />
-                </AnimateBorder>
+                <TestimonialCard testimonial={testimonial} />
               </m.div>
             )
         )}
@@ -198,7 +195,11 @@ export function AboutTestimonials() {
       sx={{
         ...bgGradient({
           // color: `0deg, ${varAlpha(theme.vars.palette.grey['900Channel'], 0.6)}, ${varAlpha(theme.vars.palette.grey['900Channel'], 0.9)}`,
-          color: `0deg, transparent, #05040C,#01183A,#00407D,#01457C,#003464,#05050F ,transparent `,
+          color: isMobile
+            ? `0deg, transparent 8%, #01183A,#001F45,#05050F,#013369,#00366A,#05050F ,#003464 ,transparent `
+            : '0deg, transparent 8%, rgba(1, 24, 58, 0.7), #01183A,#05050F,#013369,#00366A,#003464 ,transparent',
+          // '0deg, transparent, , rgba(5, 5, 15, 0.7), rgba(1, 51, 105, 0.7), rgba(0, 54, 106, 0.7), rgba(0, 52, 100, 0.7), transparent'
+
           // imgUrl: `${CONFIG.site.basePath}/assets/images/about/Eran.png`,
         }),
         overflow: 'hidden',
