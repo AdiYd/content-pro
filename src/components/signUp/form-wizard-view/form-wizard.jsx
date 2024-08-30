@@ -144,6 +144,22 @@ export function FormWizard({ coursePrice }) {
     setActiveStep(0);
   }, [reset]);
 
+  const handlePyament = async (formData) => {
+    try {
+      const res = await fetch('/api/payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ data: formData }),
+      });
+
+      const result = await res.json();
+    } catch (error) {
+      console.error('Error submitting data:', error);
+    }
+  };
+
   const onSubmit = handleSubmit(async (data) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -151,6 +167,7 @@ export function FormWizard({ coursePrice }) {
       toast.success('Create success!');
       console.info('DATA', data);
       trackPurchase(data.email, data.totalPrice, 'ILS', 'Course');
+      handlePyament(data);
       // handleNext();
     } catch (error) {
       console.error(error);
@@ -160,6 +177,7 @@ export function FormWizard({ coursePrice }) {
   const completedStep = activeStep === steps.length;
   const name = methods.getValues().name.split(' ')[0];
   const { email } = methods.getValues();
+
   return (
     <AnimateBorder
       sx={{ borderRadius: 2, borderWidth: 0 }}

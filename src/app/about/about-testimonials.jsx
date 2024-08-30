@@ -1,5 +1,5 @@
 import { m } from 'framer-motion';
-import { useContext } from 'react';
+import { useMemo, useContext } from 'react';
 
 import Box from '@mui/material/Box';
 import Masonry from '@mui/lab/Masonry';
@@ -127,8 +127,20 @@ export const testimonials = [
 export function AboutTestimonials() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const { textGradient } = useContext(ColorContext);
+  const { textGradient, mode } = useContext(ColorContext);
   const mdUp = useResponsive('up', 'md');
+
+  const getGradient = useMemo(() => {
+    if (mode === 'dark') {
+      return isMobile
+        ? '0deg, transparent 8%, #01183A,#001F45,#05050F,#013369,#00366A,#05050F ,#003464 ,transparent '
+        : '0deg, transparent 8%, rgba(1, 24, 58, 0.7), #01183A,#05050F,#013369,#00366A,#003464 ,transparent';
+    }
+
+    return isMobile
+      ? '0deg, transparent 8%, rgba(220, 240, 255, 0.9), #E6F7FF,#6FAEFF,#6FAEFF, #99CCFF, #CCE8FF, #E6F7FF,  transparent'
+      : '0deg, transparent 8%, rgba(220, 240, 255, 0.9), #E6F7FF,#6FAEFF,#6FAEFF, #99CCFF, #CCE8FF, #E6F7FF,  transparent';
+  }, [mode, isMobile]);
 
   const renderDescription = (
     <Box sx={{ maxWidth: { md: 360 }, textAlign: { xs: 'center', md: 'unset' } }}>
@@ -149,7 +161,7 @@ export function AboutTestimonials() {
             },
           }}
         />
-        <Typography variant="h2" sx={{ my: 3, color: 'common.white' }}>
+        <Typography variant="h2" sx={{ my: 3, color: 'text.primary' }}>
           <Box component="a" sx={textGradient}>
             ממליצים{' '}
           </Box>
@@ -159,7 +171,7 @@ export function AboutTestimonials() {
       </m.div>
 
       <m.div variants={varFade().inUp}>
-        <Typography sx={{ color: 'common.white' }}>
+        <Typography sx={{ color: 'text.primary' }}>
           המטרה שלי היא לעזור לאנשים בדרך להצלחה, ליצור ולקחת חלק ביצירת תוכן מקצועי ואיכותי יותר{' '}
           <br />
           הקורס ייתן לך כלים וטיפים וראייה רחבה יותר בכל הקשור ליצירת תוכן לרשתות החברתיות
@@ -172,8 +184,8 @@ export function AboutTestimonials() {
     <Box
       sx={{
         ...hideScrollY,
-        // py: { md: 10 },
-        // height: { md: 1 },
+        py: { md: 10 },
+        height: { md: 1 },
         overflowY: { xs: 'unset', md: 'auto' },
       }}
     >
@@ -195,11 +207,10 @@ export function AboutTestimonials() {
       sx={{
         ...bgGradient({
           // color: `0deg, ${varAlpha(theme.vars.palette.grey['900Channel'], 0.6)}, ${varAlpha(theme.vars.palette.grey['900Channel'], 0.9)}`,
-          color: isMobile
-            ? `0deg, transparent 8%, #01183A,#001F45,#05050F,#013369,#00366A,#05050F ,#003464 ,transparent `
-            : '0deg, transparent 8%, rgba(1, 24, 58, 0.7), #01183A,#05050F,#013369,#00366A,#003464 ,transparent',
-          // '0deg, transparent, , rgba(5, 5, 15, 0.7), rgba(1, 51, 105, 0.7), rgba(0, 54, 106, 0.7), rgba(0, 52, 100, 0.7), transparent'
-
+          // color: isMobile
+          //   ? `0deg, transparent 8%, #01183A,#001F45,#05050F,#013369,#00366A,#05050F ,#003464 ,transparent `
+          //   : '',
+          color: getGradient,
           // imgUrl: `${CONFIG.site.basePath}/assets/images/about/Eran.png`,
         }),
         overflow: 'hidden',
@@ -213,13 +224,13 @@ export function AboutTestimonials() {
           spacing={3}
           alignItems="center"
           justifyContent={{ xs: 'center', md: 'space-between' }}
-          // sx={{ height: 1 }}
+          sx={{ height: 1 }}
         >
           <Grid xs={10} md={4}>
             {renderDescription}
           </Grid>
 
-          <Grid xs={12} md={7} lg={6} alignItems="center">
+          <Grid xs={12} md={7} lg={6} alignItems="center" sx={{ height: 1 }}>
             {renderContent}
           </Grid>
         </Grid>
@@ -240,7 +251,7 @@ function TestimonialCard({ testimonial, sx, ...other }) {
         ...bgBlur({ color: varAlpha(theme.vars.palette.common.whiteChannel, 0.08) }),
         p: 3,
         borderRadius: 2,
-        color: 'common.white',
+        color: 'text.primary',
         ...sx,
       }}
       {...other}
