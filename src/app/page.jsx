@@ -11,12 +11,12 @@ import StepperSection from 'src/components/stepper/Stepper';
 import Considering from 'src/components/considering/Considering';
 
 import ColorPicker from './colorPalette';
-import { AboutYou } from './about/about-you';
 import ImageDiv from './about/view/ImageDiv';
 import { AboutWhat } from './about/about-what';
 import { AboutHero } from './about/about-hero';
 import { AboutLead } from './about/about-lead';
 import { AboutOrder } from './about/about-order';
+import { AboutYouTwo } from './about/about-youTwo';
 import SocialProof from './about/view/social-proof';
 import { AboutTestimonials } from './about/about-testimonials';
 // ----------------------------------------------------------------------
@@ -31,23 +31,26 @@ export default function Page() {
       <AboutWhat contentType="aboutCourse" />
       <AboutWhat contentType="aboutMe" />
       {/* <IconSection /> */}
-      <AboutYou />
+      <AboutYouTwo />
+      <StepperSection />
       <AboutOrder />
+
       <Considering buttonBefore="סקרנים?! לחצו כאן 😉" />
       <ImageDiv />
       <SignUp coursePrice={CoursePrice} />
       <AccordionSection />
+      {/* <StepperSection /> */}
+      <AboutTestimonials />
       <Considering confettiOnly />
-      <StepperSection />
+
+      {/* <Promotion1 /> */}
+      {/* <AboutVision /> */}
       <SocialProof />
       <Considering
         booklet
         buttonBefore="רוצים לקבל חוברת הדרכה עם טיפים והסברים? לחצו כאן "
         buttonAfter="🎉 עוד כמה צעדים ואתם מתחילים ליצור את הקהילה שתמיד חלמתם עליה  🎉"
       />
-      {/* <Promotion1 /> */}
-      {/* <AboutVision /> */}
-      <AboutTestimonials />
       <AboutLead />
 
       <Footer />

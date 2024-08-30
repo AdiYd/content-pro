@@ -18,7 +18,7 @@ export function FormWizardView({ coursePrice }) {
   return (
     <>
       <Typography variant="h2">
-        איך נרשמים ל
+        איך מצטרפים ל
         <Typography mx={1} variant="h2" component="a" sx={textGradient}>
           Video-Pro
         </Typography>

@@ -1,12 +1,13 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
+import { m } from 'framer-motion';
 import { useState, useEffect, useContext } from 'react';
 
-import { Box, Divider, useTheme, Typography } from '@mui/material';
+import { Box, Divider, useTheme, Container, Typography } from '@mui/material';
 
 import { ColorContext } from 'src/context/colorMain';
 
 import { Iconify } from '../iconify';
-import { varBounce, AnimateText } from '../animate';
+import { varSlide, varBounce, MotionContainer } from '../animate';
 
 export const arrowsDown = (
   mainColor = 'currentColor',
@@ -79,15 +80,15 @@ const arrowsDown3 = (
 
 const steps = [
   {
-    name: 'מתחילים מ - 0',
+    name: 'נרשמים לקורס',
     description: 'לומדים את הטכניקות, הכלים והטיפים הכי חמים',
     href: '#',
     id: 'step 1',
     iconName: 'bi:laptop',
-    InnerSteps: ['לומדים ממי שכבר עשו את זה', 'מתרגלים, שואלים ומתנסים'],
+    InnerSteps: ['מתחילים מ - 0', 'לומדים ממי שכבר עשו את זה', 'מתרגלים, שואלים ומתנסים'],
   },
   {
-    name: 'מצטרפים לקהילה',
+    name: 'מצטרפים לקהילה שלנו',
     description: 'מתחברים לקהילה, משתפים עבודות ומקבלים טיפים של אלופים',
     href: '#',
     id: 'step 2',
@@ -183,7 +184,7 @@ function Stepper({ children }) {
                     </span>
                   </span>
                   <Typography
-                    variant="h3"
+                    variant="h4"
                     component="div"
                     sx={{ display: 'flex', mr: 4, flexDirection: 'column', minWidth: 0 }}
                     className="mr-4 flex min-w-0 flex-col"
@@ -196,7 +197,7 @@ function Stepper({ children }) {
                     </span>
                     {step.InnerSteps.map((item, index) => (
                       <div className="my-2 w-fit" key={index}>
-                        <span className="text-base justify-start opacity-80 flex max-md:text-cente text-start ">
+                        <span className="text-sm justify-start opacity-80 flex max-md:text-cente text-start ">
                           {item}
                         </span>
                         {index !== step.InnerSteps.length - 1 &&
@@ -204,7 +205,7 @@ function Stepper({ children }) {
                             theme.palette[mainColor]?.light,
                             theme.palette[mainColor]?.dark,
                             '28px',
-                            'mr-20'
+                            'mr-10'
                           )}
                       </div>
                     ))}{' '}
@@ -240,7 +241,7 @@ function Stepper({ children }) {
                     </span>
                   </span>
                   <Typography
-                    variant="h3"
+                    variant="h4"
                     component="div"
                     sx={{
                       display: 'flex',
@@ -262,11 +263,11 @@ function Stepper({ children }) {
                     </span>
                     {step.InnerSteps.map((item, index) => (
                       <div className="my-2 w-fit" key={index}>
-                        <span className="text-base justify-start opacity-80 flex max-md:text-cente text-start ">
+                        <span className="text-sm justify-start opacity-80 flex max-md:text-cente text-start ">
                           {item}
                         </span>
                         {index !== step.InnerSteps.length - 1 &&
-                          arrowsDown(theme.palette[mainColor]?.light, undefined, '28px', 'mr-20')}
+                          arrowsDown(theme.palette[mainColor]?.light, undefined, '28px', 'mr-10')}
                       </div>
                     ))}
                   </Typography>
@@ -293,7 +294,7 @@ function Stepper({ children }) {
                     </span>
                   </span>
                   <Typography
-                    variant="h3"
+                    variant="h4"
                     component="div"
                     sx={{ display: 'flex', mr: 4, flexDirection: 'column', minWidth: 0 }}
                     className="mr-4 flex min-w-0 flex-col"
@@ -305,11 +306,11 @@ function Stepper({ children }) {
                     </span>
                     {step.InnerSteps.map((item, index) => (
                       <div className="my-2 w-fit" key={index}>
-                        <span className="text-base justify-start opacity-80 flex max-md:text-cente text-start ">
+                        <span className="text-sm justify-start opacity-80 flex max-md:text-cente text-start ">
                           {item}
                         </span>
                         {index !== step.InnerSteps.length - 1 &&
-                          arrowsDown(theme.palette[mainColor]?.light, undefined, '28px', 'mr-20')}
+                          arrowsDown(theme.palette[mainColor]?.light, undefined, '28px', 'mr-10')}
                       </div>
                     ))}{' '}
                   </Typography>
@@ -351,6 +352,7 @@ function useScrollTrigger(elementIds, callback) {
 
 export default function StepperSection({ ...props }) {
   const theme = useTheme();
+  const { textGradient } = useContext(ColorContext);
   return (
     <Box sx={{ mb: 8, mx: { md: 8, xs: 2 } }}>
       <Divider
@@ -377,14 +379,27 @@ export default function StepperSection({ ...props }) {
           },
         }}
       />
-
-      <AnimateText
+      <Container component={MotionContainer}>
+        <m.div animate={varBounce().in}>
+          <Typography mb={4} variant="h3">
+            איך הופכים תוכן מקורי
+            <Box mx={1} sx={textGradient} component="a">
+              למקור הכנסה
+            </Box>
+            ?
+          </Typography>
+        </m.div>
+        <m.div animate={varSlide().inDown}>
+          <Stepper />
+        </m.div>
+      </Container>
+      {/* <AnimateText
         variant="h3"
         sx={{ mb: 4 }}
         variants={varBounce({ durationIn: 0.05 }).inX}
-        text="איך הופכים תוכן מקורי למקור הכנסה?"
-      />
-      <Stepper />
+        text=
+      /> */}
+      {/* <Stepper /> */}
     </Box>
   );
 }

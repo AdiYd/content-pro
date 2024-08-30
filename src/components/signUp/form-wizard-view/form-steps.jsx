@@ -564,6 +564,7 @@ export function StepThree({ name, email, coursePrice, setValue }) {
   );
 }
 
+
 export function StepCompleted({ onReset }) {
   return (
     <Box

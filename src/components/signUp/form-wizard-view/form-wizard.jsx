@@ -151,7 +151,7 @@ export function FormWizard({ coursePrice }) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ data: formData }),
+        body: JSON.stringify(formData),
       });
 
       const result = await res.json();
@@ -273,7 +273,6 @@ export function FormWizard({ coursePrice }) {
                   הבא
                 </Button>
               )}
-              {activeStep === 2 && <></>}
             </Box>
           )}
 
@@ -283,3 +282,4 @@ export function FormWizard({ coursePrice }) {
     </AnimateBorder>
   );
 }
+
