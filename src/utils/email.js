@@ -86,13 +86,13 @@ const geminiTamplate = (data) => {
 
       <h2 style="
         font-size: 24px;
-        background: linear-gradient(to right, #4caf50, #8bc34a);
-        color: white;
+        // background: linear-gradient(to right, #4caf50, #8bc34a);
+        color: black;
         text-align: center;
         border-radius: 8px;
         margin: 0;
         padding: 10px;
-      "> חבר חדש נוסף לקהילה  🥳</h2>
+      "> חבר חדש נוסף לקהילה </h2>
 
       <h3 style="
         font-size: 20px;
@@ -179,7 +179,7 @@ const gptTamplates = (data) => {
         border-radius: 8px;
         margin: 0;
         padding: 10px;
-      "> ברוך הבא לקהילה המדהימה שלנו! 🎉</h2>
+      "> ברוך הבא לקהילה המדהימה שלנו!</h2>
 
       <div style="display: flex; align-items: center; margin-top: 20px;">
         <div style="flex: 1;">
