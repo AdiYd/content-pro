@@ -86,20 +86,13 @@ const geminiTamplate = (data) => {
 
       <h2 style="
         font-size: 24px;
-        // background: linear-gradient(to right, #4caf50, #8bc34a);
-        color: black;
+        background: linear-gradient(to right, #4caf50, #8bc34a);
+        color: white;
         text-align: center;
         border-radius: 8px;
         margin: 0;
         padding: 10px;
-      "> חבר חדש נוסף לקהילה </h2>
-
-      <h3 style="
-        font-size: 20px;
-        color: #333333;
-        margin-bottom: 20px;">
-      משתמש חדש נרשם לאתר:
-      </h3>
+      "> משתמש חדש נוסף לקהילה </h2>
 
       <div style="display: flex; align-items: center; margin-top: 20px;">
         <div style="flex: 1;">
@@ -114,9 +107,7 @@ const geminiTamplate = (data) => {
       </div>
       <div>
         <h3 style="font-size: 16px; color: #333333; margin: 8px 0;">
-        שמחים מאוד שהצטרפת אלינו,
-        <br />
-            צוות Video-Pro כאן כדי לתמוך בך בכל צעד בדרך להצלחה.
+        Video-Pro
         </h3>
       <div>
     </div>

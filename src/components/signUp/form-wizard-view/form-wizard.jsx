@@ -82,7 +82,6 @@ export function FormWizard({ coursePrice }) {
     defaultValues,
   });
 
-  console.log('Changed: ', methods.getValues());
 
   const {
     reset,
