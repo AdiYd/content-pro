@@ -29,7 +29,7 @@ import {
 
 import COLORS from '../../theme/core/colors.json';
 
-const emph = (colorPalette) => (
+const emph = (colorPalette, gradient = false) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="160"
@@ -59,7 +59,7 @@ const emph = (colorPalette) => (
         gradientUnits="userSpaceOnUse"
       >
         {/* <stop stopColor="#020D20" /> */}
-        {colorPalette ? (
+        {colorPalette && gradient ? (
           <>
             <stop offset="0" stopColor={colorPalette?.lighter} />
             <stop offset="0.3" stopColor={colorPalette?.light} />
@@ -68,7 +68,10 @@ const emph = (colorPalette) => (
             <stop offset="1" stopColor={colorPalette?.darker} />
           </>
         ) : (
-          <stop offset="0.44" stopColor="#EAF2FF" />
+          <>
+            <stop stopColor="#59677C" />
+            <stop offset="0.44" stopColor="#EAF2FF" />
+          </>
         )}
         {/* <stop offset="1" stopColor="#9BC1FF" /> */}
       </linearGradient>
@@ -80,7 +83,7 @@ const emph = (colorPalette) => (
         y2="61.3919"
         gradientUnits="userSpaceOnUse"
       >
-        {colorPalette ? (
+        {colorPalette && gradient ? (
           <>
             <stop offset="0" stopColor={colorPalette?.lighter} />
             <stop offset="0.3" stopColor={colorPalette?.light} />
@@ -90,7 +93,7 @@ const emph = (colorPalette) => (
           </>
         ) : (
           <>
-            <stop stopColor="#414E64" />
+            <stop stopColor="#59677C" />
             <stop offset="1" stopColor="#E8EEF7" />
           </>
         )}
@@ -153,7 +156,7 @@ export function AboutHero() {
             variants={varSlide({ distance: 500 }).inDown}
             sx={{
               ...textGradient(
-                `45deg, ${COLORS[mainColor]?.dark} 25%, ${COLORS[mainColor]?.light} 40%, ${COLORS[mainColor]?.main} 50%,${COLORS[mainColor]?.light} 80%, ${COLORS[mainColor]?.main} 95%`
+                `45deg, ${COLORS[mainColor]?.dark} 25%, ${COLORS[mainColor]?.main} 40%, ${COLORS[mainColor]?.main} 50%,${COLORS[mainColor]?.light} 80%, ${COLORS[mainColor]?.main} 95%`
               ),
               direction: 'ltr',
               textAlign: { md: 'end', xs: 'unset' },
