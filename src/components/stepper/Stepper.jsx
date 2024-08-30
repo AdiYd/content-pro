@@ -197,7 +197,7 @@ function Stepper({ children }) {
                     </span>
                     {step.InnerSteps.map((item, index) => (
                       <div className="my-2 w-fit" key={index}>
-                        <span className="text-sm justify-start opacity-80 flex max-md:text-cente text-start ">
+                        <span className="text-base justify-start opacity-80 flex max-md:text-cente text-start ">
                           {item}
                         </span>
                         {index !== step.InnerSteps.length - 1 &&
@@ -263,7 +263,7 @@ function Stepper({ children }) {
                     </span>
                     {step.InnerSteps.map((item, index) => (
                       <div className="my-2 w-fit" key={index}>
-                        <span className="text-sm justify-start opacity-80 flex max-md:text-cente text-start ">
+                        <span className="text-base justify-start opacity-80 flex max-md:text-cente text-start ">
                           {item}
                         </span>
                         {index !== step.InnerSteps.length - 1 &&
@@ -306,7 +306,7 @@ function Stepper({ children }) {
                     </span>
                     {step.InnerSteps.map((item, index) => (
                       <div className="my-2 w-fit" key={index}>
-                        <span className="text-sm justify-start opacity-80 flex max-md:text-cente text-start ">
+                        <span className="text-base justify-start opacity-80 flex max-md:text-cente text-start ">
                           {item}
                         </span>
                         {index !== step.InnerSteps.length - 1 &&

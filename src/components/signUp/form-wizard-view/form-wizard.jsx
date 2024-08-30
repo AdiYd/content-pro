@@ -1,7 +1,6 @@
 'use client';
 
 import { z as zod } from 'zod';
-import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState, useContext, useCallback } from 'react';
@@ -47,10 +46,7 @@ const WizardSchema = zod.object({
   }),
   age: zod.number().optional(),
   gender: zod.string().optional(),
-  'make-comunity': zod.boolean().optional(),
-  'make-money': zod.boolean().optional(),
-  'make-people': zod.boolean().optional(),
-  learn: zod.boolean().optional(),
+  goals: zod.array(zod.string()).optional(),
   totalPrice: zod.number().optional(),
   // stepOne: StepOneSchema,
   // stepTwo: StepTwoSchema,
@@ -71,10 +67,7 @@ const defaultValues = {
   approveTerms: false,
   age: 0,
   gender: 'other',
-  'make-comunity': false,
-  'make-money': false,
-  'make-people': false,
-  learn: true,
+  goals: [],
   totalPrice: 99,
 };
 
@@ -88,6 +81,8 @@ export function FormWizard({ coursePrice }) {
     resolver: zodResolver(WizardSchema),
     defaultValues,
   });
+
+  console.log('Changed: ', methods.getValues());
 
   const {
     reset,
@@ -105,15 +100,7 @@ export function FormWizard({ coursePrice }) {
         if (step === 'stepOne') {
           isValid = await trigger(['email', 'name', 'approveTerms']);
         } else {
-          await trigger([
-            'age',
-            'learn',
-            'make-comunity',
-            'make-people',
-            'make-money',
-            'totalPrice',
-            'gender',
-          ]);
+          await trigger(['age', 'goals', 'gender']);
         }
 
         if (isValid) {
@@ -164,8 +151,8 @@ export function FormWizard({ coursePrice }) {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      toast.success('Create success!');
       console.info('DATA', data);
+
       trackPurchase(data.email, data.totalPrice, 'ILS', 'Course');
       handlePyament(data);
       // handleNext();

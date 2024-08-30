@@ -38,6 +38,13 @@ import { NumOfDiscount } from 'src/components/considering/Considering';
 
 const terms = require('../../../utils/terms.json');
 
+export const goalsDict = {
+  'make-comunity': 'ליצור קהילה',
+  'make-people': 'להכיר יוצרי תוכן',
+  'make-money': 'לעבוד בתחום',
+  learn: 'ללמוד ולהתמקצע',
+};
+
 const CustomConnector = styled(StepConnector)(({ theme }) => ({
   [`& .MuiStepConnector-horizontal`]: {
     left: 'calc(50% + 20px)',
@@ -276,9 +283,56 @@ export function StepOne({ setValue, control, errors }) {
 
 export function StepTwo({ name, setValue }) {
   const theme = useTheme();
+  const [update, setUpdate] = useState(false);
+  const [gender, setGender] = useState('');
   const { mainColor } = useContext(ColorContext);
+  const [goals, setGoals] = useState({
+    learn: true,
+    'make-money': false,
+    'make-comunity': false,
+    'make-people': false,
+  });
+  const goalsErrors = useRef();
+
   const onChangeHandler = (e) => {
-    setValue(e.target.name, e.target.checked);
+    let newGoals;
+    const tempGoals = Object.keys(goals).filter((item) => goals[item]);
+    let numOfGoals = tempGoals.length;
+
+    if (e.target.checked) {
+      numOfGoals += 1;
+      tempGoals.push(e.target.name);
+
+      if (numOfGoals > 2) {
+        goalsErrors.current = (
+          <Typography mt={0} variant="body2" color="error">
+            יש לבחור את 2 המטרות העיקריות
+          </Typography>
+        );
+        setUpdate((p) => !p);
+      } else {
+        goalsErrors.current = undefined;
+        newGoals = {
+          ...goals,
+          [e.target.name]: true,
+        };
+        setGoals(newGoals);
+      }
+    } else {
+      if (goalsErrors.current) {
+        goalsErrors.current = undefined;
+      }
+      tempGoals.splice(tempGoals.indexOf(e.target.name), 1);
+
+      newGoals = {
+        ...goals,
+        [e.target.name]: false,
+      };
+      setGoals(newGoals);
+    }
+
+    const finalGoals = tempGoals.map((item) => goalsDict[item]);
+    setValue('goals', finalGoals);
   };
 
   return (
@@ -304,52 +358,24 @@ export function StepTwo({ name, setValue }) {
           מה המטרות שלך מהקורס?
         </Typography>
         <div className="flex flex-wrap max-md:flex-col gap-4">
-          <FormControlLabel
-            control={
-              <Checkbox
-                name="learn"
-                defaultChecked
-                // checked={goals.learn ?? true}
-                color={mainColor || 'error'}
-                onChange={onChangeHandler}
-              />
-            }
-            label="ללמוד ולהתמקצע"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                name="make-money"
-                // checked={goals['make-money'] || false}
-                color={mainColor || 'error'}
-                onChange={onChangeHandler}
-              />
-            }
-            label="לעבוד בתחום"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                name="make-comunity"
-                // checked={goals['make-comunity'] || false}
-                color={mainColor || 'error'}
-                onChange={onChangeHandler}
-              />
-            }
-            label="ליצור קהילה"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                name="make-people"
-                // checked={goals['make-people'] || false}
-                color={mainColor || 'error'}
-                onChange={onChangeHandler}
-              />
-            }
-            label="להכיר יוצרי תוכן"
-          />
+          {Object.keys(goals).map((item, index) => (
+            <FormControlLabel
+              key={index}
+              name="goals"
+              control={
+                <Checkbox
+                  name={item}
+                  checked={goals[item]}
+                  // checked={goals.learn ?? true}
+                  color={mainColor || 'error'}
+                  onChange={onChangeHandler}
+                />
+              }
+              label={goalsDict[item]}
+            />
+          ))}
         </div>
+        {goalsErrors.current && goalsErrors.current}
       </div>
 
       <div className="flex flex-wrap w-full justify-around">
@@ -359,12 +385,13 @@ export function StepTwo({ name, setValue }) {
             <Select
               variant="filled"
               name="gender"
-              onChange={(e) => setValue('gender', e.target.value)}
               sx={{ textAlign: 'center', width: { md: 90, xs: 111 } }}
               itemProp={{ textAlign: 'center' }}
-              defaultValue=""
-              // value={}
-              // onChange={handleOptionsChange}
+              value={gender}
+              onChange={(e) => {
+                setGender(e.target.value);
+                setValue('gender', e.target.value);
+              }}
               // input={<OutlinedInput label="מין" />}
             >
               {['זכר', 'נקבה', 'אחר'].map((option) => (
@@ -424,7 +451,6 @@ export function StepThree({ name, email, coursePrice, setValue }) {
 
   const handleCoupon = (e) => {
     const isCoupon = Cookies.get('counting');
-    console.log(e.target.value, isCoupon);
     if (e.target.value === `ExtraPro_${NumOfDiscount}` && !validCoupon && isCoupon) {
       totalPrice.current *= (100 - NumOfDiscount) / 100;
       totalPrice.current = Math.floor(totalPrice.current);
@@ -436,14 +462,14 @@ export function StepThree({ name, email, coursePrice, setValue }) {
       setValidCoupon(true);
       setValue('totalPrice', totalPrice.current);
       trackEvent('Coupon Redeem', 'Coupons', `99₪`);
-    } else if (e.target.value === 'SuperPro_free' && !validCoupon) {
+    } else if (e.target.value === 'SuperPro_free' && !validCoupon && false) {
       totalPrice.current = 0;
       setValidCoupon(true);
       setValue('totalPrice', totalPrice.current);
       trackEvent('Coupon Redeem', 'Coupons', `free`);
     } else if (e.target.value.includes(`AdminPro_`) && !validCoupon) {
       const discount = Number(e.target.value.split('_')[1]);
-      if (!Number.isNaN(discount) && [10, 15, 20, 25].includes(discount)) {
+      if (!Number.isNaN(discount) && [10, 15].includes(discount)) {
         totalPrice.current *= (100 - discount) / 100;
         totalPrice.current = Math.floor(totalPrice.current);
         setValidCoupon(true);
