@@ -10,6 +10,24 @@ import { ColorContext } from 'src/context/colorMain';
 import { Iconify } from 'src/components/iconify';
 import { varFade, MotionViewport } from 'src/components/animate';
 
+
+const halfWave = (mode) => (
+  <svg
+    className="absolute -bottom-8 h-auto w-full z-10  origin-center"
+    style={{ transform: 'scale(2)' }}
+    viewBox="0 0 2880 480"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M2160 0C1440 240 720 240 720 240H0v240h2880V0h-720z"
+      fill={mode === 'dark' ? '#141A21' : '#FFF'}
+    />
+  </svg>
+);
+
 // ----------------------------------------------------------------------
 const bulletsWithIcons = [
   {
@@ -52,14 +70,17 @@ const bulletsWithIcons = [
 
 const renderCard = (item, mode = 'dark') => (
   <Card sx={{ borderRadius: 2, boxShadow: 5, height: 1 }} key={item.title}>
-    <CardMedia
-      component="img"
-      height="100"
-      image={item.imageUrl}
-      alt={item.title}
-      sx={{ borderRadius: '16px 16px 0 0', height: 180 }}
-    />
-    <CardContent>
+    <div className="relative">
+      <CardMedia
+        component="img"
+        height="100"
+        image={item.imageUrl}
+        alt={item.title}
+        sx={{ borderRadius: '16px 16px 0 0', height: 180 }}
+      />
+      {halfWave(mode)}
+    </div>
+    <CardContent sx={{ zIndex: 15, position: 'relative' }}>
       <Typography variant="h5" component="div">
         {item.title}
       </Typography>
