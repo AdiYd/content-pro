@@ -91,7 +91,7 @@ function Considering({
   const [active, setActive] = useState(false);
   const errorMsg = useRef();
   const buttonMsg = useRef(buttonBefore);
-  color = color || mainColor || 'info';
+  color = color || mainColor || 'error';
 
   // useEffect(() => {
   //   const isCounting = getRemainingCookieTimeInSeconds('counting');

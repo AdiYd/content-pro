@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import { Box, Switch, useTheme, useColorScheme } from '@mui/material';
 
@@ -16,9 +16,9 @@ function ColorPicker({ ...props }) {
   const settings = useSettingsContext();
   const [checkMode, setCheckMode] = useState();
 
-  useState(() => {
+  useEffect(() => {
     setCheckMode(mode === 'dark');
-  }, []);
+  }, [mode]);
 
   return (
     <Box

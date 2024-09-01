@@ -230,7 +230,7 @@ export function AboutTestimonials() {
             {renderDescription}
           </Grid>
 
-          <Grid xs={12} md={7} lg={6} alignItems="center" sx={{ height: 1 }}>
+          <Grid xs={12} md={8} alignItems="center" sx={{ height: 1 }}>
             {renderContent}
           </Grid>
         </Grid>
