@@ -198,17 +198,7 @@ export function FormWizard({ coursePrice }) {
       >
         <Form methods={methods} onSubmit={handleSubmit(onSubmit)}>
           <Stepper steps={steps} activeStep={activeStep} />
-          {/* <AnimateBorder
-            sx={{ zIndex: 10, maxWidth: { md: '60%', xs: '100%' }, borderRadius: 2, mx: 'auto' }}
-            animate={{
-              disable: true,
-              color: theme.palette.success.main,
-              // outline: '',
-              disableDoubleline: true,
-              width: '1px',
-              length: 30,
-            }}
-          > */}
+
           <Card
             gap={3}
             // display="flex"
@@ -217,13 +207,18 @@ export function FormWizard({ coursePrice }) {
               display: 'flex',
               flexDirection: 'column',
               gap: 3,
-              p: 3,
+              p: 4,
               zIndex: 25,
               mb: 3,
-              maxWidth: { md: '60%', xs: '100%' },
+              overflow: 'visible',
+              maxWidth: { md: '80%', xs: '100%' },
               minHeight: 240,
               mx: 'auto',
               borderRadius: 2,
+              borderStyle: 'solid',
+              borderWidth: { lg: '0.7px', md: 0 },
+              // boxShadow: { md: 'none', lg: 'inherit' },
+              boxShadow: 'none',
               // border: theme.palette.mode === 'light' && `solid 1px ${theme.vars.palette.divider}`,
               // background: theme.palette.background.paper,
             }}
@@ -267,8 +262,6 @@ export function FormWizard({ coursePrice }) {
               )}
             </Box>
           )}
-
-          {/* </AnimateBorder> */}
         </Form>
       </Container>
     </AnimateBorder>

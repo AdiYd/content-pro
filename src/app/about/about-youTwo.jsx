@@ -114,7 +114,7 @@ const renderCard = (item, mode = 'dark') => (
         height="100"
         image={item.imageUrl}
         alt={item.title}
-        sx={{ borderRadius: '16px 16px 0 0', height: 180 }}
+        sx={{ borderRadius: '16px 16px 0 0', height: 200 }}
       />
       {halfWave(mode)}
     </div>

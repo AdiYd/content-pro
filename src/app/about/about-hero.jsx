@@ -20,7 +20,6 @@ import { Iconify, SocialIcon } from 'src/components/iconify';
 import { ScrollComponent } from 'src/components/considering/Considering';
 import {
   varFade,
-  varSlide,
   varBounce,
   AnimateText,
   AnimateAvatar,
@@ -122,7 +121,7 @@ export function AboutHero() {
   return (
     <Box
       sx={{
-        height: { md: 680, xs: 650 },
+        height: { md: 680, xs: 640 },
         overflow: 'visible',
         pt: { xs: 8, md: 2 },
         pb: { xs: 10, md: 0 },
@@ -152,8 +151,8 @@ export function AboutHero() {
           <AnimateText
             component="h1"
             variant="h1"
-            text="Video-Pro"
-            variants={varSlide({ distance: 500 }).inDown}
+            text={['Video-Pro']}
+            variants={varFade().inDown}
             sx={{
               ...textGradient(
                 `45deg, ${COLORS[mainColor]?.dark} 25%, ${COLORS[mainColor]?.main} 40%, ${COLORS[mainColor]?.main} 50%,${COLORS[mainColor]?.light} 80%, ${COLORS[mainColor]?.main} 95%`
@@ -175,7 +174,7 @@ export function AboutHero() {
           /> */}
           <div className="w-fit h-fit relative max-lg:mx-auto">
             <m.div variants={varFade().in}>
-              <Typography color="common.white" variant="h3">
+              <Typography color="common.white" variant="h2">
                 ההכשרה שעוזרת ליוצרי תוכן
                 <br />
                 לקבל עבודה באופן שוטף

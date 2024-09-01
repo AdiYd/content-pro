@@ -10,6 +10,9 @@ import MuiStepper from '@mui/material/Stepper';
 import StepLabel from '@mui/material/StepLabel';
 import Typography from '@mui/material/Typography';
 import {
+  List,
+  Card,
+  Grid,
   styled,
   Select,
   Dialog,
@@ -22,18 +25,22 @@ import {
   IconButton,
   FormControl,
   DialogTitle,
+  CardContent,
   StepConnector,
   DialogActions,
   DialogContent,
+  useMediaQuery,
   FormControlLabel,
 } from '@mui/material';
 
 import { trackEvent } from 'src/utils/GAEvents';
 
+import { customShadows } from 'src/theme/core';
 import { ColorContext } from 'src/context/colorMain';
 
 import { Field } from 'src/components/hook-form';
 import { Iconify } from 'src/components/iconify';
+import { AnimateBorder } from 'src/components/animate';
 import { NumOfDiscount } from 'src/components/considering/Considering';
 
 const terms = require('../../../utils/terms.json');
@@ -439,16 +446,31 @@ export function StepTwo({ name, setValue }) {
 
 export function StepThree({ name, email, coursePrice, setValue }) {
   const theme = useTheme();
+  const [active, setActive] = useState(1);
   const { mainColor, mode } = useContext(ColorContext);
   const [update, setUpdate] = useState(false);
   const [coupon, setCoupon] = useState(false);
   const [validCoupon, setValidCoupon] = useState(false);
-  const totalPrice = useRef(coursePrice || 199);
+  const totalPrice = useRef(coursePrice || active === 1 ? 499 : 749);
   const color = validCoupon ? theme.palette.success.main : theme.palette.error.main;
-
+  coursePrice = active === 0 ? 249 : [1, 2].includes(active) ? 499 : 749;
   useEffect(() => {
     setValue('totalPrice', totalPrice.current);
   }, [setValue]);
+
+  useEffect(() => {
+    if (active === 0) {
+      totalPrice.current = 249;
+    } else if (active === 1) {
+      totalPrice.current = 499;
+    } else if (active === 2) {
+      totalPrice.current = 499;
+    } else {
+      totalPrice.current = 749;
+    }
+    console.log('Changing price to : ', totalPrice.current);
+    setUpdate((p) => !p);
+  }, [active]);
 
   const handleCoupon = (e) => {
     const isCoupon = Cookies.get('counting');
@@ -486,23 +508,57 @@ export function StepThree({ name, email, coursePrice, setValue }) {
 
   return (
     <>
-      <Typography variant="h6">
-        מחיר חבילה הכוללת את הקורס, קישור לקהילה ועזרה בבניית תיק עבודות
+      <Typography textAlign="center" mb={2} variant="h6">
+        כדי שכולם יוכלו להינות מהתכנים שלנו, הוספנו הנחות לזמן מוגבל ומבצעים למספר מצומצם של נרשמים
       </Typography>
-      <Typography
-        sx={{ textDecoration: 'line-through' }}
-        textAlign="center"
-        my={0}
-        mx={1}
-        component="a"
-        color="GrayText"
-        variant="h6"
-      >
-        במקום ₪ 749
-      </Typography>
-      <Typography my={0} textAlign="center" variant="h3">
-        רק ב - ₪ {coursePrice}
-      </Typography>
+      <CourseOptions active={active} setActive={setActive} />
+
+      {active === 1 && (
+        <>
+          <Typography
+            textAlign="center"
+            mt={4}
+            mx={1}
+            component="a"
+            color="text.secondary"
+            variant="h6"
+          >
+            יש לנו מבצע לזמן מוגבל ול-20 נרשמים הבאים בלבד 🎁
+          </Typography>
+          <Typography
+            sx={{ textDecoration: 'line-through' }}
+            textAlign="center"
+            my={0}
+            mx={1}
+            component="a"
+            color="GrayText"
+            variant="h6"
+          >
+            במקום ₪749
+          </Typography>
+          <Typography my={0} textAlign="center" variant="h3">
+            רק ב - {coursePrice} ₪
+          </Typography>
+        </>
+      )}
+      {active === 2 && (
+        <>
+          <Typography
+            // sx={{ textDecoration: 'line-through' }}
+            textAlign="center"
+            mt={4}
+            mx={1}
+            component="a"
+            color="text.secondary"
+            variant="h6"
+          >
+            ל 20 נרשמים הבאים - מקבלים שדרוג לחבילת Master הכל כלול 🤫
+          </Typography>
+          <Typography my={0} textAlign="center" variant="h3">
+            רק ב - {coursePrice} ₪
+          </Typography>
+        </>
+      )}
       <div className="flex justify-center">
         {!coupon && (
           <Button onClick={() => setCoupon(true)} variant="outlined" size="small">
@@ -681,7 +737,6 @@ export function StepThree({ name, email, coursePrice, setValue }) {
   );
 }
 
-
 export function StepCompleted({ onReset }) {
   return (
     <Box
@@ -705,3 +760,190 @@ export function StepCompleted({ onReset }) {
     </Box>
   );
 }
+
+const courseOptions = [
+  {
+    title: 'Base-Pro',
+    subTitle: 'קורס Video-Pro',
+    bullets: ['כל סרטוני הקורס', 'חוברות והדרכות הקורס'],
+    oldPrice: '₪399',
+    currPrice: '₪249',
+  },
+  {
+    title: 'Master-Pro',
+    subTitle: 'הכל כלול',
+    bullets: [
+      'קורס + מנוי לקהילה',
+      'כל מה שיוצר תוכן צריך',
+      'ליווי בהכנת תיק עבודות',
+      'קבלת הצעות עבודה',
+    ],
+    oldPrice: '₪1,099',
+    currPrice: '₪749',
+    master: true,
+  },
+  {
+    title: 'Xtra-Pro',
+    subTitle: 'קורס + מנוי לקהילה',
+    bullets: ['כל תכני הקורס', 'מנוי לקהילת יוצרי תוכן', 'המשך קבלת תכני העשרה ומדריכים'],
+    oldPrice: '₪749',
+    currPrice: '₪499',
+  },
+];
+
+const CourseOptions = ({ active, setActive }) => (
+  <Grid
+    alignItems="center"
+    overflow="visible"
+    // display="flex"
+    container
+    spacing={1}
+    justifyContent="center"
+  >
+    {courseOptions.map((option, index) => (
+      <Grid height={1} display="flex" item xs={12} sm={6} md={6} lg={4} key={index}>
+        <CourseCard
+          active={Boolean(active === index)}
+          onClick={() => setActive(index)}
+          index={index - 1}
+          title={option.title}
+          subTitle={option.subTitle}
+          bullets={option.bullets}
+          oldPrice={option.oldPrice}
+          currPrice={option.currPrice}
+          master={option.master}
+        />
+      </Grid>
+    ))}
+  </Grid>
+);
+
+const CourseCard = ({
+  title,
+  subTitle,
+  bullets,
+  oldPrice,
+  currPrice,
+  index,
+  master,
+  active,
+  onClick,
+}) => {
+  const { textGradient, mainColor, mode } = useContext(ColorContext);
+  const [update, setUpdate] = useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
+
+  useEffect(() => {
+    setUpdate((p) => !p);
+  }, [active]);
+
+  return (
+    <AnimateBorder
+      sx={{
+        width: 1,
+        display: 'flex',
+        // mx: 'auto',
+        p: active ? 0.2 : 0,
+        borderRadius: 2,
+        '&:hover': {
+          transform: isMobile ? '' : `scale(1.1) rotate(${isMobile ? 0 : -1 * (index * 6)}deg)`,
+          zIndex: 40,
+          boxShadow: customShadows().z16,
+        },
+        transform: isMobile ? `scale(0.94)` : `rotate(${-1 * (index * 6)}deg)`,
+      }}
+      animate={{
+        color: theme.palette.error.main,
+        borderRadius: 2,
+        width: '4px',
+        distance: 80,
+      }}
+    >
+      <Card
+        sx={{
+          position: master ? 'relative' : '',
+          mb: 2,
+          boxShadow: customShadows(mode).z4,
+          // border: active ? '2px solid red' : '',
+          // ...bgGradient({
+          //   color:
+          //     mode === 'dark'
+          //       ? 't45deg, transparent, #333, #333, transparent'
+          //       : `45deg, #f5f5f5, #e5e5e5, transparent`,
+          // }),
+          bgcolor: theme.palette.background.paper,
+          height: '100%',
+          display: 'flex',
+          zIndex: active ? 50 : 40,
+          cursor: 'pointer',
+          transition: 'all 0.4s ease-in-out',
+          width: 1,
+          direction: 'rtl',
+          textAlign: 'center',
+          p: 0.5,
+          // transform: isMobile ? 'scale(0.7)' : ``,
+        }}
+        onClick={onClick}
+      >
+        {master && (
+          <Button size="small" sx={{ position: 'absolute', top: 5, right: 5 }} variant="outlined">
+            הכי מבוקש
+          </Button>
+        )}
+        <CardContent sx={{ mx: 'auto' }}>
+          <Typography
+            sx={{ display: 'flex', justifyContent: 'center', ...textGradient }}
+            width={1}
+            variant="h4"
+            fontWeight={600}
+            component="div"
+            gutterBottom
+          >
+            {title}
+          </Typography>
+          <Typography
+            width={1}
+            component="div"
+            justifyContent="center"
+            variant="subtitle1"
+            color="text.secondary"
+            gutterBottom
+          >
+            {subTitle}
+          </Typography>
+          <List>
+            {bullets.map((bullet, indx) => (
+              <Typography
+                variant="body1"
+                my={1}
+                sx={{ m: 0, p: 0, textAlign: 'start', display: 'flex', gap: 1 }}
+                key={indx}
+              >
+                <Iconify width={isMobile ? 15 : 15} icon="lets-icons:check-fill" />
+                {bullet}
+                {/* <ListItemText sx={{ fontSize: '10px', fontWeight: 400, m: 0, p: 0 }} primary={bullet} /> */}
+              </Typography>
+            ))}
+          </List>
+          <Divider sx={{ borderStyle: 'dashed', marginY: 2, mb: master ? 0 : '' }} />
+          {master && (
+            <Typography fontSize={10} mb={2} variant="body2">
+              * התחייבות להצעת עבודה ראשונה בתשלום של עד ₪499, עד 3 חודשים מסיום בניית תיק עבודות
+            </Typography>
+          )}
+          <Typography
+            variant="body1"
+            color="text.secondary"
+            sx={{ textDecoration: 'line-through' }}
+          >
+            {oldPrice}
+          </Typography>
+          <Typography variant="h4" component="div" sx={{ fontWeight: 'bold' }}>
+            {currPrice}
+          </Typography>
+        </CardContent>
+      </Card>
+    </AnimateBorder>
+  );
+};

@@ -172,11 +172,11 @@ const _Syllabus = {
   ],
   'תוכן הקורס': ['תוכן הקורס'],
   היכרות: ['מי אני ?'],
-  'למה דווקא תוכן בצורת וידיאו ?': ['למה צריך ליצור תוכן בעיקר באמצעות וידיאו ?'],
+  'למה דווקא תוכן בצורת וידיאו?': ['למה צריך ליצור תוכן בעיקר באמצעות וידיאו?'],
   'איך להרוויח כסף בתור יוצר תוכן': [
     'איך לעשות כסף מהאינסטגרם',
     'איך לעשות כסף מהיוטיוב',
-    'על מה אתם אמורים לשים הכי הרבה דגש בשביל לעשות כסף מהרשת החברתית ?',
+    'על מה אתם אמורים לשים הכי הרבה דגש בשביל לעשות כסף מהרשת החברתית?',
     'מי יכניס לכם הכי הרבה כסף לכיס ?',
     'באיזה רשת חברתית הכי כדאי ליצור תוכן ?',
   ],
@@ -185,7 +185,7 @@ const _Syllabus = {
     'איך למדוד תוצאות בשיתופי פעולה',
     'לסיכום',
   ],
-  'איך להפוך ליוצרי תוכן שכל החברות רוצות לעבוד איתכם ?': [
+  'איך להפוך ליוצרי תוכן שכל החברות רוצות לעבוד איתכם?': [
     'שלב 1 : למצוא תוכן עם ביקוש בטווח הארוך : מציאת נישה חכמה',
     'שלב 2 - השיטה ליצור הרבה תוכן ברמה גבוהה שלא סיפרו לכם',
     'שלב 3 : יצירת הסרטון (מרעיון למציאות) - איך הופכים רעיון לתוכן ויזואלי : כתיבת התסריט',
@@ -208,7 +208,7 @@ const _Syllabus = {
 export function AccordionView({ title, accordions = _accordions, mode = 0 }) {
   const [controlled, setControlled] = useState(false);
   const theme = useTheme();
-  const { mainColor } = useContext(ColorContext);
+  const { mainColor, textGradient } = useContext(ColorContext);
   const [expanded, setExpanded] = useState(() => {
     const res = {};
     if (mode === 1) {
@@ -239,6 +239,9 @@ export function AccordionView({ title, accordions = _accordions, mode = 0 }) {
           maxWidth: { md: '70%', xs: '100%' },
         }}
       >
+        <Typography textAlign="start" variant="h4" component="h4" sx={{ ...textGradient }}>
+          סילבוס הקורס
+        </Typography>
         <div className=" z-10 mx-0 px-0">
           {Object.keys(_Syllabus).map((accordion, index) => (
             <Accordion
@@ -280,14 +283,14 @@ export function AccordionView({ title, accordions = _accordions, mode = 0 }) {
                 // expandIcon={<Iconify icon="eva:arrow-ios-downward-fill" />}
                 // expandIcon={<ExpandMoreRounded />}
               >
-                <Typography component="p" sx={{ mb: 0 }} mr={2} variant="p">
+                <Typography component="p" my={1.2} ml={6} mr={1} variant="p">
                   {accordion}
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <ul className="list-disc mr-6">
                   {_Syllabus[accordion].map((item, indx) => (
-                    <Typography component="li" key={indx}>
+                    <Typography color="text.secondary" component="li" key={indx}>
                       {item}
                     </Typography>
                   ))}

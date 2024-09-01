@@ -28,9 +28,9 @@ function AccordionSyllabus({ title = defaultTitle, accordions = [], ...props }) 
             component="div"
           >
             מה בדיוק לומדים בקורס?
-            <Typography mx={1} component="a" variant="h3" sx={textGradient}>
+            {/* <Typography mx={1} component="a" variant="h3" sx={textGradient}>
               סילבוס
-            </Typography>
+            </Typography> */}
           </Typography>
           <Typography color="text.secondary" variant="p">
             אנחנו כל כך גאים בתכנים שלנו שבחרנו להציג את הסילבוס של הקורס, ככה פשוט.
