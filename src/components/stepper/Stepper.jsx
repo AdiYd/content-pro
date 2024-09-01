@@ -39,89 +39,140 @@ export const arrowsDown = (
     </svg>
   </div>
 );
-export const arrowsDown2 = (
-  mainColor = 'currentColor',
-  accentColor = 'currentColor',
-  width = '28px',
-  className = ''
-) => (
-  <div className={`flex justify-start ${className}`}>
-    <svg width={width} height={width} viewBox="0 -960 960 960" fill="url(#gradientAnimation)">
-      <defs>
-        <linearGradient id="gradientAnimation" x1="0%" y1="0%" x2="0%" y2="100%">
-          <animateTransform
-            attributeName="transform"
-            type="translateY"
-            from="0%"
-            to="100%"
-            dur="1s"
-            repeatCount="indefinite"
-          />
-          <stop offset="0%" stopColor={accentColor} />
-          <stop offset="100%" stopColor={mainColor} />
-        </linearGradient>
-      </defs>
-      <path d="M480-200 240-440l56-56 184 183 184-183 56 56-240 240Zm0-240L240-680l56-56 184 183 184-183 56 56-240 240Z" />
-    </svg>
-  </div>
-);
 
-const arrowsDown3 = (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    height="24px"
-    viewBox="0 -960 960 960"
-    width="24px"
-    fill="currentColor"
-  >
-    <path d="M480-200 240-440l56-56 184 183 184-183 56 56-240 240Zm0-240L240-680l56-56 184 183 184-183 56 56-240 240Z" />
-  </svg>
-);
+// export const arrowsDown2 = (
+//   mainColor = 'currentColor',
+//   accentColor = 'currentColor',
+//   width = '28px',
+//   className = ''
+// ) => (
+//   <div className={`flex justify-start ${className}`}>
+//     <svg width={width} height={width} viewBox="0 -960 960 960" fill="url(#gradientAnimation)">
+//       <defs>
+//         <linearGradient id="gradientAnimation" x1="0%" y1="0%" x2="0%" y2="100%">
+//           <animateTransform
+//             attributeName="transform"
+//             type="translateY"
+//             from="0%"
+//             to="100%"
+//             dur="1s"
+//             repeatCount="indefinite"
+//           />
+//           <stop offset="0%" stopColor={accentColor} />
+//           <stop offset="100%" stopColor={mainColor} />
+//         </linearGradient>
+//       </defs>
+//       <path d="M480-200 240-440l56-56 184 183 184-183 56 56-240 240Zm0-240L240-680l56-56 184 183 184-183 56 56-240 240Z" />
+//     </svg>
+//   </div>
+// );
 
+// const steps2 = [
+//   {
+//     name: 'נרשמים לקורס',
+//     description: 'לומדים את הטכניקות, הכלים והטיפים הכי חמים',
+//     href: '#',
+//     id: 'step 1',
+//     iconName: 'bi:laptop',
+//     InnerSteps: ['מתחילים מ - 0', 'לומדים ממי שכבר עשו את זה', 'מתרגלים, שואלים ומתנסים'],
+//   },
+//   {
+//     name: 'מצטרפים לקהילה שלנו',
+//     description: 'מתחברים לקהילה, משתפים עבודות ומקבלים טיפים של אלופים',
+//     href: '#',
+//     id: 'step 2',
+//     iconName: 'iconoir:community',
+//     InnerSteps: [
+//       'קהילה אקסלוסיבית 🤫',
+//       'המקום לשאלות, עדכונים ועזרה',
+//       'תכני העשרה, מדריכים וטיפים שיקצרו לכם את הדרך 🚀',
+//     ],
+//   },
+//   {
+//     name: 'בונים תיק עבודות',
+//     description: 'מתחילים להתנסות, יוצרים סירטונים ותכנים ומשתפרים',
+//     href: '#',
+//     id: 'step 3',
+//     iconName: 'dashicons:portfolio', // 'bytesize:portfolio'
+//     InnerSteps: [
+//       'משקיעים בתיק מרשים',
+//       'משתפים רעיונות ומתחילים ליצור תוכן מקורי',
+//       'צוברים ניסיון, ידע וקשרים',
+//     ],
+//   },
+
+//   {
+//     name: 'הכנסה מיצירת תוכן',
+//     description: 'לקהילה שלנו יש ביקוש, מי שיקח את הכלים שלנו ברצינות יקבל הצעות עבודה',
+//     href: '#',
+//     id: 'step 4',
+//     iconName: 'game-icons:money-stack',
+//     InnerSteps: [
+//       'הקהילה שלנו מבוקשת',
+//       'יוצרים שיתופי פעולה עם יוצרי תוכן אחרים ',
+//       'יוצרים חיבורים עם לקוחות פוטנציאלים 🤝',
+//     ],
+//   },
+//   {
+//     name: '',
+//     description: '',
+//     href: '#',
+//     id: 'final step',
+//     final: true,
+//     iconName: 'solar:cup-star-linear',
+//     InnerSteps: ['איך מרוויחים 500 ש"ח מסירטון קצר? בואו לגלות 😉'],
+//   },
+// ];
 const steps = [
   {
-    name: 'נרשמים לקורס',
+    name: 'נרשמים להכשרה שלנו',
     description: 'לומדים את הטכניקות, הכלים והטיפים הכי חמים',
     href: '#',
     id: 'step 1',
     iconName: 'bi:laptop',
-    InnerSteps: ['מתחילים מ - 0', 'לומדים ממי שכבר עשו את זה', 'מתרגלים, שואלים ומתנסים'],
+    InnerSteps: [
+      'מקבלים מייל עם גישה לתכנים הלימודיים ולקהילה',
+      'לומדים ממי שכבר עשו את זה',
+      'מתחילים לתרגל',
+      'מצטרפים לקבוצת ואטסאפ',
+    ],
   },
   {
-    name: 'מצטרפים לקהילה שלנו',
+    name: 'קהילה אקסקלוסיבית מלאה ביוצרי תוכן',
+    // emoji: '🤫',
     description: 'מתחברים לקהילה, משתפים עבודות ומקבלים טיפים של אלופים',
     href: '#',
     id: 'step 2',
     iconName: 'iconoir:community',
     InnerSteps: [
-      'קהילה אקסלוסיבית 🤫',
-      'המקום לשאלות, עדכונים ועזרה',
-      'תכני העשרה, מדריכים וטיפים שיקצרו לכם את הדרך 🚀',
+      'שואלים, מתייעצים ועוזרים אחד לשני',
+      'תכני העשרה קבועים מדריכים וטיפים שיקצרו לכם את הדרך 🚀',
+      'יוצרים סרטונים ביחד עם יוצרי התוכן בקבוצה',
     ],
   },
   {
-    name: 'בונים תיק עבודות',
+    name: 'צוברים ניסיון וידע ייחודי שיש רק ליוצרי התוכן שלנו',
     description: 'מתחילים להתנסות, יוצרים סירטונים ותכנים ומשתפרים',
     href: '#',
     id: 'step 3',
     iconName: 'dashicons:portfolio', // 'bytesize:portfolio'
     InnerSteps: [
-      'משקיעים בתיק מרשים',
+      'משקיעים בתיק עבודות מרשים שיבלוט בקלות',
       'משתפים רעיונות ומתחילים ליצור תוכן מקורי',
-      'צוברים ניסיון, ידע וקשרים',
+      'צוברים ניסיון וקשרים ומתחילים',
     ],
   },
 
   {
-    name: 'הכנסה מיצירת תוכן',
+    name: 'אנחנו נעזור לכם ליצור חיבורים עם ללקוחות פוטנציאליים',
     description: 'לקהילה שלנו יש ביקוש, מי שיקח את הכלים שלנו ברצינות יקבל הצעות עבודה',
     href: '#',
     id: 'step 4',
     iconName: 'game-icons:money-stack',
     InnerSteps: [
       'הקהילה שלנו מבוקשת',
-      'יוצרים שיתופי פעולה עם יוצרי תוכן אחרים ',
-      'יוצרים חיבורים עם לקוחות פוטנציאלים 🤝',
+      'ממשיכים להגדיל את החשיפה ברשתות ולשפר את התוכן',
+      'יוצרים חיבורים ושיתופי פעולה 🤝',
     ],
   },
   {
@@ -131,7 +182,7 @@ const steps = [
     id: 'final step',
     final: true,
     iconName: 'solar:cup-star-linear',
-    InnerSteps: ['איך מרוויחים 500 ש"ח מסירטון קצר? בואו לגלות 😉'],
+    InnerSteps: ['איך מרוויחים 500 ש"ח מסרטון של עד דקה? בואו לגלות 😉'],
   },
 ];
 
@@ -193,12 +244,12 @@ function Stepper({ children }) {
                       // className="text-2xl font-medium"
                       style={{ marginBottom: '10px' }}
                     >
-                      {step.name}
+                      {step.name} {step.emoji}
                     </span>
                     {step.InnerSteps.map((item, index) => (
                       <div className="my-2 w-fit" key={index}>
-                        <span className="text-base justify-start opacity-80 flex max-md:text-cente text-start ">
-                          {item}
+                        <span className="text-base justify-start flex max-md:text-cente text-start ">
+                          <Typography color="text.secondary">{item}</Typography>
                         </span>
                         {index !== step.InnerSteps.length - 1 &&
                           arrowsDown(
@@ -261,10 +312,11 @@ function Stepper({ children }) {
                     >
                       {step.name}
                     </span>
+                    {step.emoji}
                     {step.InnerSteps.map((item, index) => (
                       <div className="my-2 w-fit" key={index}>
-                        <span className="text-base justify-start opacity-80 flex max-md:text-cente text-start ">
-                          {item}
+                        <span className="text-base justify-start flex max-md:text-cente text-start ">
+                          <Typography color="text.secondary">{item}</Typography>
                         </span>
                         {index !== step.InnerSteps.length - 1 &&
                           arrowsDown(theme.palette[mainColor]?.light, undefined, '28px', 'mr-10')}
@@ -302,12 +354,12 @@ function Stepper({ children }) {
                     <span
                     // className="text-2xl font-medium "
                     >
-                      {step.name}
+                      {step.name} {step.emoji}
                     </span>
                     {step.InnerSteps.map((item, index) => (
                       <div className="my-2 w-fit" key={index}>
-                        <span className="text-base justify-start opacity-80 flex max-md:text-cente text-start ">
-                          {item}
+                        <span className="text-base justify-start flex max-md:text-cente text-start ">
+                          <Typography color="text.secondary">{item}</Typography>
                         </span>
                         {index !== step.InnerSteps.length - 1 &&
                           arrowsDown(theme.palette[mainColor]?.light, undefined, '28px', 'mr-10')}

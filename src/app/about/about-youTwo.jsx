@@ -13,7 +13,7 @@ import { varFade, MotionViewport } from 'src/components/animate';
 
 const halfWave = (mode) => (
   <svg
-    className="absolute -bottom-8 max-sm:-bottom-4 max-sm:-left-2 h-auto w-full z-10  origin-center"
+    className="absolute -bottom-8 max-sm:-bottom-4 max-sm:left-2 h-auto w-full z-10  origin-center"
     style={{ transform: 'scale(2)' }}
     viewBox="0 0 2880 480"
     fill="none"
@@ -29,10 +29,48 @@ const halfWave = (mode) => (
 );
 
 // ----------------------------------------------------------------------
+// const bulletsWithIcons2 = [
+//   {
+//     title: 'מקצוע דיגיטלי מבוקש',
+//     text: 'מקצוע דיגיטלי מבוקש, ללא קשר לפלטפורמה המועדפת עליכם',
+//     icons: ['logos:youtube-icon', 'logos:tiktok-icon', 'skill-icons:instagram', 'logos:facebook'],
+//     imageUrl: `https://picsum.photos/seed/${Math.random()}/300/200`,
+//   },
+//   {
+//     title: 'ליצור תוכן ולהרוויח',
+//     text: 'ליצור תוכן ולהרוויח כסף מכל מקום ובכל זמן',
+//     icons: ['svg-spinners:wifi', 'twemoji:laptop', 'flat-color-icons:globe'],
+//     imageUrl: `https://picsum.photos/seed/${Math.random()}/300/200`,
+//   },
+//   {
+//     title: 'לבנות לעצמכם קהילה אותנטית',
+//     text: 'לבנות קהילה אותנטית שתהווה עבורכם מקור הכנסה וקהל שאוהב אתכם',
+//     icons: ['mdi:account-group-outline', 'material-symbols:animated-images'],
+//     imageUrl: `https://picsum.photos/seed/${Math.random()}/300/200`,
+//   },
+//   {
+//     title: 'השקעה שמחזירה את עצמה',
+//     text: 'ההשקעה חוזרת - נחבר אתכם לפרויקט ראשון בתשלום לאחר הכנת תיק עבודות',
+//     icons: ['bytesize:portfolio', 'game-icons:money-stack', 'mdi:film-open-star-outline'],
+//     imageUrl: `https://picsum.photos/seed/${Math.random()}/300/200`,
+//   },
+//   {
+//     title: 'להצטרף לקהילה איכותית',
+//     text: 'קבוצת פרטית של יוצרי תוכן עם תכני העשרה, טיפים והדרכות להמשך הדרך',
+//     icons: ['logos:whatsapp-icon', 'emojione:books'],
+//     imageUrl: `https://picsum.photos/seed/${Math.random()}/300/200`,
+//   },
+//   {
+//     title: 'התחייבות מלאה',
+//     text: 'לא אהבתם ? תקבלו את כספכם בחזרה',
+//     icons: ['mdi:cash-refund', 'pajamas:partner-verified'],
+//     imageUrl: `https://picsum.photos/seed/${Math.random()}/300/200`,
+//   },
+// ];
 const bulletsWithIcons = [
   {
     title: 'מקצוע דיגיטלי מבוקש',
-    text: 'מקצוע דיגיטלי מבוקש, ללא קשר לפלטפורמה המועדפת עליכם',
+    text: ' מהיוצרים עם ניסיון של 4 שנים ומעלה מרוויחים מעל 20,00 $  בשנה / 78% מהיוצרים במשרה מלאה מרוויחים מעל 23,500 $ בשנה.',
     icons: ['logos:youtube-icon', 'logos:tiktok-icon', 'skill-icons:instagram', 'logos:facebook'],
     imageUrl: `https://picsum.photos/seed/${Math.random()}/300/200`,
   },
@@ -44,13 +82,13 @@ const bulletsWithIcons = [
   },
   {
     title: 'לבנות לעצמכם קהילה אותנטית',
-    text: 'לבנות קהילה אותנטית שתהווה עבורכם מקור הכנסה וקהל שאוהב אתכם',
+    text: 'לבנות קהילה אותנטית שתהווה בשבילכם בסיס קשרים אסטרטגי בנישה שלכם לכל פעילות עתידית',
     icons: ['mdi:account-group-outline', 'material-symbols:animated-images'],
     imageUrl: `https://picsum.photos/seed/${Math.random()}/300/200`,
   },
   {
     title: 'השקעה שמחזירה את עצמה',
-    text: 'ההשקעה חוזרת - נחבר אתכם לפרויקט ראשון בתשלום לאחר הכנת תיק עבודות',
+    text: 'ההשקעה חוזרת - נחבר אתכם לפרויקט ראשון בתשלום, עד 3 חודשים לאחר הכנת תיק עבודות',
     icons: ['bytesize:portfolio', 'game-icons:money-stack', 'mdi:film-open-star-outline'],
     imageUrl: `https://picsum.photos/seed/${Math.random()}/300/200`,
   },
@@ -62,7 +100,7 @@ const bulletsWithIcons = [
   },
   {
     title: 'התחייבות מלאה',
-    text: 'לא אהבתם ? תקבלו את כספכם בחזרה',
+    text: 'לא הצלחנו להשיג לכם את העבודה הראשונה שלכם ? קבלו החזר כספי מלא',
     icons: ['mdi:cash-refund', 'pajamas:partner-verified'],
     imageUrl: `https://picsum.photos/seed/${Math.random()}/300/200`,
   },

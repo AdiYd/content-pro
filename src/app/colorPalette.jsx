@@ -56,7 +56,7 @@ function ColorPicker({ ...props }) {
           )
       )}
       <Switch
-        sx={{ ml: { md: 0, xs: 12 }, mt: { md: 4, xs: 0 } }}
+        sx={{ ml: { md: 0, xs: 8 }, mt: { md: 4, xs: 0 } }}
         onChange={() => {
           settings.onUpdateField('colorScheme', mode === 'light' ? 'dark' : 'light');
           setMode(mode === 'dark' ? 'light' : 'dark');

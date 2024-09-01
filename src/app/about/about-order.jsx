@@ -89,21 +89,24 @@ export function AboutOrder({ contentType = 'aboutCourse' }) {
       component={MotionViewport}
       // maxWidth="lg"
       sx={{
-        py: { xs: 4, md: 4 },
+        pb: { xs: 4, md: 4 },
         alignItems: 'center',
         textAlign: { xs: 'center', md: 'unset', direction: 'rtl' },
       }}
     >
       <m.div variants={varFade().inLeft}>
-        <Typography variant="h4" sx={{ mb: 3 }}>
+        {/* <Typography variant="h4" sx={{ mb: 3 }}>
           עולם הדיגיטל, הסושיאל ויצירת התוכן הוא
           <Box component="a" mx={1}>
             עצום ומלא אפשרויות (ואכזבות), זאת גם הסיבה שכדי להצליח חשוב מאוד לבנות את עצמכם בצורה
             נכונה ולספק תוכן איכותי ומקורי.
           </Box>
+        </Typography> */}
+        <Typography variant="h3" mb={4}>
+          אחרי ההכשרה הזו אתם תצליחו להתמודד עם כל האתגרים שביצירת תוכן
         </Typography>
       </m.div>
-      <m.div variants={varFade({ delay: 0.5 }).inLeft}>
+      {/* <m.div variants={varFade({ delay: 0.5 }).inLeft}>
         <Typography variant="h4" sx={{ mb: 3 }}>
           אני אעשה לך
           <Box component="a" mx={1} sx={textGradient}>
@@ -114,7 +117,7 @@ export function AboutOrder({ contentType = 'aboutCourse' }) {
             סיכויי ההצלחה שלך
           </Box>
         </Typography>
-      </m.div>
+      </m.div> */}
       <div className="flex max-lg:justify-center">
         <Box
           sx={{

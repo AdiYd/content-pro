@@ -24,7 +24,7 @@ import { varFade, MotionViewport } from 'src/components/animate';
 
 export const testimonials = [
   {
-    name: 'קורל דלומי',
+    name: 'קורל חלומי',
     postedDate: '2024-07-15',
     ratingNumber: 5,
     avatarUrl: 'https://i.pravatar.cc/150?u=a8d942',
