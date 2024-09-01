@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import puppeteer from 'puppeteer';
 
 import { sendEmail } from './email';
@@ -148,8 +147,13 @@ const generateInvoiceTemplate = (data) => {
 
 // Function to create a PDF from the HTML template
 const createPDF = async (htmlContent, outputPath) => {
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
+    console.log('CREATING PDF BRFORE');
+    const browser = await puppeteer.launch();
+    console.log('CREATING PDF aFTER 1');
+
+    const page = await browser.newPage();
+    console.log('CREATING PDF aFTER 2');
+
   await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
   await page.pdf({ path: outputPath, format: 'A4', printBackground: true });
   await browser.close();
