@@ -13,7 +13,7 @@ const generateInvoiceTemplate = (data) => {
     minute: '2-digit',
   });
   data.businessName = data.businessName || 'Video-pro';
-  data.businessID = data.businessID || '201432912';
+  data.businessID = data.businessID || '209221886';
   data.products = data.products || [{ name: 'קורס יצירת תוכן', price: data.totalPrice }];
   data.currency = data.currency || '₪';
   process.env.INVOICE_ID = Number(process.env.INVOICE_ID) + 1;
@@ -162,7 +162,7 @@ export const sendInvoiceEmail = async (data) => {
 
   // Create the PDF from the HTML content
   await createPDF(htmlContent, pdfPath);
-
+  console.log('PDF created...');
   const attachments = [
     {
       filename: 'invoice.pdf',

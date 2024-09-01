@@ -18,7 +18,8 @@ export async function POST(request) {
       },
     });
   } catch (error) {
-    return new Response(JSON.stringify({ error: 'Invalid request' }), {
+    console.log('There was an error with creating payment: ', error);
+    return new Response(JSON.stringify({ error: 'Invalid request', log: error }), {
       status: 400,
       headers: {
         'Content-Type': 'application/json',

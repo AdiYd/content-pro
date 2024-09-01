@@ -51,8 +51,7 @@ export default async function RootLayout({ children }) {
           property="og:description"
           content="הצטרף לוידאו-פרו, האקדמיה המקצועית ליצירת תוכן וידאו. למד ליצירת תוכן איכותי, הצטרף לקהילה תומכת, והרוויח מתוכן דיגיטלי."
         />
-        <meta property="og:image" content="path/to/your/course-image.jpg" />
-        <meta property="og:url" content="https://yourwebsite.com/video-pro" />
+        <meta property="og:url" content="https://videopro.webly.digital" />
         <meta property="og:type" content="website" />
 
         <meta name="twitter:card" content="summary_large_image" />

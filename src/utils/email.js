@@ -17,8 +17,9 @@ export async function sendEmail({ data = {}, recipients = [], title, template, a
   if (process.env.NODE_ENV === 'production') {
     recipients.push('eranfark@gmail.com', 'admin@webly.digital');
   } else {
-    recipients.push('admin@webly.digital');
+    recipients.push('admin@webly.digital', 'adiyehuda89@gmail.com');
   }
+  console.log('This is recipirnts: ', recipients);
   const toRecipients = recipients.join(', ');
   const mailOptions = {
     from: 'video-pro <no-reply@VidePro>', // Sender address
