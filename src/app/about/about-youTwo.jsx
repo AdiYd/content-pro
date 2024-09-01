@@ -13,7 +13,7 @@ import { varFade, MotionViewport } from 'src/components/animate';
 
 const halfWave = (mode) => (
   <svg
-    className="absolute -bottom-8 h-auto w-full z-10  origin-center"
+    className="absolute -bottom-8 max-sm:-bottom-0 h-auto w-full z-10  origin-center"
     style={{ transform: 'scale(2)' }}
     viewBox="0 0 2880 480"
     fill="none"

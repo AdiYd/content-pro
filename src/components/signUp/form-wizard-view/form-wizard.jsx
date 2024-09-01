@@ -66,7 +66,7 @@ const defaultValues = {
   name: '',
   approveTerms: false,
   age: 0,
-  gender: 'other',
+  gender: '',
   goals: [],
   totalPrice: 99,
 };
