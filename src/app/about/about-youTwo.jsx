@@ -70,7 +70,7 @@ const halfWave = (mode) => (
 const bulletsWithIcons = [
   {
     title: 'מקצוע דיגיטלי מבוקש',
-    text: ' מהיוצרים עם ניסיון של 4 שנים ומעלה מרוויחים מעל 20,00 $  בשנה / 78% מהיוצרים במשרה מלאה מרוויחים מעל 23,500 $ בשנה.',
+    text: '46%  מהיוצרים עם ניסיון של 4 שנים ומעלה מרוויחים מעל 20,00 $  בשנה / 78% מהיוצרים במשרה מלאה מרוויחים מעל 23,500 $ בשנה.',
     icons: ['logos:youtube-icon', 'logos:tiktok-icon', 'skill-icons:instagram', 'logos:facebook'],
     imageUrl: `https://picsum.photos/seed/${Math.random()}/300/200`,
   },

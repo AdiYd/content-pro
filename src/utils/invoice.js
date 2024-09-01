@@ -24,7 +24,8 @@ const createPDF = async (htmlContent, outputPath) => {
 
 // Function to send the invoice email with the PDF attachment
 export const sendInvoiceEmail = async (data) => {
-  const pdfPath = path.join(process.cwd(), 'Invoice.pdf');
+  const pdfPath = path.join('/tmp', 'Invoice.pdf');
+  console.log('PDF path: ', pdfPath);
   const htmlContent = generateInvoiceTemplate(data);
 
   // Create the PDF from the HTML content

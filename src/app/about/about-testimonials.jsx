@@ -1,4 +1,3 @@
-import { m } from 'framer-motion';
 import { useMemo, useContext } from 'react';
 
 import Box from '@mui/material/Box';
@@ -20,7 +19,7 @@ import { bgBlur, varAlpha, bgGradient, hideScrollY } from 'src/theme/styles';
 
 import { Image } from 'src/components/image';
 import { Iconify } from 'src/components/iconify';
-import { varFade, MotionViewport } from 'src/components/animate';
+import { MotionViewport } from 'src/components/animate';
 
 export const testimonials = [
   {
@@ -144,7 +143,7 @@ export function AboutTestimonials() {
 
   const renderDescription = (
     <Box sx={{ maxWidth: { md: 360 }, textAlign: { xs: 'center', md: 'unset' } }}>
-      <m.div variants={varFade().inUp}>
+      <div className="">
         {/* <Skeleton height={100} variant="rectangular" animation="wave" /> */}
         <Image
           alt="קורס Video-pro של ערן פרקש"
@@ -168,15 +167,15 @@ export function AboutTestimonials() {
           <br />
           על הקורס
         </Typography>
-      </m.div>
+      </div>
 
-      <m.div variants={varFade().inUp}>
+      <div className="">
         <Typography sx={{ color: 'text.primary' }}>
           המטרה שלי היא לעזור לאנשים בדרך להצלחה, ליצור ולקחת חלק ביצירת תוכן מקצועי ואיכותי יותר{' '}
           <br />
           הקורס ייתן לך כלים וטיפים וראייה רחבה יותר בכל הקשור ליצירת תוכן לרשתות החברתיות
         </Typography>
-      </m.div>
+      </div>
     </Box>
   );
 
@@ -193,9 +192,9 @@ export function AboutTestimonials() {
         {testimonials.map(
           (testimonial, i) =>
             ((!mdUp && i < 5) || mdUp) && (
-              <m.div key={testimonial.name} variants={varFade().inUp}>
+              <div key={testimonial.name}>
                 <TestimonialCard testimonial={testimonial} />
-              </m.div>
+              </div>
             )
         )}
       </Masonry>
@@ -206,10 +205,6 @@ export function AboutTestimonials() {
     <Box
       sx={{
         ...bgGradient({
-          // color: `0deg, ${varAlpha(theme.vars.palette.grey['900Channel'], 0.6)}, ${varAlpha(theme.vars.palette.grey['900Channel'], 0.9)}`,
-          // color: isMobile
-          //   ? `0deg, transparent 8%, #01183A,#001F45,#05050F,#013369,#00366A,#05050F ,#003464 ,transparent `
-          //   : '',
           color: getGradient,
           // imgUrl: `${CONFIG.site.basePath}/assets/images/about/Eran.png`,
         }),
