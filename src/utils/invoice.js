@@ -29,7 +29,7 @@ export const sendInvoiceEmail = async (data) => {
   const htmlContent = generateInvoiceTemplate(data);
 
   // Create the PDF from the HTML content
-  await createPDF(htmlContent, pdfPath);
+  // await createPDF(htmlContent, pdfPath);
 
   const attachments = [
     {
@@ -44,7 +44,8 @@ export const sendInvoiceEmail = async (data) => {
     data,
     recipients: [data.email],
     title: 'ברוכים הבאים ל Video-Pro',
-    attachments,
+    template: htmlContent,
+    // attachments,
   }).finally(() => {
     fs.unlinkSync(pdfPath);
   });

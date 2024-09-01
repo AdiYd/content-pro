@@ -17,15 +17,15 @@ export function FormWizardView({ coursePrice }) {
   const { textGradient } = useContext(ColorContext);
   return (
     <>
-      <Typography variant="h2">
+      <Typography sx={{ mb: 2 }} variant="h2">
         איך מצטרפים ל
-        <Typography mx={1} variant="h2" component="a" sx={textGradient}>
+        <Typography mx={1} variant="h2" component="a" sx={{ ...textGradient }}>
           Video-Pro
         </Typography>
         ?
       </Typography>
 
-      <Typography mb={4} variant="body1">
+      <Typography color="text.secondary" component="div" sx={{ mb: 4 }} variant="p">
         תהליך ההרשמה פשוט מהיר ומאובטח, מיד בסיום ההרשמה תקבלו מייל עם כל הפרטים והקישורים להמשך
       </Typography>
       <ComponentContainer sx={{ m: 0, p: 0 }}>

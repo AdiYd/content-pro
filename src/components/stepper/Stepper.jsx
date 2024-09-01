@@ -249,7 +249,9 @@ function Stepper({ children }) {
                     {step.InnerSteps.map((item, index) => (
                       <div className="my-2 w-fit" key={index}>
                         <span className="text-base justify-start flex max-md:text-cente text-start ">
-                          <Typography color="text.secondary">{item}</Typography>
+                          <Typography variant="p" color="text.secondary">
+                            {item}
+                          </Typography>
                         </span>
                         {index !== step.InnerSteps.length - 1 &&
                           arrowsDown(
@@ -316,7 +318,9 @@ function Stepper({ children }) {
                     {step.InnerSteps.map((item, index) => (
                       <div className="my-2 w-fit" key={index}>
                         <span className="text-base justify-start flex max-md:text-cente text-start ">
-                          <Typography color="text.secondary">{item}</Typography>
+                          <Typography variant="p" color="text.secondary">
+                            {item}
+                          </Typography>
                         </span>
                         {index !== step.InnerSteps.length - 1 &&
                           arrowsDown(theme.palette[mainColor]?.light, undefined, '28px', 'mr-10')}
@@ -359,7 +363,9 @@ function Stepper({ children }) {
                     {step.InnerSteps.map((item, index) => (
                       <div className="my-2 w-fit" key={index}>
                         <span className="text-base justify-start flex max-md:text-cente text-start ">
-                          <Typography color="text.secondary">{item}</Typography>
+                          <Typography variant="p" color="text.secondary">
+                            {item}
+                          </Typography>
                         </span>
                         {index !== step.InnerSteps.length - 1 &&
                           arrowsDown(theme.palette[mainColor]?.light, undefined, '28px', 'mr-10')}
@@ -442,7 +448,7 @@ export default function StepperSection({ ...props }) {
           </Typography>
         </m.div>
         <m.div animate={varBounce({ delay: 0.1 }).in}>
-          <Typography component="div" mb={4} variant="p">
+          <Typography color="text.secondary" component="div" mb={4} variant="p">
             התקדמנו הרבה מעבר לחוברון והיום אתם עדים בפעם הראשונה להכשרה המלאה של video-pro שמלמדת
             אתכם את התהליך המלא של איך יוצרים תוכן איכותי והופכים אותו להכנסה. אז איך זה עובד?
           </Typography>

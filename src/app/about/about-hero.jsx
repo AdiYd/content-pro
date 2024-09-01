@@ -122,7 +122,7 @@ export function AboutHero() {
   return (
     <Box
       sx={{
-        height: { md: 680, xs: 640 },
+        height: { md: 680, xs: 650 },
         overflow: 'visible',
         pt: { xs: 8, md: 2 },
         pb: { xs: 10, md: 0 },
@@ -174,7 +174,14 @@ export function AboutHero() {
             }}
           /> */}
           <div className="w-fit h-fit relative max-lg:mx-auto">
-            <AnimateText
+            <m.div variants={varFade().in}>
+              <Typography color="common.white" variant="h3">
+                ההכשרה שעוזרת ליוצרי תוכן
+                <br />
+                לקבל עבודה באופן שוטף
+              </Typography>
+            </m.div>
+            {/* <AnimateText
               component="h2"
               variant="h2"
               text={['ההכשרה שעוזרת ליוצרי תוכן ', 'לקבל עבודות באופן שוטף']}
@@ -183,7 +190,7 @@ export function AboutHero() {
                 color: 'common.white',
                 direction: 'rtl',
               }}
-            />
+            /> */}
             <m.div
               // className="animate-bounce"
               variants={varBounce({ durationIn: 2, delay: 2 }).inLeft}
@@ -261,6 +268,14 @@ export function AboutHero() {
                 <SocialIcon width={30} icon="facebook" />
               </Link>
             </Stack>
+            {/* <Box
+              sx={{
+                display: 'flex',
+                justifyContent: { lg: 'inherit', md: 'center', xs: 'center' },
+              }}
+            >
+              {emph(theme.palette[mainColor])}
+            </Box> */}
             <Container
               sx={{
                 display: 'flex',
@@ -286,6 +301,7 @@ export function AboutHero() {
                 }}
                 variant="outlined"
                 color={mainColor}
+                onClick={() => ScrollComponent('contactUs')}
               >
                 צרו קשר
               </Button>

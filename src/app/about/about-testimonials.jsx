@@ -203,6 +203,7 @@ export function AboutTestimonials() {
 
   return (
     <Box
+      mt={8}
       sx={{
         ...bgGradient({
           color: getGradient,

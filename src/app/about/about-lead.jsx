@@ -195,6 +195,7 @@ export function AboutLead({ contentType = 'aboutCourse' }) {
 
   return (
     <Container
+      id="contactUs"
       component={MotionViewport}
       // maxWidth="lg"
       sx={{

@@ -62,6 +62,7 @@ export function Stepper({ steps, activeStep }) {
     <MuiStepper
       // connector={<CustomConnector />}
       activeStep={activeStep}
+      variant="elevation"
       alternativeLabel
       sx={{
         mb: 5,
@@ -93,7 +94,7 @@ export function Stepper({ steps, activeStep }) {
                     color: `${mainColor}.contrastText`,
                   }),
                   ...(completed && {
-                    bgcolor: `${mainColor}.main`,
+                    bgcolor: `success.main`,
                     color: `${mainColor}.contrastText`,
                   }),
                 }}

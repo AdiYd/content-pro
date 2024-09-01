@@ -131,7 +131,7 @@ export function AboutOrder({ contentType = 'aboutCourse' }) {
         </Box>
       </div>
       <m.div variants={varFade({ delay: 0.7 }).inLeft}>
-        <Typography variant="p" sx={{ mb: 3 }}>
+        <Typography color="text.secondary" variant="p" sx={{ mb: 3 }}>
           אני יודע כמה זה מתסכל לנסות ליצור תוכן איכותי ובסוף לגלות שיש עוד 1000 כמוכם שעשו את זה
           כבר לפניכם.
           <br />

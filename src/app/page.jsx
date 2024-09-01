@@ -4,6 +4,7 @@
 import { Box } from '@mui/material';
 
 import AccordionSection from 'src/layouts/components/Accordion/AccordionSection';
+import AccordionSyllabus from 'src/layouts/components/Accordion/AccordionSillabus';
 
 import SignUp from 'src/components/signUp/SignUp';
 import Footer from 'src/components/footer/Footer';
@@ -34,7 +35,7 @@ export default function Page() {
       <AboutYouTwo />
       <StepperSection />
       <AboutOrder />
-
+      <AccordionSyllabus />
       <Considering buttonBefore="סקרנים?! לחצו כאן 😉" />
       <ImageDiv />
       <SignUp coursePrice={CoursePrice} />

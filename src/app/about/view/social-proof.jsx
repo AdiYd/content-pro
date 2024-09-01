@@ -55,17 +55,20 @@ function SocialProof({ title, bullets = [], ...props }) {
           variants={varFade({}).inLeft}
         />
         <Typography
-          variant="body1"
+          variant="p"
+          color="text.secondary"
           sx={{
             textAlign: 'start',
             opacity: 0.8,
           }}
         >
           כמובן! אנחנו שמים דגש על הפרטים הקטנים שעושים את ההבדל - היצירתיות, הייחודיות והדגשים שרק
-          המקצוענים שמים לב אליהם
+          המקצוענים שמים לב אליהם.
         </Typography>
+        <br />
         <Typography
-          variant="body1"
+          variant="p"
+          color="text.secondary"
           sx={{
             textAlign: 'start',
             opacity: 0.8,

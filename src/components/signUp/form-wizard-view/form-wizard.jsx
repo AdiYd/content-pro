@@ -141,12 +141,12 @@ export function FormWizard({ coursePrice }) {
       const result = await res.json();
       console.log('this is api result: ', result);
 
-      // window.location.href =
-      //   formData.totalPrice === 499
-      //     ? 'https://meshulam.co.il/quick_payment?b=66e0d1ec8b97738b8e3f0fafa7826855'
-      //     : formData.totalPrice === 449
-      //       ? 'https://meshulam.co.il/quick_payment?b=b525a66f1ebef00df2e9f11ed69ad593'
-      //       : 'https://meshulam.co.il/quick_payment?b=7f441e3b9b0a82f40c07e05e67e36835';
+      window.location.href =
+        formData.totalPrice === 499
+          ? 'https://meshulam.co.il/quick_payment?b=66e0d1ec8b97738b8e3f0fafa7826855'
+          : formData.totalPrice === 449
+            ? 'https://meshulam.co.il/quick_payment?b=b525a66f1ebef00df2e9f11ed69ad593'
+            : 'https://meshulam.co.il/quick_payment?b=7f441e3b9b0a82f40c07e05e67e36835';
     } catch (error) {
       console.error('Error submitting data:', error);
     }

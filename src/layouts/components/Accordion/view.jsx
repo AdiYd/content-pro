@@ -14,6 +14,7 @@ import {
   AccordionDetails,
 } from '@mui/material';
 
+import { customShadows } from 'src/theme/core';
 import { ColorContext } from 'src/context/colorMain';
 
 import { Iconify } from 'src/components/iconify';
@@ -162,101 +163,166 @@ const _accordions = [
   },
 ];
 
+const _Syllabus = {
+  פתיח: [
+    'ברוכים הבאים',
+    'איך להוציא את המיטב מהקורס',
+    'איך להישאר רלוונטים ליצירת תוכן גם ב-2090',
+    'המטרה הכי גדולה של יוצרי התוכן - להגדיל קהילה',
+  ],
+  'תוכן הקורס': ['תוכן הקורס'],
+  היכרות: ['מי אני ?'],
+  'למה דווקא תוכן בצורת וידיאו ?': ['למה צריך ליצור תוכן בעיקר באמצעות וידיאו ?'],
+  'איך להרוויח כסף בתור יוצר תוכן': [
+    'איך לעשות כסף מהאינסטגרם',
+    'איך לעשות כסף מהיוטיוב',
+    'על מה אתם אמורים לשים הכי הרבה דגש בשביל לעשות כסף מהרשת החברתית ?',
+    'מי יכניס לכם הכי הרבה כסף לכיס ?',
+    'באיזה רשת חברתית הכי כדאי ליצור תוכן ?',
+  ],
+  'משא ומתן בסיסי עם חברות בתור יוצרי תוכן עצמאים': [
+    'איך לעשות משא ומתן מעמדה עוצמתית וכנה עם חברות',
+    'איך למדוד תוצאות בשיתופי פעולה',
+    'לסיכום',
+  ],
+  'איך להפוך ליוצרי תוכן שכל החברות רוצות לעבוד איתכם ?': [
+    'שלב 1 : למצוא תוכן עם ביקוש בטווח הארוך : מציאת נישה חכמה',
+    'שלב 2 - השיטה ליצור הרבה תוכן ברמה גבוהה שלא סיפרו לכם',
+    'שלב 3 : יצירת הסרטון (מרעיון למציאות) - איך הופכים רעיון לתוכן ויזואלי : כתיבת התסריט',
+    'שלב 4 : צילום ותאורה כמו מקצוענים',
+    'שלב 5 : למשוך תשומת לב של הצופים בעזרת עריכה',
+    'שלב 6 : העלאת התוכן לרשת החברתית בצורה נכונה יותר',
+    'שלב 7 : איך לנתח את התוכן שלכם ולמקסם את התוצאות בדפים שלכם',
+  ],
+  'ההזדמנות ביצירת תוכן': ['הפוטנציאל ביצירת תוכן'],
+  'אל תעשו את הטעות הזו : במה יוצר תוכן צריך להתמקד בהתחלה': [
+    'היכולת שמבדילה בין יוצרי תוכן בינוניים ליוצרי תוכן מצליחים',
+  ],
+  'המיינדסט של יוצרי תוכן מובילים': ['מה המנטליות שנדרשת ממכם בשביל להצליח בתור יוצרי תוכן'],
+  לסיכום: ['כמה נקודות לקחת מכאן והלאה'],
+  'פרק בונוס : איך ליצור סרטונים קצרים ויראלים': ['פרק בונוס : ניר לוגאסי'],
+};
+
 // ----------------------------------------------------------------------
 
-export function AccordionView({ title, accordions = _accordions }) {
+export function AccordionView({ title, accordions = _accordions, mode = 0 }) {
   const [controlled, setControlled] = useState(false);
   const theme = useTheme();
   const { mainColor } = useContext(ColorContext);
   const [expanded, setExpanded] = useState(() => {
     const res = {};
-    accordions.forEach((item) => {
-      if (item.defaultOpen) {
-        res[item.value] = true;
-      }
-    });
+    if (mode === 1) {
+      Object.keys(_Syllabus).forEach((item) => {
+        res[item] = false;
+      });
+    } else {
+      accordions.forEach((item) => {
+        if (item.defaultOpen) {
+          res[item.value] = true;
+        }
+      });
+    }
     return res;
   });
 
-  return (
-    // <AnimateBorder
-    //   sx={{ borderRadius: 1.5, maxWidth: { md: '66%', xs: '100%' } }}
-    //   animate={{ color: theme.palette.success.main || '#fff' }}
-    // >
-    <ComponentBlock
-      sx={{
-        my: 0,
-        pt: 2,
-        mx: 0,
-        px: { md: 2, xs: 0.8 },
-        width: 1,
-        maxWidth: { md: '70%', xs: '100%' },
-      }}
-    >
-      {/* <div className=" z-10 mx-0 px-0">
-        {accordions.map((accordion, index) => (
-          <AnimateBorder
-            sx={{ borderRadius: 1, mb: 2, zIndex: 50 }}
-            key={index}
-            animate={{
-              disable: !expanded[accordion.value],
-              width: expanded[accordion.value] === true ? '2px' : 0,
-              color:
-                theme.palette[Object.keys(basePalette)[index % 6]]?.dark ||
-                theme.palette.secondary.main,
-            }}
-          >
+  let accordionDiv;
+
+  if (mode === 1) {
+    accordionDiv = (
+      <ComponentBlock
+        sx={{
+          my: 4,
+          pt: 2,
+          mx: 0,
+          px: { md: 2, xs: 0.8 },
+          width: 1,
+          maxWidth: { md: '70%', xs: '100%' },
+        }}
+      >
+        <div className=" z-10 mx-0 px-0">
+          {Object.keys(_Syllabus).map((accordion, index) => (
             <Accordion
-              // expanded={expanded[accordion.value] || true}
+              // expanded={expanded[accordion] || true}
               // onChange={() =>
               //   setExpanded((p) => ({
               //     ...p,
               //     [accordion.value]: p[accordion.value] ? !p[accordion.value] : true,
               //   }))
               // }
-              defaultExpanded={accordion.defaultOpen}
+              // defaultExpanded
+              sx={{ '&.Mui-expanded': { boxShadow: customShadows().z1 } }}
               onChange={() =>
                 setExpanded((p) => ({
                   ...p,
-                  [accordion.value]: p[accordion.value] ? !p[accordion.value] : true,
+                  [accordion]: p[accordion] ? !p[accordion] : false,
                 }))
               }
-              // sx={{ borderBottom: '1px, pb: 1 }}
               key={index}
-              id={accordion.value}
+              id={accordion}
+              // sx={{ mt: index === accordion.length ? 0 : 4 }}
             >
               <AccordionSummary
-                expandIcon={<ExpandMore />}
-                sx={{ zIndex: 10 }}
+                // expandIcon={expanded[accordion.value] ? <RemoveFormattingIcon /> : <AddIcon />}
+                expandIcon={
+                  <Iconify
+                    icon={expanded[accordion] ? 'eva:arrow-up-fill' : 'eva:arrow-down-fill'}
+                  />
+                }
+                sx={{
+                  zIndex: 10,
+                  '& .MuiAccordionSummary-content': {
+                    mb: 0,
+                  },
+                  '& .MuiAccordionSummary-expandIconWrapper': {
+                    transition: 'transform 0.4s ease-in-out', // Adjust the duration and easing of the animation
+                  },
+                }}
                 // expandIcon={<Iconify icon="eva:arrow-ios-downward-fill" />}
                 // expandIcon={<ExpandMoreRounded />}
               >
-                <Typography variant="subtitle1">{accordion.heading}</Typography>
+                <Typography component="p" sx={{ mb: 0 }} mr={2} variant="p">
+                  {accordion}
+                </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Typography sx={{ opacity: 0.8 }} lineHeight={2}>
-                  {accordion.detail}
-                </Typography>
-                {accordion.button && (
-                  <Container sx={{ width: 1, my: 2, display: 'flex', justifyContent: 'center' }}>
-                    <Button
-                      sx={{ zIndex: 40, fontSize: { md: '1rem', xs: '1rem' }, borderRadius: 1 }}
-                      variant="outlined"
-                      onClick={() => ScrollComponent('signUp')}
-                      color={mainColor}
-                    >
-                      {accordion.button}
-                    </Button>
-                  </Container>
-                )}
+                <ul className="list-disc mr-6">
+                  {_Syllabus[accordion].map((item, indx) => (
+                    <Typography component="li" key={indx}>
+                      {item}
+                    </Typography>
+                  ))}
+                </ul>
               </AccordionDetails>
             </Accordion>
-            {!expanded[accordion.value] && <hr className="border-gray-700/50" />}
-          </AnimateBorder>
-        ))}
-      </div> */}
-      <div className=" z-10 mx-0 px-0">
-        {accordions.map((accordion, index) => (
+          ))}
+        </div>
+      </ComponentBlock>
+    );
+  } else {
+    accordionDiv = (
+      <ComponentBlock
+        sx={{
+          my: 0,
+          pt: 2,
+          mx: 0,
+          px: { md: 2, xs: 0.8 },
+          width: 1,
+          maxWidth: { md: '70%', xs: '100%' },
+        }}
+      >
+        {/* <div className=" z-10 mx-0 px-0">
+      {accordions.map((accordion, index) => (
+        <AnimateBorder
+          sx={{ borderRadius: 1, mb: 2, zIndex: 50 }}
+          key={index}
+          animate={{
+            disable: !expanded[accordion.value],
+            width: expanded[accordion.value] === true ? '2px' : 0,
+            color:
+              theme.palette[Object.keys(basePalette)[index % 6]]?.dark ||
+              theme.palette.secondary.main,
+          }}
+        >
           <Accordion
             // expanded={expanded[accordion.value] || true}
             // onChange={() =>
@@ -272,43 +338,26 @@ export function AccordionView({ title, accordions = _accordions }) {
                 [accordion.value]: p[accordion.value] ? !p[accordion.value] : true,
               }))
             }
+            // sx={{ borderBottom: '1px, pb: 1 }}
             key={index}
             id={accordion.value}
-            sx={{ mt: index === accordion.length ? 0 : 4 }}
           >
             <AccordionSummary
-              // expandIcon={expanded[accordion.value] ? <RemoveIcon /> : <AddIcon />}
-              expandIcon={
-                <Iconify
-                  icon={expanded[accordion.value] ? 'ic:round-minus' : 'mingcute:add-fill'}
-                />
-              }
-              sx={{
-                zIndex: 10,
-                '& .MuiAccordionSummary-expandIconWrapper': {
-                  transition: 'transform 0.4s ease-in-out', // Adjust the duration and easing of the animation
-                },
-              }}
+              expandIcon={<ExpandMore />}
+              sx={{ zIndex: 10 }}
               // expandIcon={<Iconify icon="eva:arrow-ios-downward-fill" />}
               // expandIcon={<ExpandMoreRounded />}
             >
-              <Typography ml={8} variant="p">
-                {accordion.heading}
-              </Typography>
+              <Typography variant="subtitle1">{accordion.heading}</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography sx={{ opacity: 0.8 }} lineHeight={2}>
                 {accordion.detail}
               </Typography>
               {accordion.button && (
-                <Container sx={{ width: 1, display: 'flex', justifyContent: 'center' }}>
+                <Container sx={{ width: 1, my: 2, display: 'flex', justifyContent: 'center' }}>
                   <Button
-                    sx={{
-                      zIndex: 40,
-                      fontSize: { md: '1rem', xs: '1rem' },
-                      my: 2,
-                      borderRadius: 1,
-                    }}
+                    sx={{ zIndex: 40, fontSize: { md: '1rem', xs: '1rem' }, borderRadius: 1 }}
                     variant="outlined"
                     onClick={() => ScrollComponent('signUp')}
                     color={mainColor}
@@ -319,9 +368,86 @@ export function AccordionView({ title, accordions = _accordions }) {
               )}
             </AccordionDetails>
           </Accordion>
-        ))}
-      </div>
-    </ComponentBlock>
+          {!expanded[accordion.value] && <hr className="border-gray-700/50" />}
+        </AnimateBorder>
+      ))}
+    </div> */}
+        <div className=" z-10 mx-0 px-0">
+          {accordions.map((accordion, index) => (
+            <Accordion
+              // expanded={expanded[accordion.value] || true}
+              // onChange={() =>
+              //   setExpanded((p) => ({
+              //     ...p,
+              //     [accordion.value]: p[accordion.value] ? !p[accordion.value] : true,
+              //   }))
+              // }
+              defaultExpanded={accordion.defaultOpen}
+              onChange={() =>
+                setExpanded((p) => ({
+                  ...p,
+                  [accordion.value]: p[accordion.value] ? !p[accordion.value] : true,
+                }))
+              }
+              key={index}
+              id={accordion.value}
+              sx={{ mt: index === accordion.length ? 0 : 4 }}
+            >
+              <AccordionSummary
+                // expandIcon={expanded[accordion.value] ? <RemoveIcon /> : <AddIcon />}
+                expandIcon={
+                  <Iconify
+                    icon={expanded[accordion.value] ? 'ic:round-minus' : 'mingcute:add-fill'}
+                  />
+                }
+                sx={{
+                  zIndex: 10,
+                  '& .MuiAccordionSummary-expandIconWrapper': {
+                    transition: 'transform 0.4s ease-in-out', // Adjust the duration and easing of the animation
+                  },
+                }}
+                // expandIcon={<Iconify icon="eva:arrow-ios-downward-fill" />}
+                // expandIcon={<ExpandMoreRounded />}
+              >
+                <Typography ml={8} variant="p">
+                  {accordion.heading}
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography sx={{ opacity: 0.8 }} lineHeight={2}>
+                  {accordion.detail}
+                </Typography>
+                {accordion.button && (
+                  <Container sx={{ width: 1, display: 'flex', justifyContent: 'center' }}>
+                    <Button
+                      sx={{
+                        zIndex: 40,
+                        fontSize: { md: '1rem', xs: '1rem' },
+                        my: 2,
+                        borderRadius: 1,
+                      }}
+                      variant="outlined"
+                      onClick={() => ScrollComponent('signUp')}
+                      color={mainColor}
+                    >
+                      {accordion.button}
+                    </Button>
+                  </Container>
+                )}
+              </AccordionDetails>
+            </Accordion>
+          ))}
+        </div>
+      </ComponentBlock>
+    );
+  }
+
+  return (
+    // <AnimateBorder
+    //   sx={{ borderRadius: 1.5, maxWidth: { md: '66%', xs: '100%' } }}
+    //   animate={{ color: theme.palette.success.main || '#fff' }}
+    // >
+    <>{accordionDiv}</>
     // </AnimateBorder>
   );
 }
