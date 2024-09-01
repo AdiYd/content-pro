@@ -38,7 +38,7 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const imageDiv = (
-    <Container sx={{ display: { md: 'none', xs: 'flex' }, gap: 2, alignItems: 'center' }}>
+    <Container sx={{ my: 8, display: { md: 'none', xs: 'flex' }, gap: 2, alignItems: 'center' }}>
       <m.div variants={varFade().inRight}>
         <Image
           alt="מקצוע גלובלי"
@@ -177,13 +177,20 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
           <m.div variants={varFade({ distnce: 0 }).inUp}>
             {contentType === 'aboutMe' && (
               <>
-                <Typography variant="p" sx={{ lineHeight: 1.7, opacity: 0.8 }}>
+                {/* <Typography variant="p" sx={{ lineHeight: 1.7, opacity: 0.8 }}>
                   יזם דיגיטלי ויוצר תוכן בעל נסיון של שנים ברשתות החברתיות, הקמתי מספר רב של ערוצי
                   תוכן עם עשרות אלפי עוקבים, השתתפתי בתצוגות, תערוכות ושיתופי פעולה דיגיטליים ברחבי
                   העולם - חלקם הצליחו יותר וחלקם פחות אבל מה שבטוח הוא שצברתי נסיון רב וטיפים שאותם
                   אני מתכוון לחשוף בפניכם. חקרתי ולמדתי במשך שנים את השיטות לייצר תוכן איכותי
                   ואותנטי שמושך אליו קהל חם שרק מחכה לעוד. אני מלווה יוצרי תוכן בתחילת דרכם, תוך דגש
                   על יצירת נישה אישית שתגרום ללקוחות שלכם להתאהב ולחזור לעוד
+                </Typography> */}
+                <Typography variant="p" sx={{ lineHeight: 1.7, opacity: 0.8 }}>
+                  אני ערן פרקש, יזם דיגיטלי ויוצר תוכן עם ניסיון רב. צברתי 80 אלף עוקבים וסרטונים עם
+                  מאות אלפי צפיות, תוך שמירה על אותנטיות וללא מעורבות בנושאים פוליטיים או שנויים
+                  במחלוקת. פיצחתי את הנוסחה ליצירת תוכן איכותי שמושך קהל ומניב תגובות רבות. בקורס
+                  Video-Pro, אשתף אתכם את כל הסודות שלי, את הטעויות שכדאי להימנע מהן, ואת הדרך
+                  הבטוחה להפוך את התשוקה שלכם לתוכן למקצוע מניב ומצליח.
                 </Typography>
                 <br />
                 <br />
@@ -217,7 +224,7 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
             )}
             {contentType === 'aboutCourse' && (
               <>
-                <Typography
+                {/* <Typography
                   variant="p"
                   sx={{ color: 'text.dark.main', lineHeight: 1.7, opacity: 0.8, mb: 4 }}
                 >
@@ -227,6 +234,18 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
                   עוקבים/לקוחות נאמנים שאוהבים התכנים והסטייל האישי שלכם. אנחנו נלווה אתכם עד
                   שתתחילו את הצעדים הראשונים כיוצרי תוכן בתשלום או לקהילה שלכם. סקרנים? המשיכו לקרוא
                   😉
+                </Typography> */}
+                <Typography
+                  variant="p"
+                  sx={{ color: 'text.dark.main', lineHeight: 1.7, opacity: 0.8, mb: 4 }}
+                >
+                  Video-Pro היא קהילה שמפתחת יוצרי תוכן איכותיים. אחרי שתעברו את הקורס, תהיו חלק
+                  מקבוצה של יוצרים כמוכם – אנשים שיודעים ליצור סרטונים איכותיים, לבנות קהילה נאמנה
+                  ולהפוך את התוכן להכנסה יציבה. כאן לא תישארו לבד; תעבדו ביחד עם יוצרי תוכן נוספים,
+                  תשתפו רעיונות, תתייעצו, תלמדו מטעויות של אחרים, תהנו מהרצאות שוטפות כל חודש ותתמכו
+                  אחד בשני. זו ההזדמנות שלכם להצטרף לקהילה יוצרת ולבנות קריירה מצליחה. בקהילה נעזור
+                  גם להפיץ את תיק העבודות שלכם ללקוחות פוטנציאליים, והטובים ביותר יקבלו הזדמנויות
+                  לעבודות ייחודיות מבחוץ. ויש עוד... 😉
                 </Typography>
                 <br />
                 <br />

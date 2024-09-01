@@ -1,13 +1,11 @@
 import fs from 'fs';
 import path from 'path';
 import puppeteer from 'puppeteer';
-import chromium from 'chrome-aws-lambda';
-import puppeteerCore from 'puppeteer-core';
 
 import { sendEmail } from './email';
 
 // Function to create a PDF from the HTML template
-const createPDF2 = async (htmlContent, outputPath) => {
+const createPDF = async (htmlContent, outputPath) => {
   try {
     const browser = await puppeteer.launch({
       args: ['--no-sandbox', '--disable-setuid-sandbox'], // Necessary for running Puppeteer in many serverless environments
@@ -22,37 +20,7 @@ const createPDF2 = async (htmlContent, outputPath) => {
   }
 };
 
-const createPDF = async (htmlContent, outputPath) => {
-  let browser = null;
-  try {
-    // Launch the browser with chrome-aws-lambda's Chromium
-    browser = await puppeteerCore.launch({
-      args: chromium.args,
-      defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath, // Path to the Chromium binary
-      headless: chromium.headless,
-      ignoreHTTPSErrors: true, // To avoid any HTTPS-related errors
-    });
 
-    const page = await browser.newPage();
-    await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
-
-    const pdfBuffer = await page.pdf({
-      format: 'A4',
-      printBackground: true,
-    });
-
-    // Write the PDF buffer to the specified output path
-    fs.writeFileSync(outputPath, pdfBuffer);
-  } catch (error) {
-    console.error('Error creating PDF:', error);
-    throw new Error('Failed to create PDF');
-  } finally {
-    if (browser !== null) {
-      await browser.close();
-    }
-  }
-};
 
 // Function to send the invoice email with the PDF attachment
 export const sendInvoiceEmail = async (data) => {

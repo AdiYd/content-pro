@@ -146,7 +146,7 @@ function Stepper({ children }) {
   useScrollTrigger(stepsId, (index) => setActive(index));
 
   return (
-    <nav dir="rtl" className="mx-4" aria-label="Progress">
+    <nav dir="rtl" className="mx-0" aria-label="Progress">
       <ol className="overflow-hidden">
         {steps.map((step, stepIdx) => (
           <li
@@ -381,12 +381,18 @@ export default function StepperSection({ ...props }) {
       />
       <Container component={MotionContainer}>
         <m.div animate={varBounce().in}>
-          <Typography mb={4} variant="h3">
+          <Typography mb={2} variant="h3">
             איך הופכים תוכן מקורי
             <Box mx={1} sx={textGradient} component="a">
               למקור הכנסה
             </Box>
             ?
+          </Typography>
+        </m.div>
+        <m.div animate={varBounce({ delay: 0.1 }).in}>
+          <Typography component="div" mb={4} variant="p">
+            התקדמנו הרבה מעבר לחוברון והיום אתם עדים בפעם הראשונה להכשרה המלאה של video-pro שמלמדת
+            אתכם את התהליך המלא של איך יוצרים תוכן איכותי והופכים אותו להכנסה. אז איך זה עובד?
           </Typography>
         </m.div>
         <m.div animate={varSlide().inDown}>

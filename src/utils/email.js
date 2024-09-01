@@ -15,9 +15,9 @@ export async function sendEmail({ data = {}, recipients = [], title, template, a
   // const htmlTamplate = gptTamplates(data)[1];
 
   if (process.env.NODE_ENV === 'production') {
-    recipients.push('eranfark@gmail.com', 'admin@webly.digital');
+    recipients.push( 'admin@webly.digital');
   } else {
-    recipients.push('admin@webly.digital', 'adiyehuda89@gmail.com');
+    recipients.push('admin@webly.digital', 'yddevelops@gmail.com');
   }
   console.log('This is recipirnts: ', recipients);
   const toRecipients = recipients.join(', ');

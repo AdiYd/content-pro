@@ -177,7 +177,7 @@ export function AboutHero() {
             <AnimateText
               component="h2"
               variant="h2"
-              text={['בואו להפוך ליוצרי תוכן', 'מצליחים']}
+              text={['ההכשרה שעוזרת ליוצרי תוכן ', 'לקבל עבודות באופן שוטף']}
               variants={varFade({ durationIn: 0.01 }).in}
               sx={{
                 color: 'common.white',
@@ -188,14 +188,14 @@ export function AboutHero() {
               // className="animate-bounce"
               variants={varBounce({ durationIn: 2, delay: 2 }).inLeft}
             >
-              <Box
+              {/* <Box
                 sx={{
                   display: 'flex',
                   justifyContent: { lg: 'inherit', md: 'center', xs: 'center' },
                 }}
               >
                 {emph(theme.palette[mainColor])}
-              </Box>
+              </Box> */}
             </m.div>
           </div>
 
@@ -204,7 +204,7 @@ export function AboutHero() {
               variant="h5"
               sx={{ color: 'common.white', mt: 3, fontWeight: 'fontWeightSemiBold', opacity: 0.8 }}
             >
-              קורס ליצירת וידאו ותוכן מקצועי לעסקים ולרשתות החברתיות
+              כל הידע שעזר לי להשיג את העבודה הראשונה שלי בפחות מ-3 שעות
             </Typography>
             <Stack
               mt={4}

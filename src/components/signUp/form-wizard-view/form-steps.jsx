@@ -580,6 +580,11 @@ export function StepThree({ name, email, coursePrice, setValue }) {
         name="totalPrice"
         // inputProps={{}}
       />
+      <div className="flex justify-center">
+        <Button type="submit" variant="contained" size="large" color="success">
+          מעבר לתשלום
+        </Button>
+      </div>
       <div className="flex gap-8 max-sm:gap-4 items-center justify-center">
         <Iconify width={50} icon="logos:google-pay" />
         {/* <Iconify width={40} icon={mode === 'dark' ? 'cib:apple-pay' : 'logos:apple-pay'} /> */}
@@ -670,12 +675,6 @@ export function StepThree({ name, email, coursePrice, setValue }) {
             transform="matrix(1 0 0 -1 0 82.668)"
           />
         </svg> */}
-      </div>
-
-      <div className="flex justify-center">
-        <Button type="submit" variant="contained" size="large" color="success">
-          מעבר לתשלום
-        </Button>
       </div>
     </>
   );
