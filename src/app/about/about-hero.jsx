@@ -121,7 +121,7 @@ export function AboutHero() {
   return (
     <Box
       sx={{
-        height: { md: 680, xs: 640 },
+        height: { md: 680, xs: 635 },
         overflow: 'visible',
         pt: { xs: 8, md: 2 },
         pb: { xs: 10, md: 0 },

@@ -54,7 +54,7 @@ export default function Page() {
       <AccordionSyllabus />
       {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
 
-      <Considering buttonBefore="סקרנים?! לחצו כאן 😉" />
+      <Considering color="mainColor" buttonBefore="סקרנים?! לחצו כאן 😉" />
       {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
 
       <ImageDiv />

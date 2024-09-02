@@ -72,7 +72,7 @@ const defaultValues = {
 };
 
 export function FormWizard({ coursePrice }) {
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(2);
   const theme = useTheme();
   const { mainColor, mode } = useContext(ColorContext);
 
@@ -207,7 +207,8 @@ export function FormWizard({ coursePrice }) {
               display: 'flex',
               flexDirection: 'column',
               gap: 3,
-              p: 4,
+              py: 4,
+              px: 1,
               zIndex: 25,
               mb: 3,
               overflow: 'visible',

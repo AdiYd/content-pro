@@ -37,7 +37,8 @@ function AccordionSyllabus({ title = defaultTitle, accordions = [], ...props }) 
           </Typography>
           <br />
           <Typography color="text.secondary" variant="p">
-            נזכיר לכם שבקהילה שלנו תמשיכו לקבל באופן שוטף עדכונים, מדריכים, וובינרים, טיפים ועוד 😎
+            מזכירים לכם שבקהילה שלנו תמשיכו לקבל באופן שוטף עדכונים, מדריכים, וובינרים, טיפים ועוד
+            😎
           </Typography>
           <AccordionView mode={1} />
         </m.div>

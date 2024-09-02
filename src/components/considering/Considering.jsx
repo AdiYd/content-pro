@@ -91,7 +91,7 @@ function Considering({
   const [active, setActive] = useState(false);
   const errorMsg = useRef();
   const buttonMsg = useRef(buttonBefore);
-  // color = color || mainColor || 'error';
+  color = color === 'mainColor' ? mainColor : color;
 
   // useEffect(() => {
   //   const isCounting = getRemainingCookieTimeInSeconds('counting');
@@ -378,7 +378,7 @@ function Considering({
                     px: 4,
                     borderRadius: 25,
                     transition: 'all 0.3s ease-in',
-                    fontSize: { md: '18px', xs: '14px' },
+                    fontSize: { md: '24px', xs: '18px' },
                     maxWidth: '80vw',
                     '&:hover': {
                       transform: active ? '' : 'scale(1.1)',

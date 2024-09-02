@@ -42,6 +42,7 @@ import { Field } from 'src/components/hook-form';
 import { Iconify } from 'src/components/iconify';
 import { AnimateBorder } from 'src/components/animate';
 import { NumOfDiscount } from 'src/components/considering/Considering';
+import { Carousel, useCarousel, CarouselDotButtons } from 'src/components/carousel';
 
 const terms = require('../../../utils/terms.json');
 
@@ -446,29 +447,36 @@ export function StepTwo({ name, setValue }) {
 
 export function StepThree({ name, email, coursePrice, setValue }) {
   const theme = useTheme();
-  const [active, setActive] = useState(1);
-  const { mainColor, mode } = useContext(ColorContext);
+  const { mainColor, mode, textGradient } = useContext(ColorContext);
   const [update, setUpdate] = useState(false);
   const [coupon, setCoupon] = useState(false);
   const [validCoupon, setValidCoupon] = useState(false);
-  const totalPrice = useRef(coursePrice || active === 1 ? 499 : 749);
+  const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
+  const [active, setActive] = useState('Master-Pro');
+  const totalPrice = useRef(coursePrice || active === 'Master-Pro' ? 499 : 749);
   const color = validCoupon ? theme.palette.success.main : theme.palette.error.main;
-  coursePrice = active === 0 ? 249 : [1, 2].includes(active) ? 499 : 749;
+  coursePrice =
+    active === 'Base-Pro'
+      ? 249
+      : ['Master-Pro', 'Xtra-Pro', 'Extra-Pro'].includes(active)
+        ? 499
+        : 749;
+
   useEffect(() => {
     setValue('totalPrice', totalPrice.current);
   }, [setValue]);
 
   useEffect(() => {
-    if (active === 0) {
+    if (active === 'Base-Pro') {
       totalPrice.current = 249;
-    } else if (active === 1) {
+    } else if (active === 'Xtra-Pro' || active === 'Extra-Pro') {
       totalPrice.current = 499;
-    } else if (active === 2) {
+    } else if (active === 'Master-Pro') {
       totalPrice.current = 499;
     } else {
       totalPrice.current = 749;
     }
-    console.log('Changing price to : ', totalPrice.current);
+    // console.log('Changing price to : ', totalPrice.current);
     setUpdate((p) => !p);
   }, [active]);
 
@@ -511,13 +519,15 @@ export function StepThree({ name, email, coursePrice, setValue }) {
       <Typography textAlign="center" mb={2} variant="h6">
         כדי שכולם יוכלו להינות מהתכנים שלנו, הוספנו הנחות לזמן מוגבל ומבצעים למספר מצומצם של נרשמים
       </Typography>
-      <CourseOptions active={active} setActive={setActive} />
-
-      {active === 1 && (
+      <CourseOptions active={active} setActive={setActive} isMobile={isMobile || false} />
+      <Typography component="div" variant="h4" sx={{ my: 1, textAlign: 'center' }}>
+        {active}
+      </Typography>
+      {active === 'Master-Pro' && (
         <>
           <Typography
             textAlign="center"
-            mt={4}
+            my={0}
             mx={1}
             component="a"
             color="text.secondary"
@@ -541,12 +551,12 @@ export function StepThree({ name, email, coursePrice, setValue }) {
           </Typography>
         </>
       )}
-      {active === 2 && (
+      {(active === 'Xtra-Pro' || active === 'Extra-Pro') && (
         <>
           <Typography
             // sx={{ textDecoration: 'line-through' }}
             textAlign="center"
-            mt={4}
+            mt={0}
             mx={1}
             component="a"
             color="text.secondary"
@@ -761,6 +771,35 @@ export function StepCompleted({ onReset }) {
   );
 }
 
+const courseOptions2 = [
+  {
+    title: 'Master-Pro',
+    subTitle: 'הכל כלול',
+    bullets: [
+      'קורס + מנוי לקהילה',
+      'כל מה שיוצר תוכן צריך',
+      'ליווי בהכנת תיק עבודות',
+      'קבלת הצעות עבודה',
+    ],
+    oldPrice: '₪1,099',
+    currPrice: '₪749',
+    master: true,
+  },
+  {
+    title: 'Xtra-Pro',
+    subTitle: 'קורס + מנוי לקהילה',
+    bullets: ['כל תכני הקורס', 'מנוי לקהילת יוצרי תוכן', 'המשך קבלת תכני העשרה ומדריכים'],
+    oldPrice: '₪749',
+    currPrice: '₪499',
+  },
+  {
+    title: 'Base-Pro',
+    subTitle: 'קורס Video-Pro',
+    bullets: ['כל סרטוני הקורס', 'חוברות והדרכות הקורס'],
+    oldPrice: '₪399',
+    currPrice: '₪249',
+  },
+];
 const courseOptions = [
   {
     title: 'Base-Pro',
@@ -791,32 +830,81 @@ const courseOptions = [
   },
 ];
 
-const CourseOptions = ({ active, setActive }) => (
-  <Grid
-    alignItems="center"
-    overflow="visible"
-    // display="flex"
-    container
-    spacing={1}
-    justifyContent="center"
-  >
-    {courseOptions.map((option, index) => (
-      <Grid height={1} display="flex" item xs={12} sm={6} md={6} lg={4} key={index}>
-        <CourseCard
-          active={Boolean(active === index)}
-          onClick={() => setActive(index)}
-          index={index - 1}
-          title={option.title}
-          subTitle={option.subTitle}
-          bullets={option.bullets}
-          oldPrice={option.oldPrice}
-          currPrice={option.currPrice}
-          master={option.master}
+const CourseOptions = ({ active, setActive, isMobile }) => {
+  const { mainColor, themeColor } = useContext(ColorContext);
+  const carousel = useCarousel({
+    loop: true,
+
+    plugins: [{ name: 'autoScroll' }],
+    thumbs: {
+      slidesToShow: 'auto',
+    },
+  });
+  const courseOptionDiv = isMobile ? (
+    <div>
+      <Carousel
+        // sx={{ m: 0, p: 0, display: 'block' }}
+        slotProps={{ slide: { display: 'flex', px: 1, m: 1 } }}
+        carousel={carousel}
+      >
+        {courseOptions2.map((option, index) => (
+          <CourseCard
+            active={active}
+            onClick={() => setActive(option.title)}
+            index={index - 1}
+            title={option.title}
+            subTitle={option.subTitle}
+            bullets={option.bullets}
+            oldPrice={option.oldPrice}
+            currPrice={option.currPrice}
+            master={option.master}
+          />
+        ))}
+      </Carousel>
+      {/* <CarouselArrowFloatButtons
+        onClickPrev={carousel.arrows.onClickNext}
+        onClickNext={carousel.arrows.onClickPrev}
+        slotProps={{ prevBtn: { sx: { left: 0 } }, nextBtn: { sx: { right: -0 } } }}
+      /> */}
+      <div className="w-full flex justify-center">
+        <CarouselDotButtons
+          scrollSnaps={carousel.dots.scrollSnaps}
+          selectedIndex={carousel.dots.selectedIndex}
+          onClickDot={carousel.dots.onClickDot}
+          sx={{ color: themeColor, direction: 'ltr' }}
         />
-      </Grid>
-    ))}
-  </Grid>
-);
+      </div>
+    </div>
+  ) : (
+    <Grid
+      alignItems="center"
+      overflow="visible"
+      // display="flex"
+      container
+      spacing={1}
+      paddingX={1}
+      justifyContent="center"
+    >
+      {courseOptions.map((option, index) => (
+        <Grid height={1} display="flex" item xs={12} sm={6} md={6} lg={4} key={index}>
+          <CourseCard
+            active={active}
+            onClick={() => setActive(option.title)}
+            index={index - 1}
+            title={option.title}
+            subTitle={option.subTitle}
+            bullets={option.bullets}
+            oldPrice={option.oldPrice}
+            currPrice={option.currPrice}
+            master={option.master}
+          />
+        </Grid>
+      ))}
+    </Grid>
+  );
+
+  return courseOptionDiv;
+};
 
 const CourseCard = ({
   title,
@@ -833,6 +921,7 @@ const CourseCard = ({
   const [update, setUpdate] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
+  active = title.includes(active);
 
   useEffect(() => {
     setUpdate((p) => !p);
@@ -865,14 +954,14 @@ const CourseCard = ({
           position: master ? 'relative' : '',
           mb: 2,
           boxShadow: customShadows(mode).z4,
-          // border: active ? '2px solid red' : '',
+          border: active ? `0.7px solid ${theme.palette.error.light}` : '',
           // ...bgGradient({
           //   color:
           //     mode === 'dark'
           //       ? 't45deg, transparent, #333, #333, transparent'
           //       : `45deg, #f5f5f5, #e5e5e5, transparent`,
           // }),
-          bgcolor: theme.palette.background.paper,
+          // bgcolor: theme.palette.background.paper,
           height: '100%',
           display: 'flex',
           zIndex: active ? 50 : 40,

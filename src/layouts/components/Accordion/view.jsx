@@ -290,7 +290,7 @@ export function AccordionView({ title, accordions = _accordions, mode = 0 }) {
               <AccordionDetails>
                 <ul className="list-disc mr-6">
                   {_Syllabus[accordion].map((item, indx) => (
-                    <Typography color="text.secondary" component="li" key={indx}>
+                    <Typography component="li" key={indx}>
                       {item}
                     </Typography>
                   ))}
