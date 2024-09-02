@@ -39,7 +39,7 @@ function SocialProof({ title, bullets = [], ...props }) {
   const theme = useTheme();
   const { mainColor, textGradient, themeColor } = useContext(ColorContext);
   return (
-    <Box my={2} mx={{ md: 8, xs: 4 }}>
+    <Box sx={{ mb: { md: 10, sx: 8 }, mx: { md: 8, xs: 4 } }}>
       <Container maxWidth={500}>
         <AnimateText
           className={animateTextClasses.word}
@@ -47,9 +47,9 @@ function SocialProof({ title, bullets = [], ...props }) {
           component="h3"
           sx={{
             textAlign: 'start',
-            '& .animate-text-word[data-index="3"]': {
-              ...textGradient,
-            },
+            // '& .animate-text-word[data-index="3"]': {
+            //   ...textGradient,
+            // },
           }}
           text="האם נלמד דברים יחודיים בקורס?"
           variants={varFade({}).inLeft}
@@ -117,7 +117,11 @@ const RowX = ({
         {bullets.map((item, indx) => (
           <ListItem key={indx} sx={{ padding: 0, textAlign: 'justify' }}>
             <Iconify icon="lets-icons:check-fill" width={20} />
-            <Typography sx={{ fontSize: '1rem', mx: { md: 4, xs: 2 } }} variant="h4">
+            <Typography
+              // color="text.secondary"
+              sx={{ fontSize: '1rem', mx: { md: 4, xs: 2 } }}
+              variant="subtitle1"
+            >
               {item}
             </Typography>
           </ListItem>

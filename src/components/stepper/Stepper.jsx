@@ -2,7 +2,7 @@
 import { m } from 'framer-motion';
 import { useState, useEffect, useContext } from 'react';
 
-import { Box, Divider, useTheme, Container, Typography } from '@mui/material';
+import { Box, useTheme, Container, Typography } from '@mui/material';
 
 import { ColorContext } from 'src/context/colorMain';
 
@@ -409,11 +409,9 @@ function useScrollTrigger(elementIds, callback) {
 }
 
 export default function StepperSection({ ...props }) {
-  const theme = useTheme();
-  const { textGradient } = useContext(ColorContext);
   return (
-    <Box sx={{ mb: 8, mx: { md: 8, xs: 2 } }}>
-      <Divider
+    <Box sx={{ mb: { md: 8, xs: 6 }, mx: { md: 8, xs: 2 } }}>
+      {/* <Divider
         sx={{
           mt: 6,
           mb: 4,
@@ -436,15 +434,11 @@ export default function StepperSection({ ...props }) {
             },
           },
         }}
-      />
+      /> */}
       <Container component={MotionContainer}>
         <m.div animate={varBounce().in}>
           <Typography mb={2} variant="h3">
-            איך הופכים תוכן מקורי
-            <Box mx={1} sx={textGradient} component="a">
-              למקור הכנסה
-            </Box>
-            ?
+            איך הופכים תוכן מקורי למקור הכנסה ?
           </Typography>
         </m.div>
         <m.div animate={varBounce({ delay: 0.1 }).in}>

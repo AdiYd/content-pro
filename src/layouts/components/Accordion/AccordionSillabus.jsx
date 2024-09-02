@@ -15,8 +15,8 @@ function AccordionSyllabus({ title = defaultTitle, accordions = [], ...props }) 
   const { textGradient } = useContext(ColorContext);
   const theme = useTheme();
   return (
-    <section dir="rtl" className="px-2">
-      <Container sx={{ py: 1 }} component={MotionContainer}>
+    <section dir="rtl" className="">
+      <Container sx={{ mb: { md: 10, xs: 8 } }} component={MotionContainer}>
         <m.div variants={varFade({ duration: 0.5 }).inRight}>
           <Typography
             sx={{

@@ -174,10 +174,9 @@ export function AboutHero() {
           /> */}
           <div className="w-fit h-fit relative max-lg:mx-auto">
             <m.div variants={varFade().in}>
-              <Typography color="common.white" variant="h2">
-                ההכשרה שעוזרת ליוצרי תוכן
-                <br />
-                לקבל עבודה באופן שוטף
+              <Typography maxWidth={400} color="common.white" variant="h3">
+                ההכשרה שעוזרת ליוצרי תוכן לקבל עבודה באופן שוטף
+                {/* <br /> */}
               </Typography>
             </m.div>
             {/* <AnimateText
@@ -191,6 +190,7 @@ export function AboutHero() {
               }}
             /> */}
             <m.div
+              style={{ display: 'none' }}
               // className="animate-bounce"
               variants={varBounce({ durationIn: 2, delay: 2 }).inLeft}
             >
@@ -207,8 +207,9 @@ export function AboutHero() {
 
           <m.div variants={varFade({ distance: 240, duration: 0.5 }).inDown}>
             <Typography
-              variant="h5"
-              sx={{ color: 'common.white', mt: 3, fontWeight: 'fontWeightSemiBold', opacity: 0.8 }}
+              variant="subtitle1"
+              component="div"
+              sx={{ color: 'common.white', mt: 4, fontWeight: 'fontWeightSemiBold', opacity: 0.8 }}
             >
               כל הידע שעזר לי להשיג את העבודה הראשונה שלי בפחות מ-3 שעות
             </Typography>

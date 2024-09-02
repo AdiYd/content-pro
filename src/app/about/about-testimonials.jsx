@@ -203,7 +203,7 @@ export function AboutTestimonials() {
 
   return (
     <Box
-      mt={8}
+      // mt={8}
       sx={{
         ...bgGradient({
           color: getGradient,
@@ -211,7 +211,7 @@ export function AboutTestimonials() {
         }),
         overflow: 'hidden',
         height: { md: 840 },
-        py: { xs: 10, md: 0 },
+        pb: { xs: 8, md: 10 },
       }}
     >
       <Container component={MotionViewport} sx={{ position: 'relative', height: 1 }}>
@@ -244,7 +244,7 @@ function TestimonialCard({ testimonial, sx, ...other }) {
     <Stack
       spacing={3}
       sx={{
-        ...bgBlur({ color: varAlpha(theme.vars.palette.common.whiteChannel, 0.08) }),
+        ...bgBlur({ color: varAlpha(theme.vars.palette.common.whiteChannel, 0.2) }),
         p: 3,
         borderRadius: 2,
         color: 'text.primary',

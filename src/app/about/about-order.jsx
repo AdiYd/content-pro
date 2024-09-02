@@ -89,7 +89,7 @@ export function AboutOrder({ contentType = 'aboutCourse' }) {
       component={MotionViewport}
       // maxWidth="lg"
       sx={{
-        pb: { xs: 4, md: 4 },
+        pb: { xs: 8, md: 10 },
         alignItems: 'center',
         textAlign: { xs: 'center', md: 'unset', direction: 'rtl' },
       }}
@@ -136,7 +136,7 @@ export function AboutOrder({ contentType = 'aboutCourse' }) {
           כבר לפניכם.
           <br />
           אבל תנו לי לגלות לכם סוד -
-          <Typography component="a" mx={1} sx={textGradient}>
+          <Typography variant="p" component="a" mx={1} color="text.primary">
             גם אתם יכולים להצליח,ובגדול!
           </Typography>
           אתם לא צריכים להמציא את הגלגל - פשוט ללמוד ממי שכבר עשה את זה ולהתחיל לייצר תוכן איכותי

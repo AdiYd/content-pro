@@ -199,7 +199,7 @@ export function AboutLead({ contentType = 'aboutCourse' }) {
       component={MotionViewport}
       // maxWidth="lg"
       sx={{
-        my: 8,
+        mb: { md: 10, xs: 8 },
         pb: { xs: 4, md: 4 },
         alignItems: 'center',
         textAlign: { xs: 'center', md: 'unset', direction: 'rtl' },

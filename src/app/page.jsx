@@ -1,7 +1,7 @@
 'use client';
 
 
-import { Box } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 
 import AccordionSection from 'src/layouts/components/Accordion/AccordionSection';
 import AccordionSyllabus from 'src/layouts/components/Accordion/AccordionSillabus';
@@ -25,33 +25,64 @@ import { AboutTestimonials } from './about/about-testimonials';
 export const CoursePrice = 499;
 
 export default function Page() {
+  const divider = false;
   return (
-    <Box sx={{ transform: 'all 0.4s eas-in-out', transition: 'ease-in', direction: 'rtl' }}>
+    <Box
+      sx={{
+        transform: 'all 0.4s eas-in-out',
+        transition: 'ease-in',
+        direction: 'rtl',
+      }}
+    >
       <ColorPicker />
       <AboutHero />
+      {/* {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />} */}
       <AboutWhat contentType="aboutCourse" />
+      {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
       <AboutWhat contentType="aboutMe" />
+      {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
       {/* <IconSection /> */}
       <AboutYouTwo />
+      {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
+
       <StepperSection />
+      {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
+
       <AboutOrder />
+      {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
+
       <AccordionSyllabus />
+      {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
+
       <Considering buttonBefore="סקרנים?! לחצו כאן 😉" />
+      {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
+
       <ImageDiv />
+      {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
+
       <SignUp coursePrice={CoursePrice} />
+      {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
+
       <AccordionSection />
       {/* <StepperSection /> */}
+      {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
       <AboutTestimonials />
+
+      {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
       <Considering confettiOnly />
 
       {/* <Promotion1 /> */}
       {/* <AboutVision /> */}
+
+      {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
       <SocialProof />
-      <Considering
+
+      {/* <Considering
         booklet
         buttonBefore="רוצים לקבל חוברת הדרכה עם טיפים והסברים? לחצו כאן "
         buttonAfter="🎉 עוד כמה צעדים ואתם מתחילים ליצור את הקהילה שתמיד חלמתם עליה  🎉"
-      />
+      /> */}
+      {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
       <AboutLead />
 
       <Footer />

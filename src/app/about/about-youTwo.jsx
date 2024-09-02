@@ -146,7 +146,7 @@ export function AboutYouTwo({ contentType = 'aboutCourse' }) {
       component={MotionViewport}
       // maxWidth="lg"
       sx={{
-        pb: { xs: 4, md: 4 },
+        pb: { xs: 8, md: 10 },
         alignItems: 'center',
         textAlign: { xs: 'center', md: 'unset', direction: 'rtl' },
       }}

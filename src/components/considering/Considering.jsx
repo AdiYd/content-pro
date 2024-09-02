@@ -91,7 +91,7 @@ function Considering({
   const [active, setActive] = useState(false);
   const errorMsg = useRef();
   const buttonMsg = useRef(buttonBefore);
-  color = color || mainColor || 'error';
+  // color = color || mainColor || 'error';
 
   // useEffect(() => {
   //   const isCounting = getRemainingCookieTimeInSeconds('counting');
@@ -290,7 +290,6 @@ function Considering({
 
       <DialogActions sx={{ display: 'flex', gap: 3, justifyContent: 'center' }}>
         <Button
-          color={mainColor}
           size="small"
           variant="contained"
           onClick={() => {
@@ -368,8 +367,8 @@ function Considering({
         </div>
       )}
       {(buttonAfter !== buttonMsg.current || confettiOnly) && (
-        <div className="my-8 flex justify-center w-full">
-          <Container component={MotionContainer}>
+        <div className="flex justify-center w-full">
+          <Container sx={{ mb: { md: 8, xs: 6 } }} component={MotionContainer}>
             <m.div variants={varBounce({ durationIn: 1 }).in}>
               <div className="flex justify-center ">
                 <Button
@@ -379,13 +378,20 @@ function Considering({
                     px: 4,
                     borderRadius: 25,
                     transition: 'all 0.3s ease-in',
+                    fontSize: { md: '18px', xs: '14px' },
                     maxWidth: '80vw',
                     '&:hover': {
                       transform: active ? '' : 'scale(1.1)',
                     },
                   }}
                   onClick={startConfetti}
-                  variant={active || buttonAfter === buttonMsg.current ? 'text' : 'outlined'}
+                  variant={
+                    active || buttonAfter === buttonMsg.current
+                      ? 'text'
+                      : confettiOnly
+                        ? 'outlined'
+                        : 'contained'
+                  }
                   color={color}
                 >
                   {buttonMsg.current}

@@ -1,7 +1,7 @@
 import { m } from 'framer-motion';
 import { useContext } from 'react';
 
-import { Divider, useTheme, Container } from '@mui/material';
+import { useTheme, Container } from '@mui/material';
 
 import { ColorContext } from 'src/context/colorMain';
 
@@ -17,8 +17,8 @@ function SignUp({ coursePrice, ...props }) {
       component={MotionContainer}
       // maxWidth="lg"
       sx={{
-        pt: { xs: 2, md: 2 },
-        pb: { xs: 4, md: 4 },
+        // pt: { xs: 2, md: 2 },
+        pb: { xs: 8, md: 10 },
         direction: 'rtl',
         alignItems: 'center',
         textAlign: { xs: 'center', md: 'unset', direction: 'rtl' },
@@ -73,7 +73,7 @@ function SignUp({ coursePrice, ...props }) {
           },
         }}
       /> */}
-      <Divider
+      {/* <Divider
         sx={{
           mt: 6,
           background: `linear-gradient(to right, ${theme.palette.info?.main},${theme.palette.warning?.main},${theme.palette.error?.main})`,
@@ -95,7 +95,7 @@ function SignUp({ coursePrice, ...props }) {
             },
           },
         }}
-      />
+      /> */}
     </Container>
   );
 }

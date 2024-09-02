@@ -38,7 +38,7 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const imageDiv = (
-    <Container sx={{ my: 8, display: { md: 'none', xs: 'flex' }, gap: 2, alignItems: 'center' }}>
+    <Container sx={{ my: 4, display: { md: 'none', xs: 'flex' }, gap: 2, alignItems: 'center' }}>
       <m.div variants={varFade().inRight}>
         <Image
           alt="מקצוע גלובלי"
@@ -114,7 +114,7 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
       component={MotionViewport}
       // maxWidth="lg"
       sx={{
-        pb: { xs: 6, md: 15 },
+        pb: { xs: 8, md: 10 },
         alignItems: 'center',
         textAlign: { xs: 'center', md: 'unset', direction: 'rtl' },
       }}
@@ -159,7 +159,7 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
                 sx={{
                   display: { xs: 'flex', md: 'none' },
                   justifyContent: { md: 'justify', xs: 'center' },
-                  mb: 4,
+                  mb: 8,
                 }}
               >
                 {introVideo}

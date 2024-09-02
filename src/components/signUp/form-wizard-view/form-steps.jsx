@@ -851,7 +851,7 @@ const CourseCard = ({
           zIndex: 40,
           boxShadow: customShadows().z16,
         },
-        transform: isMobile ? `scale(0.94)` : `rotate(${-1 * (index * 6)}deg)`,
+        transform: isMobile ? `` : `rotate(${-1 * (index * 6)}deg)`,
       }}
       animate={{
         color: theme.palette.error.main,
@@ -887,12 +887,17 @@ const CourseCard = ({
         onClick={onClick}
       >
         {master && (
-          <Button size="small" sx={{ position: 'absolute', top: 5, right: 5 }} variant="outlined">
+          <Button
+            size="small"
+            sx={{ position: 'absolute', top: 2, right: 5, fontSize: 10 }}
+            variant="outlined"
+          >
             הכי מבוקש
           </Button>
         )}
         <CardContent sx={{ mx: 'auto' }}>
           <Typography
+            alignItems="baseline"
             sx={{ display: 'flex', justifyContent: 'center', ...textGradient }}
             width={1}
             variant="h4"
@@ -900,7 +905,7 @@ const CourseCard = ({
             component="div"
             gutterBottom
           >
-            {title}
+            {master && <Iconify sx={{ mx: 1 }} icon="fluent-emoji:crown" />} {title}
           </Typography>
           <Typography
             width={1}

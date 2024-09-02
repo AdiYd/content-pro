@@ -1,11 +1,17 @@
 import { m } from 'framer-motion';
+import { useContext } from 'react';
 
 import Box from '@mui/material/Box';
+import { useTheme } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
+
+import { ColorContext } from 'src/context/colorMain';
 
 // ----------------------------------------------------------------------
 
 export function AnimateAvatar({ sx, slotProps, children, width = 40, ...other }) {
+  const theme = useTheme();
+  const { themeColor, mainColor } = useContext(ColorContext);
   const borderWidth = slotProps?.overlay?.border ?? 2;
 
   const spacing = slotProps?.overlay?.spacing ?? 2;
@@ -55,7 +61,9 @@ export function AnimateAvatar({ sx, slotProps, children, width = 40, ...other })
           height: 1,
           position: 'absolute',
           borderRadius: 'inherit',
-          background: slotProps?.overlay?.color ?? 'conic-gradient(cyan, magenta, yellow, cyan)',
+          background:
+            slotProps?.overlay?.color ??
+            `conic-gradient(${theme.palette.info.main || theme.palette.info.main}, transparent, ${theme.palette.info.light || theme.palette.info.light},transparent)`,
           mask: 'linear-gradient(#FFF 0 0) content-box, linear-gradient(#FFF 0 0)',
           WebkitMask: 'linear-gradient(#FFF 0 0) content-box, linear-gradient(#FFF 0 0)',
           maskComposite: 'exclude',
