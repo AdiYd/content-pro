@@ -7,7 +7,7 @@ import { useState, useContext, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { Card, useTheme, Container } from '@mui/material';
+import { Card, useTheme, Container, CircularProgress } from '@mui/material';
 
 import { trackEvent, trackPurchase } from 'src/utils/GAEvents';
 
@@ -73,6 +73,7 @@ const defaultValues = {
 
 export function FormWizard({ coursePrice }) {
   const [activeStep, setActiveStep] = useState(0);
+  const [loading, setLoading] = useState(false);
   const theme = useTheme();
   const { mainColor, mode } = useContext(ColorContext);
 
@@ -103,12 +104,24 @@ export function FormWizard({ coursePrice }) {
 
         if (isValid) {
           // trackEvent(`New user: ${methods.getValues().email}`);
-          trackEvent(
-            'New user',
-            'Signup',
-            `${methods.getValues().name} ; ${methods.getValues().email}`,
-            1
-          );
+          if (step === 'stepOne') {
+            trackEvent(
+              'New user',
+              'Signup',
+              `${methods.getValues().name} ; ${methods.getValues().email}`,
+              1
+            );
+            fetch('/api/leads', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                name: methods.getValues().name,
+                email: methods.getValues().email,
+              }),
+            });
+          }
           trackEvent('Signup', `Step #${activeStep + 1}`);
           setActiveStep((prevActiveStep) => prevActiveStep + 1);
         }
@@ -131,6 +144,7 @@ export function FormWizard({ coursePrice }) {
 
   const handlePyament = async (formData) => {
     try {
+      setLoading(true);
       const res = await fetch('/api/payment', {
         method: 'POST',
         headers: {
@@ -139,7 +153,8 @@ export function FormWizard({ coursePrice }) {
         body: JSON.stringify(formData),
       });
       const result = await res.json();
-      console.log('this is api result: ', result);
+      setLoading(false);
+      // console.log('this is api result: ', result);
 
       window.location.href =
         formData.totalPrice === 499
@@ -228,7 +243,13 @@ export function FormWizard({ coursePrice }) {
             {activeStep === 0 && <StepOne errors={errors} control={control} setValue={setValue} />}
             {activeStep === 1 && <StepTwo setValue={setValue} name={name} />}
             {activeStep === 2 && (
-              <StepThree setValue={setValue} coursePrice={coursePrice} name={name} email={email} />
+              <StepThree
+                setValue={setValue}
+                coursePrice={coursePrice}
+                loading={loading}
+                name={name}
+                email={email}
+              />
             )}
             {/* {completedStep && <StepCompleted onReset={handleReset} />} */}
           </Card>
@@ -242,26 +263,38 @@ export function FormWizard({ coursePrice }) {
 
               <Box sx={{ flex: 'auto 1 1' }} />
 
-              {activeStep === 0 && (
-                <Button
-                  sx={{ zIndex: 30 }}
-                  variant="contained"
-                  color={mainColor}
-                  onClick={() => handleNext('stepOne')}
-                >
-                  הבא
-                </Button>
-              )}
-              {activeStep === 1 && (
-                <Button
-                  sx={{ zIndex: 30 }}
-                  color={mainColor}
-                  variant="contained"
-                  onClick={() => handleNext('stepTwo')}
-                >
-                  הבא
-                </Button>
-              )}
+              {activeStep === 0 &&
+                (loading ? (
+                  <CircularProgress />
+                ) : (
+                  <Button
+                    sx={{ zIndex: 30 }}
+                    variant="contained"
+                    color={mainColor}
+                    onClick={() => {
+                      setLoading(true);
+                      handleNext('stepOne').then(() => setLoading(false));
+                    }}
+                  >
+                    הבא
+                  </Button>
+                ))}
+              {activeStep === 1 &&
+                (loading ? (
+                  <CircularProgress />
+                ) : (
+                  <Button
+                    sx={{ zIndex: 30 }}
+                    color={mainColor}
+                    variant="contained"
+                    onClick={() => {
+                      setLoading(true);
+                      handleNext('stepTwo').then(() => setLoading(false));
+                    }}
+                  >
+                    הבא
+                  </Button>
+                ))}
             </Box>
           )}
         </Form>

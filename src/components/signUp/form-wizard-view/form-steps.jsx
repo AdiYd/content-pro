@@ -31,6 +31,7 @@ import {
   DialogContent,
   useMediaQuery,
   FormControlLabel,
+  CircularProgress,
 } from '@mui/material';
 
 import { trackEvent } from 'src/utils/GAEvents';
@@ -445,7 +446,7 @@ export function StepTwo({ name, setValue }) {
   );
 }
 
-export function StepThree({ name, email, coursePrice, setValue }) {
+export function StepThree({ name, email, coursePrice, setValue, loading }) {
   const theme = useTheme();
   const { mainColor, mode, textGradient } = useContext(ColorContext);
   const [update, setUpdate] = useState(false);
@@ -479,6 +480,10 @@ export function StepThree({ name, email, coursePrice, setValue }) {
     // console.log('Changing price to : ', totalPrice.current);
     setUpdate((p) => !p);
   }, [active]);
+
+  useEffect(() => {
+    setUpdate((p) => !p);
+  }, [loading]);
 
   const handleCoupon = (e) => {
     const isCoupon = Cookies.get('counting');
@@ -648,9 +653,13 @@ export function StepThree({ name, email, coursePrice, setValue }) {
         // inputProps={{}}
       />
       <div className="flex justify-center">
-        <Button type="submit" variant="contained" size="large" color="success">
-          מעבר לתשלום
-        </Button>
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          <Button type="submit" variant="contained" size="large" color="success">
+            מעבר לתשלום
+          </Button>
+        )}
       </div>
       <div className="flex gap-8 max-sm:gap-4 items-center justify-center">
         <Iconify width={50} icon="logos:google-pay" />

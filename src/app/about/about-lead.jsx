@@ -17,7 +17,10 @@ import {
   DialogActions,
   DialogContent,
   FormControlLabel,
+  CircularProgress,
 } from '@mui/material';
+
+import { trackEvent } from 'src/utils/GAEvents';
 
 import { ColorContext } from 'src/context/colorMain';
 
@@ -36,8 +39,10 @@ export function AboutLead({ contentType = 'aboutCourse' }) {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [activeTxtfield, setActiveTxtField] = useState(false);
   const [active, setActive] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [thanks, setThanks] = useState(false);
   const [formData, setFormData] = useState({
-    fullName: '',
+    name: '',
     email: '',
     approveTerms: true,
     message: '',
@@ -45,7 +50,7 @@ export function AboutLead({ contentType = 'aboutCourse' }) {
 
   const [errors, setErrors] = useState({
     email: '',
-    fullName: '',
+    name: '',
     approveTerms: '',
   });
 
@@ -66,19 +71,34 @@ export function AboutLead({ contentType = 'aboutCourse' }) {
         ...errors,
         email: emailValid ? '' : 'נא למלא כתובת אימייל תקינה',
       });
-    } else if (name === 'fullName') {
+    } else if (name === 'name') {
       setErrors({
         ...errors,
-        fullName: value.length < 2 ? 'נא למלא שם' : '',
+        name: value.length < 2 ? 'נא למלא שם' : '',
       });
     }
   };
 
   // onSubmit handler to log form data
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    trackEvent('New user', 'Lead', `${formData.name} ; ${formData.email}`, 1);
+    const res = await fetch('/api/leads', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    }).finally(() => {
+      setTimeout(() => {
+        setLoading(false);
+        setThanks(true);
+      }, 400);
+    });
 
-    console.log('Form Data:', formData);
+    // console.log('Lead API res: ', result);
+    // console.log('Form Data:', formData);
   };
 
   const dialog = (
@@ -151,8 +171,73 @@ export function AboutLead({ contentType = 'aboutCourse' }) {
     </Dialog>
   );
 
+  const dialogThanks = (
+    <Dialog
+      sx={{
+        // minWidth: '50%',
+        // width: 'fit-content',
+        // p: 15,
+        // position: 'relative',
+        direction: 'rtl',
+        textAlign: 'center',
+      }}
+      open={thanks}
+      onClose={() => setActive(false)}
+    >
+      <DialogTitle>
+        קיבלנו את הפרטים
+        <IconButton
+          aria-label="close"
+          onClick={() => {
+            setThanks(false);
+          }}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            // color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <Iconify icon="carbon:close-filled" />
+        </IconButton>
+      </DialogTitle>
+
+      <DialogContent dividers sx={{ color: 'text.secondary' }}>
+        <Typography variant="h4">תודה על יצירת הקשר</Typography>
+        <br />
+        <Typography color="text.primary" variant="p">
+          נחזור אליכם בקרוב עם פרטים נוספים
+        </Typography>
+        <br />
+      </DialogContent>
+
+      <DialogActions sx={{ display: 'flex', gap: 3, justifyContent: 'center' }}>
+        <Button
+          size="small"
+          variant="contained"
+          onClick={() => {
+            setThanks(false);
+          }}
+          autoFocus
+        >
+          סגירה
+        </Button>
+
+        {/* <Button
+ color={mainColor}
+ size="small"
+ variant="outlined"
+ onClick={() => setActive(false)}
+>
+ לא תודה
+</Button> */}
+      </DialogActions>
+    </Dialog>
+  );
+
   const checkBox = (
     <div className="flex flex-col gap-2">
+      {dialogThanks}
       <FormControlLabel
         name="approveTerms"
         sx={{ mr: 0 }}
@@ -249,15 +334,15 @@ export function AboutLead({ contentType = 'aboutCourse' }) {
 
               <TextField
                 label="שם מלא"
-                name="fullName"
+                name="name"
                 variant="filled"
                 fullWidth
                 required
-                value={formData.fullName}
+                value={formData.name}
                 onChange={handleChange}
                 margin="normal"
-                error={Boolean(errors.fullName)}
-                helperText={errors.fullName}
+                error={Boolean(errors.name)}
+                helperText={errors.name}
               />
 
               <TextField
@@ -304,17 +389,21 @@ export function AboutLead({ contentType = 'aboutCourse' }) {
 
               {checkBox}
               <div className="w-full flex justify-center">
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color={mainColor}
-                  sx={{ my: 2 }}
-                  disabled={
-                    !formData.fullName || !formData.email || !formData.approveTerms || errors.email
-                  }
-                >
-                  שליחה
-                </Button>
+                {loading ? (
+                  <CircularProgress />
+                ) : (
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color={mainColor}
+                    sx={{ my: 2 }}
+                    disabled={
+                      !formData.name || !formData.email || !formData.approveTerms || errors.email
+                    }
+                  >
+                    שליחה
+                  </Button>
+                )}
               </div>
             </form>
           </Card>

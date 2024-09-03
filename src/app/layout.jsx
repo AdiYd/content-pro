@@ -95,7 +95,10 @@ export default async function RootLayout({ children }) {
           property="og:description"
           content="קורס Video-pro של ערן פרקש - קורס אונליין ליצירת תוכן וידאו ומדיה חברתית. הצטרפו לאקדמיה, הקהילה הבלעדית וקבלו הדרכה ליצירת הכנסה מתוכן דיגיטלי והפכו ליוצרי תוכן מקצועיים."
         />
-        <meta property="og:image" content="https://videopro.webly.digital/assets/images/Eran.png" />
+        <meta
+          property="og:image"
+          content="https://videopro.webly.digital/assets/images/about/Eran.png"
+        />
 
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://videopro.webly.digital" />
@@ -109,7 +112,7 @@ export default async function RootLayout({ children }) {
         />
         <meta
           property="twitter:image"
-          content="https://videopro.webly.digital/assets/images/Eran.png"
+          content="https://videopro.webly.digital/assets/images/about/Eran.png"
         />
 
         <script

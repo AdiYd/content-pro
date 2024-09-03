@@ -1,32 +1,31 @@
 import fs from 'fs';
 import path from 'path';
-import puppeteer from 'puppeteer';
+// import puppeteer from 'puppeteer';
 
-import { sendEmail } from './email';
+import { sendEmail, signupTemaplate } from './email';
 
 // Function to create a PDF from the HTML template
-const createPDF = async (htmlContent, outputPath) => {
-  try {
-    const browser = await puppeteer.launch({
-      args: ['--no-sandbox', '--disable-setuid-sandbox'], // Necessary for running Puppeteer in many serverless environments
-      headless: true, // Run in headless mode
-    });
-    const page = await browser.newPage();
-    await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
-    await page.pdf({ path: outputPath, format: 'A4', printBackground: true });
-    await browser.close();
-  } catch (error) {
-    console.log('Error with createPDF function : ', error);
-  }
-};
-
-
+// const createPDF = async (htmlContent, outputPath) => {
+//   try {
+//     const browser = await puppeteer.launch({
+//       args: ['--no-sandbox', '--disable-setuid-sandbox'], // Necessary for running Puppeteer in many serverless environments
+//       headless: true, // Run in headless mode
+//     });
+//     const page = await browser.newPage();
+//     await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
+//     await page.pdf({ path: outputPath, format: 'A4', printBackground: true });
+//     await browser.close();
+//   } catch (error) {
+//     console.log('Error with createPDF function : ', error);
+//   }
+// };
 
 // Function to send the invoice email with the PDF attachment
 export const sendInvoiceEmail = async (data) => {
   const pdfPath = path.join('/tmp', 'Invoice.pdf');
   console.log('PDF path: ', pdfPath);
-  const htmlContent = generateInvoiceTemplate(data);
+  // const htmlContent = generateInvoiceTemplate(data);
+  const htmlContent = signupTemaplate(data);
 
   // Create the PDF from the HTML content
   // await createPDF(htmlContent, pdfPath);

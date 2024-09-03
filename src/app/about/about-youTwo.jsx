@@ -5,11 +5,11 @@ import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import { Box, Card, Grid, Container, CardMedia, CardContent, useMediaQuery } from '@mui/material';
 
+import { CONFIG } from 'src/config-global';
 import { ColorContext } from 'src/context/colorMain';
 
 import { Iconify } from 'src/components/iconify';
 import { varFade, MotionViewport } from 'src/components/animate';
-
 
 const halfWave = (mode) => (
   <svg
@@ -72,39 +72,46 @@ const bulletsWithIcons = [
     title: 'מקצוע דיגיטלי מבוקש',
     text: '46%  מהיוצרים עם ניסיון של 4 שנים ומעלה מרוויחים מעל 20,00 $  בשנה / 78% מהיוצרים במשרה מלאה מרוויחים מעל 23,500 $ בשנה.',
     icons: ['logos:youtube-icon', 'logos:tiktok-icon', 'skill-icons:instagram', 'logos:facebook'],
-    imageUrl: `https://picsum.photos/seed/${Math.random()}/300/200`,
+    imageUrl: `${CONFIG.site.basePath}/assets/background/back1.jpg`,
+    imageUrl2: `https://picsum.photos/seed/${Math.random()}/300/200`,
   },
   {
     title: 'ליצור תוכן ולהרוויח',
     text: 'ליצור תוכן ולהרוויח כסף מכל מקום ובכל זמן',
     icons: ['svg-spinners:wifi', 'twemoji:laptop', 'flat-color-icons:globe'],
-    imageUrl: `https://picsum.photos/seed/${Math.random()}/300/200`,
+    imageUrl: `${CONFIG.site.basePath}/assets/background/back2.jpg`,
+    imageUrl2: `https://picsum.photos/seed/${Math.random()}/300/200`,
   },
   {
     title: 'לבנות לעצמכם קהילה אותנטית',
     text: 'לבנות קהילה אותנטית שתהווה בשבילכם בסיס קשרים אסטרטגי בנישה שלכם לכל פעילות עתידית',
     icons: ['mdi:account-group-outline', 'material-symbols:animated-images'],
-    imageUrl: `https://picsum.photos/seed/${Math.random()}/300/200`,
+    imageUrl: `${CONFIG.site.basePath}/assets/background/back3.jpg`,
+    imageUrl2: `https://picsum.photos/seed/${Math.random()}/300/200`,
   },
   {
     title: 'השקעה שמחזירה את עצמה',
     text: 'ההשקעה חוזרת - נחבר אתכם לפרויקט ראשון בתשלום, עד 3 חודשים לאחר הכנת תיק עבודות',
     icons: ['bytesize:portfolio', 'game-icons:money-stack', 'mdi:film-open-star-outline'],
-    imageUrl: `https://picsum.photos/seed/${Math.random()}/300/200`,
+    imageUrl: `${CONFIG.site.basePath}/assets/background/back4.jpg`,
+    imageUrl2: `https://picsum.photos/seed/${Math.random()}/300/200`,
   },
   {
     title: 'להצטרף לקהילה איכותית',
     text: 'קבוצת פרטית של יוצרי תוכן עם תכני העשרה, טיפים והדרכות להמשך הדרך',
     icons: ['logos:whatsapp-icon', 'emojione:books'],
-    imageUrl: `https://picsum.photos/seed/${Math.random()}/300/200`,
+    imageUrl: `${CONFIG.site.basePath}/assets/background/back5.jpg`,
+    imageUrl2: `https://picsum.photos/seed/${Math.random()}/300/200`,
   },
   {
     title: 'התחייבות מלאה',
     text: 'לא הצלחנו להשיג לכם את העבודה הראשונה שלכם ? קבלו החזר כספי מלא',
     icons: ['mdi:cash-refund', 'pajamas:partner-verified'],
-    imageUrl: `https://picsum.photos/seed/${Math.random()}/300/200`,
+    imageUrl: `${CONFIG.site.basePath}/assets/background/back6.jpg`,
+    imageUrl2: `https://picsum.photos/seed/${Math.random()}/300/200`,
   },
 ];
+
 
 const renderCard = (item, mode = 'dark') => (
   <Card sx={{ borderRadius: 2, boxShadow: 5, height: 1 }} key={item.title}>

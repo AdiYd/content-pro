@@ -1,7 +1,13 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import nodemailer from 'nodemailer';
 
-export async function sendEmail({ data = {}, recipients = [], title, template, attachments } = {}) {
+export async function sendEmail({
+  data = {},
+  recipients = [],
+  title,
+  template,
+  attachments,
+  lead = false,
+} = {}) {
   const auth = {
     user: 'serviece.webly@gmail.com', // Your email address
     pass: process.env.EMAIL_CRED, // Your email password or app-specific password
@@ -9,30 +15,34 @@ export async function sendEmail({ data = {}, recipients = [], title, template, a
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth,
+    logger: true, // Enable logging
+    debug: true, // Show debug output
   });
 
   const htmlTamplate = template || geminiTamplate(data)[2];
   // const htmlTamplate = gptTamplates(data)[1];
 
   if (process.env.NODE_ENV === 'production') {
-    recipients.push( 'admin@webly.digital');
+    recipients.push('admin@webly.digital');
   } else {
     recipients.push('admin@webly.digital', 'yddevelops@gmail.com');
   }
-  console.log('This is recipirnts: ', recipients);
   const toRecipients = recipients.join(', ');
   const mailOptions = {
-    from: 'video-pro <no-reply@VidePro>', // Sender address
-    bcc: toRecipients, // Admin email address
-    // to: toRecipients, // Admin email address
-    subject: title || data.totalPrice ? 'ברוכים הבאים ל Video-Pro' : 'רישום חדש', // Subject line
+    from: 'video-pro <no-reply@VideoPro>', // Sender address
+    subject: title || (data.totalPrice ? 'ברוכים הבאים ל Video-Pro' : 'רישום חדש'), // Subject line
     html: htmlTamplate,
     attachments,
   };
-  // Send the email
+  if (lead) {
+    mailOptions.to = toRecipients;
+  } else {
+    mailOptions.bcc = toRecipients;
+  }
+  console.log('Mail options: ', mailOptions, auth);
   try {
     const info = await transporter.sendMail(mailOptions);
-    // console.log(`Email sent: ${info.response}`);
+    console.log(`Email sent: ${info.response}`, recipients);
     return true;
   } catch (error) {
     console.error('Error sending email:', error);
@@ -248,3 +258,72 @@ const gptTamplates = (data) => {
     </div>`;
   return [tamplate1, tamplate2];
 };
+
+export const leadTemplate = (
+  data
+) => `<div style="font-family: 'Alef', Arial, sans-serif; direction: rtl; text-align: right; line-height: 1.6; padding: 20px;">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Alef:wght@400;700&display=swap');
+  </style>
+
+  <h2 style="
+    font-size: 24px;
+    background: linear-gradient(to right, #8bc34a, #4caf50, #8bc34a);
+    color: white;
+    text-align: center;
+    border-radius: 8px;
+    margin: 0;
+    padding: 10px;
+  "> מתעניין חדש</h2>
+
+  <div style="display: flex; align-items: center; margin-top: 20px;">
+    <div style="flex: 1;">
+      ${data.name ? `<p style="margin: 10px; font-size: 14px;"><b>שם:</b> ${data.name}</p>` : ''}
+      ${data.email ? `<p style="margin: 10px; font-size: 14px;"><b>אימייל:</b> ${data.email}</p>` : ''}
+      ${data.message ? `<p style="margin: 10px; font-size: 14px;"><b>הודעה:</b> ${data.message}</p>` : ''}
+    </div>
+  </div>
+  <div>
+    <h3 style="font-size: 16px; color: #333333; margin: 8px 0;">
+    Video-Pro
+    </h3>
+  <div>
+</div>
+`;
+
+export const signupTemaplate = (data) => `<style>
+    @import url('https://fonts.googleapis.com/css2?family=Alef:wght@400;500;700&display=swap');
+    h4, p {
+    color:black;
+    font-wight:500;
+    }
+  </style>
+  <div style="font-family: 'Alef', Arial, sans-serif; direction: rtl; text-align: right; line-height: 1.6; padding: 20px;">
+
+  <h2 style="font-size: 20px; 
+  background: linear-gradient(to right,#95dc4f, #2ecc71, #95dc4f); 
+  color: white; text-align: center; border-radius: 8px; margin: 0; padding: 10px;">
+    הצטרפתם למשפחת Video-pro 😎
+  </h2>
+
+  <div style="display: flex; align-items: center; margin-top: 20px;">
+    <div style="flex: 1;">
+      ${data.name ? `<h3 style="margin: 10px; font-size: 20px;">היי ${data.name}, </h3>` : ''}
+        <h4 style="margin: 10px; font-size: 16px;"> אנחנו שמחים שבחרתם להצטרף לקורס ולקהילה שלנו, ללמוד איך ליצור תוכן איכותי שמושך אליו קהל ולקוחות.</h4>
+        <h4 style="margin: 10px; font-size: 16px;"> מאחלים לכם בהצלחה בתהליך ואנחנו פה לכל שאלה ותמיכה</h4>
+        <h4 style="margin: 10px; font-size: 16px;"> מצורפים הקישורים לקורס (יש לבצע רישום פשוט וליצור לעצמכם שם משתמש) ולקבוצת הוואטסאפ שלנו: </h4>
+        <p style="margin: 10px; font-size: 16px;"><b>קישור לקורס:</b> ${'www.something.com'}</p>
+        <p style="margin: 10px; font-size: 16px;"><b>קישור לקהילה:</b> ${'www.somethingElse.com'}</p>
+
+    <h4 style="margin: 10px; margin-top:20px; font-size: 16px;"> קחו לכם את הזמן ללמוד ולתרגל, הצטרפו לקהילה בוואטצאפ ותקבלו עוד הדרכות והכוונות</h4>
+    </div>
+
+  
+  </div>
+
+  <h3 style="margin: 20px;">
+    נרגשים שאתם איתנו! 
+    <br />
+    ערן פרקש וצוות Video-pro
+  </h3>
+</div>`;

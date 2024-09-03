@@ -2,11 +2,14 @@
 
 'use server';
 
+import { sendEmail, leadTemplate } from 'src/utils/email';
+
 export async function POST(request) {
   try {
-    const body = await request.json();
-    console.log('Message from client: ', body);
-    return new Response(JSON.stringify({ message: `Received: ${body.data}` }), {
+    const data = await request.json();
+    console.log('Message from client: ', data);
+    sendEmail({ data, template: leadTemplate(data), title: 'מתעניין חדש', lead: true });
+    return new Response(JSON.stringify({ message: `Received: ${data.email}` }), {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
