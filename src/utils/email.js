@@ -1,13 +1,6 @@
 import nodemailer from 'nodemailer';
 
-export async function sendEmail({
-  data = {},
-  recipients = [],
-  title,
-  template,
-  attachments,
-  lead = false,
-} = {}) {
+export async function sendEmail({ data = {}, recipients = [], title, template, attachments } = {}) {
   const auth = {
     user: 'serviece.webly@gmail.com', // Your email address
     pass: process.env.EMAIL_CRED, // Your email password or app-specific password
@@ -15,31 +8,26 @@ export async function sendEmail({
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth,
-    logger: true, // Enable logging
-    debug: true, // Show debug output
   });
 
   const htmlTamplate = template || geminiTamplate(data)[2];
   // const htmlTamplate = gptTamplates(data)[1];
 
   if (process.env.NODE_ENV === 'production') {
-    recipients.push('admin@webly.digital');
+    recipients.push('admin@webly.digital', 'eranfark@gmail.com');
   } else {
-    recipients.push('admin@webly.digital', 'yddevelops@gmail.com');
+    recipients.push('admin@webly.digital');
   }
   const toRecipients = recipients.join(', ');
   const mailOptions = {
     from: 'video-pro <no-reply@VideoPro>', // Sender address
+    // to: toRecipients,
+    bcc: toRecipients,
     subject: title || (data.totalPrice ? 'ברוכים הבאים ל Video-Pro' : 'רישום חדש'), // Subject line
     html: htmlTamplate,
-    attachments,
+    // attachments,
   };
-  if (lead) {
-    mailOptions.to = toRecipients;
-  } else {
-    mailOptions.bcc = toRecipients;
-  }
-  console.log('Mail options: ', mailOptions, auth);
+
   try {
     const info = await transporter.sendMail(mailOptions);
     console.log(`Email sent: ${info.response}`, recipients);
@@ -51,7 +39,7 @@ export async function sendEmail({
 }
 
 // Gemini
-const geminiTamplate = (data) => {
+export const geminiTamplate = (data) => {
   const tamplate1 = `<div style="font-family: 'Alef', Arial, sans-serif; direction: rtl; text-align: right; line-height: 1.6; padding: 20px;">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Alef:wght@400;700&display=swap');
@@ -259,13 +247,11 @@ const gptTamplates = (data) => {
   return [tamplate1, tamplate2];
 };
 
-export const leadTemplate = (
-  data
-) => `<div style="font-family: 'Alef', Arial, sans-serif; direction: rtl; text-align: right; line-height: 1.6; padding: 20px;">
+export const leadTemplate = (data) => `
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Alef:wght@400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Alef:wght@400;500;600;700&display=swap');
   </style>
-
+<div style="font-family: 'Alef', Arial, sans-serif; direction: rtl; text-align: right; line-height: 1.6; padding: 20px;">
   <h2 style="
     font-size: 24px;
     background: linear-gradient(to right, #8bc34a, #4caf50, #8bc34a);
@@ -274,7 +260,7 @@ export const leadTemplate = (
     border-radius: 8px;
     margin: 0;
     padding: 10px;
-  "> מתעניין חדש</h2>
+  ">פרטי המתעניין:</h2>
 
   <div style="display: flex; align-items: center; margin-top: 20px;">
     <div style="flex: 1;">
@@ -291,7 +277,8 @@ export const leadTemplate = (
 </div>
 `;
 
-export const signupTemaplate = (data) => `<style>
+export const signupTemaplate = (data) => `
+<style>
     @import url('https://fonts.googleapis.com/css2?family=Alef:wght@400;500;700&display=swap');
     h4, p {
     color:black;

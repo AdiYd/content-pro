@@ -23,7 +23,7 @@ import { sendEmail, signupTemaplate } from './email';
 // Function to send the invoice email with the PDF attachment
 export const sendInvoiceEmail = async (data) => {
   const pdfPath = path.join('/tmp', 'Invoice.pdf');
-  console.log('PDF path: ', pdfPath);
+  // console.log('PDF path: ', pdfPath);
   // const htmlContent = generateInvoiceTemplate(data);
   const htmlContent = signupTemaplate(data);
 

@@ -8,7 +8,8 @@ export async function POST(request) {
   try {
     const data = await request.json();
     console.log('Message from client: ', data);
-    sendEmail({ data, template: leadTemplate(data), title: 'מתעניין חדש', lead: true });
+    const template = leadTemplate(data);
+    await sendEmail({ data, template, title: 'מתעניין חדש' });
     return new Response(JSON.stringify({ message: `Received: ${data.email}` }), {
       status: 200,
       headers: {
