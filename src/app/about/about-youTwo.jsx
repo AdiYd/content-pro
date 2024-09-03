@@ -123,7 +123,7 @@ const renderCard = (item, mode = 'dark') => (
         alt={item.title}
         sx={{ borderRadius: '16px 16px 0 0', height: 200 }}
       />
-      {halfWave(mode)}
+      {/* {halfWave(mode)} */}
     </div>
     <CardContent sx={{ zIndex: 15, position: 'relative' }}>
       <Typography variant="h5" component="div">

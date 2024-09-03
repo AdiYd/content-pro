@@ -16,7 +16,7 @@ import { textGradient } from 'src/theme/styles';
 import { ColorContext } from 'src/context/colorMain';
 
 import { Image } from 'src/components/image';
-import { Iconify, SocialIcon } from 'src/components/iconify';
+import { Iconify } from 'src/components/iconify';
 import { ScrollComponent } from 'src/components/considering/Considering';
 import {
   varFade,
@@ -31,7 +31,7 @@ import COLORS from '../../theme/core/colors.json';
 const emph = (colorPalette, gradient = false) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="160"
+    width="200"
     // length="inherit"
     viewBox="0 0 507 98"
     fill="none"
@@ -223,6 +223,62 @@ export function AboutHero() {
                 p: 1,
                 mx: { xs: 'auto', md: 'inherit' },
                 width: 'fit-content',
+                color: 'common.white',
+                // background: { xs: varAlpha('255 255 255', 0.2), md: 'transparent' },
+              }}
+              spacing={3}
+            >
+              <Link
+                className="hover:opacity-80"
+                passHref
+                style={{ cursor: 'pointer' }}
+                href="https://www.tiktok.com/@eranfarkash1"
+              >
+                <Iconify icon="bi:tiktok" />
+              </Link>
+              <Link
+                className="hover:opacity-80"
+                passHref
+                style={{ cursor: 'pointer' }}
+                href="https://www.instagram.com/eranfarkash/"
+              >
+                <Iconify width={30} icon="lucide:instagram" />
+              </Link>
+              <Link
+                className="hover:opacity-80"
+                passHref
+                style={{ cursor: 'pointer' }}
+                href="https://www.linkedin.com/in/eran-farkash-543b42232/?originalSubdomain=il"
+              >
+                <Iconify width={30} icon="bi:linkedin" />
+              </Link>
+              <Link
+                className="hover:opacity-80"
+                passHref
+                style={{ cursor: 'pointer' }}
+                href="https://www.youtube.com/@eranfarkash"
+              >
+                <Iconify width={30} icon="bi:youtube" />
+              </Link>
+              <Link
+                className="hover:opacity-80"
+                passHref
+                style={{ cursor: 'pointer' }}
+                href="https://www.facebook.com/eran.farkash"
+              >
+                <Iconify width={30} icon="ri:facebook-fill" />
+              </Link>
+            </Stack>
+            {/* <Stack
+              mt={4}
+              mb={1}
+              direction="row"
+              sx={{
+                justifyContent: { md: 'inherit', xs: 'center' },
+                borderRadius: 4,
+                p: 1,
+                mx: { xs: 'auto', md: 'inherit' },
+                width: 'fit-content',
                 // background: { xs: varAlpha('255 255 255', 0.2), md: 'transparent' },
               }}
               spacing={2}
@@ -267,7 +323,7 @@ export function AboutHero() {
               >
                 <SocialIcon width={30} icon="facebook" />
               </Link>
-            </Stack>
+            </Stack> */}
             {/* <Box
               sx={{
                 display: 'flex',
@@ -312,12 +368,12 @@ export function AboutHero() {
       {waveVector.current && (
         <img
           alt="wave-vector"
-          style={{ position: 'absolute', bottom: isMobile ? '-5px' : '-20px' }}
+          style={{ position: 'absolute', bottom: isMobile ? '-5px' : '-15px' }}
           src={waveVector.current}
           className="w-full absolute bottom-0"
         />
       )}
-      <div className="absolute -bottom-8 right-10 rounded-full shadow-md shadow-zinc-300/20 hidden justify-center max-lg:flex">
+      <div className="absolute -bottom-6 right-10 rounded-full shadow-md shadow-zinc-300/20 hidden justify-center max-lg:flex">
         <AnimateAvatar width={115}>
           <Image
             alt="קורס Video-pro של ערן פרקש"
