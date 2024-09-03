@@ -520,7 +520,7 @@ export function StepThree({ name, email, coursePrice, setValue }) {
         כדי שכולם יוכלו להינות מהתכנים שלנו, הוספנו הנחות לזמן מוגבל ומבצעים למספר מצומצם של נרשמים
       </Typography>
       <CourseOptions active={active} setActive={setActive} isMobile={isMobile || false} />
-      <Typography component="div" variant="h4" sx={{ my: 1, textAlign: 'center' }}>
+      <Typography component="div" variant="h4" sx={{ my: 0, textAlign: 'center' }}>
         {active}
       </Typography>
       {active === 'Master-Pro' && (
@@ -774,7 +774,7 @@ export function StepCompleted({ onReset }) {
 const courseOptions2 = [
   {
     title: 'Master-Pro',
-    subTitle: 'הכל כלול',
+    subTitle: 'פרמיום הכל כלול',
     bullets: [
       'קורס + מנוי לקהילה',
       'כל מה שיוצר תוכן צריך',
@@ -795,7 +795,7 @@ const courseOptions2 = [
   {
     title: 'Base-Pro',
     subTitle: 'קורס Video-Pro',
-    bullets: ['כל סרטוני הקורס', 'חוברות והדרכות הקורס'],
+    bullets: ['כל סרטוני הקורס', 'חוברות והדרכות הקורס', 'חיבור לרשימת תפוצה'],
     oldPrice: '₪399',
     currPrice: '₪249',
   },
@@ -930,31 +930,35 @@ const CourseCard = ({
   return (
     <AnimateBorder
       sx={{
-        width: 1,
+        width: 'fit-content',
         display: 'flex',
-        // mx: 'auto',
+        height: 'fit-content',
+        my: 'auto',
+        mx: 'auto',
         p: active ? 0.2 : 0,
         borderRadius: 2,
         '&:hover': {
           transform: isMobile ? '' : `scale(1.1) rotate(${isMobile ? 0 : -1 * (index * 6)}deg)`,
           zIndex: 40,
-          boxShadow: customShadows().z16,
+          boxShadow: isMobile ? '' : customShadows().z16,
         },
         transform: isMobile ? `` : `rotate(${-1 * (index * 6)}deg)`,
       }}
       animate={{
         color: theme.palette.error.main,
         borderRadius: 2,
-        width: '4px',
+        width: active ? '4px' : '0.9px',
         distance: 80,
       }}
     >
       <Card
         sx={{
           position: master ? 'relative' : '',
-          mb: 2,
+          // mb: 2,
           boxShadow: customShadows(mode).z4,
-          border: active ? `0.7px solid ${theme.palette.error.light}` : '',
+          border: active
+            ? `0.7px solid ${theme.palette.error.light}`
+            : `0.7px solid ${theme.palette.divider}`,
           // ...bgGradient({
           //   color:
           //     mode === 'dark'
@@ -962,7 +966,7 @@ const CourseCard = ({
           //       : `45deg, #f5f5f5, #e5e5e5, transparent`,
           // }),
           // bgcolor: theme.palette.background.paper,
-          height: '100%',
+          // height: '100%',
           display: 'flex',
           zIndex: active ? 50 : 40,
           cursor: 'pointer',
@@ -984,7 +988,17 @@ const CourseCard = ({
             הכי מבוקש
           </Button>
         )}
-        <CardContent sx={{ mx: 'auto' }}>
+        <CardContent
+          sx={{
+            mx: 'auto',
+            display: 'flex',
+            height: 1,
+            // zIndex: 40,
+            flexDirection: 'column',
+            direction: 'rtl',
+            justifyContent: 'space-around',
+          }}
+        >
           <Typography
             alignItems="baseline"
             sx={{ display: 'flex', justifyContent: 'center', ...textGradient }}
@@ -1010,11 +1024,11 @@ const CourseCard = ({
             {bullets.map((bullet, indx) => (
               <Typography
                 variant="body1"
-                my={1}
+                my={2}
                 sx={{ m: 0, p: 0, textAlign: 'start', display: 'flex', gap: 1 }}
                 key={indx}
               >
-                <Iconify width={isMobile ? 15 : 15} icon="lets-icons:check-fill" />
+                <Iconify sx={{ mt: 0.5 }} width={isMobile ? 15 : 15} icon="lets-icons:check-fill" />
                 {bullet}
                 {/* <ListItemText sx={{ fontSize: '10px', fontWeight: 400, m: 0, p: 0 }} primary={bullet} /> */}
               </Typography>
