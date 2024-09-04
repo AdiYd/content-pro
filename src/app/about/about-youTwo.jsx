@@ -76,8 +76,8 @@ const bulletsWithIcons = [
     imageUrl2: `https://picsum.photos/seed/${Math.random()}/300/200`,
   },
   {
-    title: 'ליצור תוכן ולהרוויח',
-    text: 'ליצור תוכן ולהרוויח כסף מכל מקום ובכל זמן',
+    title: 'ליצור תוכן בכל זמן ומקום',
+    text: 'ליצור תוכן מקורי שמותאם לאורך החיים שלכם ולהרוויח כסף מכל מקום ובכל זמן',
     icons: ['svg-spinners:wifi', 'twemoji:laptop', 'flat-color-icons:globe'],
     imageUrl: `${CONFIG.site.basePath}/assets/background/back2.jpg`,
     imageUrl2: `https://picsum.photos/seed/${Math.random()}/300/200`,
@@ -112,24 +112,53 @@ const bulletsWithIcons = [
   },
 ];
 
-
 const renderCard = (item, mode = 'dark') => (
-  <Card sx={{ borderRadius: 2, boxShadow: 5, height: 1 }} key={item.title}>
+  <Card
+    sx={{
+      borderRadius: 2,
+      // boxShadow: customShadows(mode).z20,
+      height: 1,
+      minHeight: 400,
+      // border: `0.6px solid grey`,
+      '&:before': {
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        zIndex: 8,
+        content: '""',
+        position: 'absolute',
+        backgroundImage:
+          'linear-gradient(to bottom, transparent,rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.7) 73%, rgba(0,0,0,0.8))',
+      },
+    }}
+    key={item.title}
+  >
     <div className="relative">
       <CardMedia
+        className="absolute w-full h-full"
         component="img"
         height="100"
         image={item.imageUrl}
         alt={item.title}
-        sx={{ borderRadius: '16px 16px 0 0', height: 200 }}
+        sx={{ borderRadius: '16px 16px 0 0', height: 400 }}
       />
       {/* {halfWave(mode)} */}
     </div>
-    <CardContent sx={{ zIndex: 15, position: 'relative' }}>
-      <Typography variant="h5" component="div">
+    <CardContent
+      sx={{
+        zIndex: 15,
+        position: 'relative',
+        height: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'end',
+      }}
+    >
+      <Typography my={3} color="common.white" variant="h5" component="div">
         {item.title}
       </Typography>
-      <Typography variant="body2" color="text.secondary" sx={{ marginBottom: 2 }}>
+      <Typography variant="body2" color="common.white" sx={{ marginBottom: 2 }}>
         {item.text}
       </Typography>
       <Box sx={{ display: 'flex', gap: 3, justifyContent: 'center' }}>
