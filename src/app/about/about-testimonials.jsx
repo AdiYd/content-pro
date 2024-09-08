@@ -28,7 +28,7 @@ export const testimonials = [
     ratingNumber: 5,
     avatarUrl: 'https://i.pravatar.cc/150?u=a8d942',
     content:
-      'ערן, אתה קוסם! הקורס שלך פתח לי עולם שלם של יצירתיות שלא ידעתי שקיים בי. בזכותך, הערוץ שלי בטיקטוק פורח, ואני מקבלת הצעות עבודה מדהימות. תודה ענקית!',
+      'ערן, אתה קוסם! הקורס שלך פתח לי עולם שלם של יצירתיות שלא ידעתי שקיים בי. בזכותך התחלתי ליצור תוכן לחברות, ואני מקבלת הצעות עבודה מדהימות. תודה ענקית!',
   },
   {
     name: 'אבי גרינברג',
@@ -55,7 +55,7 @@ export const testimonials = [
       'עשיתי המון קורסים, אבל הקורס של ערן הוא פשוט ברמה אחרת. הוא לימד אותי איך לחשוב כמו יוצר תוכן אמיתי, ואיך להביא את הסיפור שלי לעולם. ממליץ בחום',
   },
   {
-    name: 'אביה קולר',
+    name: 'שני דביר',
     postedDate: '2024-02-08',
     ratingNumber: 5,
     avatarUrl: 'https://i.pravatar.cc/150?u=a7d942',
@@ -75,42 +75,22 @@ export const testimonials = [
     postedDate: '2024-01-15',
     ratingNumber: 5,
     avatarUrl: 'https://via.placeholder.com/150/0000FF/FFFFFF?text=Male+Avatar',
-    content: `קורס מצוין! תודה רבה! למדתי המון על יצירת תוכן וניהול מדיה חברתית.`,
-  },
-  {
-    name: 'דנה כהן',
-    postedDate: '2024-02-22',
-    ratingNumber: 5,
-    avatarUrl: 'https://via.placeholder.com/150/FF69B4/FFFFFF?text=Female+Avatar',
-    content: `הקורס הוא מהמובילים בתחום העיצוב והארכיטקטורה של יישומים. עשינו כמה שינויים כמו מעבר ל-TS והטמעת useContext ב-React כדי להתאים למתודולוגיית העבודה שלנו. המוצר הוא מהטובים ביותר בשוק!`,
+    content: `קורס מצוין! תודה רבה! למדתי המון על יצירת תוכן ותפעול מדיה חברתית.`,
   },
   {
     name: 'איתי בן דוד',
     postedDate: '2024-03-10',
     ratingNumber: 4,
     avatarUrl: 'https://via.placeholder.com/150/0000FF/FFFFFF?text=Male+Avatar',
-    content: `תמיכה מהירה ועוזרת מאוד. העיצוב של הקורס מדהים וגם הקוד נקי וקריא. עבודה מצוינת!`,
-  },
-  {
-    name: 'שירה מזרחי',
-    postedDate: '2024-04-05',
-    ratingNumber: 5,
-    avatarUrl: 'https://via.placeholder.com/150/FF69B4/FFFFFF?text=Female+Avatar',
-    content: `מדהים, איכות קוד מעולה ודוגמאות רבות ליישום. הקורס הזה הוא חובה לכל יוצר תוכן.`,
+    content:
+      'קהילה תומכת ועוזרת, הכרתי שם את מאור השותף שלי ויחד התחלנו למכור סרטוני שיווק לבעלי עסקים קטנים',
   },
   {
     name: 'נועם כהן',
     postedDate: '2024-05-12',
     ratingNumber: 5,
     avatarUrl: 'https://via.placeholder.com/150/0000FF/FFFFFF?text=Male+Avatar',
-    content: `היו לי כמה שאלות לאחר רכישת הקורס. ערן פרקש הגיב מהר והיה מאוד מועיל. הקוד מצוין ועובד נהדר. 5/5 כוכבים!`,
-  },
-  {
-    name: 'ליאל חן',
-    postedDate: '2024-06-20',
-    ratingNumber: 5,
-    avatarUrl: 'https://via.placeholder.com/150/FF69B4/FFFFFF?text=Female+Avatar',
-    content: `אני מנכ"ל Codealy.io. בנינו פלטפורמה להערכת מפתחים המבוססת על משימות ב-Git repositories ומופעלת במכונות וירטואליות. רכשתי את הקורס כי היינו צריכים לספק דאשבורד מרשים ללקוחות הראשונים שלנו. אני מאוד מרוצה מהרכישה. הקוד טוב כמו העיצוב. תודה רבה!`,
+    content: `היו לי כמה שאלות לאחר רכישת הקורס. ערן פרקש הגיב מהר והיה מאוד מועיל. הקורס עזר לי להבין איך לקחת את הצעד הראשון, מומלץ!`,
   },
   {
     name: 'מורן שדה',

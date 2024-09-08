@@ -574,7 +574,86 @@ export function StepThree({ name, email, coursePrice, setValue, loading }) {
           </Typography>
         </>
       )}
-      <div className="flex justify-center">
+      {/* <div className="flex justify-center">
+        {!coupon && (
+          <Button onClick={() => setCoupon(true)} variant="outlined" size="small">
+            יש לי קוד קופון
+          </Button>
+        )}
+
+        {coupon && (
+          <TextField
+            variant="standard"
+            inputMode="text"
+            sx={{
+              direction: 'ltr',
+              '& .MuiInputBase-input': {
+                textAlign: 'center', // Center the text when typing
+              },
+              '& .MuiInput-underline:before': {
+                borderBottomColor: color, // Default underline color
+              },
+              '& .MuiInput-underline:after': {
+                borderBottomColor: color, // Color of underline when focused
+              },
+              '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
+                borderBottomColor: color, // Color of underline on hover
+              },
+            }}
+            type="text"
+            onChange={handleCoupon}
+            // fullWidth
+            label="קופון"
+            InputLabelProps={{
+              shrink: true,
+              sx: {
+                width: '125%',
+                textAlign: 'right',
+              },
+            }}
+            helperText={validCoupon ? 'הקופון הוזן בהצלחה' : 'קופון לא תקין'}
+          />
+        )}
+      </div> */}
+      <div className="">
+        <Typography textAlign="start" sx={{ opacity: 0.8 }} mr={2} mb={0} variant="body2">
+          סיכום הרכישה
+        </Typography>
+        <Divider mt={0} sx={{ borderStyle: 'dashed' }} variant="middle" />
+      </div>
+      <div className="flex flex-wrap gap-4">
+        {name && (
+          <Typography my={0} variant="body2">
+            שם: {name}
+          </Typography>
+        )}
+        {email && (
+          <Typography my={0} variant="body2">
+            אימייל: {email}
+          </Typography>
+        )}
+      </div>
+      <Typography my={0} variant="p">
+        {'סה"כ לתשלום : '} {totalPrice.current} ₪
+        <Typography
+          noWrap
+          component="a"
+          sx={{ textDecoration: 'line-through' }}
+          mx={1}
+          color="text.secondary"
+        >
+          {validCoupon && `( ₪ ${coursePrice})`}
+        </Typography>
+      </Typography>
+
+      <Field.Text
+        sx={{ visibility: 'hidden', display: 'none' }}
+        value={totalPrice.current}
+        name="totalPrice"
+        // inputProps={{}}
+      />
+
+      <div className="flex justify-start">
         {!coupon && (
           <Button onClick={() => setCoupon(true)} variant="outlined" size="small">
             יש לי קוד קופון
@@ -615,43 +694,7 @@ export function StepThree({ name, email, coursePrice, setValue, loading }) {
           />
         )}
       </div>
-      <div className="">
-        <Typography textAlign="start" sx={{ opacity: 0.8 }} mr={2} mb={0} variant="body2">
-          סיכום הרכישה
-        </Typography>
-        <Divider mt={0} sx={{ borderStyle: 'dashed' }} variant="middle" />
-      </div>
-      <div className="flex flex-wrap gap-4">
-        {name && (
-          <Typography my={0} variant="body2">
-            שם: {name}
-          </Typography>
-        )}
-        {email && (
-          <Typography my={0} variant="body2">
-            אימייל: {email}
-          </Typography>
-        )}
-      </div>
-      <Typography my={0} variant="p">
-        {'סה"כ לתשלום : '} {totalPrice.current} ₪
-        <Typography
-          noWrap
-          component="a"
-          sx={{ textDecoration: 'line-through' }}
-          mx={1}
-          color="text.secondary"
-        >
-          {validCoupon && `( ₪ ${coursePrice})`}
-        </Typography>
-      </Typography>
 
-      <Field.Text
-        sx={{ visibility: 'hidden', display: 'none' }}
-        value={totalPrice.current}
-        name="totalPrice"
-        // inputProps={{}}
-      />
       <div className="flex justify-center">
         {loading ? (
           <CircularProgress />

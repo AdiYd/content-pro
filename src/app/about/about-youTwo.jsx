@@ -161,7 +161,7 @@ const renderCard = (item, mode = 'dark') => (
       <Typography variant="body2" color="common.white" sx={{ marginBottom: 2 }}>
         {item.text}
       </Typography>
-      <Box sx={{ display: 'flex', gap: 3, justifyContent: 'center' }}>
+      <Box sx={{ display: 'flex', gap: 3, justifyContent: 'center', color: 'white' }}>
         {item.icons.map((icon, index) => (
           <Iconify key={index} width={30} icon={icon} />
         ))}

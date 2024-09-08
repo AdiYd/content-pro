@@ -235,7 +235,7 @@ export function AboutHero() {
                 rel="noopener noreferrer"
                 href="https://www.tiktok.com/@eranfarkash1"
               >
-                <Iconify icon="bi:tiktok" />
+                <Iconify width={25} icon="bi:tiktok" />
               </Link>
               <Link
                 className="hover:opacity-80 cursor-pointer"
@@ -244,7 +244,7 @@ export function AboutHero() {
                 rel="noopener noreferrer"
                 href="https://www.instagram.com/eranfarkash/"
               >
-                <Iconify width={30} icon="lucide:instagram" />
+                <Iconify width={25} icon="lucide:instagram" />
               </Link>
               <Link
                 className="hover:opacity-80 cursor-pointer"
@@ -253,7 +253,7 @@ export function AboutHero() {
                 rel="noopener noreferrer"
                 href="https://www.linkedin.com/in/eran-farkash-543b42232/?originalSubdomain=il"
               >
-                <Iconify width={30} icon="bi:linkedin" />
+                <Iconify width={25} icon="bi:linkedin" />
               </Link>
               <Link
                 className="hover:opacity-80 cursor-pointer"
@@ -262,7 +262,7 @@ export function AboutHero() {
                 rel="noopener noreferrer"
                 href="https://www.youtube.com/@eranfarkash"
               >
-                <Iconify width={30} icon="bi:youtube" />
+                <Iconify width={25} icon="bi:youtube" />
               </Link>
               <Link
                 className="hover:opacity-80 cursor-pointer"
@@ -271,7 +271,7 @@ export function AboutHero() {
                 rel="noopener noreferrer"
                 href="https://www.facebook.com/eran.farkash"
               >
-                <Iconify width={30} icon="ri:facebook-fill" />
+                <Iconify width={25} icon="ri:facebook-fill" />
               </Link>
             </Stack>
             {/* <Stack
