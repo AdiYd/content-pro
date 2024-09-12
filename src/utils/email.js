@@ -138,7 +138,7 @@ export const geminiTamplate = (data) => {
         <h4 style="margin: 10px; font-size: 16px;"> אנחנו שמחים שבחרתם להצטרף לקורס ולקהילה שלנו, ללמוד איך ליצור תוכן איכותי שמושך אליו קהל ולקוחות.</h4>
         <h4 style="margin: 10px; font-size: 16px;"> מאחלים לכם בהצלחה בתהליך ואנחנו פה לכל שאלה ותמיכה</h4>
         <h4 style="margin: 10px; font-size: 16px;"> מצורפים הקישורים לקורס (יש לבצע רישום פשוט וליצור לעצמכם שם משתמש) ולקבוצת הוואטסאפ שלנו: </h4>
-        <p style="margin: 10px; font-size: 16px;"><b>קישור לקורס:</b> ${'www.something.com'}</p>
+        <p style="margin: 10px; font-size: 16px;"><b>קישור לקורס:</b> ${'https://eranfarkash.thinkific.com/courses/social-platforms'}</p>
         <p style="margin: 10px; font-size: 16px;"><b>קישור לוואטסאפ:</b> ${'www.somethingElse.com'}</p>
 
     <h4 style="margin: 10px; margin-top:20px; font-size: 16px;"> קחו לכם את הזמן ללמוד ולתרגל, הצטרפו לקהילה בוואטצאפ ותקבלו עוד הדרכות והכוונות</h4>
@@ -299,7 +299,7 @@ export const signupTemaplate = (data) => `
         <h4 style="margin: 10px; font-size: 16px;"> אנחנו שמחים שבחרתם להצטרף לקורס ולקהילה שלנו, ללמוד איך ליצור תוכן איכותי שמושך אליו קהל ולקוחות.</h4>
         <h4 style="margin: 10px; font-size: 16px;"> מאחלים לכם בהצלחה בתהליך ואנחנו פה לכל שאלה ותמיכה</h4>
         <h4 style="margin: 10px; font-size: 16px;"> מצורפים הקישורים לקורס (יש לבצע רישום פשוט וליצור לעצמכם שם משתמש) ולקבוצת הוואטסאפ שלנו: </h4>
-        <p style="margin: 10px; font-size: 16px;"><b>קישור לקורס:</b> ${'www.something.com'}</p>
+        <p style="margin: 10px; font-size: 16px;"><b>קישור לקורס:</b> ${'https://eranfarkash.thinkific.com/courses/social-platforms'}</p>
         <p style="margin: 10px; font-size: 16px;"><b>קישור לקהילה:</b> ${'www.somethingElse.com'}</p>
 
     <h4 style="margin: 10px; margin-top:20px; font-size: 16px;"> קחו לכם את הזמן ללמוד ולתרגל, הצטרפו לקהילה בוואטצאפ ותקבלו עוד הדרכות והכוונות</h4>
