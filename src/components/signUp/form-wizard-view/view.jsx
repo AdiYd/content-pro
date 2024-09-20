@@ -26,7 +26,7 @@ export function FormWizardView({ coursePrice }) {
       </Typography>
 
       <Typography color="text.secondary" component="div" sx={{ mb: 4 }} variant="p">
-        תהליך ההרשמה פשוט מהיר ומאובטח, מיד בסיום ההרשמה תקבלו מייל עם כל הפרטים והקישורים להמשך
+        בשלשה צעדים פשוטים ומהירים תקבלו את כל הפרטים והקישורים להצטרפות אלינו ישירות למייל שלכם
       </Typography>
       <ComponentContainer sx={{ m: 0, p: 0 }}>
         <FormWizard coursePrice={coursePrice} />

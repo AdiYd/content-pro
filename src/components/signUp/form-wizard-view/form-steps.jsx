@@ -477,9 +477,10 @@ export function StepThree({ name, email, coursePrice, setValue, loading }) {
     } else {
       totalPrice.current = 749;
     }
-    // console.log('Changing price to : ', totalPrice.current);
+    console.log('Changing price to : ', totalPrice.current);
     setUpdate((p) => !p);
-  }, [active]);
+    setValue('totalPrice', totalPrice.current);
+  }, [active, setValue]);
 
   useEffect(() => {
     setUpdate((p) => !p);

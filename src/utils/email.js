@@ -74,7 +74,7 @@ export const geminiTamplate = (data) => {
     </div>
   </div>
 
-  <h3 style="margin: 16px;">
+  <h3 style="margin: 14px;">
     נרגשים שאתם איתנו! 
     <br />
     צוות Video-pro
@@ -109,7 +109,7 @@ export const geminiTamplate = (data) => {
         </div>
       </div>
       <div>
-        <h3 style="font-size: 16px; color: #333333; margin: 8px 0;">
+        <h3 style="font-size: 14px; color: #333333; margin: 8px 0;">
         Video-Pro
         </h3>
       <div>
@@ -129,19 +129,19 @@ export const geminiTamplate = (data) => {
   <h2 style="font-size: 20px; 
   background: linear-gradient(to right,#95dc4f, #2ecc71, #95dc4f); 
   color: white; text-align: center; border-radius: 8px; margin: 0; padding: 10px;">
-    הצטרפתם למשפחת Video-pro 😎
+    ברוכים הבאים ל Video-pro 😎
   </h2>
 
   <div style="display: flex; align-items: center; margin-top: 20px;">
     <div style="flex: 1;">
       ${data.name ? `<h3 style="margin: 10px; font-size: 20px;">היי ${data.name}, </h3>` : ''}
-        <h4 style="margin: 10px; font-size: 16px;"> אנחנו שמחים שבחרתם להצטרף לקורס ולקהילה שלנו, ללמוד איך ליצור תוכן איכותי שמושך אליו קהל ולקוחות.</h4>
-        <h4 style="margin: 10px; font-size: 16px;"> מאחלים לכם בהצלחה בתהליך ואנחנו פה לכל שאלה ותמיכה</h4>
-        <h4 style="margin: 10px; font-size: 16px;"> מצורפים הקישורים לקורס (יש לבצע רישום פשוט וליצור לעצמכם שם משתמש) ולקבוצת הוואטסאפ שלנו: </h4>
-        <p style="margin: 10px; font-size: 16px;"><b>קישור לקורס:</b> ${'https://eranfarkash.thinkific.com/courses/social-platforms'}</p>
-        <p style="margin: 10px; font-size: 16px;"><b>קישור לוואטסאפ:</b> ${'www.somethingElse.com'}</p>
-
-    <h4 style="margin: 10px; margin-top:20px; font-size: 16px;"> קחו לכם את הזמן ללמוד ולתרגל, הצטרפו לקהילה בוואטצאפ ותקבלו עוד הדרכות והכוונות</h4>
+        <h4 style="margin: 10px; font-size: 14px;"> אנחנו שמחים שבחרתם להצטרף לקורס ולקהילה שלנו, ללמוד איך ליצור תוכן איכותי שמושך אליו קהל ולקוחות.</h4>
+        <h4 style="margin: 10px; font-size: 14px;"> מאחלים לכם בהצלחה בתהליך ואנחנו פה לכל שאלה ותמיכה</h4>
+        <h4 style="margin: 10px; font-size: 14px;"> מצורפים הקישורים לקורס (יש לבצע רישום פשוט וליצור לעצמכם שם משתמש) ולקבוצת הוואטסאפ שלנו: </h4>
+        <p style="margin: 10px; font-size: 14px;"><b>קישור לקורס:</b> ${'https://eranfarkash.thinkific.com/courses/social-platforms'}</p>
+        <p style="margin: 10px; font-size: 14px;"><b>קישור לוואטסאפ:</b> ${'https://chat.whatsapp.com/DE2HSwpg9ABJpaEYj4ZAfv'}</p>
+        
+    <h4 style="margin: 10px; margin-top:20px; font-size: 14px;"> התחילו ללמוד ולתרגל, הצטרפו לקהילה בוואטצאפ ותקבלו עוד הדרכות והכוונות</h4>
     </div>
 
   
@@ -172,13 +172,13 @@ const gptTamplates = (data) => {
       
       <div style="display: flex; align-items: flex-start;">  
         <div style="flex: 1;">
-          ${data.name ? `<p style="font-size: 16px; margin: 8px 0;"><strong>שם:</strong> ${data.name}</p>` : ''}
-          ${data.email ? `<p style="font-size: 16px; margin: 8px 0;"><strong>אימייל:</strong> ${data.email}</p>` : ''}
-          ${data.age !== undefined ? `<p style="font-size: 16px; margin: 8px 0;"><strong>גיל:</strong> ${data.age}</p>` : ''}
-          ${data.gender ? `<p style="font-size: 16px; margin: 8px 0;"><strong>מין:</strong> ${data.gender}</p>` : ''}
-          ${data.totalPrice !== undefined ? `<p style="font-size: 16px; margin: 8px 0;"><strong>סכום תשלום:</strong> ₪${data.totalPrice}</p>` : ''}
-          ${data.goals && data.goals.length > 0 ? `<p style="font-size: 16px; margin: 8px 0;"><strong>מטרות:</strong> ${data.goals.join(', ')}</p>` : ''}
-          ${data.message ? `<p style="font-size: 16px; margin: 8px 0;"><strong>הודעה:</strong> ${data.message}</p>` : ''}
+          ${data.name ? `<p style="font-size: 14px; margin: 8px 0;"><strong>שם:</strong> ${data.name}</p>` : ''}
+          ${data.email ? `<p style="font-size: 14px; margin: 8px 0;"><strong>אימייל:</strong> ${data.email}</p>` : ''}
+          ${data.age !== undefined ? `<p style="font-size: 14px; margin: 8px 0;"><strong>גיל:</strong> ${data.age}</p>` : ''}
+          ${data.gender ? `<p style="font-size: 14px; margin: 8px 0;"><strong>מין:</strong> ${data.gender}</p>` : ''}
+          ${data.totalPrice !== undefined ? `<p style="font-size: 14px; margin: 8px 0;"><strong>סכום תשלום:</strong> ₪${data.totalPrice}</p>` : ''}
+          ${data.goals && data.goals.length > 0 ? `<p style="font-size: 14px; margin: 8px 0;"><strong>מטרות:</strong> ${data.goals.join(', ')}</p>` : ''}
+          ${data.message ? `<p style="font-size: 14px; margin: 8px 0;"><strong>הודעה:</strong> ${data.message}</p>` : ''}
         </div>
 
         <div style="margin: 20px;" >
@@ -192,8 +192,8 @@ const gptTamplates = (data) => {
           </div>
       </div>
 
-      <p style="font-size: 16px; margin: 8px 0;">בברכה,</p>
-      <p style="font-size: 16px; margin: 8px 0;">הנהלת Video-Pro</p>
+      <p style="font-size: 14px; margin: 8px 0;">בברכה,</p>
+      <p style="font-size: 14px; margin: 8px 0;">הנהלת Video-Pro</p>
     </div>
     `;
 
@@ -238,7 +238,7 @@ const gptTamplates = (data) => {
         </div>
       </div>
 
-      <h3 style="font-size: 16px; margin: 10px;">
+      <h3 style="font-size: 14px; margin: 10px;">
        אנחנו נרגשים לקבל אותך לשורותינו!
        <br />
         צוות Video-Pro כאן ללוות אותך בכל שלב במסע שלך להצלחה.
@@ -260,7 +260,7 @@ export const leadTemplate = (data) => `
     border-radius: 8px;
     margin: 0;
     padding: 10px;
-  ">פרטי המתעניין:</h2>
+  ">פרטים:</h2>
 
   <div style="display: flex; align-items: center; margin-top: 20px;">
     <div style="flex: 1;">
@@ -270,7 +270,7 @@ export const leadTemplate = (data) => `
     </div>
   </div>
   <div>
-    <h3 style="font-size: 16px; color: #333333; margin: 8px 0;">
+    <h3 style="font-size: 14px; color: #333333; margin: 8px 0;">
     Video-Pro
     </h3>
   <div>
@@ -290,19 +290,20 @@ export const signupTemaplate = (data) => `
   <h2 style="font-size: 20px; 
   background: linear-gradient(to right,#95dc4f, #2ecc71, #95dc4f); 
   color: white; text-align: center; border-radius: 8px; margin: 0; padding: 10px;">
-    הצטרפתם למשפחת Video-pro 😎
+    ברוכים הבאים ל Video-pro 😎
   </h2>
 
   <div style="display: flex; align-items: center; margin-top: 20px;">
     <div style="flex: 1;">
       ${data.name ? `<h3 style="margin: 10px; font-size: 20px;">היי ${data.name}, </h3>` : ''}
-        <h4 style="margin: 10px; font-size: 16px;"> אנחנו שמחים שבחרתם להצטרף לקורס ולקהילה שלנו, ללמוד איך ליצור תוכן איכותי שמושך אליו קהל ולקוחות.</h4>
-        <h4 style="margin: 10px; font-size: 16px;"> מאחלים לכם בהצלחה בתהליך ואנחנו פה לכל שאלה ותמיכה</h4>
-        <h4 style="margin: 10px; font-size: 16px;"> מצורפים הקישורים לקורס (יש לבצע רישום פשוט וליצור לעצמכם שם משתמש) ולקבוצת הוואטסאפ שלנו: </h4>
-        <p style="margin: 10px; font-size: 16px;"><b>קישור לקורס:</b> ${'https://eranfarkash.thinkific.com/courses/social-platforms'}</p>
-        <p style="margin: 10px; font-size: 16px;"><b>קישור לקהילה:</b> ${'www.somethingElse.com'}</p>
+        <h4 style="margin: 10px; font-size: 14px;"> אנחנו שמחים שבחרתם להצטרף לקורס ולקהילה שלנו, ללמוד איך ליצור תוכן איכותי שמושך אליו קהל ולקוחות.</h4>
+        <h4 style="margin: 10px; font-size: 14px;"> מאחלים לכם בהצלחה בתהליך ואנחנו פה לכל שאלה ותמיכה</h4>
+        <h4 style="margin: 10px; font-size: 14px;"> מצורפים הקישורים לקורס (יש לבצע רישום פשוט וליצור לעצמכם שם משתמש) ולקבוצת הוואטסאפ שלנו: </h4>
+        <p style="margin: 10px; font-size: 14px;"><b>קישור לקורס:</b> ${'https://eranfarkash.thinkific.com/courses/social-platforms'}</p>
+        <p style="margin: 10px; font-size: 14px;"><b>קישור לוואטסאפ:</b> ${'https://chat.whatsapp.com/DE2HSwpg9ABJpaEYj4ZAfv'}</p>
+      
 
-    <h4 style="margin: 10px; margin-top:20px; font-size: 16px;"> קחו לכם את הזמן ללמוד ולתרגל, הצטרפו לקהילה בוואטצאפ ותקבלו עוד הדרכות והכוונות</h4>
+    <h4 style="margin: 10px; margin-top:20px; font-size: 14px;"> התחילו ללמוד ולתרגל, הצטרפו לקהילה בוואטצאפ ותקבלו עוד הדרכות והכוונות</h4>
     </div>
 
   
