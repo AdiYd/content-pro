@@ -152,7 +152,7 @@ export function AboutHero() {
             component="h1"
             variant="h1"
             text="Video-Pro"
-            variants={varFade().inDown}
+            // variants={varSlide().inDown}
             sx={{
               ...textGradient(
                 `45deg, ${COLORS[mainColor]?.dark} 25%, ${COLORS[mainColor]?.main} 40%, ${COLORS[mainColor]?.main} 50%,${COLORS[mainColor]?.light} 80%, ${COLORS[mainColor]?.main} 95%`
@@ -207,7 +207,7 @@ export function AboutHero() {
 
           <m.div variants={varFade({ distance: 240, duration: 0.5 }).inDown}>
             <Typography
-              variant="subtitle1"
+              variant="p"
               component="div"
               sx={{ color: 'common.white', mt: 4, fontWeight: 'fontWeightSemiBold', opacity: 0.8 }}
             >
@@ -378,7 +378,10 @@ export function AboutHero() {
       {waveVector.current && (
         <img
           alt="wave-vector"
-          style={{ position: 'absolute', bottom: isMobile ? '-5px' : '-15px' }}
+          style={{
+            position: 'absolute',
+            bottom: isMobile ? '-5px' : '-15px',
+          }}
           src={waveVector.current}
           className="w-full absolute bottom-0"
         />

@@ -1,10 +1,14 @@
 <svg width="2732" height="221" viewBox="0 0 2732 221" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M0 0C513.816 239.339 1091.38 248.264 2732 0V221H0V0Z" 
-
-
-fill="#000000"
-/>
+  <!-- <defs>
+    <linearGradient id="myGradient" x1="0%" y1="0%" x2="100%" y2="0%"  >
+      <stop offset="3%" stop-color="#182943" />
+      <stop offset="7%" stop-color="#16263F" />
+      <stop offset="22%" stop-color="#111D35" />
+      <stop offset="40%" stop-color="#0B1129" />
+      <stop offset="58.13%" stop-color="rgb(3, 4, 25)" />
+    </linearGradient>
+  </defs> -->
+  <path d="M0 0C513.816 239.339 1091.38 248.264 2732 0V221H0V0Z" fill="black" />
 </svg>
-
 
 <!-- fill="#141A21" -->

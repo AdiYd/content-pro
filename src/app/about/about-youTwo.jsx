@@ -128,7 +128,7 @@ const renderCard = (item, mode = 'dark') => (
         zIndex: 8,
         content: '""',
         position: 'absolute',
-        backgroundImage:
+        _backgroundImage:
           'linear-gradient(to bottom, transparent,rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.7) 73%, rgba(0,0,0,0.8))',
       },
     }}
@@ -136,32 +136,32 @@ const renderCard = (item, mode = 'dark') => (
   >
     <div className="relative">
       <CardMedia
-        className="absolute w-full h-full"
+        className="absolute* w-full h-full"
         component="img"
         height="100"
         image={item.imageUrl}
         alt={item.title}
-        sx={{ borderRadius: '16px 16px 0 0', height: 400 }}
+        sx={{ borderRadius: '16px 16px 0 0', height: 300 }}
       />
-      {/* {halfWave(mode)} */}
+      {halfWave(mode)}
     </div>
     <CardContent
       sx={{
         zIndex: 15,
         position: 'relative',
-        height: 1,
+        // height: 1,
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'end',
+        // justifyContent: 'end',
       }}
     >
-      <Typography my={3} color="common.white" variant="h5" component="div">
+      <Typography mt={0} mb={3} colors="common.white" variant="h5" component="div">
         {item.title}
       </Typography>
-      <Typography variant="body2" color="common.white" sx={{ marginBottom: 2 }}>
+      <Typography variant="body2" colors="common.white" sx={{ marginBottom: 2 }}>
         {item.text}
       </Typography>
-      <Box sx={{ display: 'flex', gap: 3, justifyContent: 'center', color: 'white' }}>
+      <Box sx={{ display: 'flex', gap: 3, justifyContent: 'center', _color: 'white' }}>
         {item.icons.map((icon, index) => (
           <Iconify key={index} width={30} icon={icon} />
         ))}

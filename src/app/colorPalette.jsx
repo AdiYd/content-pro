@@ -18,6 +18,14 @@ function ColorPicker({ ...props }) {
 
   useEffect(() => {
     setCheckMode(mode === 'dark');
+    // if (mode === 'dark') {
+    //   const body = document.querySelector('body');
+    //   body.style.backgroundImage =
+    //     'linear-gradient(66.06deg, rgb(56, 97, 129) -63.32%, rgb(3 4 25) 62.13%)';
+    // } else {
+    //   const body = document.querySelector('body');
+    //   body.style.backgroundImage = 'none';
+    // }
   }, [mode]);
 
   return (

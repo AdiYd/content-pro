@@ -165,7 +165,7 @@ export default async function RootLayout({ children }) {
         </Script>
       </head>
 
-      <body suppressHydrationWarning>
+      <body className="bg-fixed" suppressHydrationWarning>
         {getInitColorSchemeScript}
         <AuthProvider>
           <SettingsProvider
