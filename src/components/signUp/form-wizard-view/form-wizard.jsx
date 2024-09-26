@@ -46,6 +46,7 @@ const WizardSchema = zod.object({
   }),
   age: zod.number().optional(),
   gender: zod.string().optional(),
+  packageType: zod.string().optional(),
   goals: zod.array(zod.string()).optional(),
   totalPrice: zod.number().optional(),
   // stepOne: StepOneSchema,
@@ -69,6 +70,7 @@ const defaultValues = {
   gender: '',
   goals: [],
   totalPrice: 99,
+  packageType: 'Master-pro',
 };
 
 export function FormWizard({ coursePrice }) {
@@ -156,16 +158,16 @@ export function FormWizard({ coursePrice }) {
       setLoading(false);
       // console.log('this is api result: ', result);
       // console.log(formData.totalPrice);
-      window.location.href =
-        formData.totalPrice === 499
-          ? 'https://meshulam.co.il/quick_payment?b=66e0d1ec8b97738b8e3f0fafa7826855'
-          : formData.totalPrice === 449
-            ? 'https://meshulam.co.il/quick_payment?b=b525a66f1ebef00df2e9f11ed69ad593'
-            : formData.totalPrice === 249
-              ? 'https://meshulam.co.il/quick_payment?b=75ffe208cc1d655af87be053046ee040'
-              : formData.totalPrice === 224
-                ? 'https://meshulam.co.il/quick_payment?b=d9d1186a167d4e7df7d9e341297a7ca4'
-                : 'https://meshulam.co.il/quick_payment?b=7f441e3b9b0a82f40c07e05e67e36835';
+      // window.location.href =
+      //   formData.totalPrice === 499
+      //     ? 'https://meshulam.co.il/quick_payment?b=66e0d1ec8b97738b8e3f0fafa7826855'
+      //     : formData.totalPrice === 449
+      //       ? 'https://meshulam.co.il/quick_payment?b=b525a66f1ebef00df2e9f11ed69ad593'
+      //       : formData.totalPrice === 249
+      //         ? 'https://meshulam.co.il/quick_payment?b=75ffe208cc1d655af87be053046ee040'
+      //         : formData.totalPrice === 224
+      //           ? 'https://meshulam.co.il/quick_payment?b=d9d1186a167d4e7df7d9e341297a7ca4'
+      //           : 'https://meshulam.co.il/quick_payment?b=7f441e3b9b0a82f40c07e05e67e36835';
     } catch (error) {
       console.error('Error submitting data:', error);
     }
@@ -174,7 +176,7 @@ export function FormWizard({ coursePrice }) {
   const onSubmit = handleSubmit(async (data) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
-
+      data.email = data.email.toLowerCase();
       console.info('DATA', data);
 
       trackPurchase(data.email, data.totalPrice, 'ILS', 'Course');

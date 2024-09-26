@@ -121,6 +121,7 @@ function Footer({ ...props }) {
   return (
     <Box component="footer" boxShadow={customShadows(mode).z20} height={8} mt={8} maxWidth="100%">
       <Divider />
+      {dialog}
 
       <div className="px-4 w-full mt-4 flex flex-wrap-reverse justify-around">
         <div className="max-w-3xl px-4 flex w-fit">
@@ -164,6 +165,20 @@ function Footer({ ...props }) {
               px={1}
             >
               מדיניות פרטיות
+            </Button>
+          </Typography>
+          <Typography noWrap>
+            <Button
+              size="small"
+              sx={{
+                textDecoration: 'underline',
+                opacity: 0.8,
+              }}
+              // color="text.secondary"
+              href="/login"
+              px={1}
+            >
+              איזור אישי
             </Button>
           </Typography>
 

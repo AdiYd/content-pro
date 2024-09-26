@@ -237,3 +237,26 @@ export function fSub({
 
   return result;
 }
+
+
+
+export function getIsraelTimestamp() {
+  // Create a new Date object for the current time
+  const now = new Date();
+
+  // Define the options for the date and time format
+  const options = {
+    timeZone: 'Asia/Jerusalem',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false, // Use 24-hour format
+  };
+
+  // Convert the date to a string in the desired format
+  const israelTimestamp = now.toLocaleString('en-GB', options);
+
+  return israelTimestamp;
+}

@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState, useEffect, createContext } from 'react';
 
-import { useTheme } from '@mui/material';
+import { useTheme, keyframes } from '@mui/material';
 
 import { setStorage } from 'src/hooks/use-local-storage';
 
@@ -11,6 +11,18 @@ import { localStorageGetItem } from 'src/utils/storage-available';
 import { textGradient } from 'src/theme/styles';
 
 import COLORS from '../theme/core/colors.json';
+
+export const gradientAnimation = keyframes`
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+`;
 
 export const ColorContext = createContext();
 
@@ -27,6 +39,13 @@ const ColorProvider = ({ children }) => {
     const accentColor = COLORS[storedColor][gradMode];
     const textGradientName = `to right, ${accentColor}, ${themeColors}`;
     const textGradients = textGradient(textGradientName);
+    const textGradientAnimation = {
+      ...textGradient(
+        `45deg, ${COLORS[storedColor]?.dark} 25%, ${COLORS[storedColor]?.main} 40%, ${COLORS[storedColor]?.main} 50%,${COLORS[storedColor]?.light} 80%, ${COLORS[storedColor]?.main} 95%`
+      ),
+      backgroundSize: '200% 200%',
+      animation: `${gradientAnimation} 5s ease-in-out infinite`,
+    };
     setMainColor(storedColor);
     setThemeColor({
       mode,
@@ -34,6 +53,7 @@ const ColorProvider = ({ children }) => {
       themeColor,
       accentColor,
       textGradient: textGradients,
+      textGradientAnimation,
     });
   };
 
@@ -51,6 +71,13 @@ const ColorProvider = ({ children }) => {
       const accentColor = COLORS[storedColor][gradMode];
       const textGradientName = `to right, ${accentColor}, ${themeColors}`;
       const textGradients = textGradient(textGradientName);
+      const textGradientAnimation = {
+        ...textGradient(
+          `45deg, ${COLORS[storedColor]?.dark} 25%, ${COLORS[storedColor]?.main} 40%, ${COLORS[storedColor]?.main} 50%,${COLORS[storedColor]?.light} 80%, ${COLORS[storedColor]?.main} 95%`
+        ),
+        backgroundSize: '200% 200%',
+        animation: `${gradientAnimation} 5s ease-in-out infinite`,
+      };
       setMainColor(storedColor);
       setThemeColor((p) => ({
         mode,
@@ -58,6 +85,7 @@ const ColorProvider = ({ children }) => {
         themeColor: themeColors,
         accentColor,
         textGradient: textGradients,
+        textGradientAnimation,
       }));
     } catch {
       const storedColor = 'primary';
@@ -67,6 +95,13 @@ const ColorProvider = ({ children }) => {
       const accentColor = COLORS[storedColor][gradMode];
       const textGradientName = `to right, ${accentColor}, ${themeColors}`;
       const textGradients = textGradient(textGradientName);
+      const textGradientAnimation = {
+        ...textGradient(
+          `45deg, ${COLORS[storedColor]?.dark} 25%, ${COLORS[storedColor]?.main} 40%, ${COLORS[storedColor]?.main} 50%,${COLORS[storedColor]?.light} 80%, ${COLORS[storedColor]?.main} 95%`
+        ),
+        backgroundSize: '200% 200%',
+        animation: `${gradientAnimation} 5s ease-in-out infinite`,
+      };
       setMainColor(storedColor);
       setThemeColor((p) => ({
         mode,
@@ -74,6 +109,7 @@ const ColorProvider = ({ children }) => {
         themeColor: themeColors,
         accentColor,
         textGradient: textGradients,
+        textGradientAnimation,
       }));
     }
   }, [theme.palette?.mode]);

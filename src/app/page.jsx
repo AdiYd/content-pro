@@ -1,6 +1,7 @@
 'use client';
 
 
+
 import { Box, Divider } from '@mui/material';
 
 import AccordionSection from 'src/layouts/components/Accordion/AccordionSection';
@@ -26,6 +27,7 @@ export const CoursePrice = 499;
 
 export default function Page() {
   const divider = false;
+
   return (
     <Box
       sx={{

@@ -480,6 +480,7 @@ export function StepThree({ name, email, coursePrice, setValue, loading }) {
     console.log('Changing price to : ', totalPrice.current);
     setUpdate((p) => !p);
     setValue('totalPrice', totalPrice.current);
+    setValue('packageType', active);
   }, [active, setValue]);
 
   useEffect(() => {

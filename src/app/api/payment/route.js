@@ -3,13 +3,16 @@
 'use server';
 
 import { sendInvoiceEmail } from 'src/utils/invoice';
+import { addUser } from 'src/utils/firebaseFunctions';
 
 export async function POST(request) {
   try {
     const data = await request.json();
     console.log('Message from client: ', data);
-    await sendInvoiceEmail(data);
-    // const res = await sendEmail({ data });
+    await addUser(data);
+    if (false) {
+      await sendInvoiceEmail(data);
+    }
     // console.log('This is email response: ', res);
     return new Response(JSON.stringify({ message: `Message Received` }), {
       status: 200,

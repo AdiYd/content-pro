@@ -37,7 +37,7 @@ export function AboutLead({ contentType = 'aboutCourse' }) {
   const theme = useTheme();
   const { mainColor, textGradient, mode } = useContext(ColorContext);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const [activeTxtfield, setActiveTxtField] = useState(false);
+  const [activeTxtfield, setActiveTxtField] = useState(true);
   const [active, setActive] = useState(false);
   const [loading, setLoading] = useState(false);
   const [thanks, setThanks] = useState(false);
@@ -46,6 +46,7 @@ export function AboutLead({ contentType = 'aboutCourse' }) {
     email: '',
     approveTerms: true,
     message: '',
+    contactForm: true,
   });
 
   const [errors, setErrors] = useState({
@@ -185,7 +186,6 @@ export function AboutLead({ contentType = 'aboutCourse' }) {
       onClose={() => setActive(false)}
     >
       <DialogTitle>
-        קיבלנו את הפרטים
         <IconButton
           aria-label="close"
           onClick={() => {
@@ -203,10 +203,10 @@ export function AboutLead({ contentType = 'aboutCourse' }) {
       </DialogTitle>
 
       <DialogContent dividers sx={{ color: 'text.secondary' }}>
-        <Typography variant="h4">תודה על יצירת הקשר</Typography>
+        <Typography variant="h4">תודה על יצירת הקשר 😀</Typography>
         <br />
         <Typography color="text.primary" variant="p">
-          נחזור אליכם בקרוב עם פרטים נוספים
+          קיבלנו את הפרטים, נחזור אליכם עם פרטים נוספים
         </Typography>
         <br />
       </DialogContent>
@@ -369,12 +369,12 @@ export function AboutLead({ contentType = 'aboutCourse' }) {
                   mx={1}
                 >
                   {' '}
-                  לחצו כאן{' '}
+                  (לא חובה){' '}
                 </Typography>
               </Typography>
               {activeTxtfield && (
                 <TextField
-                  label="הודעה"
+                  label="יש לכם שאלות? הערות? הצעות? נשמח לשמוע ממכם..."
                   name="message"
                   variant="filled"
                   fullWidth
