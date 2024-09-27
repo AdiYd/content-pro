@@ -9,7 +9,7 @@ import { varAlpha, hexToRgbChannel } from 'src/theme/styles';
 import { Iconify } from 'src/components/iconify';
 import { useSettingsContext } from 'src/components/settings';
 
-function ColorPicker({ ...props }) {
+function ColorPicker({ showSwitch = true, inlineChange = true, callBack = () => {}, ...props }) {
   const theme = useTheme();
   const { mainColor, setColor } = useContext(ColorContext);
   const { mode, setMode } = useColorScheme();
@@ -48,6 +48,7 @@ function ColorPicker({ ...props }) {
         direction: 'ltr',
         rowGap: 1,
         alignItems: 'center',
+        ...props.sx,
       }}
     >
       {Object.keys(colors).map(
@@ -55,7 +56,12 @@ function ColorPicker({ ...props }) {
           colors[item]?.main && (
             <Iconify
               sx={{ cursor: 'pointer', '&:hover': { opacity: 0.8 } }}
-              onClick={() => setColor(item)}
+              onClick={() => {
+                if (inlineChange) {
+                  setColor(item);
+                }
+                callBack(item);
+              }}
               key={index}
               width={mainColor === item ? 40 : 25}
               color={colors[item]?.main}
@@ -63,16 +69,18 @@ function ColorPicker({ ...props }) {
             />
           )
       )}
-      <Switch
-        sx={{ ml: { md: 0, xs: 8 }, mt: { md: 4, xs: 0 } }}
-        onChange={() => {
-          settings.onUpdateField('colorScheme', mode === 'light' ? 'dark' : 'light');
-          setMode(mode === 'dark' ? 'light' : 'dark');
-          setCheckMode((p) => !p);
-        }}
-        color={mainColor}
-        checked={checkMode}
-      />
+      {showSwitch && (
+        <Switch
+          sx={{ ml: { md: 0, xs: 8 }, mt: { md: 4, xs: 0 } }}
+          onChange={() => {
+            settings.onUpdateField('colorScheme', mode === 'light' ? 'dark' : 'light');
+            setMode(mode === 'dark' ? 'light' : 'dark');
+            setCheckMode((p) => !p);
+          }}
+          color={mainColor}
+          checked={checkMode}
+        />
+      )}
     </Box>
   );
 }

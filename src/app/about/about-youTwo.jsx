@@ -115,10 +115,10 @@ const bulletsWithIcons = [
 const renderCard = (item, mode = 'dark') => (
   <Card
     sx={{
-      borderRadius: 2,
+      // borderRadius: 2,
       // boxShadow: customShadows(mode).z20,
       height: 1,
-      minHeight: 400,
+      minHeight: 350,
       // border: `0.6px solid grey`,
       '&:before': {
         top: 0,
@@ -141,7 +141,7 @@ const renderCard = (item, mode = 'dark') => (
         height="100"
         image={item.imageUrl}
         alt={item.title}
-        sx={{ borderRadius: '16px 16px 0 0', height: 300 }}
+        sx={{ borderRadius: '16px 16px 0 0', height: 250 }}
       />
       {halfWave(mode)}
     </div>

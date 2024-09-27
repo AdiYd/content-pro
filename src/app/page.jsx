@@ -12,7 +12,6 @@ import Footer from 'src/components/footer/Footer';
 import StepperSection from 'src/components/stepper/Stepper';
 import Considering from 'src/components/considering/Considering';
 
-import ColorPicker from './colorPalette';
 import ImageDiv from './about/view/ImageDiv';
 import { AboutWhat } from './about/about-what';
 import { AboutHero } from './about/about-hero';
@@ -36,7 +35,7 @@ export default function Page() {
         direction: 'rtl',
       }}
     >
-      <ColorPicker />
+      {/* <ColorPicker /> */}
       <AboutHero />
       {/* {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />} */}
       <AboutWhat contentType="aboutCourse" />

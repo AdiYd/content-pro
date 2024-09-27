@@ -151,7 +151,7 @@ export function AboutHero() {
             text="Video-Pro"
             // variants={varSlide().inDown}
             sx={{
-               ...textGradientAnimation,
+              ...textGradientAnimation,
               direction: 'ltr',
               textAlign: { md: 'end', xs: 'unset' },
               pb: 2,
@@ -362,9 +362,10 @@ export function AboutHero() {
                 }}
                 variant="outlined"
                 color={mainColor}
-                onClick={() => ScrollComponent('contactUs')}
+                href="/login"
+                // onClick={() => ScrollComponent('contactUs')}
               >
-                צרו קשר
+                לאיזור אישי
               </Button>
             </Container>
           </m.div>

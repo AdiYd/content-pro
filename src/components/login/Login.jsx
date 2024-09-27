@@ -2,6 +2,7 @@
 
 import { m } from 'framer-motion';
 import { useRouter } from 'next/navigation';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { Oval, Circles } from 'react-loader-spinner';
 import { useForm, Controller } from 'react-hook-form';
 import { useRef, useState, useEffect, useContext } from 'react';
@@ -9,23 +10,34 @@ import { useRef, useState, useEffect, useContext } from 'react';
 import { DarkModeTwoTone, LightModeTwoTone } from '@mui/icons-material';
 import {
   Box,
+  Card,
   Stack,
   Button,
+  Dialog,
+  Select,
   Divider,
   useTheme,
   Skeleton,
+  MenuItem,
   Container,
   TextField,
   Typography,
+  InputLabel,
+  DialogTitle,
+  FormControl,
   useMediaQuery,
+  DialogContent,
+  DialogActions,
   useColorScheme,
 } from '@mui/material';
 
-import { getLeadById, getAllDataFromCollection } from 'src/utils/firebaseFunctions';
+import { getUserById, getAllDataFromCollection } from 'src/utils/firebaseFunctions';
 
+import ColorPicker from 'src/app/colorPalette';
 import { ColorContext } from 'src/context/colorMain';
 
-import { varSlide, varBounce, MotionContainer } from 'src/components/animate';
+import { varSlide, varBounce, AnimateBorder, MotionContainer } from 'src/components/animate';
+
 
 function Login({ id }) {
   const theme = useTheme();
@@ -39,11 +51,12 @@ function Login({ id }) {
 
   useEffect(() => {
     if (id) {
-      getLeadById(id).then((data) => {
+      getUserById(id).then((data) => {
         if (data) {
           setLoading(true);
           setTimeout(() => {
             setLoading(false);
+            data.goals = data.goals.join(', ');
             setUserData(data);
           }, 1 * 1e3);
         } else {
@@ -58,6 +71,7 @@ function Login({ id }) {
   };
 
   const setUser = (user, userID) => {
+    console.log('This is user:' , user)
     if (user === 'admin') {
       setLoading(true);
       setTimeout(() => {
@@ -72,7 +86,7 @@ function Login({ id }) {
   const data = isAdmin ? (
     <Admin />
   ) : userData ? (
-    <Typography variant="h3">היי {userData.name}</Typography>
+    <User userData={userData} />
   ) : (
     <EmailVerificationForm callback={setUser} />
   );
@@ -119,7 +133,7 @@ function Login({ id }) {
             </Typography>
             {!isActive && (
               <Typography variant="h3" sx={{ mb: 2 }}>
-                הבית של יוצרי התוכן והקמפיינים בישראל
+                הבית של יוצרי התוכן הטובים בישראל
               </Typography>
             )}
             {isActive && <Divider sx={{ width: 1, mb: 4 }} />}
@@ -162,11 +176,11 @@ export default Login;
 function EmailVerificationForm({ callback = () => {} }) {
   const [emails, setEmails] = useState();
   const [userData, setData] = useState();
-  const { mainColor } = useContext(ColorContext);
+  const { mainColor, textGradientAnimation } = useContext(ColorContext);
 
   useEffect(() => {
     setTimeout(() => {
-      getAllDataFromCollection('leads').then((data) => {
+      getAllDataFromCollection('users').then((data) => {
         setEmails(data.emails);
         setData(data.data);
       });
@@ -188,10 +202,13 @@ function EmailVerificationForm({ callback = () => {} }) {
 
   // Form submit handler
   const onSubmit = (data) => {
-    console.log('Form Submitted', data);
+    if (!data.email){
+        return
+    }
+    data.email = data.email?.toLowerCase();
     let userID;
     userData?.some((item) => {
-      if (item.email === data.email.toLowerCase()) {
+      if (item.email === data.email) {
         userID = item.id;
         return true;
       }
@@ -200,10 +217,9 @@ function EmailVerificationForm({ callback = () => {} }) {
     console.log(userID);
     callback(data.email, userID);
   };
-
+  const isValidInput =Boolean(!(!isValid && (emailValue && emailValue?.toLowerCase()!=='admin' || !emailValue)));
   // Check if email is in the predefined list
   const isSignedEmail = (email) => emails?.includes(email);
-
   return (
     <Box component={MotionContainer}>
       <Box
@@ -221,9 +237,9 @@ function EmailVerificationForm({ callback = () => {} }) {
       >
         {/* Email Input */}
         <m.div style={{ width: '100%' }} variants={varSlide({ delay: 0.3 }).inUp}>
-          <Typography variant="p" color="text.secondary">
+        {/* <Typography variant="p" color="text.secondary">
             איזור אישי
-          </Typography>
+          </Typography> */}
           {emails ? (
             <Controller
               name="email"
@@ -231,15 +247,13 @@ function EmailVerificationForm({ callback = () => {} }) {
               defaultValue=""
               rules={{
                 required: 'יש להכניס כתובת אימייל',
-
                 // pattern: {
                 //   value: /^\S+@\S+\.\S+$/,
                 //   message: 'כתובת אימייל לא תקינה',
                 // },
                 validate: {
                   isSignedUser: (value) =>
-                    ['admin'].includes(value.toLowerCase()) ||
-                    isSignedEmail(value.toLowerCase()) ||
+                    (value.toLowerCase() === 'admin'||isSignedEmail(value.toLowerCase())) ||
                     'משתמש לא רשום',
                 },
               }}
@@ -277,13 +291,24 @@ function EmailVerificationForm({ callback = () => {} }) {
 
           {/* Submit Button */}
           <Button
-            sx={{ my: 4 }}
+            sx={(!isValidInput) ? {
+                my:4
+            }:
+            { my: 4,
+                ...textGradientAnimation,
+                        animationDuration:'10s',
+                        WebkitBackgroundClip: 'inherit',
+                        WebkitTextFillColor: 'inherit',
+                        backgroundClip: 'inherit',
+                        textFillColor: 'inherit',
+                        color: 'inherit',
+             }}
             color={mainColor}
             type="submit"
             variant="contained"
-            disabled={!isValid}
+            disabled={!isValidInput}
           >
-            התחברות
+            לאיזור האישי
           </Button>
         </m.div>
       </Box>
@@ -303,11 +328,57 @@ function Admin() {
   const [data, setData] = useState({});
   const [search, setSearch] = useState();
   const [loader, setLoader] = useState(false);
+  const [dialogRef, setDialog] = useState();
+  const [open, setOpen] = useState(false);
   const theme = useTheme();
-  const { mainColor, textGradient } = useContext(ColorContext);
+  const { setMode } = useColorScheme();
+  const { mainColor, textGradient, mode, setColor } = useContext(ColorContext);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const searchInput = useRef();
   let dataRes;
+
+  const changeMode = () => {
+    console.log('Change data base theme mode to: ',mode === 'dark' ? 'light' : 'dark' )
+    setMode(mode === 'dark' ? 'light' : 'dark');
+  };
+  const changeColor = (color) => {
+    setDialog(dialog(()=>onApproval(color)))
+
+    const onApproval = (colorChange)=>{
+        setColor(colorChange);
+        console.log('Change data base main color to: ',colorChange )
+    }
+    // setMode(mode === 'dark' ? 'light' : 'dark');
+  };
+
+  const dialog =(onClose=()=>{})=>
+    <Dialog sx={{textAlign:'center', direction:'rtl', alignItems:'center'}} open onClose={onClose}>
+    {/* Dialog Title */}
+    <DialogTitle>פעולה ראשית</DialogTitle>
+
+    {/* Dialog Content */}
+    <DialogContent>
+      <Typography variant="body1" >
+        פעולה זו תשנה את האתר לצמיתות
+      </Typography>
+      <Typography variant="p" >
+        מאשר?
+      </Typography>
+    </DialogContent>
+
+    {/* Dialog Actions */}
+    <DialogActions sx={{width:1, display:'flex', justifyContent:'space-around'}}>
+      {/* Close Button */}
+      <Button variant='contained' onClick={()=> {onClose();setDialog(undefined)}}>
+        אישור
+      </Button>
+      <Button variant='outlined' onClick={()=>{setDialog(undefined)}} >
+        ביטול
+      </Button>
+    </DialogActions>
+  </Dialog>
+  
+
   if (search || searchInput.current) {
     dataRes = search?.resCount ? (
       <Box>
@@ -383,6 +454,47 @@ function Admin() {
         אין עדיין משתמשים רשומים
       </Typography>
     );
+  }else if (activeButton === 'הגדרות אתר'){
+    dataRes = <Box sx={{display:'flex', p:4,maxWidth:'95%', flexDirection:'column', justifyContent: 'center', alignItems:'center'}}>
+    <Card sx={{px:{md:8, xs: 4}, py:4, alignItems:'center', textAlign:'center'}}>
+    <Typography variant='p'>
+        כיצד יראה האתר למשתמש חדש? (Not active yet)
+    </Typography>
+    {dialogRef}
+    <Stack direction="row" justifyContent="center" my={2} spacing={8}>
+              <div className={`p-2 rounded-full ${mode === 'light' && ' bg-slate-400/30'}`}>
+                <LightModeTwoTone
+                color={theme.palette[mainColor].main}
+                  onClick={()=>{
+                    if (mode === 'light'){
+                        return
+                    }
+                    setDialog(dialog(changeMode))
+                    }}
+                  className="cursor-pointer hover:opacity-50"
+                  titleAccess="Light mode"
+                />
+              </div>
+              <div className={`p-2 rounded-full ${mode === 'dark' && ' bg-slate-400/30'}`}>
+                <DarkModeTwoTone
+                  onClick={()=>{
+                    if (mode === 'dark'){
+                        return
+                    }
+                    setDialog(dialog(changeMode))
+                    }}
+                  className="cursor-pointer hover:opacity-50"
+                  titleAccess="DarkModeTwoTone"
+                />
+              </div>
+    </Stack>
+    <ColorPicker 
+    showSwitch={false} 
+    inlineChange = {false}
+    callBack={changeColor}
+    sx={{position:'static', flexDirection:'row', mx:'auto', bgcolor:'transparent', gap:{md:6, xs:2}}} />
+    </Card>
+    </Box>
   }
 
   useEffect(() => {
@@ -426,7 +538,7 @@ function Admin() {
 
   return (
     <Box width={1} sx={{ dir: 'rtl' }} textAlign="start">
-      <Typography variant="h4">היי מנהל אתר,</Typography>
+      <Typography variant="h4">היי מנהל אתר 👋🏽,</Typography>
       <Typography color="text.secondary" variant="body1">
         כאן ניתן לראות נתוני משתמשים ולשנות הגדרות
       </Typography>
@@ -493,21 +605,21 @@ const userPropDict = {
   timeStamp: 'תאריך',
 };
 
-function ActiveUser({ index, user = {} }) {
-  const [open, setOpen] = useState(false);
+function ActiveUser({ index, user = {}, active = false, showMail = true, typoVariant='body2' }) {
+  const [open, setOpen] = useState(active);
   return (
-    <Box sx={{ cursor: 'pointer' }} onClick={() => setOpen(!open)} key={index}>
-      <Typography variant="p">
+    <Box sx={{ cursor: 'pointer' }} onClick={() => {if (!active) {setOpen(!open)}}} key={index}>
+      {showMail && <Typography variant="p">
         {index}. {user.email}
-      </Typography>
+      </Typography>}
       {open ? (
         <Stack>
           {Object.keys(userPropDict).map(
             (item, indx) =>
               user[item] && (
                 <Container sx={{ display: 'flex', gap: 1 }} key={indx}>
-                  <Typography variant="body2">{userPropDict[item]}:</Typography>
-                  <Typography color="text.secondary" variant="body2">
+                  <Typography variant={typoVariant}>{userPropDict[item]}:</Typography>
+                  <Typography color="text.secondary" variant={typoVariant}>
                     {user[item]} {item === 'payment' && '₪'}
                   </Typography>
                 </Container>
@@ -524,6 +636,218 @@ function ActiveUser({ index, user = {} }) {
           </Typography>
         </>
       )}
+    </Box>
+  );
+}
+
+const UserOptionsDict = ['פרטים', 'Script AI', 'נבחרת'];
+const ContentNiches = ['אופנה וטקסטיל','מותגי מזון','הייטק','מדיה ורשתות חברתיות','מותגי יוקרה'];
+const aiDescription =
+  "כל מה שצריך זה לבחור נישה של תוכן ולכתוב כמה מילים משלכם (לא חובה). הצ'אט שלנו יבנה לכם סקריפט ליצרת סרטון ואתם תוכלו להשתמש בו ככלי לימודי ומקור לרעיונות";
+
+function User({ userData = {} }) {
+  const { mainColor, textGradientAnimation } = useContext(ColorContext);
+  const [activeButton, setActiveButton] = useState();
+  const [loader, setLoader] = useState(false);
+  const [focus, setFocus] = useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const [inputRef, setInput] = useState();
+  const [selectRef, setSelect] = useState('');
+  const isMaster = userData.packageType === 'Master-Pro' || false;
+  let dataRes;
+
+  const setLoaderActive = (duration = 0.2) => {
+    setLoader(true);
+    setTimeout(() => {
+      setLoader(false);
+    }, [duration * 1e3]);
+  };
+
+  const handleInput = (e) => {
+    if (e.target.value.length <= 250) {
+      setInput(e.target.value);
+    }
+  };
+  const handleSelect = (e) => {
+    setSelect(e.target.value);
+  };
+  const hundleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    console.log('This is submit data: ', formData);
+  };
+
+  if (activeButton === 'Script AI') {
+    dataRes = (
+      <Box textAlign="center" my={4}>
+        <Typography variant="body1" color="text.secondary">
+          בנינו לכם מודל AI שמבין ביצירת תוכן ויעזור לכם ליצור תוכן יצירתי, מתוחכם ומקורי
+        </Typography>
+        <Typography mb={2} variant="body1" color="text.secondary">
+          {aiDescription}
+        </Typography>
+        <AnimateBorder
+          sx={{ borderRadius: 2, borderWidth: 1, borderColor: 'transparent' }}
+          animate={{
+            angle: 250,
+            // outline: 'none',
+            distance: 8,
+            // disableDoubleline: true,
+            length: 15,
+            color: theme.palette.success.main,
+            // width: '2px',
+          }}
+        >
+          <Card
+            sx={{
+              display: 'flex',
+              zIndex: 80,
+              flexDirection: 'column',
+              gap: 4,
+              m: 0.4,
+              px: { md: 6, xs: 2 },
+              py: 4,
+              mx: 'auto',
+              width: isMobile ? 1 : 1,
+            }}
+            component="form"
+            onSubmit={hundleSubmit}
+          >
+            <Typography sx={textGradientAnimation} variant="h4">
+              © Video-Pro Script Generator
+            </Typography>
+            <FormControl variant="outlined" fullWidth>
+              <InputLabel>בחירת נישה</InputLabel>
+              {/* <InputLabel className='w-full flex justify-start text-start' id="select">בחירת נישה ליצירת תוכן</InputLabel> */}
+              <Select
+                displayEmpty
+                // label='נישה ליצירת תוכן'
+                // variant="co"
+                name="gender"
+                sx={{ textAlign: 'center', my: 4 }}
+                defaultValue="בחרו נישה"
+                onChange={handleSelect}
+                value={selectRef}
+              >
+                {ContentNiches.map((item, index) => (
+                  <MenuItem defaultValue={index === 0} key={index} value={item}>
+                    {item}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <Box textAlign="start">
+              <TextField
+                fullWidth
+                multiline
+                name="free-text"
+                disabled={!isMaster}
+                rows={4}
+                onChange={handleInput}
+                onBlur={() => setFocus(false)}
+                onFocus={() => setFocus(true)}
+                variant={isMaster ? 'outlined' : 'filled'}
+                // InputLabelProps={{dir:'rtl',sx:{px:2, float:'right'}, style:{margin: '0px 10px', width:'max-content'}}}
+                value={inputRef}
+                label={focus ? '.    תנו לנו כיוון, אנחנו נמשיך משם    .' : ''}
+                placeholder="טקסט חופשי - רעיונות, לוקיישנים וכל הכוונה אחרת ל AI"
+              />
+              <Box width={1} display="flex" justifyContent="space-between">
+                <Typography
+                  variant="body2"
+                  component="div"
+                  color={isMaster ? theme.palette.success.main : theme.palette.error.main}
+                >
+                  אפשרות לתלמידי מסלול Master בלבד
+                </Typography>
+                <Typography variant="body2" fontSize="0.7" color="text.secondary">
+                  עד 250 תווים ({250 - (inputRef?.length || 0)})
+                </Typography>
+              </Box>
+            </Box>
+            <Button
+              sx={{
+                ...textGradientAnimation,
+                animationDuration: '10s',
+                WebkitBackgroundClip: 'inherit',
+                WebkitTextFillColor: 'inherit',
+                backgroundClip: 'inherit',
+                textFillColor: 'inherit',
+                color: 'inherit',
+              }}
+              size={isMobile ? 'small' : 'medium'}
+              type="submit"
+              variant="contained"
+            >
+              {' '}
+              Generate AI sctipt
+            </Button>
+          </Card>
+        </AnimateBorder>
+      </Box>
+    );
+  } else if (activeButton === 'פרטים') {
+    dataRes = (
+      <Box textAlign="center" my={4}>
+        <ActiveUser user={userData} showMail={false} active typoVariant="body1" />
+        <ColorPicker
+          sx={{
+            position: 'static',
+            flexDirection: 'row',
+            mx: 'auto',
+            bgcolor: 'transparent',
+            gap: { md: 6, xs: 2 },
+          }}
+          showSwitch={false}
+        />
+      </Box>
+    );
+  }
+  return (
+    <Box textAlign="start" my={2}>
+      <Box display="flex" gap={1}>
+        <Typography variant="h3">היי </Typography>
+        <Typography sx={textGradientAnimation} variant="h3">
+          {userData.name}{' '}
+        </Typography>
+        <Typography variant="h3">, </Typography>
+        {/* <Typography variant="h3">👋🏽</Typography> */}
+      </Box>
+      <Typography variant="body1">
+        באיזור האישי ניתן לראות פרטים על הקורס, בחירת נישה להתמחות ורעיונות לתכני וידאו
+      </Typography>
+      <Stack my={4} justifyContent="center" direction="row" spacing={4}>
+        {UserOptionsDict.map((item, index) => (
+          <Button
+            onClick={() => {
+              setLoaderActive(0.5);
+              setActiveButton(item === activeButton ? undefined : item);
+            }}
+            key={index}
+            color={activeButton === item ? mainColor : undefined}
+            size={isMobile ? 'small' : 'medium'}
+            sx={{ fontSize: isMobile ? '0.8rem' : '', textWrap: 'nowrap' }}
+            variant={activeButton === item ? 'contained' : 'outlined'}
+          >
+            {item}
+          </Button>
+        ))}
+      </Stack>
+
+      <Box my={4}>
+        {loader ? (
+          <Circles
+            wrapperClass="flex justify-center width-full my-8"
+            height={80}
+            color={theme.palette[mainColor]?.main}
+            width={80}
+            visible
+          />
+        ) : (
+          dataRes
+        )}
+      </Box>
     </Box>
   );
 }
