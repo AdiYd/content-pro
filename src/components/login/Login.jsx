@@ -12,6 +12,7 @@ import {
   Box,
   Card,
   Stack,
+  Radio,
   Button,
   Dialog,
   Select,
@@ -23,12 +24,15 @@ import {
   TextField,
   Typography,
   InputLabel,
+  RadioGroup,
   DialogTitle,
   FormControl,
   useMediaQuery,
   DialogContent,
   DialogActions,
   useColorScheme,
+  FormHelperText,
+  FormControlLabel,
 } from '@mui/material';
 
 import { getUserById, getAllDataFromCollection } from 'src/utils/firebaseFunctions';
@@ -37,7 +41,6 @@ import ColorPicker from 'src/app/colorPalette';
 import { ColorContext } from 'src/context/colorMain';
 
 import { varSlide, varBounce, AnimateBorder, MotionContainer } from 'src/components/animate';
-
 
 function Login({ id }) {
   const theme = useTheme();
@@ -71,7 +74,7 @@ function Login({ id }) {
   };
 
   const setUser = (user, userID) => {
-    console.log('This is user:' , user)
+    console.log('This is user:', user);
     if (user === 'admin') {
       setLoading(true);
       setTimeout(() => {
@@ -202,8 +205,8 @@ function EmailVerificationForm({ callback = () => {} }) {
 
   // Form submit handler
   const onSubmit = (data) => {
-    if (!data.email){
-        return
+    if (!data.email) {
+      return;
     }
     data.email = data.email?.toLowerCase();
     let userID;
@@ -217,7 +220,9 @@ function EmailVerificationForm({ callback = () => {} }) {
     console.log(userID);
     callback(data.email, userID);
   };
-  const isValidInput =Boolean(!(!isValid && (emailValue && emailValue?.toLowerCase()!=='admin' || !emailValue)));
+  const isValidInput = Boolean(
+    !(!isValid && ((emailValue && emailValue?.toLowerCase() !== 'admin') || !emailValue))
+  );
   // Check if email is in the predefined list
   const isSignedEmail = (email) => emails?.includes(email);
   return (
@@ -237,7 +242,7 @@ function EmailVerificationForm({ callback = () => {} }) {
       >
         {/* Email Input */}
         <m.div style={{ width: '100%' }} variants={varSlide({ delay: 0.3 }).inUp}>
-        {/* <Typography variant="p" color="text.secondary">
+          {/* <Typography variant="p" color="text.secondary">
             איזור אישי
           </Typography> */}
           {emails ? (
@@ -253,7 +258,8 @@ function EmailVerificationForm({ callback = () => {} }) {
                 // },
                 validate: {
                   isSignedUser: (value) =>
-                    (value.toLowerCase() === 'admin'||isSignedEmail(value.toLowerCase())) ||
+                    value.toLowerCase() === 'admin' ||
+                    isSignedEmail(value.toLowerCase()) ||
                     'משתמש לא רשום',
                 },
               }}
@@ -291,18 +297,22 @@ function EmailVerificationForm({ callback = () => {} }) {
 
           {/* Submit Button */}
           <Button
-            sx={(!isValidInput) ? {
-                my:4
-            }:
-            { my: 4,
-                ...textGradientAnimation,
-                        animationDuration:'10s',
-                        WebkitBackgroundClip: 'inherit',
-                        WebkitTextFillColor: 'inherit',
-                        backgroundClip: 'inherit',
-                        textFillColor: 'inherit',
-                        color: 'inherit',
-             }}
+            sx={
+              !isValidInput
+                ? {
+                    my: 4,
+                  }
+                : {
+                    my: 4,
+                    ...textGradientAnimation,
+                    animationDuration: '10s',
+                    WebkitBackgroundClip: 'inherit',
+                    WebkitTextFillColor: 'inherit',
+                    backgroundClip: 'inherit',
+                    textFillColor: 'inherit',
+                    color: 'inherit',
+                  }
+            }
             color={mainColor}
             type="submit"
             variant="contained"
@@ -475,9 +485,18 @@ function Admin() {
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
+          mx: 'auto',
         }}
       >
-        <Card sx={{ px: { md: 8, xs: 4 }, py: 4, alignItems: 'center', textAlign: 'center' }}>
+        <Card
+          sx={{
+            px: { md: 8, xs: 4 },
+            py: 4,
+            alignItems: 'center',
+            textAlign: 'center',
+            mx: 'auto',
+          }}
+        >
           <Typography variant="p">כיצד יראה האתר למשתמש חדש? (Not active yet)</Typography>
           {dialogRef}
           <Stack direction="row" justifyContent="center" my={2} spacing={8}>
@@ -678,6 +697,15 @@ function ActiveUser({ index, user = {}, active = false, showMail = true, typoVar
 }
 
 const UserOptionsDict = ['פרטים', 'Script AI', 'נבחרת'];
+const nicheData = {
+  'אוכל ומשקאות': ['מתכונים', 'סקירות על מוצרים', 'מסעדות', 'בישול ביתי', 'תזונה בריאה'],
+  'כושר ובריאות': ['אימונים', 'טיפים לאורח חיים בריא', 'יוגה', 'פילאטיס', 'אימוני HIIT'],
+  'יופי ואופנה': ['מדריכי איפור', 'סקירות מוצרים', 'טיפים לעיצוב אישי', 'טרנדים עונתיים'],
+  // ... והמשך עבור כל נושא
+  'טיפוח אישי וגברים': ['טיפוח זקן', 'תספורות גברים', 'סקירות מוצרים לגברים'],
+  'ספורט ואקסטרים': ['סקי', 'גלישת גלים', 'טיפוס הרים', 'ספורט אתגרי'],
+  'חיות מחמד': ['מדריכים לטיפול בחיות', 'סקירות מוצרים לחיות מחמד', 'אימונים וטיפים'],
+};
 const ContentNiches = [
   'אופנה וטקסטיל',
   'מותגי מזון',
@@ -696,6 +724,7 @@ function User({ userData = {} }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [inputRef, setInput] = useState();
+  const [category, setCategory] = useState('');
   const [selectRef, setSelect] = useState('');
   const isMaster = userData.packageType === 'Master-Pro' || false;
   let dataRes;
@@ -715,10 +744,14 @@ function User({ userData = {} }) {
   const handleSelect = (e) => {
     setSelect(e.target.value);
   };
+  const handleCategory = (e) => {
+    setCategory(e.target.value);
+  };
+
   const hundleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    console.log('This is submit data: ', formData);
+    console.log('This is submit data: ', { category, inputRef, selectRef });
   };
 
   if (activeButton === 'Script AI') {
@@ -760,25 +793,42 @@ function User({ userData = {} }) {
             <Typography sx={textGradientAnimation} variant="h4">
               © Video-Pro Script Generator
             </Typography>
-            <FormControl variant="outlined" fullWidth>
+            <FormControl required fullWidth variant="outlined">
               <InputLabel>בחירת נישה</InputLabel>
               {/* <InputLabel className='w-full flex justify-start text-start' id="select">בחירת נישה ליצירת תוכן</InputLabel> */}
               <Select
                 displayEmpty
-                // label='נישה ליצירת תוכן'
-                // variant="co"
                 name="niche"
                 sx={{ textAlign: 'center', my: 0 }}
-                defaultValue="בחרו נישה"
                 onChange={handleSelect}
                 value={selectRef}
               >
-                {ContentNiches.map((item, index) => (
-                  <MenuItem defaultValue={index === 0} key={index} value={item}>
+                {Object.keys(nicheData).map((item, index) => (
+                  <MenuItem selected={index === 0} key={index} value={item}>
                     {item}
                   </MenuItem>
                 ))}
               </Select>
+              <FormHelperText>נא לבחור נישה</FormHelperText>
+              {nicheData[selectRef] && (
+                <Box>
+                  <Typography my={2} textAlign="start" variant="body2" color="text.secondary">
+                    בחרו תת-קטגוריה:
+                  </Typography>
+                  <RadioGroup color={mainColor} value={category} onChange={handleCategory}>
+                    <Stack justifyContent="start" direction="row" flexWrap="wrap">
+                      {nicheData[selectRef].map((subNiche, indx) => (
+                        <FormControlLabel
+                          key={`${indx} ${subNiche}`}
+                          value={subNiche}
+                          control={<Radio color={mainColor} />}
+                          label={subNiche}
+                        />
+                      ))}
+                    </Stack>
+                  </RadioGroup>
+                </Box>
+              )}
             </FormControl>
             <Box textAlign="start">
               <TextField
