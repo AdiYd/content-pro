@@ -480,7 +480,7 @@ function Admin() {
       <Box
         sx={{
           display: 'flex',
-          p: 4,
+          p: { md: 4, xs: 1 },
           maxWidth: '95%',
           flexDirection: 'column',
           justifyContent: 'center',
@@ -490,14 +490,16 @@ function Admin() {
       >
         <Card
           sx={{
-            px: { md: 8, xs: 4 },
+            px: { md: 8, xs: 'inherit' },
             py: 4,
             alignItems: 'center',
             textAlign: 'center',
             mx: 'auto',
           }}
         >
-          <Typography variant="p">כיצד יראה האתר למשתמש חדש? (Not active yet)</Typography>
+          <Typography mx={2} variant="p">
+            כיצד יראה האתר למשתמש חדש? (Not active yet)
+          </Typography>
           {dialogRef}
           <Stack direction="row" justifyContent="center" my={2} spacing={8}>
             <div className={`p-2 rounded-full ${mode === 'light' && ' bg-slate-400/30'}`}>
@@ -526,18 +528,20 @@ function Admin() {
               />
             </div>
           </Stack>
-          <ColorPicker
-            showSwitch={false}
-            inlineChange={false}
-            callBack={changeColor}
-            sx={{
-              position: 'static',
-              flexDirection: 'row',
-              mx: 'auto',
-              bgcolor: 'transparent',
-              gap: { md: 6, xs: 2 },
-            }}
-          />
+          <Box width={1} display="flex" justifyContent="center">
+            <ColorPicker
+              showSwitch={false}
+              inlineChange={false}
+              callBack={changeColor}
+              sx={{
+                position: 'static',
+                flexDirection: 'row',
+                //   mx: 'auto',
+                bgcolor: 'transparent',
+                gap: { md: 6, xs: 2 },
+              }}
+            />
+          </Box>
         </Card>
       </Box>
     );
@@ -614,15 +618,17 @@ function Admin() {
           </Button>
         ))}
       </Stack>
-      <Box width={isMobile ? 1 : '60%'} mx="auto" display="flex" justifyContent="center">
-        <TextField
-          fullWidth
-          onChange={handleSearch}
-          variant="filled"
-          value={searchInput.current}
-          label="חיפוש לפי שם/אימייל"
-        />
-      </Box>
+      {activeButton !== 'הגדרות אתר' && (
+        <Box width={isMobile ? 1 : '60%'} mx="auto" display="flex" justifyContent="center">
+          <TextField
+            fullWidth
+            onChange={handleSearch}
+            variant="filled"
+            value={searchInput.current}
+            label="חיפוש לפי שם/אימייל"
+          />
+        </Box>
+      )}
       <Box my={4}>
         {loader ? (
           <Circles
@@ -672,7 +678,7 @@ function ActiveUser({ index, user = {}, active = false, showMail = true, typoVar
         <Stack>
           {Object.keys(userPropDict).map(
             (item, indx) =>
-              user[item] && (
+              Boolean(user[item]) && (
                 <Container sx={{ display: 'flex', gap: 1 }} key={indx}>
                   <Typography variant={typoVariant}>{userPropDict[item]}:</Typography>
                   <Typography color="text.secondary" variant={typoVariant}>
@@ -790,15 +796,14 @@ function User({ userData = {} }) {
             component="form"
             onSubmit={hundleSubmit}
           >
-            <Typography sx={textGradientAnimation} variant="h4">
-              © Video-Pro Script Generator
-            </Typography>
+            <Typography variant="h4">© Video-Pro Script Generator</Typography>
             <FormControl required fullWidth variant="outlined">
               <InputLabel>בחירת נישה</InputLabel>
               {/* <InputLabel className='w-full flex justify-start text-start' id="select">בחירת נישה ליצירת תוכן</InputLabel> */}
               <Select
                 displayEmpty
                 name="niche"
+                variant="filled"
                 sx={{ textAlign: 'center', my: 0 }}
                 onChange={handleSelect}
                 value={selectRef}

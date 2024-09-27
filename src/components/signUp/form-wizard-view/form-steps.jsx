@@ -655,7 +655,7 @@ export function StepThree({ name, email, coursePrice, setValue, loading }) {
         // inputProps={{}}
       />
 
-      <div className="flex justify-start">
+      <div className="flex justify-start max-lg:justify-center">
         {!coupon && (
           <Button onClick={() => setCoupon(true)} variant="outlined" size="small">
             יש לי קוד קופון
