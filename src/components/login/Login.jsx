@@ -2,10 +2,10 @@
 
 import { m } from 'framer-motion';
 import { useRouter } from 'next/navigation';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { Oval, Circles } from 'react-loader-spinner';
 import { useForm, Controller } from 'react-hook-form';
 import { useRef, useState, useEffect, useContext } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Oval, Circles, InfinitySpin } from 'react-loader-spinner';
 
 import { DarkModeTwoTone, LightModeTwoTone } from '@mui/icons-material';
 import {
@@ -41,6 +41,8 @@ import ColorPicker from 'src/app/colorPalette';
 import { ColorContext } from 'src/context/colorMain';
 
 import { varSlide, varBounce, AnimateBorder, MotionContainer } from 'src/components/animate';
+
+import { Iconify } from '../iconify';
 
 function Login({ id }) {
   const theme = useTheme();
@@ -155,19 +157,20 @@ function Login({ id }) {
       ) : (
         data
       )}
-      <Box mt={4} display="flex" width={1}>
+      <Box my={4} display="flex" justifyContent="center" width={1}>
         <Button
           size="small"
+          startIcon={<Iconify icon="lucide-lab:home" />}
           sx={{
-            alignSelf: 'start',
-            textDecoration: 'underline',
+            alignSelf: 'center',
+            // textDecoration: 'underline',
             opacity: 0.8,
           }}
           // color="text.secondary"
           href="/"
           px={1}
         >
-          חזרה לדף הבית
+          &nbsp; לדף הבית
         </Button>
       </Box>
     </Box>
@@ -723,9 +726,10 @@ const aiDescription =
   "כל מה שצריך זה לבחור נישה של תוכן ולכתוב כמה מילים משלכם (לא חובה). הצ'אט שלנו יבנה לכם סקריפט ליצרת סרטון ואתם תוכלו להשתמש בו ככלי לימודי ומקור לרעיונות";
 
 function User({ userData = {} }) {
-  const { mainColor, textGradientAnimation } = useContext(ColorContext);
+  const { mainColor, textGradientAnimation, mode } = useContext(ColorContext);
   const [activeButton, setActiveButton] = useState('פרטים');
   const [loader, setLoader] = useState(false);
+  const [loaderGenerate, setLoaderGenerate] = useState(false);
   const [focus, setFocus] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -758,6 +762,13 @@ function User({ userData = {} }) {
     e.preventDefault();
     const formData = new FormData(e.target);
     console.log('This is submit data: ', { category, inputRef, selectRef });
+  };
+
+  const generateScript = () => {
+    setLoaderGenerate(true);
+    setTimeout(() => {
+      setLoaderGenerate(false);
+    }, 15 * 1e3);
   };
 
   if (activeButton === 'Script AI') {
@@ -796,91 +807,116 @@ function User({ userData = {} }) {
             component="form"
             onSubmit={hundleSubmit}
           >
-            <Typography variant="h4">© Video-Pro Script Generator</Typography>
-            <FormControl required fullWidth variant="outlined">
-              <InputLabel>בחירת נישה</InputLabel>
-              {/* <InputLabel className='w-full flex justify-start text-start' id="select">בחירת נישה ליצירת תוכן</InputLabel> */}
-              <Select
-                displayEmpty
-                name="niche"
-                variant="filled"
-                sx={{ textAlign: 'center', my: 0 }}
-                onChange={handleSelect}
-                value={selectRef}
-              >
-                {Object.keys(nicheData).map((item, index) => (
-                  <MenuItem selected={index === 0} key={index} value={item}>
-                    {item}
-                  </MenuItem>
-                ))}
-              </Select>
-              <FormHelperText>נא לבחור נישה</FormHelperText>
-              {nicheData[selectRef] && (
-                <Box>
-                  <Typography my={2} textAlign="start" variant="body2" color="text.secondary">
-                    בחרו תת-קטגוריה:
+            {loaderGenerate ? (
+              <div>
+                <div className="animate-pulse">
+                  <Typography sx={{ direction: 'ltr', ...textGradientAnimation }} variant="h4">
+                    Generating content...
                   </Typography>
-                  <RadioGroup color={mainColor} value={category} onChange={handleCategory}>
-                    <Stack justifyContent="start" direction="row" flexWrap="wrap">
-                      {nicheData[selectRef].map((subNiche, indx) => (
-                        <FormControlLabel
-                          key={`${indx} ${subNiche}`}
-                          value={subNiche}
-                          control={<Radio color={mainColor} />}
-                          label={subNiche}
-                        />
-                      ))}
-                    </Stack>
-                  </RadioGroup>
+                </div>
+                <div className="my-20 flex justify-center">
+                  <InfinitySpin
+                    height="200"
+                    // width=
+                    colors={[theme.palette[mainColor]?.dark, theme.palette[mainColor]?.light]}
+                    color={
+                      theme.palette[mainColor][mode === 'dark' ? 'light' : 'dark'] ||
+                      theme.palette.secondary.main
+                    }
+                  />
+                </div>
+              </div>
+            ) : (
+              <Box display="flex" flexDirection="column" gap={4} width={1}>
+                <Typography variant="h4">© Video-Pro Script Generator</Typography>
+                <FormControl required fullWidth variant="outlined">
+                  <InputLabel>בחירת נישה</InputLabel>
+                  {/* <InputLabel className='w-full flex justify-start text-start' id="select">בחירת נישה ליצירת תוכן</InputLabel> */}
+                  <Select
+                    displayEmpty
+                    name="niche"
+                    variant="filled"
+                    sx={{ textAlign: 'center', my: 0 }}
+                    onChange={handleSelect}
+                    value={selectRef}
+                  >
+                    {Object.keys(nicheData).map((item, index) => (
+                      <MenuItem selected={index === 0} key={index} value={item}>
+                        {item}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  <FormHelperText>נא לבחור נישה</FormHelperText>
+                  {nicheData[selectRef] && (
+                    <Box>
+                      <Typography my={2} textAlign="start" variant="body2" color="text.secondary">
+                        בחרו תת-קטגוריה:
+                      </Typography>
+                      <RadioGroup color={mainColor} value={category} onChange={handleCategory}>
+                        <Stack justifyContent="start" direction="row" flexWrap="wrap">
+                          {nicheData[selectRef].map((subNiche, indx) => (
+                            <FormControlLabel
+                              key={`${indx} ${subNiche}`}
+                              value={subNiche}
+                              control={<Radio color={mainColor} />}
+                              label={subNiche}
+                            />
+                          ))}
+                        </Stack>
+                      </RadioGroup>
+                    </Box>
+                  )}
+                </FormControl>
+                <Box textAlign="start">
+                  <TextField
+                    fullWidth
+                    multiline
+                    name="free-text"
+                    disabled={!isMaster}
+                    rows={4}
+                    onChange={handleInput}
+                    onBlur={() => setFocus(false)}
+                    onFocus={() => setFocus(true)}
+                    variant={isMaster ? 'outlined' : 'filled'}
+                    // InputLabelProps={{dir:'rtl',sx:{px:2, float:'right'}, style:{margin: '0px 10px', width:'max-content'}}}
+                    value={inputRef}
+                    label={focus ? '.    תנו לנו כיוון, אנחנו נמשיך משם    .' : ''}
+                    placeholder="טקסט חופשי - רעיונות, לוקיישנים וכל הכוונה אחרת ל AI"
+                  />
+                  <Box mb={2} width={1} display="flex" justifyContent="space-between">
+                    <Typography
+                      variant="body2"
+                      component="div"
+                      color={isMaster ? theme.palette.success.main : theme.palette.error.main}
+                    >
+                      לתלמידי מסלול Master בלבד
+                    </Typography>
+                    <Typography variant="body2" fontSize="0.7" color="text.secondary">
+                      {!isMobile && 'עד 250 תווים'}({250 - (inputRef?.length || 0)})
+                    </Typography>
+                  </Box>
                 </Box>
-              )}
-            </FormControl>
-            <Box textAlign="start">
-              <TextField
-                fullWidth
-                multiline
-                name="free-text"
-                disabled={!isMaster}
-                rows={4}
-                onChange={handleInput}
-                onBlur={() => setFocus(false)}
-                onFocus={() => setFocus(true)}
-                variant={isMaster ? 'outlined' : 'filled'}
-                // InputLabelProps={{dir:'rtl',sx:{px:2, float:'right'}, style:{margin: '0px 10px', width:'max-content'}}}
-                value={inputRef}
-                label={focus ? '.    תנו לנו כיוון, אנחנו נמשיך משם    .' : ''}
-                placeholder="טקסט חופשי - רעיונות, לוקיישנים וכל הכוונה אחרת ל AI"
-              />
-              <Box width={1} display="flex" justifyContent="space-between">
-                <Typography
-                  variant="body2"
-                  component="div"
-                  color={isMaster ? theme.palette.success.main : theme.palette.error.main}
+                <Button
+                  sx={{
+                    ...textGradientAnimation,
+                    animationDuration: '10s',
+                    WebkitBackgroundClip: 'inherit',
+                    WebkitTextFillColor: 'inherit',
+                    backgroundClip: 'inherit',
+                    textFillColor: 'inherit',
+                    color: 'inherit',
+                  }}
+                  size={isMobile ? 'medium' : 'large'}
+                  type="submit"
+                  variant="contained"
+                  fullWidth
+                  onClick={generateScript}
                 >
-                  לתלמידי מסלול Master בלבד
-                </Typography>
-                <Typography variant="body2" fontSize="0.7" color="text.secondary">
-                  {!isMobile && 'עד 250 תווים'}({250 - (inputRef?.length || 0)})
-                </Typography>
+                  {' '}
+                  ✨ Generate AI sctipt
+                </Button>
               </Box>
-            </Box>
-            <Button
-              sx={{
-                ...textGradientAnimation,
-                animationDuration: '10s',
-                WebkitBackgroundClip: 'inherit',
-                WebkitTextFillColor: 'inherit',
-                backgroundClip: 'inherit',
-                textFillColor: 'inherit',
-                color: 'inherit',
-              }}
-              size={isMobile ? 'medium' : 'large'}
-              type="submit"
-              variant="contained"
-            >
-              {' '}
-              Generate AI sctipt
-            </Button>
+            )}
           </Card>
         </AnimateBorder>
       </Box>
@@ -928,7 +964,7 @@ function User({ userData = {} }) {
             sx={{ fontSize: isMobile ? '0.8rem' : '', textWrap: 'nowrap' }}
             variant={activeButton === item ? 'contained' : 'outlined'}
           >
-            {item}
+            {item === 'Script AI' && '✨'} {item}
           </Button>
         ))}
       </Stack>
