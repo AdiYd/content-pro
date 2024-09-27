@@ -852,10 +852,10 @@ function User({ userData = {} }) {
                   component="div"
                   color={isMaster ? theme.palette.success.main : theme.palette.error.main}
                 >
-                  אפשרות לתלמידי מסלול Master בלבד
+                  לתלמידי מסלול Master בלבד
                 </Typography>
                 <Typography variant="body2" fontSize="0.7" color="text.secondary">
-                  עד 250 תווים ({250 - (inputRef?.length || 0)})
+                  {!isMobile && 'עד 250 תווים'}({250 - (inputRef?.length || 0)})
                 </Typography>
               </Box>
             </Box>
@@ -869,7 +869,7 @@ function User({ userData = {} }) {
                 textFillColor: 'inherit',
                 color: 'inherit',
               }}
-              size={isMobile ? 'small' : 'medium'}
+              size={isMobile ? 'medium' : 'large'}
               type="submit"
               variant="contained"
             >

@@ -340,6 +340,7 @@ export function AboutHero() {
             <Container
               sx={{
                 display: 'flex',
+                flexDirection: { md: 'row', xs: 'column' },
                 gap: 4,
                 mt: { md: 6, xs: 6 },
                 pr: { md: 0, xs: 'auto' },
@@ -358,7 +359,7 @@ export function AboutHero() {
                 sx={{
                   fontSize: { md: '1rem', xs: '1rem' },
                   borderRadius: 1,
-                  display: { md: 'inherit', xs: 'none' },
+                  // display: { md: 'inherit', xs: 'none' },
                 }}
                 variant="outlined"
                 color={mainColor}
