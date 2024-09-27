@@ -324,7 +324,7 @@ const adminOptionsDict = {
 };
 
 function Admin() {
-  const [activeButton, setActiveButton] = useState();
+  const [activeButton, setActiveButton] = useState('משתמשים רשומים');
   const [data, setData] = useState({});
   const [search, setSearch] = useState();
   const [loader, setLoader] = useState(false);
@@ -338,46 +338,57 @@ function Admin() {
   let dataRes;
 
   const changeMode = () => {
-    console.log('Change data base theme mode to: ',mode === 'dark' ? 'light' : 'dark' )
+    console.log('Change data base theme mode to: ', mode === 'dark' ? 'light' : 'dark');
     setMode(mode === 'dark' ? 'light' : 'dark');
   };
   const changeColor = (color) => {
-    setDialog(dialog(()=>onApproval(color)))
+    setDialog(dialog(() => onApproval(color)));
 
-    const onApproval = (colorChange)=>{
-        setColor(colorChange);
-        console.log('Change data base main color to: ',colorChange )
-    }
+    const onApproval = (colorChange) => {
+      setColor(colorChange);
+      console.log('Change data base main color to: ', colorChange);
+    };
     // setMode(mode === 'dark' ? 'light' : 'dark');
   };
 
-  const dialog =(onClose=()=>{})=>
-    <Dialog sx={{textAlign:'center', direction:'rtl', alignItems:'center'}} open onClose={onClose}>
-    {/* Dialog Title */}
-    <DialogTitle>פעולה ראשית</DialogTitle>
+  const dialog = (onClose = () => {}) => (
+    <Dialog
+      sx={{ textAlign: 'center', direction: 'rtl', alignItems: 'center' }}
+      open
+      onClose={onClose}
+    >
+      {/* Dialog Title */}
+      <DialogTitle>פעולה ראשית</DialogTitle>
 
-    {/* Dialog Content */}
-    <DialogContent>
-      <Typography variant="body1" >
-        פעולה זו תשנה את האתר לצמיתות
-      </Typography>
-      <Typography variant="p" >
-        מאשר?
-      </Typography>
-    </DialogContent>
+      {/* Dialog Content */}
+      <DialogContent>
+        <Typography variant="body1">פעולה זו תשנה את האתר לצמיתות</Typography>
+        <Typography variant="p">מאשר?</Typography>
+      </DialogContent>
 
-    {/* Dialog Actions */}
-    <DialogActions sx={{width:1, display:'flex', justifyContent:'space-around'}}>
-      {/* Close Button */}
-      <Button variant='contained' onClick={()=> {onClose();setDialog(undefined)}}>
-        אישור
-      </Button>
-      <Button variant='outlined' onClick={()=>{setDialog(undefined)}} >
-        ביטול
-      </Button>
-    </DialogActions>
-  </Dialog>
-  
+      {/* Dialog Actions */}
+      <DialogActions sx={{ width: 1, display: 'flex', justifyContent: 'space-around' }}>
+        {/* Close Button */}
+        <Button
+          variant="contained"
+          onClick={() => {
+            onClose();
+            setDialog(undefined);
+          }}
+        >
+          אישור
+        </Button>
+        <Button
+          variant="outlined"
+          onClick={() => {
+            setDialog(undefined);
+          }}
+        >
+          ביטול
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
 
   if (search || searchInput.current) {
     dataRes = search?.resCount ? (
@@ -454,47 +465,63 @@ function Admin() {
         אין עדיין משתמשים רשומים
       </Typography>
     );
-  }else if (activeButton === 'הגדרות אתר'){
-    dataRes = <Box sx={{display:'flex', p:4,maxWidth:'95%', flexDirection:'column', justifyContent: 'center', alignItems:'center'}}>
-    <Card sx={{px:{md:8, xs: 4}, py:4, alignItems:'center', textAlign:'center'}}>
-    <Typography variant='p'>
-        כיצד יראה האתר למשתמש חדש? (Not active yet)
-    </Typography>
-    {dialogRef}
-    <Stack direction="row" justifyContent="center" my={2} spacing={8}>
-              <div className={`p-2 rounded-full ${mode === 'light' && ' bg-slate-400/30'}`}>
-                <LightModeTwoTone
+  } else if (activeButton === 'הגדרות אתר') {
+    dataRes = (
+      <Box
+        sx={{
+          display: 'flex',
+          p: 4,
+          maxWidth: '95%',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Card sx={{ px: { md: 8, xs: 4 }, py: 4, alignItems: 'center', textAlign: 'center' }}>
+          <Typography variant="p">כיצד יראה האתר למשתמש חדש? (Not active yet)</Typography>
+          {dialogRef}
+          <Stack direction="row" justifyContent="center" my={2} spacing={8}>
+            <div className={`p-2 rounded-full ${mode === 'light' && ' bg-slate-400/30'}`}>
+              <LightModeTwoTone
                 color={theme.palette[mainColor].main}
-                  onClick={()=>{
-                    if (mode === 'light'){
-                        return
-                    }
-                    setDialog(dialog(changeMode))
-                    }}
-                  className="cursor-pointer hover:opacity-50"
-                  titleAccess="Light mode"
-                />
-              </div>
-              <div className={`p-2 rounded-full ${mode === 'dark' && ' bg-slate-400/30'}`}>
-                <DarkModeTwoTone
-                  onClick={()=>{
-                    if (mode === 'dark'){
-                        return
-                    }
-                    setDialog(dialog(changeMode))
-                    }}
-                  className="cursor-pointer hover:opacity-50"
-                  titleAccess="DarkModeTwoTone"
-                />
-              </div>
-    </Stack>
-    <ColorPicker 
-    showSwitch={false} 
-    inlineChange = {false}
-    callBack={changeColor}
-    sx={{position:'static', flexDirection:'row', mx:'auto', bgcolor:'transparent', gap:{md:6, xs:2}}} />
-    </Card>
-    </Box>
+                onClick={() => {
+                  if (mode === 'light') {
+                    return;
+                  }
+                  setDialog(dialog(changeMode));
+                }}
+                className="cursor-pointer hover:opacity-50"
+                titleAccess="Light mode"
+              />
+            </div>
+            <div className={`p-2 rounded-full ${mode === 'dark' && ' bg-slate-400/30'}`}>
+              <DarkModeTwoTone
+                onClick={() => {
+                  if (mode === 'dark') {
+                    return;
+                  }
+                  setDialog(dialog(changeMode));
+                }}
+                className="cursor-pointer hover:opacity-50"
+                titleAccess="DarkModeTwoTone"
+              />
+            </div>
+          </Stack>
+          <ColorPicker
+            showSwitch={false}
+            inlineChange={false}
+            callBack={changeColor}
+            sx={{
+              position: 'static',
+              flexDirection: 'row',
+              mx: 'auto',
+              bgcolor: 'transparent',
+              gap: { md: 6, xs: 2 },
+            }}
+          />
+        </Card>
+      </Box>
+    );
   }
 
   useEffect(() => {
@@ -605,13 +632,23 @@ const userPropDict = {
   timeStamp: 'תאריך',
 };
 
-function ActiveUser({ index, user = {}, active = false, showMail = true, typoVariant='body2' }) {
+function ActiveUser({ index, user = {}, active = false, showMail = true, typoVariant = 'body2' }) {
   const [open, setOpen] = useState(active);
   return (
-    <Box sx={{ cursor: 'pointer' }} onClick={() => {if (!active) {setOpen(!open)}}} key={index}>
-      {showMail && <Typography variant="p">
-        {index}. {user.email}
-      </Typography>}
+    <Box
+      sx={{ cursor: 'pointer' }}
+      onClick={() => {
+        if (!active) {
+          setOpen(!open);
+        }
+      }}
+      key={index}
+    >
+      {showMail && (
+        <Typography variant="p">
+          {index}. {user.email}
+        </Typography>
+      )}
       {open ? (
         <Stack>
           {Object.keys(userPropDict).map(
@@ -641,13 +678,19 @@ function ActiveUser({ index, user = {}, active = false, showMail = true, typoVar
 }
 
 const UserOptionsDict = ['פרטים', 'Script AI', 'נבחרת'];
-const ContentNiches = ['אופנה וטקסטיל','מותגי מזון','הייטק','מדיה ורשתות חברתיות','מותגי יוקרה'];
+const ContentNiches = [
+  'אופנה וטקסטיל',
+  'מותגי מזון',
+  'הייטק',
+  'מדיה ורשתות חברתיות',
+  'מותגי יוקרה',
+];
 const aiDescription =
   "כל מה שצריך זה לבחור נישה של תוכן ולכתוב כמה מילים משלכם (לא חובה). הצ'אט שלנו יבנה לכם סקריפט ליצרת סרטון ואתם תוכלו להשתמש בו ככלי לימודי ומקור לרעיונות";
 
 function User({ userData = {} }) {
   const { mainColor, textGradientAnimation } = useContext(ColorContext);
-  const [activeButton, setActiveButton] = useState();
+  const [activeButton, setActiveButton] = useState('פרטים');
   const [loader, setLoader] = useState(false);
   const [focus, setFocus] = useState(false);
   const theme = useTheme();
@@ -724,8 +767,8 @@ function User({ userData = {} }) {
                 displayEmpty
                 // label='נישה ליצירת תוכן'
                 // variant="co"
-                name="gender"
-                sx={{ textAlign: 'center', my: 4 }}
+                name="niche"
+                sx={{ textAlign: 'center', my: 0 }}
                 defaultValue="בחרו נישה"
                 onChange={handleSelect}
                 value={selectRef}
@@ -791,21 +834,21 @@ function User({ userData = {} }) {
     dataRes = (
       <Box textAlign="center" my={4}>
         <ActiveUser user={userData} showMail={false} active typoVariant="body1" />
-        <ColorPicker
-          sx={{
-            position: 'static',
-            flexDirection: 'row',
-            mx: 'auto',
-            bgcolor: 'transparent',
-            gap: { md: 6, xs: 2 },
-          }}
-          showSwitch={false}
-        />
       </Box>
     );
   }
   return (
     <Box textAlign="start" my={2}>
+      <ColorPicker
+        sx={{
+          position: 'static',
+          flexDirection: 'row',
+          mx: 'auto',
+          bgcolor: 'transparent',
+          gap: { md: 6, xs: 2 },
+        }}
+        showSwitch={false}
+      />
       <Box display="flex" gap={1}>
         <Typography variant="h3">היי </Typography>
         <Typography sx={textGradientAnimation} variant="h3">

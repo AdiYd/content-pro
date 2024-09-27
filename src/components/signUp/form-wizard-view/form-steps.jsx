@@ -1024,7 +1024,7 @@ const CourseCard = ({
           display: 'flex',
           zIndex: active ? 50 : 40,
           cursor: 'pointer',
-          transition: 'all 0.4s ease-in-out',
+          transition: 'all 0.5s ease-in-out',
           width: 1,
           direction: 'rtl',
           textAlign: 'center',
