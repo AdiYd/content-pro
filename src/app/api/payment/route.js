@@ -22,7 +22,6 @@ export async function POST(request) {
       },
     });
     const url = await res.text();
-    console.log('This is the result: ', res);
     console.log('This is Text result: ', url);
 
     if (false) {

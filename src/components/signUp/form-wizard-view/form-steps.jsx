@@ -866,7 +866,7 @@ const courseOptions2 = [
     master: true,
   },
   {
-    title: 'Xtra-Pro',
+    title: 'Extra-Pro',
     subTitle: 'קורס + מנוי לקהילה',
     bullets: ['כל תכני הקורס', 'מנוי לקהילת יוצרי תוכן', 'המשך קבלת תכני העשרה ומדריכים'],
     oldPrice: '₪749',
@@ -902,7 +902,7 @@ const courseOptions = [
     master: true,
   },
   {
-    title: 'Xtra-Pro',
+    title: 'Extra-Pro',
     subTitle: 'קורס + מנוי לקהילה',
     bullets: ['כל תכני הקורס', 'מנוי לקהילת יוצרי תוכן', 'המשך קבלת תכני העשרה ומדריכים'],
     oldPrice: '₪749',

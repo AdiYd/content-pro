@@ -2,9 +2,10 @@
 
 import { z as zod } from 'zod';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 import { Circles } from 'react-loader-spinner';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState, useEffect, useContext, useCallback } from 'react';
+import { useState, useContext, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -75,17 +76,37 @@ const defaultValues = {
   packageType: 'Master-pro',
 };
 
+const packageTypesDict = {
+  'Base-Pro': {
+    id: '100',
+    price: 249,
+  },
+  'Extra-Pro': {
+    id: '200',
+    price: 499,
+  },
+  'Xtra-Pro': {
+    id: '200',
+    price: 499,
+  },
+  'Master-Pro': {
+    id: '300',
+    price: 749,
+  },
+};
+
 export function FormWizard({ coursePrice }) {
-  const [activeStep, setActiveStep] = useState();
+  const [activeStep, setActiveStep] = useState(0);
   const [loading, setLoading] = useState(false);
   const [url, setUrl] = useState();
   const [paymentLoad, setPaymentLoad] = useState(false);
   const theme = useTheme();
+  const router = useRouter();
   const { mainColor, mode } = useContext(ColorContext);
 
-  useEffect(() => {
-    handlePyament(defaultValues);
-  }, []);
+  // useEffect(() => {
+  //   handlePyament(defaultValues);
+  // }, []);
 
   const methods = useForm({
     mode: 'onChange',
@@ -154,20 +175,22 @@ export function FormWizard({ coursePrice }) {
 
   const handlePyament = async (formData) => {
     try {
-      setPaymentLoad(true);
-      setActiveStep('pay');
-      setTimeout(() => {
-        setPaymentLoad(false);
-      }, 5 * 1e3);
-      const { email, name, totalPrice, id, phone, info, items } = formData;
-      const templateCode = 7;
+      setLoading(true);
+      // setActiveStep('pay');
+      // setTimeout(() => {
+      //   setLoading(false);
+      // }, 5 * 1e3);
+      const { email, name, totalPrice, phone, info, packageType } = formData;
+      const itemInfo = `[${packageTypesDict[packageType]?.id}~${packageType}~1~${totalPrice.toFixed(2)}]`;
+      const templateCode = 4;
       const api = {
         key: process.env.NEXT_PUBLIC_CC_API,
         masof: process.env.NEXT_PUBLIC_CC_MASOF,
         passp: process.env.NEXT_PUBLIC_CC_PASSP,
       };
       // const apiUrl = `https://icom.yaad.net/p/?action=APISign&What=SIGN&KEY=${api.key}&PassP=yaad&Masof=${api.masof}&Order=12345678910&Info=test-api&Amount=${api.amount}&UTF8=True&UTF8out=True&ClientName=${api.fname}&ClientLName=${api.lname}&email=${api.email}&Tash=2&FixTash=False&ShowEngTashText=False&Coin=1&Postpone=False&J5=False&Sign=True&MoreData=True&sendemail=True&SendHesh=True&heshDesc=[0~Item 1~1~8][0~Item 2~2~1]&Pritim=True&PageLang=HEB&tmp=9`;
-      const apiUrl = `https://pay.hyp.co.il/p/?action=APISign&What=SIGN&KEY=${api.key}&Masof=${api.masof}&PassP=${api.passp}&Order=${email || 'unSigned'}&Amount=${totalPrice || '0.0'}&UTF8=True&UTF8out=True&UserId=${id || '123456789'}&ClientName=${name?.split(' ')[0] || 'ישראל'}&ClientLName=${name?.split(' ')[1] || 'ישראלי'}&cell=${phone || ''}&email=${email || 'Admin@webly.digital'}&Info=${info || ''}&Tash=2&FixTash=False&ShowEngTashText=False&Coin=1&Postpone=False&J5=False&Sign=True&MoreData=True&sendemail=True&SendHesh=True&heshDesc=${items}&Pritim=True&PageLang=HEB&tmp=${templateCode || 7}`;
+      const apiUrl = `https://pay.hyp.co.il/p/?action=APISign&What=SIGN&KEY=${api.key}&Masof=${api.masof}&PassP=${api.passp}&Order=${email || 'unSigned'}&Amount=${totalPrice || '0.0'}&UTF8=True&UTF8out=True&ClientName=${name?.split(' ')[0] || 'ישראל'}&ClientLName=${name?.split(' ')[1] || 'ישראלי'}&cell=${phone || ''}&email=${email || 'Admin@webly.digital'}&Info=${info || ''}&Tash=2&FixTash=False&ShowEngTashText=False&Coin=1&Postpone=False&J5=False&Sign=True&MoreData=True&sendemail=True&SendHesh=True&heshDesc=${itemInfo}&Pritim=True&PageLang=HEB&tmp=${templateCode || 7}`;
+      // const apiUrl = `https://icom.yaad.net/p/?action=APISign&What=SIGN&KEY=${api.key}&Masof=${api.masof}&PassP=${api.passp}&Order=${email || 'unSigned'}&Amount=${totalPrice || '0.0'}&UTF8=True&UTF8out=True&ClientName=${name?.split(' ')[0] || 'ישראל'}&ClientLName=${name?.split(' ')[1] || 'ישראלי'}&cell=${phone || ''}&email=${email || 'Admin@webly.digital'}&Info=${info || ''}&Tash=2&FixTash=False&ShowEngTashText=False&Coin=1&Postpone=False&J5=False&Sign=True&MoreData=True&sendemail=True&SendHesh=True&heshDesc=${itemInfo}&Pritim=True&PageLang=HEB&tmp=${templateCode || 7}`;
       const res = await fetch('/api/payment', {
         method: 'POST',
         headers: {
@@ -176,8 +199,11 @@ export function FormWizard({ coursePrice }) {
         body: JSON.stringify({ apiUrl, ...formData }),
       });
       const result = await res.json();
+      setLoading(false);
       const urlRes = `https://pay.hyp.co.il/p/?action=pay&${result.url}`;
-      setUrl(urlRes);
+      // const urlRes = `https://icom.yaad.net/p/?action=pay&${result.url}`;
+      router.push(urlRes);
+      // setUrl(urlRes);
 
       // console.log('this is api result: ', result);
       // console.log(formData.totalPrice);
