@@ -1,3 +1,4 @@
+import { keyframes } from '@mui/material';
 import { dividerClasses } from '@mui/material/Divider';
 import { checkboxClasses } from '@mui/material/Checkbox';
 import { menuItemClasses } from '@mui/material/MenuItem';
@@ -6,6 +7,18 @@ import { autocompleteClasses } from '@mui/material/Autocomplete';
 import { CONFIG } from 'src/config-global';
 
 import { remToPx, varAlpha, mediaQueries } from './utils';
+
+export const gradientAnimation = keyframes`
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+`;
 
 // ----------------------------------------------------------------------
 
@@ -40,6 +53,13 @@ export function textGradient(color) {
     backgroundClip: 'text',
     textFillColor: 'transparent',
     color: 'transparent',
+  };
+}
+export function bgGradientAnimat(color) {
+  return {
+    background: `linear-gradient(${color})`,
+    backgroundSize: '200% 200%',
+    animation: `${gradientAnimation} 5s ease-in-out infinite`,
   };
 }
 

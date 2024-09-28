@@ -9,12 +9,28 @@ export async function POST(request) {
   try {
     const data = await request.json();
     console.log('Message from client: ', data);
-    await addUser(data);
+    console.log('calling: ', data.apiUrl);
+
+    const res = await fetch(data.apiUrl, {
+      headers: {
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        Accept:
+          'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Accept-Language': 'en-US,en;q=0.9',
+      },
+    });
+    const url = await res.text();
+    console.log('This is the result: ', res);
+    console.log('This is Text result: ', url);
+
     if (false) {
+      await addUser(data);
       await sendInvoiceEmail(data);
     }
     // console.log('This is email response: ', res);
-    return new Response(JSON.stringify({ message: `Message Received` }), {
+    return new Response(JSON.stringify({ message: `Message Received`, url, res }), {
       status: 200,
       headers: {
         'Content-Type': 'application/json',

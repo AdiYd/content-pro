@@ -2,27 +2,17 @@
 
 import React, { useMemo, useState, useEffect, createContext } from 'react';
 
-import { useTheme, keyframes } from '@mui/material';
+import { useTheme } from '@mui/material';
 
 import { setStorage } from 'src/hooks/use-local-storage';
 
 import { localStorageGetItem } from 'src/utils/storage-available';
 
-import { textGradient } from 'src/theme/styles';
+import { textGradient, gradientAnimation } from 'src/theme/styles';
 
 import COLORS from '../theme/core/colors.json';
 
-export const gradientAnimation = keyframes`
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-`;
+
 
 export const ColorContext = createContext();
 
