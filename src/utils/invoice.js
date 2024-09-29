@@ -1,5 +1,3 @@
-import fs from 'fs';
-import path from 'path';
 // import puppeteer from 'puppeteer';
 
 import { sendEmail, signupTemaplate } from './email';
@@ -22,7 +20,7 @@ import { sendEmail, signupTemaplate } from './email';
 
 // Function to send the invoice email with the PDF attachment
 export const sendInvoiceEmail = async (data) => {
-  const pdfPath = path.join('/tmp', 'Invoice.pdf');
+  // const pdfPath = path.join('/tmp', 'Invoice.pdf');
   // console.log('PDF path: ', pdfPath);
   // const htmlContent = generateInvoiceTemplate(data);
   const htmlContent = signupTemaplate(data);
@@ -30,13 +28,13 @@ export const sendInvoiceEmail = async (data) => {
   // Create the PDF from the HTML content
   // await createPDF(htmlContent, pdfPath);
 
-  const attachments = [
-    {
-      filename: 'invoice.pdf',
-      path: pdfPath,
-      contentType: 'application/pdf',
-    },
-  ];
+  // const attachments = [
+  //   {
+  //     filename: 'invoice.pdf',
+  //     path: pdfPath,
+  //     contentType: 'application/pdf',
+  //   },
+  // ];
 
   // send the email
   await sendEmail({
@@ -46,7 +44,7 @@ export const sendInvoiceEmail = async (data) => {
     template: htmlContent,
     // attachments,
   }).finally(() => {
-    fs.unlinkSync(pdfPath);
+    // fs.unlinkSync(pdfPath);
   });
 };
 

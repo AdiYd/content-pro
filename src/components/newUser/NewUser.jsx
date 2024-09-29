@@ -33,25 +33,27 @@ export function NewUser({ params, ...props }) {
   };
 
   useEffect(() => {
-    fetch('/api/postPayment', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(params),
-    })
-      .then((data) => data.json())
-      .then((res) => {
-        console.log('This is payment approval result data', res.payment);
-        if (res.payment) {
-          console.log('This is success');
-          router.push(`/success/?Fild1=${Fild1}&Approved=${true}`, undefined, { shallow: true });
-          setLoader(false);
-        } else if (!Approved) {
-          router.push('/');
-        }
-      });
-  }, [params, router, Fild1, Approved]);
+    if (!Approved) {
+      fetch('/api/postPayment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(params),
+      })
+        .then((data) => data.json())
+        .then((res) => {
+          // console.log('This is payment approval result data', res.payment);
+          if (res.payment) {
+            console.log('User assigned sucessfully');
+            router.push(`/success/?Fild1=${Fild1}&Approved=${true}`, undefined, { shallow: true });
+            setLoader(false);
+          } else {
+            router.push('/');
+          }
+        });
+    }
+  }, [params, Fild1, Approved, router]);
 
   return (
     <Box my={8} textAlign="center" mx="auto">

@@ -2,8 +2,6 @@
 
 'use server';
 
-import { sendInvoiceEmail } from 'src/utils/invoice';
-import { addUser } from 'src/utils/firebaseFunctions';
 
 import { PayersDict } from '../payersTemp';
 
@@ -31,10 +29,7 @@ export async function POST(request) {
 
     PayersDict[tempUser.email] = { ...tempUser };
     console.log('This is PayersDict: ', PayersDict);
-    if (false) {
-      await addUser(data);
-      await sendInvoiceEmail(data);
-    }
+
     // console.log('This is email response: ', res);
     return new Response(JSON.stringify({ message: `Message Received`, url, res }), {
       status: 200,

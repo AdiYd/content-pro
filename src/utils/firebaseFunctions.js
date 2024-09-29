@@ -7,32 +7,36 @@ import { getIsraelTimestamp } from './format-time';
 // Function to add a user to the "users" table
 export async function addUser({
   email,
-  name,
+  name = null,
   age = null,
   gender = null,
   niche = null,
   location = null,
-  packageType,
-  goals,
-  totalPrice,
+  packageType = null,
+  goals = null,
+  totalPrice = null,
   approveTerms = false,
 }) {
   try {
     const timeStamp = getIsraelTimestamp();
-    const docRef = await addDoc(collection(db, 'users'), {
-      email,
-      name,
-      age,
-      gender,
-      niche,
-      location,
-      packageType,
-      goals,
-      payment: totalPrice,
-      approveTerms,
-      timeStamp,
-    });
-    console.log('User added with ID: ', docRef.id);
+    const isUser = await getUserByEmail(email);
+    console.log('Res of isUser: ', isUser);
+    if (isUser.length === 0) {
+      const docRef = await addDoc(collection(db, 'users'), {
+        email,
+        name,
+        age,
+        gender,
+        niche,
+        location,
+        packageType,
+        goals,
+        payment: totalPrice,
+        approveTerms,
+        timeStamp,
+      });
+      console.log('User added with ID: ', docRef.id);
+    }
   } catch (e) {
     console.error('Error adding user: ', e);
   }
@@ -43,7 +47,7 @@ export async function addLead({ email, name, contactForm = false }) {
   try {
     const timeStamp = getIsraelTimestamp();
     const docRef = await addDoc(collection(db, 'leads'), { email, name, contactForm, timeStamp });
-    console.log('Lead added with ID: ', docRef.id, email, name, contactForm);
+    console.log('Lead added with ID: ', docRef.id, email, name);
   } catch (e) {
     console.error('Error adding lead: ', e);
   }

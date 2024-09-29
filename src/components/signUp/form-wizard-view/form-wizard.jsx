@@ -74,7 +74,7 @@ const defaultValues = {
   age: 0,
   gender: '',
   niche: 'ספורט ובריאות',
-  goals: [],
+  goals: ['ללמוד ולהתמקצע'],
   totalPrice: 99,
   packageType: 'Master-pro',
 };
