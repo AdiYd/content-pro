@@ -380,7 +380,7 @@ export function AboutLead({ contentType = 'aboutCourse' }) {
                   fullWidth
                   multiline
                   rows={4}
-                  maxRows={4}
+                  // maxRows={4}
                   value={formData.message}
                   onChange={handleChange}
                   margin="normal"

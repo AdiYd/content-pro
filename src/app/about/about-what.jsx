@@ -92,7 +92,8 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
             width={500}
             allowFullScreen
             allow="fullscreen"
-            src="https://drive.google.com/file/d/1GPVCyit_PuX4sUh5FMlAjTKVRCVdW0mY/preview"
+            // src="https://drive.google.com/file/d/1GPVCyit_PuX4sUh5FMlAjTKVRCVdW0mY/preview"
+            src="https://drive.google.com/file/d/1eRFoJo_xadtbariK_3CXNXlk5QjLnyBU/preview"
             className="relative rounded-3xl z-20 w-full h-full aspect-video"
 
             // controls

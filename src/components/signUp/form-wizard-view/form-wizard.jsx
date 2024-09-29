@@ -96,7 +96,7 @@ const packageTypesDict = {
 };
 
 export function FormWizard({ coursePrice }) {
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(2);
   const [loading, setLoading] = useState(false);
   const [url, setUrl] = useState();
   const [paymentLoad, setPaymentLoad] = useState(false);
@@ -188,7 +188,6 @@ export function FormWizard({ coursePrice }) {
         masof: process.env.NEXT_PUBLIC_CC_MASOF,
         passp: process.env.NEXT_PUBLIC_CC_PASSP,
       };
-      // const apiUrl = `https://icom.yaad.net/p/?action=APISign&What=SIGN&KEY=${api.key}&PassP=yaad&Masof=${api.masof}&Order=12345678910&Info=test-api&Amount=${api.amount}&UTF8=True&UTF8out=True&ClientName=${api.fname}&ClientLName=${api.lname}&email=${api.email}&Tash=2&FixTash=False&ShowEngTashText=False&Coin=1&Postpone=False&J5=False&Sign=True&MoreData=True&sendemail=True&SendHesh=True&heshDesc=[0~Item 1~1~8][0~Item 2~2~1]&Pritim=True&PageLang=HEB&tmp=9`;
       const apiUrl = `https://pay.hyp.co.il/p/?action=APISign&What=SIGN&KEY=${api.key}&Masof=${api.masof}&PassP=${api.passp}&Order=${email || 'unSigned'}&Amount=${totalPrice || '0.0'}&UTF8=True&UTF8out=True&ClientName=${name?.split(' ')[0] || 'ישראל'}&ClientLName=${name?.split(' ')[1] || 'ישראלי'}&cell=${phone || ''}&email=${email || 'Admin@webly.digital'}&Info=${info || ''}&Tash=2&FixTash=False&ShowEngTashText=False&Coin=1&Postpone=False&J5=False&Sign=True&MoreData=True&sendemail=True&SendHesh=True&heshDesc=${itemInfo}&Pritim=True&PageLang=HEB&tmp=${templateCode || 7}`;
       // const apiUrl = `https://icom.yaad.net/p/?action=APISign&What=SIGN&KEY=${api.key}&Masof=${api.masof}&PassP=${api.passp}&Order=${email || 'unSigned'}&Amount=${totalPrice || '0.0'}&UTF8=True&UTF8out=True&ClientName=${name?.split(' ')[0] || 'ישראל'}&ClientLName=${name?.split(' ')[1] || 'ישראלי'}&cell=${phone || ''}&email=${email || 'Admin@webly.digital'}&Info=${info || ''}&Tash=2&FixTash=False&ShowEngTashText=False&Coin=1&Postpone=False&J5=False&Sign=True&MoreData=True&sendemail=True&SendHesh=True&heshDesc=${itemInfo}&Pritim=True&PageLang=HEB&tmp=${templateCode || 7}`;
       const res = await fetch('/api/payment', {
@@ -199,7 +198,7 @@ export function FormWizard({ coursePrice }) {
         body: JSON.stringify({ apiUrl, ...formData }),
       });
       const result = await res.json();
-      setLoading(false);
+      // setLoading(false);
       const urlRes = `https://pay.hyp.co.il/p/?action=pay&${result.url}`;
       // const urlRes = `https://icom.yaad.net/p/?action=pay&${result.url}`;
       router.push(urlRes);
@@ -270,17 +269,17 @@ export function FormWizard({ coursePrice }) {
           <Stepper steps={steps} activeStep={activeStep} />
 
           <Card
-            gap={3}
+            gap={2}
             // display="flex"
             // flexDirection="column"
             sx={{
               display: 'flex',
               flexDirection: 'column',
               gap: 3,
-              py: 4,
+              py: 1,
               px: 1,
               zIndex: 25,
-              mb: 3,
+              mb: 2,
               overflow: 'visible',
               maxWidth: { md: '80%', xs: '100%' },
               minHeight: 240,

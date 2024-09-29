@@ -124,7 +124,7 @@ function Footer({ ...props }) {
       {dialog}
 
       <div className="px-4 w-full mt-4 flex flex-wrap-reverse justify-around">
-        <div className="max-w-3xl px-4 flex w-fit">
+        <div className="max-w-3xl flex w-fit">
           <Typography color="text.secondary" noWrap variant="p">
             כל הזכויות שמורות © 2024 Webly
             <a
@@ -138,7 +138,7 @@ function Footer({ ...props }) {
           </Typography>
         </div>
 
-        <Stack spacing={4} direction="row" sx={{ px: 4 }}>
+        <Stack width={1} direction="row" justifyContent="space-evenly" sx={{ px: 'auto' }}>
           <Typography noWrap>
             <Button
               size="small"

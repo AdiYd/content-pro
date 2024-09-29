@@ -37,7 +37,7 @@ import {
 import { trackEvent } from 'src/utils/GAEvents';
 
 import { customShadows } from 'src/theme/core';
-import { bgGradientAnimat } from 'src/theme/styles';
+import { bgGradientAnimate } from 'src/theme/styles';
 import { ColorContext } from 'src/context/colorMain';
 
 import { Field } from 'src/components/hook-form';
@@ -47,6 +47,15 @@ import { NumOfDiscount } from 'src/components/considering/Considering';
 import { Carousel, useCarousel, CarouselDotButtons } from 'src/components/carousel';
 
 const terms = require('../../../utils/terms.json');
+
+export const gradients = {
+  g1: 'to right, #007bff, #607d8b',
+  g2: 'to right, #008000, #404040',
+  g3: 'to right, #c0c0c0, #000000',
+  g4: 'to right, #000080, #ffffff',
+  g5: 'to right, #8f7b11,#8f6511, #ffd700',
+  g6: 'to right, #00ff00, #00ff00',
+};
 
 export const goalsDict = {
   'make-comunity': 'ליצור קהילה',
@@ -75,7 +84,7 @@ export function Stepper({ steps, activeStep }) {
       variant="elevation"
       alternativeLabel
       sx={{
-        mb: 5,
+        mb: 2,
         [`& .MuiStepConnector-horizontal`]: {
           left: 'calc(50% + 20px)',
           right: 'calc(-50% + 20px)',
@@ -460,9 +469,11 @@ export function StepThree({ name, email, coursePrice, setValue, loading }) {
   coursePrice =
     active === 'Base-Pro'
       ? 249
-      : ['Master-Pro', 'Xtra-Pro', 'Extra-Pro'].includes(active)
+      : ['Xtra-Pro', 'Extra-Pro'].includes(active)
         ? 499
-        : 749;
+        : active === 'Master-Pro'
+          ? 649
+          : 749;
 
   useEffect(() => {
     setValue('totalPrice', totalPrice.current);
@@ -474,11 +485,10 @@ export function StepThree({ name, email, coursePrice, setValue, loading }) {
     } else if (active === 'Xtra-Pro' || active === 'Extra-Pro') {
       totalPrice.current = 499;
     } else if (active === 'Master-Pro') {
-      totalPrice.current = 499;
+      totalPrice.current = 649;
     } else {
       totalPrice.current = 749;
     }
-    console.log('Changing price to : ', totalPrice.current);
     setUpdate((p) => !p);
     setValue('totalPrice', totalPrice.current);
     setValue('packageType', active);
@@ -490,7 +500,13 @@ export function StepThree({ name, email, coursePrice, setValue, loading }) {
 
   const handleCoupon = (e) => {
     const isCoupon = Cookies.get('counting');
-    if (e.target.value === `ExtraPro_${NumOfDiscount}` && !validCoupon && isCoupon) {
+    console.log('This is active: ', active);
+    if (
+      e.target.value === `MasterPro_${NumOfDiscount}` &&
+      !validCoupon &&
+      isCoupon &&
+      active === 'Master-Pro'
+    ) {
       totalPrice.current *= (100 - NumOfDiscount) / 100;
       totalPrice.current = Math.floor(totalPrice.current);
       setValidCoupon(true);
@@ -501,11 +517,11 @@ export function StepThree({ name, email, coursePrice, setValue, loading }) {
       setValidCoupon(true);
       setValue('totalPrice', totalPrice.current);
       trackEvent('Coupon Redeem', 'Coupons', `99₪`);
-    } else if (e.target.value === 'SuperPro_free' && !validCoupon && false) {
-      totalPrice.current = 0;
+    } else if (e.target.value === 'TestPro_1' && !validCoupon) {
+      totalPrice.current = 1;
       setValidCoupon(true);
       setValue('totalPrice', totalPrice.current);
-      trackEvent('Coupon Redeem', 'Coupons', `free`);
+      // trackEvent('Coupon Redeem', 'Coupons', `free`);
     } else if (e.target.value.includes(`AdminPro_`) && !validCoupon) {
       const discount = Number(e.target.value.split('_')[1]);
       if (!Number.isNaN(discount) && [10, 15].includes(discount)) {
@@ -522,70 +538,85 @@ export function StepThree({ name, email, coursePrice, setValue, loading }) {
     }
   };
 
-  const gradients = {
-    g1: 'to right, #007bff, #607d8b',
-    g2: 'to right, #008000, #404040',
-    g3: 'to right, #c0c0c0, #000000',
-    g4: 'to right, #000080, #ffffff',
-    g5: 'to right, #000000, #ffd700',
-    g6: 'to right, #00ff00, #00ff00',
-  };
-
   return (
     <>
-      <Typography textAlign="center" mb={2} variant="h6">
+      <Typography textAlign="center" mb={0} variant="h6">
         כדי שכולם יוכלו להינות מהתכנים שלנו, הוספנו הנחות לזמן מוגבל ומבצעים למספר מצומצם של נרשמים
       </Typography>
       <CourseOptions active={active} setActive={setActive} isMobile={isMobile || false} />
-      <Typography component="div" variant="h4" sx={{ my: 0, textAlign: 'center' }}>
-        {active}
-      </Typography>
-      {active === 'Master-Pro' && (
-        <>
-          <Typography
-            textAlign="center"
-            my={0}
-            mx={1}
-            component="a"
-            color="text.secondary"
-            variant="h6"
-          >
-            יש לנו מבצע לזמן מוגבל ול-20 נרשמים הבאים בלבד 🎁
-          </Typography>
-          <Typography
-            sx={{ textDecoration: 'line-through' }}
-            textAlign="center"
-            my={0}
-            mx={1}
-            component="a"
-            color="GrayText"
-            variant="h6"
-          >
-            במקום ₪749
-          </Typography>
-          <Typography my={0} textAlign="center" variant="h3">
-            רק ב - {coursePrice} ₪
-          </Typography>
-        </>
-      )}
-      {(active === 'Xtra-Pro' || active === 'Extra-Pro') && (
-        <>
-          <Typography
-            // sx={{ textDecoration: 'line-through' }}
-            textAlign="center"
-            mt={0}
-            mx={1}
-            component="a"
-            color="text.secondary"
-            variant="h6"
-          >
-            ל 20 נרשמים הבאים - מקבלים שדרוג לחבילת Master הכל כלול 🤫
-          </Typography>
-          <Typography my={0} textAlign="center" variant="h3">
-            רק ב - {coursePrice} ₪
-          </Typography>
-        </>
-      )}
+      <Box textAlign="center" width={1}>
+        <Typography component="div" variant="h4" sx={{ my: 0, textAlign: 'center' }}>
+          {active}
+        </Typography>
+        {active === 'Master-Pro' && (
+          <>
+            <Typography
+              textAlign="center"
+              my={0}
+              mx={1}
+              component="a"
+              color="text.secondary"
+              variant="h6"
+            >
+              יש לנו מבצע לזמן מוגבל ול-20 נרשמים הבאים בלבד 🎁
+            </Typography>
+            <br />
+            <br />
+            <Typography
+              sx={{ textDecoration: 'line-through' }}
+              textAlign="center"
+              mt={4}
+              mx={1}
+              component="a"
+              color="text.secondary"
+              variant="h6"
+            >
+              במקום ₪749
+            </Typography>
+            <Typography my={0} textAlign="center" variant="h3">
+              רק ב - {coursePrice} ₪
+            </Typography>
+          </>
+        )}
+        {(active === 'Xtra-Pro' || active === 'Extra-Pro') && (
+          <>
+            <Typography
+              // sx={{ textDecoration: 'line-through' }}
+              textAlign="center"
+              mt={0}
+              mx={1}
+              component="a"
+              color="text.secondary"
+              variant="h6"
+            >
+              למידה משמעותית, חיבור לקהילה ובניית ערוץ תוכן
+            </Typography>
+            <br />
+            <Typography mt={4} textAlign="center" variant="h3">
+              רק ב - {coursePrice} ₪
+            </Typography>
+          </>
+        )}
+        {active === 'Base-Pro' && (
+          <>
+            <Typography
+              // sx={{ textDecoration: 'line-through' }}
+              textAlign="center"
+              mt={0}
+              mx={1}
+              component="a"
+              color="text.secondary"
+              variant="h6"
+            >
+              הקורס המעולה שלנו וכל המדריכים הנלווים
+            </Typography>
+            <br />
+            <Typography mt={4} textAlign="center" variant="h3">
+              רק ב - {coursePrice} ₪
+            </Typography>
+          </>
+        )}
+      </Box>
       {/* <div className="flex justify-center">
         {!coupon && (
           <Button onClick={() => setCoupon(true)} variant="outlined" size="small">
@@ -713,7 +744,7 @@ export function StepThree({ name, email, coursePrice, setValue, loading }) {
         ) : (
           <Button
             sx={{
-              ...bgGradientAnimat(
+              ...bgGradientAnimate(
                 `45deg, ${theme.palette.success.light},${theme.palette.success.dark} ,${theme.palette.success.dark}`
               ),
               width: '50%',
@@ -859,7 +890,9 @@ const courseOptions2 = [
       'קורס + מנוי לקהילה',
       'כל מה שיוצר תוכן צריך',
       'ליווי בהכנת תיק עבודות',
-      'קבלת הצעות עבודה',
+      'גישה מלאה ל- AI-CGI',
+      'הצטרפות לנבחרת וקבלת הצעות עבודה*',
+      // 'קבלת הצעות עבודה',
     ],
     oldPrice: '₪1,099',
     currPrice: '₪749',
@@ -868,14 +901,20 @@ const courseOptions2 = [
   {
     title: 'Extra-Pro',
     subTitle: 'קורס + מנוי לקהילה',
-    bullets: ['כל תכני הקורס', 'מנוי לקהילת יוצרי תוכן', 'המשך קבלת תכני העשרה ומדריכים'],
+    bullets: [
+      'כל תכני הקורס',
+      'מנוי לקהילת יוצרי תוכן',
+      'הדרכה בבנית תיק עבודות',
+      'גישה לתכני AI',
+      'המשך קבלת תכני העשרה ומדריכים',
+    ],
     oldPrice: '₪749',
     currPrice: '₪499',
   },
   {
     title: 'Base-Pro',
     subTitle: 'קורס Video-Pro',
-    bullets: ['כל סרטוני הקורס', 'חוברות והדרכות הקורס', 'חיבור לרשימת תפוצה'],
+    bullets: ['כל סרטוני הקורס', 'חוברות והדרכות הקורס'],
     oldPrice: '₪399',
     currPrice: '₪249',
   },
@@ -890,12 +929,15 @@ const courseOptions = [
   },
   {
     title: 'Master-Pro',
-    subTitle: 'הכל כלול',
+    subTitle: 'פרמיום הכל כלול',
     bullets: [
       'קורס + מנוי לקהילה',
       'כל מה שיוצר תוכן צריך',
       'ליווי בהכנת תיק עבודות',
-      'קבלת הצעות עבודה',
+      'גישה מלאה ל- AI-CGI',
+      // 'גישה מלאה ל-AI Creator',
+      'הצטרפות לנבחרת וקבלת הצעות עבודה*',
+      // 'קבלת הצעות עבודה',
     ],
     oldPrice: '₪1,099',
     currPrice: '₪749',
@@ -904,7 +946,13 @@ const courseOptions = [
   {
     title: 'Extra-Pro',
     subTitle: 'קורס + מנוי לקהילה',
-    bullets: ['כל תכני הקורס', 'מנוי לקהילת יוצרי תוכן', 'המשך קבלת תכני העשרה ומדריכים'],
+    bullets: [
+      'כל תכני הקורס',
+      'מנוי לקהילת יוצרי תוכן',
+      'הדרכה בבנית תיק עבודות',
+      'גישה לתכני AI',
+      'המשך קבלת תכני העשרה ומדריכים',
+    ],
     oldPrice: '₪749',
     currPrice: '₪499',
   },
@@ -914,12 +962,14 @@ const CourseOptions = ({ active, setActive, isMobile }) => {
   const { mainColor, themeColor } = useContext(ColorContext);
   const carousel = useCarousel({
     loop: true,
-
     plugins: [{ name: 'autoScroll' }],
     thumbs: {
       slidesToShow: 'auto',
     },
   });
+  carousel.mainApi?.on('select', () =>
+    setActive(courseOptions2[carousel.mainApi.selectedScrollSnap()]?.title)
+  );
   const courseOptionDiv = isMobile ? (
     <div>
       <Carousel
@@ -929,6 +979,7 @@ const CourseOptions = ({ active, setActive, isMobile }) => {
       >
         {courseOptions2.map((option, index) => (
           <CourseCard
+            key={index}
             active={active}
             onClick={() => setActive(option.title)}
             index={index - 1}
@@ -1062,7 +1113,14 @@ const CourseCard = ({
         {master && (
           <Button
             size="small"
-            sx={{ position: 'absolute', top: 2, right: 5, fontSize: 10 }}
+            sx={{
+              position: 'absolute',
+              top: 2,
+              right: 5,
+              fontSize: 10,
+              color: 'white',
+              ...bgGradientAnimate(gradients.g5),
+            }}
             variant="outlined"
           >
             הכי מבוקש
@@ -1117,7 +1175,7 @@ const CourseCard = ({
           <Divider sx={{ borderStyle: 'dashed', marginY: 2, mb: master ? 0 : '' }} />
           {master && (
             <Typography fontSize={10} mb={2} variant="body2">
-              * התחייבות להצעת עבודה ראשונה בתשלום של עד ₪499, עד 3 חודשים מסיום בניית תיק עבודות
+              * התחייבות להצעת עבודה ראשונה בתשלום של עד ₪400, עד 3 חודשים מסיום בניית תיק עבודות
             </Typography>
           )}
           <Typography

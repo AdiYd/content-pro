@@ -9,7 +9,13 @@ import { varAlpha, hexToRgbChannel } from 'src/theme/styles';
 import { Iconify } from 'src/components/iconify';
 import { useSettingsContext } from 'src/components/settings';
 
-function ColorPicker({ showSwitch = true, inlineChange = true, callBack = () => {}, ...props }) {
+function ColorPicker({
+  showSwitch = true,
+  width = 25,
+  inlineChange = true,
+  callBack = () => {},
+  ...props
+}) {
   const theme = useTheme();
   const { mainColor, setColor } = useContext(ColorContext);
   const { mode, setMode } = useColorScheme();
@@ -63,7 +69,7 @@ function ColorPicker({ showSwitch = true, inlineChange = true, callBack = () => 
                 callBack(item);
               }}
               key={index}
-              width={mainColor === item ? 40 : 25}
+              width={mainColor === item ? width + 10 : width}
               color={colors[item]?.main}
               icon="mdi:color"
             />

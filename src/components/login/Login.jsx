@@ -40,7 +40,13 @@ import { getUserById, getAllDataFromCollection } from 'src/utils/firebaseFunctio
 import ColorPicker from 'src/app/colorPalette';
 import { ColorContext } from 'src/context/colorMain';
 
-import { varSlide, varBounce, AnimateBorder, MotionContainer } from 'src/components/animate';
+import {
+  varSlide,
+  varScale,
+  varBounce,
+  AnimateBorder,
+  MotionContainer,
+} from 'src/components/animate';
 
 import { Iconify } from '../iconify';
 
@@ -109,9 +115,15 @@ function Login({ id }) {
       width={isActive ? '90%' : 'auto'}
     >
       <div className="top-0">
-        <Container component={MotionContainer}>
+        <Container sx={{ position: 'relative' }} component={MotionContainer}>
           <m.div variants={varBounce({ durationIn: 0.8 }).in}>
-            <Stack direction="row" justifyContent="center" mb={2} spacing={8}>
+            <Stack
+              direction="row"
+              justifyContent="center"
+              // position="absolute"
+              bottom={0}
+              spacing={4}
+            >
               <div className={`p-2 rounded-full ${mode === 'light' && ' bg-slate-400/30'}`}>
                 <LightModeTwoTone
                   onClick={changeMode}
@@ -136,12 +148,8 @@ function Login({ id }) {
             >
               Video-Pro
             </Typography>
-            {!isActive && (
-              <Typography variant="h3" sx={{ mb: 2 }}>
-                הבית של יוצרי התוכן הטובים בישראל
-              </Typography>
-            )}
-            {isActive && <Divider sx={{ width: 1, mb: 4 }} />}
+            <Typography variant="h4">הבית של יוצרי התוכן הטובים בישראל</Typography>
+            {isActive && <Divider sx={{ width: 1, mb: 0 }} />}
           </m.div>
         </Container>
       </div>
@@ -157,29 +165,33 @@ function Login({ id }) {
       ) : (
         data
       )}
-      <Box my={4} display="flex" justifyContent="center" width={1}>
-        <Button
-          size="small"
-          startIcon={<Iconify icon="lucide-lab:home" />}
-          sx={{
-            alignSelf: 'center',
-            // textDecoration: 'underline',
-            opacity: 0.8,
-          }}
-          // color="text.secondary"
-          href="/"
-          px={1}
-        >
-          &nbsp; לדף הבית
-        </Button>
-      </Box>
+      <Container component={MotionContainer}>
+        <m.div style={{ width: '100%' }} variants={varScale({ delay: 1, durationIn: 1 }).inX}>
+          <Box my={4} display="flex" justifyContent="center" width={1}>
+            <Button
+              size="small"
+              startIcon={<Iconify icon="lucide-lab:home" />}
+              sx={{
+                alignSelf: 'center',
+                // textDecoration: 'underline',
+                opacity: 0.8,
+              }}
+              // color="text.secondary"
+              href="/"
+              px={1}
+            >
+              &nbsp; לדף הבית
+            </Button>
+          </Box>
+        </m.div>
+      </Container>
     </Box>
   );
 }
 
 export default Login;
 
-function EmailVerificationForm({ callback = () => {} }) {
+export function EmailVerificationForm({ callback = () => {}, noAdmin = false }) {
   const [emails, setEmails] = useState();
   const [userData, setData] = useState();
   const { mainColor, textGradientAnimation } = useContext(ColorContext);
@@ -261,7 +273,7 @@ function EmailVerificationForm({ callback = () => {} }) {
                 // },
                 validate: {
                   isSignedUser: (value) =>
-                    value.toLowerCase() === 'admin' ||
+                    (!noAdmin && value.toLowerCase() === 'admin') ||
                     isSignedEmail(value.toLowerCase()) ||
                     'משתמש לא רשום',
                 },
@@ -705,7 +717,7 @@ function ActiveUser({ index, user = {}, active = false, showMail = true, typoVar
   );
 }
 
-const UserOptionsDict = ['פרטים', 'Script AI', 'נבחרת'];
+const UserOptionsDict = ['פרטים', 'Script AI', 'תיק עבודות'];
 const nicheData = {
   'אוכל ומשקאות': ['מתכונים', 'סקירות על מוצרים', 'מסעדות', 'בישול ביתי', 'תזונה בריאה'],
   'כושר ובריאות': ['אימונים', 'טיפים לאורח חיים בריא', 'יוגה', 'פילאטיס', 'אימוני HIIT'],
@@ -729,14 +741,8 @@ function User({ userData = {} }) {
   const { mainColor, textGradientAnimation, mode } = useContext(ColorContext);
   const [activeButton, setActiveButton] = useState('פרטים');
   const [loader, setLoader] = useState(false);
-  const [loaderGenerate, setLoaderGenerate] = useState(false);
-  const [focus, setFocus] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const [inputRef, setInput] = useState();
-  const [category, setCategory] = useState('');
-  const [selectRef, setSelect] = useState('');
-  const isMaster = userData.packageType === 'Master-Pro' || false;
   let dataRes;
 
   const setLoaderActive = (duration = 0.2) => {
@@ -746,181 +752,8 @@ function User({ userData = {} }) {
     }, [duration * 1e3]);
   };
 
-  const handleInput = (e) => {
-    if (e.target.value.length <= 250) {
-      setInput(e.target.value);
-    }
-  };
-  const handleSelect = (e) => {
-    setSelect(e.target.value);
-  };
-  const handleCategory = (e) => {
-    setCategory(e.target.value);
-  };
-
-  const hundleSubmit = (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    console.log('This is submit data: ', { category, inputRef, selectRef });
-  };
-
-  const generateScript = () => {
-    setLoaderGenerate(true);
-    setTimeout(() => {
-      setLoaderGenerate(false);
-    }, 15 * 1e3);
-  };
-
   if (activeButton === 'Script AI') {
-    dataRes = (
-      <Box textAlign="center" my={4}>
-        <Typography variant="body1" color="text.secondary">
-          בנינו לכם מודל AI שמבין ביצירת תוכן ויעזור לכם ליצור תוכן יצירתי, מתוחכם ומקורי
-        </Typography>
-        <Typography mb={2} variant="body1" color="text.secondary">
-          {aiDescription}
-        </Typography>
-        <AnimateBorder
-          sx={{ borderRadius: 2, borderWidth: 1, borderColor: 'transparent' }}
-          animate={{
-            angle: 250,
-            // outline: 'none',
-            distance: 8,
-            // disableDoubleline: true,
-            length: 15,
-            color: theme.palette.success.main,
-            // width: '2px',
-          }}
-        >
-          <Card
-            sx={{
-              display: 'flex',
-              zIndex: 80,
-              flexDirection: 'column',
-              gap: 4,
-              m: 0.4,
-              px: { md: 6, xs: 2 },
-              py: 4,
-              mx: 'auto',
-              width: isMobile ? 1 : 1,
-            }}
-            component="form"
-            onSubmit={hundleSubmit}
-          >
-            {loaderGenerate ? (
-              <div>
-                <div className="animate-pulse">
-                  <Typography sx={{ direction: 'ltr', ...textGradientAnimation }} variant="h4">
-                    Generating content...
-                  </Typography>
-                </div>
-                <div className="my-20 flex justify-center">
-                  <InfinitySpin
-                    height="200"
-                    // width=
-                    colors={[theme.palette[mainColor]?.dark, theme.palette[mainColor]?.light]}
-                    color={
-                      theme.palette[mainColor][mode === 'dark' ? 'light' : 'dark'] ||
-                      theme.palette.secondary.main
-                    }
-                  />
-                </div>
-              </div>
-            ) : (
-              <Box display="flex" flexDirection="column" gap={4} width={1}>
-                <Typography variant="h4">© Video-Pro Script Generator</Typography>
-                <FormControl required fullWidth variant="outlined">
-                  <InputLabel>בחירת נישה</InputLabel>
-                  {/* <InputLabel className='w-full flex justify-start text-start' id="select">בחירת נישה ליצירת תוכן</InputLabel> */}
-                  <Select
-                    displayEmpty
-                    name="niche"
-                    variant="filled"
-                    sx={{ textAlign: 'center', my: 0 }}
-                    onChange={handleSelect}
-                    value={selectRef}
-                  >
-                    {Object.keys(nicheData).map((item, index) => (
-                      <MenuItem selected={index === 0} key={index} value={item}>
-                        {item}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  <FormHelperText>נא לבחור נישה</FormHelperText>
-                  {nicheData[selectRef] && (
-                    <Box>
-                      <Typography my={2} textAlign="start" variant="body2" color="text.secondary">
-                        בחרו תת-קטגוריה:
-                      </Typography>
-                      <RadioGroup color={mainColor} value={category} onChange={handleCategory}>
-                        <Stack justifyContent="start" direction="row" flexWrap="wrap">
-                          {nicheData[selectRef].map((subNiche, indx) => (
-                            <FormControlLabel
-                              key={`${indx} ${subNiche}`}
-                              value={subNiche}
-                              control={<Radio color={mainColor} />}
-                              label={subNiche}
-                            />
-                          ))}
-                        </Stack>
-                      </RadioGroup>
-                    </Box>
-                  )}
-                </FormControl>
-                <Box textAlign="start">
-                  <TextField
-                    fullWidth
-                    multiline
-                    name="free-text"
-                    disabled={!isMaster}
-                    rows={4}
-                    onChange={handleInput}
-                    onBlur={() => setFocus(false)}
-                    onFocus={() => setFocus(true)}
-                    variant={isMaster ? 'outlined' : 'filled'}
-                    // InputLabelProps={{dir:'rtl',sx:{px:2, float:'right'}, style:{margin: '0px 10px', width:'max-content'}}}
-                    value={inputRef}
-                    label={focus ? '.    תנו לנו כיוון, אנחנו נמשיך משם    .' : ''}
-                    placeholder="טקסט חופשי - רעיונות, לוקיישנים וכל הכוונה אחרת ל AI"
-                  />
-                  <Box mb={2} width={1} display="flex" justifyContent="space-between">
-                    <Typography
-                      variant="body2"
-                      component="div"
-                      color={isMaster ? theme.palette.success.main : theme.palette.error.main}
-                    >
-                      לתלמידי מסלול Master בלבד
-                    </Typography>
-                    <Typography variant="body2" fontSize="0.7" color="text.secondary">
-                      {!isMobile && 'עד 250 תווים'}({250 - (inputRef?.length || 0)})
-                    </Typography>
-                  </Box>
-                </Box>
-                <Button
-                  sx={{
-                    ...textGradientAnimation,
-                    animationDuration: '10s',
-                    WebkitBackgroundClip: 'inherit',
-                    WebkitTextFillColor: 'inherit',
-                    backgroundClip: 'inherit',
-                    textFillColor: 'inherit',
-                    color: 'inherit',
-                  }}
-                  size={isMobile ? 'medium' : 'large'}
-                  type="submit"
-                  variant="contained"
-                  fullWidth
-                  onClick={generateScript}
-                >
-                  {' '}
-                  ✨ Generate AI sctipt
-                </Button>
-              </Box>
-            )}
-          </Card>
-        </AnimateBorder>
-      </Box>
-    );
+    dataRes = <ScriptAI userData={userData} />;
   } else if (activeButton === 'פרטים') {
     dataRes = (
       <Box textAlign="center" my={4}>
@@ -948,8 +781,8 @@ function User({ userData = {} }) {
         <Typography variant="h3">, </Typography>
         {/* <Typography variant="h3">👋🏽</Typography> */}
       </Box>
-      <Typography variant="body1">
-        באיזור האישי ניתן לראות פרטים על הקורס, בחירת נישה להתמחות ורעיונות לתכני וידאו
+      <Typography color="text.secondary" variant="body1">
+        באיזור האישי ניתן לראות פרטים על הקורס, תיק העבודות, בחירת נישה להתמחות ורעיונות לתכני וידאו
       </Typography>
       <Stack my={4} justifyContent="center" direction="row" spacing={4}>
         {UserOptionsDict.map((item, index) => (
@@ -982,6 +815,193 @@ function User({ userData = {} }) {
           dataRes
         )}
       </Box>
+    </Box>
+  );
+}
+
+function ScriptAI({ userData, ...props }) {
+  const [loaderGenerate, setLoaderGenerate] = useState(false);
+  const [focus, setFocus] = useState(false);
+  const [inputRef, setInput] = useState();
+  const [category, setCategory] = useState('');
+  const [selectRef, setSelect] = useState('');
+  const isMaster = userData.packageType === 'Master-Pro' || false;
+  const theme = useTheme();
+  const { mainColor, textGradientAnimation, mode } = useContext(ColorContext);
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const generateScript = () => {
+    setLoaderGenerate(true);
+    setTimeout(() => {
+      setLoaderGenerate(false);
+    }, 15 * 1e3);
+  };
+
+  const handleInput = (e) => {
+    if (e.target.value.length <= 250) {
+      setInput(e.target.value);
+    }
+  };
+  const handleSelect = (e) => {
+    setSelect(e.target.value);
+  };
+  const handleCategory = (e) => {
+    setCategory(e.target.value);
+  };
+
+  const hundleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    console.log('This is submit data: ', { category: category || 'כללי', inputRef, selectRef });
+    generateScript();
+  };
+
+  return (
+    <Box textAlign="center" my={4}>
+      <Typography variant="body1" color="text.secondary">
+        בנינו לכם מודל AI שמבין ביצירת תוכן ויעזור לכם ליצור תוכן יצירתי, מתוחכם ומקורי
+      </Typography>
+      <Typography mb={2} variant="body1" color="text.secondary">
+        {aiDescription}
+      </Typography>
+      <AnimateBorder
+        sx={{ borderRadius: 2, borderWidth: 1, borderColor: 'transparent' }}
+        animate={{
+          angle: 250,
+          // outline: 'none',
+          distance: 8,
+          // disableDoubleline: true,
+          length: 15,
+          color: theme.palette.success.main,
+          // width: '2px',
+        }}
+      >
+        <Card
+          sx={{
+            display: 'flex',
+            zIndex: 80,
+            flexDirection: 'column',
+            gap: 4,
+            m: 0.4,
+            px: { md: 6, xs: 2 },
+            py: 4,
+            mx: 'auto',
+            width: isMobile ? 1 : 1,
+          }}
+          component="form"
+          onSubmit={hundleSubmit}
+        >
+          {loaderGenerate ? (
+            <div>
+              <div className="animate-pulse">
+                <Typography sx={{ direction: 'ltr', ...textGradientAnimation }} variant="h4">
+                  Generating content...
+                </Typography>
+              </div>
+              <div className="my-20 flex justify-center">
+                <InfinitySpin
+                  height="200"
+                  // width=
+                  colors={[theme.palette[mainColor]?.dark, theme.palette[mainColor]?.light]}
+                  color={
+                    theme.palette[mainColor][mode === 'dark' ? 'light' : 'dark'] ||
+                    theme.palette.secondary.main
+                  }
+                />
+              </div>
+            </div>
+          ) : (
+            <Box display="flex" flexDirection="column" gap={4} width={1}>
+              <Typography variant="h4">© Video-Pro Script Generator</Typography>
+              <FormControl required fullWidth variant="outlined">
+                <InputLabel>בחירת נישה</InputLabel>
+                {/* <InputLabel className='w-full flex justify-start text-start' id="select">בחירת נישה ליצירת תוכן</InputLabel> */}
+                <Select
+                  displayEmpty
+                  name="niche"
+                  variant="filled"
+                  sx={{ textAlign: 'center', my: 0 }}
+                  onChange={handleSelect}
+                  value={selectRef}
+                >
+                  {Object.keys(nicheData).map((item, index) => (
+                    <MenuItem selected={index === 0} key={index} value={item}>
+                      {item}
+                    </MenuItem>
+                  ))}
+                </Select>
+                <FormHelperText>נא לבחור נישה</FormHelperText>
+                {nicheData[selectRef] && (
+                  <Box>
+                    <Typography my={2} textAlign="start" variant="body2" color="text.secondary">
+                      בחרו תת-קטגוריה:
+                    </Typography>
+                    <RadioGroup color={mainColor} value={category} onChange={handleCategory}>
+                      <Stack justifyContent="start" direction="row" flexWrap="wrap">
+                        {nicheData[selectRef].map((subNiche, indx) => (
+                          <FormControlLabel
+                            key={`${indx} ${subNiche}`}
+                            value={subNiche}
+                            control={<Radio color={mainColor} />}
+                            label={subNiche}
+                          />
+                        ))}
+                      </Stack>
+                    </RadioGroup>
+                  </Box>
+                )}
+              </FormControl>
+              <Box textAlign="start">
+                <TextField
+                  fullWidth
+                  multiline
+                  name="free-text"
+                  disabled={!isMaster}
+                  rows={4}
+                  onChange={handleInput}
+                  onBlur={() => setFocus(false)}
+                  onFocus={() => setFocus(true)}
+                  variant={isMaster ? 'outlined' : 'filled'}
+                  // InputLabelProps={{dir:'rtl',sx:{px:2, float:'right'}, style:{margin: '0px 10px', width:'max-content'}}}
+                  value={inputRef}
+                  label={focus ? '.    תנו לנו כיוון, אנחנו נמשיך משם    .' : ''}
+                  placeholder="טקסט חופשי - רעיונות, לוקיישנים וכל הכוונה אחרת ל AI"
+                />
+                <Box mb={2} width={1} display="flex" justifyContent="space-between">
+                  <Typography
+                    variant="body2"
+                    component="div"
+                    color={isMaster ? theme.palette.success.main : theme.palette.error.main}
+                  >
+                    לתלמידי מסלול Master בלבד
+                  </Typography>
+                  <Typography variant="body2" fontSize="0.7" color="text.secondary">
+                    {!isMobile && 'עד 250 תווים'}({250 - (inputRef?.length || 0)})
+                  </Typography>
+                </Box>
+              </Box>
+              <Button
+                sx={{
+                  ...textGradientAnimation,
+                  animationDuration: '10s',
+                  WebkitBackgroundClip: 'inherit',
+                  WebkitTextFillColor: 'inherit',
+                  backgroundClip: 'inherit',
+                  textFillColor: 'inherit',
+                  color: 'inherit',
+                }}
+                size={isMobile ? 'medium' : 'large'}
+                type="submit"
+                variant="contained"
+                fullWidth
+              >
+                {' '}
+                ✨ Generate AI sctipt
+              </Button>
+            </Box>
+          )}
+        </Card>
+      </AnimateBorder>
     </Box>
   );
 }

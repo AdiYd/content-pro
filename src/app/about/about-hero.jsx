@@ -170,7 +170,7 @@ export function AboutHero() {
           <div className="w-fit h-fit relative max-lg:mx-auto">
             <m.div variants={varFade().in}>
               <Typography maxWidth={400} color="common.white" variant="h3">
-                ההכשרה שעוזרת ליוצרי תוכן לקבל עבודה באופן שוטף
+                ההכשרה שעוזרת ליוצרי תוכן לייצר עבודה באופן שוטף
                 {/* <br /> */}
               </Typography>
             </m.div>

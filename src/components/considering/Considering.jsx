@@ -84,7 +84,7 @@ function Considering({
   ...props
 }) {
   const theme = useTheme();
-  const { mainColor, mode, textGradient } = useContext(ColorContext);
+  const { mainColor, mode, textGradient, textGradientAnimation } = useContext(ColorContext);
   const [confetti, setConfetti] = useState(false);
   const [email, setEmail] = useState('');
   const { countdown, startCountdown, counting } = useCountdownSeconds(NumOfMinutes * 60);
@@ -255,8 +255,12 @@ function Considering({
       <DialogContent dividers sx={{ color: 'text.secondary' }}>
         <Typography variant="h4">{buttonMsg.current}</Typography>
         <br />
-        <Typography color="text.primary" variant="p">
+        <Typography color="text.primary" variant="body1">
           קבלו קוד הנחה של {NumOfDiscount}% בתוקף ל {NumOfMinutes} דקות הקרובות
+        </Typography>
+        <br />
+        <Typography color="text.primary" variant="body1">
+          לרכישת חבילת הפרמיום Master-Pro
         </Typography>
         <br />
         <br />
@@ -265,7 +269,7 @@ function Considering({
             title="העתק ללוח"
             onClick={() => {
               toast.success('הועתק!');
-              navigator.clipboard.writeText(`ExtraPro_${NumOfDiscount}`);
+              navigator.clipboard.writeText(`MasterPro_${NumOfDiscount}`);
             }}
             sx={{ cursor: 'pointer', '&:hover': { color: 'text.primary' } }}
             mx={2}
@@ -278,12 +282,10 @@ function Considering({
           <Typography
             variant="h4"
             sx={{
-              background: `linear-gradient(to right, ${theme.palette[mainColor]?.light}, ${theme.palette[mainColor]?.main})`,
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
+              ...textGradientAnimation,
             }}
           >
-            ExtraPro_{NumOfDiscount}
+            MasterPro_{NumOfDiscount}
           </Typography>
         </Stack>
       </DialogContent>
@@ -322,8 +324,11 @@ function Considering({
         border: '0.1px solid',
         cursor: 'pointer',
         borderRadius: 1,
-        borderColor: theme.palette[mainColor]?.main,
+        borderColor: theme.palette.divider,
+        boxShadow: theme.shadows[13],
         width: 'fit-content',
+        height: 'fit-content',
+        gap: 2,
         textAlign: 'center',
         transition: 'transform 0.3s ease',
         my: 3,
@@ -335,12 +340,12 @@ function Considering({
     >
       <div>
         <Typography variant="h5">זמן שנותר לקופון</Typography>
-        <Typography sx={textGradient} variant="h5">
-          ExtraPro_{NumOfDiscount}
+        <Typography sx={textGradientAnimation} variant="h5">
+          MasterPro_{NumOfDiscount}
         </Typography>
       </div>
       <Box
-        gap={3}
+        gap={2}
         display="flex"
         alignItems="center"
         justifyContent="center"

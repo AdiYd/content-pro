@@ -55,7 +55,7 @@ export function textGradient(color) {
     color: 'transparent',
   };
 }
-export function bgGradientAnimat(color) {
+export function bgGradientAnimate(color) {
   return {
     background: `linear-gradient(${color})`,
     backgroundSize: '200% 200%',
