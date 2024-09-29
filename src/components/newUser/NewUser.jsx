@@ -18,6 +18,7 @@ import Confettis from '../considering/Confettis';
 // ----------------------------------------------------------------------
 
 export function NewUser({ ...props }) {
+  const { totalPrice } = props;
   const theme = useTheme();
   const { setMode } = useColorScheme();
   const { mainColor, mode, textGradientAnimation } = useContext(ColorContext);
@@ -107,14 +108,16 @@ export function NewUser({ ...props }) {
               לאיזור האישי
             </Button>
 
-            <Button
-              href="https://chat.whatsapp.com/DE2HSwpg9ABJpaEYj4ZAfv"
-              variant="text"
-              // size="small"
-            >
-              <Iconify icon="logos:whatsapp-icon" />
-              &nbsp; &nbsp; הצטרפות לקהילה
-            </Button>
+            {(totalPrice > 500 || !totalPrice) && (
+              <Button
+                href="https://chat.whatsapp.com/DE2HSwpg9ABJpaEYj4ZAfv"
+                variant="text"
+                // size="small"
+              >
+                <Iconify icon="logos:whatsapp-icon" />
+                &nbsp; &nbsp; הצטרפות לקהילה
+              </Button>
+            )}
           </Stack>
 
           {/* <EmailVerificationForm noAdmin callback={(data) => console.log('This is data: ', data)} /> */}
