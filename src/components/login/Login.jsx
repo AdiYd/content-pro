@@ -664,6 +664,7 @@ function Admin() {
 const userPropDict = {
   email: 'אימייל',
   name: 'שם',
+  niche: 'נישה',
   age: 'גיל',
   gender: 'מין',
   goals: 'מטרות',
@@ -717,7 +718,7 @@ function ActiveUser({ index, user = {}, active = false, showMail = true, typoVar
   );
 }
 
-const UserOptionsDict = ['פרטים', 'Script AI', 'תיק עבודות'];
+const UserOptionsDict = ['פרטים', 'AI Creator Agent', 'תיק עבודות'];
 const nicheData = {
   'אוכל ומשקאות': ['מתכונים', 'סקירות על מוצרים', 'מסעדות', 'בישול ביתי', 'תזונה בריאה'],
   'כושר ובריאות': ['אימונים', 'טיפים לאורח חיים בריא', 'יוגה', 'פילאטיס', 'אימוני HIIT'],
@@ -752,7 +753,7 @@ function User({ userData = {} }) {
     }, [duration * 1e3]);
   };
 
-  if (activeButton === 'Script AI') {
+  if (activeButton === 'AI Creator Agent') {
     dataRes = <ScriptAI userData={userData} />;
   } else if (activeButton === 'פרטים') {
     dataRes = (
@@ -797,7 +798,7 @@ function User({ userData = {} }) {
             sx={{ fontSize: isMobile ? '0.8rem' : '', textWrap: 'nowrap' }}
             variant={activeButton === item ? 'contained' : 'outlined'}
           >
-            {item === 'Script AI' && '✨'} {item}
+            {item === 'AI Creator Agent' && '✨'} {item}
           </Button>
         ))}
       </Stack>

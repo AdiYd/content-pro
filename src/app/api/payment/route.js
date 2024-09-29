@@ -5,11 +5,13 @@
 import { sendInvoiceEmail } from 'src/utils/invoice';
 import { addUser } from 'src/utils/firebaseFunctions';
 
+import { PayersDict } from '../payersTemp';
+
 export async function POST(request) {
   try {
     const data = await request.json();
-    console.log('Message from client: ', data);
-    console.log('calling: ', data.apiUrl);
+    console.log('Payment - Message from client: ', data);
+    // console.log('calling: ', data.apiUrl);
 
     const res = await fetch(data.apiUrl, {
       headers: {
@@ -22,8 +24,13 @@ export async function POST(request) {
       },
     });
     const url = await res.text();
-    console.log('This is Text result: ', url);
+    // console.log('This is Text result: ', url);
 
+    const tempUser = { ...data };
+    delete tempUser.apiUrl;
+
+    PayersDict[tempUser.email] = { ...tempUser };
+    console.log('This is PayersDict: ', PayersDict);
     if (false) {
       await addUser(data);
       await sendInvoiceEmail(data);

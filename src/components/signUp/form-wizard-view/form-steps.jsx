@@ -13,6 +13,8 @@ import {
   List,
   Card,
   Grid,
+  Radio,
+  Stack,
   styled,
   Select,
   Dialog,
@@ -23,6 +25,7 @@ import {
   TextField,
   InputLabel,
   IconButton,
+  RadioGroup,
   FormControl,
   DialogTitle,
   CardContent,
@@ -53,7 +56,7 @@ export const gradients = {
   g2: 'to right, #008000, #404040',
   g3: 'to right, #c0c0c0, #000000',
   g4: 'to right, #000080, #ffffff',
-  g5: 'to right, #8f7b11,#8f6511, #ffd700',
+  g5: '45deg, #8f7b11, #ffd700,#8f6511',
   g6: 'to right, #00ff00, #00ff00',
 };
 
@@ -306,6 +309,7 @@ export function StepTwo({ name, setValue }) {
   const [update, setUpdate] = useState(false);
   const [gender, setGender] = useState('');
   const { mainColor } = useContext(ColorContext);
+  const [niche, setNiche] = useState('ספורט ובריאות');
   const [goals, setGoals] = useState({
     learn: true,
     'make-money': false,
@@ -355,6 +359,14 @@ export function StepTwo({ name, setValue }) {
     setValue('goals', finalGoals);
   };
 
+  const Niches = [
+    'ספורט ובריאות',
+    'ביוטי וטיפוח',
+    'אופנה ו-Lifestyle',
+    'טכנולוגיה והייטק',
+    'הורות',
+  ];
+
   return (
     <div className="z-30 flex flex-col gap-6">
       <Typography mb={2} component="div" variant="h6">
@@ -372,6 +384,36 @@ export function StepTwo({ name, setValue }) {
         <br />
         (לא חובה)
       </Typography>
+
+      <div className="z-30 mb-4 w-full flex flex-col gap-4">
+        <Typography textAlign="start" variant="body1">
+          בחירת נישה ליצירת תוכן:
+        </Typography>
+        <div className="flex flex-wrap max-md:flex-col gap-4">
+          <RadioGroup name="niche" color={mainColor}>
+            <Stack justifyContent="start" direction="row" flexWrap="wrap">
+              {Niches.map((subNiche, indx) => (
+                <FormControlLabel
+                  key={`${indx} ${subNiche}`}
+                  name="nice"
+                  value={subNiche}
+                  checked={subNiche === niche}
+                  control={
+                    <Radio
+                      onChange={() => {
+                        setNiche(subNiche);
+                        setValue('niche', subNiche);
+                      }}
+                      color="error"
+                    />
+                  }
+                  label={subNiche}
+                />
+              ))}
+            </Stack>
+          </RadioGroup>
+        </div>
+      </div>
 
       <div className="z-30 mb-4 w-full flex flex-col gap-4">
         <Typography textAlign="start" variant="body1">
@@ -517,7 +559,7 @@ export function StepThree({ name, email, coursePrice, setValue, loading }) {
       setValidCoupon(true);
       setValue('totalPrice', totalPrice.current);
       trackEvent('Coupon Redeem', 'Coupons', `99₪`);
-    } else if (e.target.value === 'TestPro_1' && !validCoupon) {
+    } else if (e.target.value === 'TestPro_1' && process.env.NODE_ENV === 'development') {
       totalPrice.current = 1;
       setValidCoupon(true);
       setValue('totalPrice', totalPrice.current);
@@ -685,7 +727,7 @@ export function StepThree({ name, email, coursePrice, setValue, loading }) {
           mx={1}
           color="text.secondary"
         >
-          {validCoupon && `( ₪ ${coursePrice})`}
+          {validCoupon && `( ${coursePrice} ₪)`}
         </Typography>
       </Typography>
 
@@ -891,7 +933,8 @@ const courseOptions2 = [
       'כל מה שיוצר תוכן צריך',
       'הדרכה בהכנת תיק עבודות',
       // 'גישה מלאה ל- AI-CGI',
-      'גישה מלאה ל-AI Creator',
+      'גישה מלאה ל AI Agent',
+      // 'גישה מלאה ל-AI Creator',
       'הצטרפות לנבחרת וקבלת הצעות עבודה*',
       // 'קבלת הצעות עבודה',
     ],
@@ -936,8 +979,9 @@ const courseOptions = [
       'כל מה שיוצר תוכן צריך',
       'הדרכה בהכנת תיק עבודות',
       // 'גישה מלאה ל- AI-CGI',
-      'גישה מלאה ל-AI Creator',
-      'הצטרפות לנבחרות וקבלת הצעות עבודה*',
+      'גישה מלאה ל AI Agent',
+      // 'גישה מלאה ל-AI Creator',
+      'הצטרפות לנבחרת וקבלת הצעות עבודה*',
       // 'קבלת הצעות עבודה',
     ],
     oldPrice: '₪1,099',
@@ -948,7 +992,7 @@ const courseOptions = [
     title: 'Extra-Pro',
     subTitle: 'קורס + מנוי לקהילה',
     bullets: [
-      'כל תכני הקורס',
+      'כל מה שיש ב Base-Pro',
       'מנוי לקהילת יוצרי תוכן',
       // 'הדרכה בבנית תיק עבודות',
       'גישה לתכני AI',
@@ -1012,6 +1056,7 @@ const CourseOptions = ({ active, setActive, isMobile }) => {
       alignItems="center"
       overflow="visible"
       // display="flex"
+      sx={{ position: 'relative', right: '-10px' }}
       container
       spacing={1}
       paddingX={1}
@@ -1119,7 +1164,7 @@ const CourseCard = ({
               top: 2,
               right: 5,
               fontSize: 10,
-              color: 'white',
+              color: 'black',
               ...bgGradientAnimate(gradients.g5),
             }}
             variant="outlined"
@@ -1176,7 +1221,7 @@ const CourseCard = ({
           <Divider sx={{ borderStyle: 'dashed', marginY: 2, mb: master ? 0 : '' }} />
           {master && (
             <Typography fontSize={10} mb={2} variant="body2">
-              * התחייבות להצעת עבודה ראשונה בתשלום של עד ₪499, עד 3 חודשים מסיום בניית תיק עבודות
+              * התחייבות להצעת עבודה ראשונה בתשלום של עד ₪500, עד 3 חודשים מסיום בניית תיק עבודות
             </Typography>
           )}
           <Typography

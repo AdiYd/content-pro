@@ -1,7 +1,8 @@
 'use client';
 
 import { m } from 'framer-motion';
-import { useContext } from 'react';
+import { useRouter } from 'next/navigation';
+import { useState, useEffect, useContext } from 'react';
 
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -17,15 +18,40 @@ import Confettis from '../considering/Confettis';
 
 // ----------------------------------------------------------------------
 
-export function NewUser({ ...props }) {
-  const { totalPrice } = props;
+export function NewUser({ params, ...props }) {
+  const { Amount, Fild1, Fild2, Approved } = params;
+  const name = Fild1?.toLowerCase();
+  const email = Fild2?.toLowerCase();
+  const [loader, setLoader] = useState(true);
   const theme = useTheme();
   const { setMode } = useColorScheme();
   const { mainColor, mode, textGradientAnimation } = useContext(ColorContext);
+  const router = useRouter();
 
   const changeMode = () => {
     setMode(mode === 'dark' ? 'light' : 'dark');
   };
+
+  useEffect(() => {
+    fetch('/api/postPayment', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(params),
+    })
+      .then((data) => data.json())
+      .then((res) => {
+        console.log('This is payment approval result data', res.payment);
+        if (res.payment) {
+          console.log('This is success');
+          router.push(`/success/?Fild1=${Fild1}&Approved=${true}`, undefined, { shallow: true });
+          setLoader(false);
+        } else if (!Approved) {
+          router.push('/');
+        }
+      });
+  }, [params, router, Fild1, Approved]);
 
   return (
     <Box my={8} textAlign="center" mx="auto">
@@ -76,6 +102,9 @@ export function NewUser({ ...props }) {
           >
             Video-Pro
           </Typography> */}
+          <Typography sx={textGradientAnimation} variant="h3">
+            {name}
+          </Typography>
           <Typography variant="h3">!איזה כיף שהצטרפת אלינו</Typography>
         </m.div>
 
@@ -108,7 +137,7 @@ export function NewUser({ ...props }) {
               לאיזור האישי
             </Button>
 
-            {(totalPrice > 500 || !totalPrice) && (
+            {(!Amount || Amount > 500) && (
               <Button
                 href="https://chat.whatsapp.com/DE2HSwpg9ABJpaEYj4ZAfv"
                 variant="text"

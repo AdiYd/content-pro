@@ -124,9 +124,9 @@ function Footer({ ...props }) {
       {dialog}
 
       <div className="px-4 w-full mt-4 flex flex-wrap-reverse justify-around">
-        <div className="max-w-3xl flex w-fit">
-          <Typography color="text.secondary" noWrap variant="p">
-            כל הזכויות שמורות © 2024 Webly
+        <div className="max-w-3xl flex text-center w-fit">
+          <Typography color="text.secondary" variant="p">
+            כל הזכויות לאתר זה שמורות © 2024 Webly
             <a
               href="https://wa.me/527242775"
               target="_blank"

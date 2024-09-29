@@ -51,10 +51,9 @@ const ColorProvider = ({ children }) => {
     try {
       let storedColor =
         localStorageGetItem('mainColor') &&
-        JSON.parse(localStorageGetItem('mainColor', JSON.stringify('error')));
+        JSON.parse(localStorageGetItem('mainColor', JSON.stringify('info')));
 
-      storedColor =
-        storedColor && Object.keys(COLORS).includes(storedColor) ? storedColor : 'error';
+      storedColor = storedColor && Object.keys(COLORS).includes(storedColor) ? storedColor : 'info';
       const mode = theme.palette?.mode || 'dark';
       const gradMode = theme.palette.mode === 'light' ? 'dark' : 'light';
       const themeColors = COLORS[storedColor]?.main;

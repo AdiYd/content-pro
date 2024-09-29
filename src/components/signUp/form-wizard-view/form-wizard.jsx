@@ -3,6 +3,7 @@
 import { z as zod } from 'zod';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { Circles } from 'react-loader-spinner';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState, useContext, useCallback } from 'react';
@@ -50,6 +51,7 @@ const WizardSchema = zod.object({
   age: zod.number().optional(),
   gender: zod.string().optional(),
   packageType: zod.string().optional(),
+  niche: zod.string({ message: 'נא לבחור נישה' }),
   goals: zod.array(zod.string()).optional(),
   totalPrice: zod.number().optional(),
   // stepOne: StepOneSchema,
@@ -71,6 +73,7 @@ const defaultValues = {
   approveTerms: false,
   age: 0,
   gender: '',
+  niche: 'ספורט ובריאות',
   goals: [],
   totalPrice: 99,
   packageType: 'Master-pro',
@@ -96,7 +99,7 @@ const packageTypesDict = {
 };
 
 export function FormWizard({ coursePrice }) {
-  const [activeStep, setActiveStep] = useState(2);
+  const [activeStep, setActiveStep] = useState(0);
   const [loading, setLoading] = useState(false);
   const [url, setUrl] = useState();
   const [paymentLoad, setPaymentLoad] = useState(false);
@@ -130,7 +133,7 @@ export function FormWizard({ coursePrice }) {
         if (step === 'stepOne') {
           isValid = await trigger(['email', 'name', 'approveTerms']);
         } else {
-          await trigger(['age', 'goals', 'gender']);
+          await trigger(['age', 'niche', 'goals', 'gender']);
         }
 
         if (isValid) {
@@ -188,7 +191,7 @@ export function FormWizard({ coursePrice }) {
         masof: process.env.NEXT_PUBLIC_CC_MASOF,
         passp: process.env.NEXT_PUBLIC_CC_PASSP,
       };
-      const apiUrl = `https://pay.hyp.co.il/p/?action=APISign&What=SIGN&KEY=${api.key}&Masof=${api.masof}&PassP=${api.passp}&Order=${email || 'unSigned'}&Amount=${totalPrice || '0.0'}&UTF8=True&UTF8out=True&ClientName=${name?.split(' ')[0] || 'ישראל'}&ClientLName=${name?.split(' ')[1] || 'ישראלי'}&cell=${phone || ''}&email=${email || 'Admin@webly.digital'}&Info=${info || ''}&Tash=2&FixTash=False&ShowEngTashText=False&Coin=1&Postpone=False&J5=False&Sign=True&MoreData=True&sendemail=True&SendHesh=True&heshDesc=${itemInfo}&Pritim=True&PageLang=HEB&tmp=${templateCode || 7}`;
+      const apiUrl = `https://pay.hyp.co.il/p/?action=APISign&What=SIGN&KEY=${api.key}&Masof=${api.masof}&PassP=${api.passp}&Order=${email || 'unSigned'}&Amount=${totalPrice || '499.0'}&UTF8=True&UTF8out=True&ClientName=${name?.split(' ')[0] || 'ישראל'}&ClientLName=${name?.split(' ')[1] || 'ישראלי'}&cell=${phone || ''}&email=${email || 'Admin@webly.digital'}&Info=${info || ''}&Tash=2&FixTash=False&ShowEngTashText=False&Coin=1&Postpone=False&J5=False&Sign=True&MoreData=True&sendemail=True&SendHesh=True&heshDesc=${itemInfo}&Pritim=True&PageLang=HEB&tmp=${templateCode || 7}`;
       // const apiUrl = `https://icom.yaad.net/p/?action=APISign&What=SIGN&KEY=${api.key}&Masof=${api.masof}&PassP=${api.passp}&Order=${email || 'unSigned'}&Amount=${totalPrice || '0.0'}&UTF8=True&UTF8out=True&ClientName=${name?.split(' ')[0] || 'ישראל'}&ClientLName=${name?.split(' ')[1] || 'ישראלי'}&cell=${phone || ''}&email=${email || 'Admin@webly.digital'}&Info=${info || ''}&Tash=2&FixTash=False&ShowEngTashText=False&Coin=1&Postpone=False&J5=False&Sign=True&MoreData=True&sendemail=True&SendHesh=True&heshDesc=${itemInfo}&Pritim=True&PageLang=HEB&tmp=${templateCode || 7}`;
       const res = await fetch('/api/payment', {
         method: 'POST',
@@ -201,7 +204,8 @@ export function FormWizard({ coursePrice }) {
       // setLoading(false);
       const urlRes = `https://pay.hyp.co.il/p/?action=pay&${result.url}`;
       // const urlRes = `https://icom.yaad.net/p/?action=pay&${result.url}`;
-      router.push(urlRes);
+      const testUrl = `${process.env.NODE_ENV === 'development' ? 'http://localhost:3033' : 'https://videopro.webly.digital'}/success?Id=12788261&CCode=0&Amount=${totalPrice || '499.0'}&ACode=0012345&Order=12345678910&Fild1=${name || 'ישראל ישראלי'}&Fild2=${email || 'aDmin@webly.digital'}&Fild3=&Sign=13cccf141e2fc2e2dd8d8201a90d58929514d97e00084cb9436cab087f1ba8c6&Bank=6&Payments=1&UserId=203269535&Brand=2&Issuer=2&L4digit=0000&street=levanon%203&city=netanya&zip=42361&cell=098610338&Coin=1&Tmonth=03&Tyear=2022&errMsg=%20(0)&Hesh=31`;
+      router.push(testUrl);
       // setUrl(urlRes);
 
       // console.log('this is api result: ', result);

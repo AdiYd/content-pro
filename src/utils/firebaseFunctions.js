@@ -137,6 +137,7 @@ export async function getAllDataFromCollection(collectionName) {
       data.push({ id: doci.id, ...doci.data() });
     });
     const emails = data.map((res) => res.email);
+
     return { data, emails };
   } catch (error) {
     console.error('Error getting documents: ', error);
