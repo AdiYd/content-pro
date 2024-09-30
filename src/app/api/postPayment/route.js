@@ -8,7 +8,7 @@ import { addUser, deletePrePayer, getPrePayerByEmail } from 'src/utils/firebaseF
 export async function POST(request) {
   try {
     const data = await request.json();
-    const { Id, Fild1, Fild2, CCode } = data;
+    const { Id, Fild1, Fild2, CCode, Amount } = data;
     const name = Fild1?.toLowerCase();
     const email = Fild2?.toLowerCase();
     const prePayer = await getPrePayerByEmail(email);
@@ -16,7 +16,7 @@ export async function POST(request) {
     console.log('Query prePayer resulted with: ', isValid, prePayer);
     if (email && isValid && Number(CCode) === 0) {
       // const approve = await fetch();
-      await addUser(prePayer[0]);
+      await addUser({ ...prePayer[0], payment: Amount || prePayer[0].payment });
       await deletePrePayer(prePayer[0]?.id);
       if (true) {
         await sendInvoiceEmail(prePayer[0]);

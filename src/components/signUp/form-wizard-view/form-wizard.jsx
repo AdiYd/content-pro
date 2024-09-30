@@ -230,6 +230,7 @@ export function FormWizard({ coursePrice }) {
       await new Promise((resolve) => setTimeout(resolve, 500));
       data.email = data.email.toLowerCase();
       console.info('DATA', data);
+      console.log('Price: ', data.totalPrice);
 
       trackPurchase(data.email, data.totalPrice, 'ILS', 'Course');
       handlePyament(data);

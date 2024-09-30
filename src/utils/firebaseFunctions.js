@@ -14,7 +14,7 @@ export async function addUser({
   location = null,
   packageType = null,
   goals = null,
-  totalPrice = null,
+  payment = null,
   approveTerms = false,
 }) {
   try {
@@ -30,7 +30,7 @@ export async function addUser({
         location,
         packageType,
         goals,
-        payment: totalPrice,
+        payment,
         approveTerms,
         timeStamp,
       });

@@ -760,7 +760,6 @@ function User({ userData = {} }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   let dataRes;
-  console.log('Userdata: ', userData);
 
   const setLoaderActive = (duration = 0.2) => {
     setLoader(true);
@@ -814,15 +813,17 @@ function User({ userData = {} }) {
             מעבר לאתר הקורס
           </Button>
 
-          <Button
-            href="https://chat.whatsapp.com/DE2HSwpg9ABJpaEYj4ZAfv"
-            variant="text"
-            size="small"
-            sx={{ mb: 2 }}
-          >
-            <Iconify icon="logos:whatsapp-icon" />
-            &nbsp; &nbsp; הצטרפות לקהילה
-          </Button>
+          {userData.payment && userData.payment > 249 && (
+            <Button
+              href="https://chat.whatsapp.com/DE2HSwpg9ABJpaEYj4ZAfv"
+              variant="text"
+              size="small"
+              sx={{ mb: 2 }}
+            >
+              <Iconify icon="logos:whatsapp-icon" />
+              &nbsp; &nbsp; הצטרפות לקהילה
+            </Button>
+          )}
         </div>
       )}
       <Stack mb={4} justifyContent="center" direction="row" spacing={4}>
@@ -857,15 +858,17 @@ function User({ userData = {} }) {
             >
               מעבר לאתר הקורס
             </Button>
-            <Button
-              href="https://chat.whatsapp.com/DE2HSwpg9ABJpaEYj4ZAfv"
-              variant="text"
-              size="small"
-              // sx={{ mb: 2 }}
-            >
-              <Iconify icon="logos:whatsapp-icon" />
-              &nbsp; &nbsp; הצטרפות לקהילה
-            </Button>
+            {userData.payment && userData.payment > 249 && (
+              <Button
+                href="https://chat.whatsapp.com/DE2HSwpg9ABJpaEYj4ZAfv"
+                variant="text"
+                size="small"
+                // sx={{ mb: 2 }}
+              >
+                <Iconify icon="logos:whatsapp-icon" />
+                &nbsp; &nbsp; הצטרפות לקהילה
+              </Button>
+            )}
           </div>
         )}
       </Stack>
