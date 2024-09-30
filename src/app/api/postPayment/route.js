@@ -3,9 +3,7 @@
 'use server';
 
 import { sendInvoiceEmail } from 'src/utils/invoice';
-import { addUser } from 'src/utils/firebaseFunctions';
-
-import { PayersDict } from '../payersTemp';
+import { addUser, deletePrePayer, getPrePayerByEmail } from 'src/utils/firebaseFunctions';
 
 export async function POST(request) {
   try {
@@ -13,14 +11,16 @@ export async function POST(request) {
     const { Id, Fild1, Fild2, CCode } = data;
     const name = Fild1?.toLowerCase();
     const email = Fild2?.toLowerCase();
-    // console.log('PayersDict: ', PayersDict, email);
-    // console.log('postPayment - Message from client: ', data);
-    if (email && PayersDict[email] && Number(CCode) === 0) {
-      const user = PayersDict[email];
+    const prePayer = await getPrePayerByEmail(email);
+    const isValid = Boolean(prePayer.length);
+    console.log('Query prePayer resulted with: ', isValid, prePayer);
+    if (email && isValid && Number(CCode) === 0) {
       // const approve = await fetch();
-        await addUser(user);
-        await sendInvoiceEmail(user);
-
+      await addUser(prePayer[0]);
+      await deletePrePayer(prePayer[0]?.id);
+      if (false) {
+        await sendInvoiceEmail(prePayer[0]);
+      }
       return new Response(JSON.stringify({ message: `Message Received`, payment: true }), {
         status: 200,
         headers: {

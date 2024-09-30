@@ -404,7 +404,7 @@ export function StepTwo({ name, setValue }) {
                         setNiche(subNiche);
                         setValue('niche', subNiche);
                       }}
-                      color="error"
+                      color="success"
                     />
                   }
                   label={subNiche}

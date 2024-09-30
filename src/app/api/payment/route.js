@@ -3,7 +3,7 @@
 'use server';
 
 
-import { PayersDict } from '../payersTemp';
+import { addPrePayer } from 'src/utils/firebaseFunctions';
 
 export async function POST(request) {
   try {
@@ -27,11 +27,9 @@ export async function POST(request) {
     const tempUser = { ...data };
     delete tempUser.apiUrl;
 
-    PayersDict[tempUser.email] = { ...tempUser };
-    console.log('This is PayersDict: ', PayersDict);
+    await addPrePayer(tempUser);
 
-    // console.log('This is email response: ', res);
-    return new Response(JSON.stringify({ message: `Message Received`, url, res }), {
+    return new Response(JSON.stringify({ message: `Message Received`, url }), {
       status: 200,
       headers: {
         'Content-Type': 'application/json',

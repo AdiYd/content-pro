@@ -1,10 +1,10 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { doc, query, where, addDoc, getDoc, getDocs, collection } from 'firebase/firestore';
+import { doc, query, where, addDoc, getDoc, getDocs, deleteDoc, collection } from 'firebase/firestore';
 
 import { db } from './firebaseConfig'; // Import your Firebase configuration
 import { getIsraelTimestamp } from './format-time';
 
-// Function to add a user to the "users" table
+// Add Tables
 export async function addUser({
   email,
   name = null,
@@ -20,7 +20,6 @@ export async function addUser({
   try {
     const timeStamp = getIsraelTimestamp();
     const isUser = await getUserByEmail(email);
-    console.log('Res of isUser: ', isUser);
     if (isUser.length === 0) {
       const docRef = await addDoc(collection(db, 'users'), {
         email,
@@ -36,24 +35,77 @@ export async function addUser({
         timeStamp,
       });
       console.log('User added with ID: ', docRef.id);
+    } else {
+      console.log(`User ${email} already exist!`, isUser[0]);
     }
   } catch (e) {
     console.error('Error adding user: ', e);
   }
 }
-
-// Function to add a lead to the "leads" table
+export async function addPrePayer({
+  email,
+  name = null,
+  age = null,
+  gender = null,
+  niche = null,
+  location = null,
+  packageType = null,
+  goals = null,
+  totalPrice = null,
+  approveTerms = false,
+}) {
+  try {
+    const timeStamp = getIsraelTimestamp();
+    const isPrePayer = await getPrePayerByEmail(email);
+    if (isPrePayer.length === 0) {
+      const docRef = await addDoc(collection(db, 'prePayers'), {
+        email,
+        name,
+        age,
+        gender,
+        niche,
+        location,
+        packageType,
+        goals,
+        payment: totalPrice,
+        approveTerms,
+        timeStamp,
+      });
+      console.log('prePayer added with ID: ', docRef.id);
+    } else {
+      console.log(`prePayer ${email} already exist!`, isPrePayer[0]);
+    }
+  } catch (e) {
+    console.error('Error adding user: ', e);
+  }
+}
 export async function addLead({ email, name, contactForm = false }) {
   try {
     const timeStamp = getIsraelTimestamp();
-    const docRef = await addDoc(collection(db, 'leads'), { email, name, contactForm, timeStamp });
-    console.log('Lead added with ID: ', docRef.id, email, name);
+    const isLead = await getLeadByEmail(email);
+    if (isLead.length === 0) {
+      const docRef = await addDoc(collection(db, 'leads'), { email, name, contactForm, timeStamp });
+      console.log('Lead added with ID: ', docRef.id, email, name);
+    } else {
+      console.log(`Lead ${email} already exist!`, isLead[0]);
+    }
   } catch (e) {
     console.error('Error adding lead: ', e);
   }
 }
 
-// Function to get user data by email from the "users" table
+// Delet item from table
+export async function deletePrePayer(id) {
+  const userDocRef = doc(db, 'prePayers', id);
+  try {
+    await deleteDoc(userDocRef);
+    console.log('prePayer deleted successfully');
+  } catch (error) {
+    console.error('Error deleting prePayer:', error);
+  }
+}
+
+// Query by mail
 export async function getUserByEmail(email) {
   try {
     const q = query(collection(db, 'users'), where('email', '==', email));
@@ -65,9 +117,39 @@ export async function getUserByEmail(email) {
     return userData;
   } catch (e) {
     console.error('Error fetching user: ', e);
-    return false;
+    return [];
   }
 }
+export async function getPrePayerByEmail(email) {
+  try {
+    const q = query(collection(db, 'prePayers'), where('email', '==', email));
+    const querySnapshot = await getDocs(q);
+    const userData = [];
+    querySnapshot.forEach((doci) => {
+      userData.push({ id: doci.id, ...doci.data() });
+    });
+    return userData;
+  } catch (e) {
+    console.error('Error fetching user: ', e);
+    return [];
+  }
+}
+export async function getLeadByEmail(email) {
+  try {
+    const q = query(collection(db, 'leads'), where('email', '==', email));
+    const querySnapshot = await getDocs(q);
+    const leadsData = [];
+    querySnapshot.forEach((doci) => {
+      leadsData.push({ id: doci.id, ...doci.data() });
+    });
+    return leadsData;
+  } catch (e) {
+    console.error('Error fetching lead: ', e);
+    return [];
+  }
+}
+
+// Query by Id
 
 export async function getUserById(userId) {
   const userDocRef = doc(db, 'users', userId);
@@ -84,7 +166,6 @@ export async function getUserById(userId) {
     return null;
   }
 }
-
 export async function getLeadById(userId) {
   const userDocRef = doc(db, 'leads', userId);
   try {
@@ -101,23 +182,8 @@ export async function getLeadById(userId) {
   }
 }
 
-// Function to get leads data by email from the "leads" table
-export async function getLeadByEmail(email) {
-  try {
-    const q = query(collection(db, 'leads'), where('email', '==', email));
-    const querySnapshot = await getDocs(q);
-    const leadsData = [];
-    querySnapshot.forEach((doci) => {
-      leadsData.push({ id: doci.id, ...doci.data() });
-    });
-    return leadsData;
-  } catch (e) {
-    console.error('Error fetching lead: ', e);
-    return false;
-  }
-}
+// Query by Location
 
-// Function to query users by location
 export async function getUsersByLocation(location) {
   try {
     const q = query(collection(db, 'users'), where('location', '==', location));
@@ -132,6 +198,25 @@ export async function getUsersByLocation(location) {
     return false;
   }
 }
+
+//  General query from table = tableName , key = itemName and value = itemValue
+
+export async function getItemByParam(tableName, itemName, itemValue) {
+  try {
+    const q = query(collection(db, tableName), where(itemName, '==', itemValue));
+    const querySnapshot = await getDocs(q);
+    const users = [];
+    querySnapshot.forEach((doci) => {
+      users.push({ id: doci.id, ...doci.data() });
+    });
+    return users;
+  } catch (e) {
+    console.error('Error fetching Item by Param: ', e);
+    return [];
+  }
+}
+
+// Query all items from collection (Table)
 
 export async function getAllDataFromCollection(collectionName) {
   try {

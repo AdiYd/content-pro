@@ -3,7 +3,7 @@
 'use server';
 
 import { sendEmail, leadTemplate } from 'src/utils/email';
-import { addLead, getAllDataFromCollection } from 'src/utils/firebaseFunctions';
+import { addLead, getLeadByEmail, getAllDataFromCollection } from 'src/utils/firebaseFunctions';
 
 const getLeads = async () => {
   try {
@@ -20,19 +20,20 @@ export async function POST(request) {
     const data = await request.json();
     data.email = data.email.toLowerCase();
     console.log('Leads - Message from client: ', data);
-    const leadsData = await getLeads();
-    if (leadsData && !leadsData.emails?.includes(data.emails)) {
-      const template = leadTemplate(data);
+    const lead = await getLeadByEmail(data.email);
+    const isLead = Boolean(lead?.length);
+    if (!isLead) {
       if (true) {
         await addLead(data);
+        const template = leadTemplate(data);
         await sendEmail({
           data,
           template,
           title: data.contactForm ? 'מתעניין חדש (טופס צרו קשר)' : 'מתעניין חדש (טופס הצטרפות)',
         });
       }
-    } else if (leadsData && leadsData.emails?.includes(data.email)) {
-      console.log('Lead already exist! ', data.email);
+    } else if (isLead) {
+      console.log('Lead already exist: ', lead[0]);
     } else {
       console.log("Lead didn't saved");
     }
@@ -42,7 +43,8 @@ export async function POST(request) {
         'Content-Type': 'application/json',
       },
     });
-  } catch (error) {
+  } catch (e) {
+    console.log('There was an error with signing new lead', e);
     return new Response(JSON.stringify({ error: 'Invalid request' }), {
       status: 400,
       headers: {
