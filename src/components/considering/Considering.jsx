@@ -59,9 +59,9 @@ const getRemainingCookieTimeInSeconds = (cookieName) => {
   }
 };
 
-const setCookie = (name = 'counting', numOfSec = NumOfMinutes * 60) => {
+export const setCookie = (name = 'counting', value = undefined, numOfSec = NumOfMinutes * 60) => {
   const expirationDate = new Date(new Date().getTime() + numOfSec * 1000);
-  const value = JSON.stringify({ expires: expirationDate });
+  value = value || JSON.stringify({ expires: expirationDate });
   Cookies.set(name, value, { expires: expirationDate });
 };
 

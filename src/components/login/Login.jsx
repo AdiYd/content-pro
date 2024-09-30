@@ -1,5 +1,6 @@
 'use client';
 
+import Cookies from 'js-cookie';
 import { m } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useForm, Controller } from 'react-hook-form';
@@ -49,6 +50,7 @@ import {
 } from 'src/components/animate';
 
 import { Iconify } from '../iconify';
+import { setCookie } from '../considering/Considering';
 
 function Login({ id }) {
   const theme = useTheme();
@@ -59,6 +61,18 @@ function Login({ id }) {
   const [userData, setUserData] = useState();
   const router = useRouter();
   const isActive = isAdmin || Boolean(userData);
+
+  useEffect(() => {
+    const signed = Cookies.get('signin');
+    if (signed) {
+      if (signed === 'admin') {
+        setAdmin(true);
+      } else {
+        router.push(`/login?id=${signed}`);
+      }
+      // console.log('SIGNIN: ', signed);
+    }
+  }, [router]);
 
   useEffect(() => {
     if (id) {
@@ -88,8 +102,10 @@ function Login({ id }) {
       setTimeout(() => {
         setLoading(false);
         setAdmin(true);
+        setCookie('signin', 'admin', 60 * 20);
       }, 1 * 1e3);
     } else if (user) {
+      setCookie('signin', userID, 60 * 20);
       router.push(`/login?id=${userID}`);
     }
   };
@@ -363,7 +379,7 @@ function Admin() {
   let dataRes;
 
   const changeMode = () => {
-    console.log('Change data base theme mode to: ', mode === 'dark' ? 'light' : 'dark');
+    console.log('Change DB theme mode to: ', mode === 'dark' ? 'light' : 'dark');
     setMode(mode === 'dark' ? 'light' : 'dark');
   };
   const changeColor = (color) => {
@@ -371,9 +387,8 @@ function Admin() {
 
     const onApproval = (colorChange) => {
       setColor(colorChange);
-      console.log('Change data base main color to: ', colorChange);
+      console.log('Change DB main color to: ', colorChange);
     };
-    // setMode(mode === 'dark' ? 'light' : 'dark');
   };
 
   const dialog = (onClose = () => {}) => (
@@ -570,7 +585,7 @@ function Admin() {
       users.data.forEach((item) => {
         usersFinal.push({ ...item, goals: item.goals.join(', ') });
       });
-      console.log(users, usersFinal);
+      // console.log(users, usersFinal);
       return { leads, users: { data: usersFinal, emails: users.emails } };
     };
     fetchDataBase().then((res) => setData(res));
