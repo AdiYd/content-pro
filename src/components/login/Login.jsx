@@ -760,6 +760,7 @@ function User({ userData = {} }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   let dataRes;
+  console.log('Userdata: ', userData);
 
   const setLoaderActive = (duration = 0.2) => {
     setLoader(true);
@@ -801,20 +802,30 @@ function User({ userData = {} }) {
         באיזור האישי ניתן לראות פרטים על הקורס, תיק העבודות, בחירת נישה להתמחות ורעיונות לתכני וידאו
       </Typography>
       {isMobile && (
-        <div className="flex justify-center">
+        <div className="flex items-center flex-col justify-center">
           <Button
             href="https://eranfarkash.thinkific.com/courses/social-platforms"
             variant="outlined"
             color={mainColor}
             size="small"
             // size="small"
-            sx={{ mt: 2, width: '80%' }}
+            sx={{ my: 2, width: '80%' }}
           >
             מעבר לאתר הקורס
           </Button>
+
+          <Button
+            href="https://chat.whatsapp.com/DE2HSwpg9ABJpaEYj4ZAfv"
+            variant="text"
+            size="small"
+            sx={{ mb: 2 }}
+          >
+            <Iconify icon="logos:whatsapp-icon" />
+            &nbsp; &nbsp; הצטרפות לקהילה
+          </Button>
         </div>
       )}
-      <Stack my={4} justifyContent="center" direction="row" spacing={4}>
+      <Stack mb={4} justifyContent="center" direction="row" spacing={4}>
         {UserOptionsDict.map((item, index) => (
           <Button
             onClick={() => {
@@ -835,16 +846,27 @@ function User({ userData = {} }) {
           </Button>
         ))}
         {!isMobile && (
-          <Button
-            href="https://eranfarkash.thinkific.com/courses/social-platforms"
-            variant="outlined"
-            color={mainColor}
-            size="medium"
-            // size="small"
-            sx={{ fontSize: '0.8rem' }}
-          >
-            מעבר לאתר הקורס
-          </Button>
+          <div className="text-center flex gap-4">
+            <Button
+              href="https://eranfarkash.thinkific.com/courses/social-platforms"
+              variant="outlined"
+              color={mainColor}
+              size="medium"
+              // size="small"
+              sx={{ fontSize: '0.8rem' }}
+            >
+              מעבר לאתר הקורס
+            </Button>
+            <Button
+              href="https://chat.whatsapp.com/DE2HSwpg9ABJpaEYj4ZAfv"
+              variant="text"
+              size="small"
+              // sx={{ mb: 2 }}
+            >
+              <Iconify icon="logos:whatsapp-icon" />
+              &nbsp; &nbsp; הצטרפות לקהילה
+            </Button>
+          </div>
         )}
       </Stack>
 

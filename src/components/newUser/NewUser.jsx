@@ -139,7 +139,7 @@ export function NewUser({ params, ...props }) {
               לאיזור האישי
             </Button>
 
-            {(!Amount || Amount > 500) && (
+            {(!Amount || Amount > 250) && (
               <Button
                 href="https://chat.whatsapp.com/DE2HSwpg9ABJpaEYj4ZAfv"
                 variant="text"
