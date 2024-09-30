@@ -800,6 +800,20 @@ function User({ userData = {} }) {
       <Typography color="text.secondary" variant="body1">
         באיזור האישי ניתן לראות פרטים על הקורס, תיק העבודות, בחירת נישה להתמחות ורעיונות לתכני וידאו
       </Typography>
+      {isMobile && (
+        <div className="flex justify-center">
+          <Button
+            href="https://eranfarkash.thinkific.com/courses/social-platforms"
+            variant="outlined"
+            color={mainColor}
+            size="small"
+            // size="small"
+            sx={{ mt: 2, width: '80%' }}
+          >
+            מעבר לאתר הקורס
+          </Button>
+        </div>
+      )}
       <Stack my={4} justifyContent="center" direction="row" spacing={4}>
         {UserOptionsDict.map((item, index) => (
           <Button
@@ -810,12 +824,28 @@ function User({ userData = {} }) {
             key={index}
             color={activeButton === item ? mainColor : undefined}
             size={isMobile ? 'small' : 'medium'}
-            sx={{ fontSize: isMobile ? '0.8rem' : '', textWrap: 'nowrap' }}
+            sx={{ fontSize: isMobile ? '0.8rem' : '0.8rem', textWrap: 'nowrap' }}
             variant={activeButton === item ? 'contained' : 'outlined'}
           >
-            {item === 'AI Creator Agent' && '✨'} {item}
+            {item === 'AI Creator Agent'
+              ? isMobile
+                ? '✨ AI Agent'
+                : '✨ AI Creator Agent'
+              : item}
           </Button>
         ))}
+        {!isMobile && (
+          <Button
+            href="https://eranfarkash.thinkific.com/courses/social-platforms"
+            variant="outlined"
+            color={mainColor}
+            size="medium"
+            // size="small"
+            sx={{ fontSize: '0.8rem' }}
+          >
+            מעבר לאתר הקורס
+          </Button>
+        )}
       </Stack>
 
       <Box my={4}>
