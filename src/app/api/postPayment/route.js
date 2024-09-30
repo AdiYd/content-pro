@@ -18,7 +18,7 @@ export async function POST(request) {
       // const approve = await fetch();
       await addUser(prePayer[0]);
       await deletePrePayer(prePayer[0]?.id);
-      if (false) {
+      if (true) {
         await sendInvoiceEmail(prePayer[0]);
       }
       return new Response(JSON.stringify({ message: `Message Received`, payment: true }), {
