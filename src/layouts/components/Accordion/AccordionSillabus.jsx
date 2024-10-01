@@ -33,7 +33,7 @@ function AccordionSyllabus({ title = defaultTitle, accordions = [], ...props }) 
             </Typography> */}
           </Typography>
           <Typography color="text.secondary" variant="p">
-            אנחנו כל כך גאים בתכנים שלנו שבחרנו להציג את הסילבוס של הקורס, ככה פשוט.
+            אנחנו כל כך גאים בתכנים שלנו ורוצים שתראו מה אתם מקבלים.
           </Typography>
           <br />
           <Typography color="text.secondary" variant="p">

@@ -138,8 +138,9 @@ export const geminiTamplate = (data) => {
         <h4 style="margin: 10px; font-size: 14px;"> אנחנו שמחים שבחרתם להצטרף לקורס ולקהילה שלנו, ללמוד איך ליצור תוכן איכותי שמושך אליו קהל ולקוחות.</h4>
         <h4 style="margin: 10px; font-size: 14px;"> מאחלים לכם בהצלחה בתהליך ואנחנו פה לכל שאלה ותמיכה</h4>
         <h4 style="margin: 10px; font-size: 14px;"> מצורפים הקישורים לקורס (יש לבצע רישום פשוט וליצור לעצמכם שם משתמש) ולקבוצת הוואטסאפ שלנו: </h4>
+        <p style="margin: 10px; font-size: 14px;"><b>קישור לאיזור האישי:</b> ${'https://VideoPro.webly.digital/login'}</p>
         <p style="margin: 10px; font-size: 14px;"><b>קישור לקורס:</b> ${'https://eranfarkash.thinkific.com/courses/social-platforms'}</p>
-        <p style="margin: 10px; font-size: 14px;"><b>קישור לוואטסאפ:</b> ${'https://chat.whatsapp.com/DE2HSwpg9ABJpaEYj4ZAfv'}</p>
+        <p style="margin: 10px; font-size: 14px;"><b>קישור לקהילה:</b> ${'https://chat.whatsapp.com/DE2HSwpg9ABJpaEYj4ZAfv'}</p>
         
     <h4 style="margin: 10px; margin-top:20px; font-size: 14px;"> התחילו ללמוד ולתרגל, הצטרפו לקהילה בוואטצאפ ותקבלו עוד הדרכות והכוונות</h4>
     </div>
@@ -299,8 +300,9 @@ export const signupTemaplate = (data) => `
         <h4 style="margin: 10px; font-size: 14px;"> אנחנו שמחים שבחרתם להצטרף לקורס ולקהילה שלנו, ללמוד איך ליצור תוכן איכותי שמושך אליו קהל ולקוחות.</h4>
         <h4 style="margin: 10px; font-size: 14px;"> מאחלים לכם בהצלחה בתהליך ואנחנו פה לכל שאלה ותמיכה</h4>
         <h4 style="margin: 10px; font-size: 14px;"> מצורפים הקישורים לקורס (יש לבצע רישום פשוט וליצור לעצמכם שם משתמש) ולקבוצת הוואטסאפ שלנו: </h4>
+        <p style="margin: 10px; font-size: 14px;"><b>קישור לאיזור האישי:</b> ${'https://VideoPro.webly.digital/login'}</p>
         <p style="margin: 10px; font-size: 14px;"><b>קישור לקורס:</b> ${'https://eranfarkash.thinkific.com/courses/social-platforms'}</p>
-        <p style="margin: 10px; font-size: 14px;"><b>קישור לוואטסאפ:</b> ${'https://chat.whatsapp.com/DE2HSwpg9ABJpaEYj4ZAfv'}</p>
+        <p style="margin: 10px; font-size: 14px;"><b>קישור לקהילה:</b> ${'https://chat.whatsapp.com/DE2HSwpg9ABJpaEYj4ZAfv'}</p>
       
 
     <h4 style="margin: 10px; margin-top:20px; font-size: 14px;"> התחילו ללמוד ולתרגל, הצטרפו לקהילה בוואטצאפ ותקבלו עוד הדרכות והכוונות</h4>
