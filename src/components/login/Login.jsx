@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import { m } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useForm, Controller } from 'react-hook-form';
-import { useRef, useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Oval, Circles, InfinitySpin } from 'react-loader-spinner';
 
@@ -51,6 +51,7 @@ import {
 
 import { Iconify } from '../iconify';
 import { setCookie } from '../considering/Considering';
+import { Niches } from '../signUp/form-wizard-view/form-steps';
 
 function Login({ id }) {
   const theme = useTheme();
@@ -96,7 +97,6 @@ function Login({ id }) {
   };
 
   const setUser = (user, userID) => {
-    console.log('This is user:', user);
     if (user === 'adminpro') {
       setLoading(true);
       setTimeout(() => {
@@ -390,12 +390,29 @@ function Admin() {
   const [loader, setLoader] = useState(false);
   const [dialogRef, setDialog] = useState();
   const [open, setOpen] = useState(false);
+  const [searchKey, setSearchKey] = useState({
+    input: undefined,
+    niche: undefined,
+  });
   const theme = useTheme();
   const { setMode } = useColorScheme();
   const { mainColor, textGradient, mode, setColor } = useContext(ColorContext);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const searchInput = useRef();
   let dataRes;
+
+  useEffect(() => {
+    const fetchDataBase = async () => {
+      const leads = await getAllDataFromCollection('leads');
+      const users = await getAllDataFromCollection('users');
+      const usersFinal = [];
+      users.data.forEach((item) => {
+        usersFinal.push({ ...item, goals: item.goals.join(', ') });
+      });
+      // console.log(users, usersFinal);
+      return { leads, users: { data: usersFinal, emails: users.emails } };
+    };
+    fetchDataBase().then((res) => setData(res));
+  }, []);
 
   const changeMode = () => {
     console.log('Change DB theme mode to: ', mode === 'dark' ? 'light' : 'dark');
@@ -449,7 +466,7 @@ function Admin() {
     </Dialog>
   );
 
-  if (search || searchInput.current) {
+  if (search) {
     dataRes = search?.resCount ? (
       <Box>
         {Boolean(search.users?.length) && (
@@ -596,20 +613,6 @@ function Admin() {
     );
   }
 
-  useEffect(() => {
-    const fetchDataBase = async () => {
-      const leads = await getAllDataFromCollection('leads');
-      const users = await getAllDataFromCollection('users');
-      const usersFinal = [];
-      users.data.forEach((item) => {
-        usersFinal.push({ ...item, goals: item.goals.join(', ') });
-      });
-      // console.log(users, usersFinal);
-      return { leads, users: { data: usersFinal, emails: users.emails } };
-    };
-    fetchDataBase().then((res) => setData(res));
-  }, []);
-
   const setLoaderActive = (duration = 0.2) => {
     setLoader(true);
     setTimeout(() => {
@@ -617,26 +620,48 @@ function Admin() {
     }, [duration * 1e3]);
   };
 
-  const handleSearch = (e) => {
-    const val = e.target.value.toLowerCase();
-    if (val === '') {
-      setSearch(undefined);
+  const handleSearch = (e, niche) => {
+    setLoaderActive();
+    const { name, value } = e.target;
+    // console.log('handle search: ', searchKey);
+    if (name === 'niche') {
+      // console.log('Changing niche to : ', niche);
+      setSearchKey((p) => ({ ...p, niche }));
+    } else if (name === 'input') {
+      // console.log('Changing Input to : ', value);
+      setSearchKey((p) => ({ ...p, input: value }));
+    }
+
+    const val = name === 'input' ? value?.toLowerCase() : searchKey.input;
+    niche = name === 'niche' ? niche : searchKey.niche;
+    if (!val || val === '') {
+      if (!niche) {
+        // console.log('No input / No niche');
+        setSearch(undefined);
+      } else if (niche) {
+        // console.log('No Input / Yes niche');
+        const nichRes = data.users?.data?.filter((item) => item.niche === niche) || [];
+        setSearch({ users: nichRes, leads: [], resCount: nichRes?.length || 0 });
+      }
       return;
     }
-    setLoaderActive();
-    const resLeads = data.leads?.data.filter(
-      (item) => item.email.toLowerCase().includes(val) || item.name.toLowerCase().includes(val)
-    );
+    const resLeads = !niche
+      ? data.leads?.data.filter(
+          (item) => item.email.toLowerCase().includes(val) || item.name.toLowerCase().includes(val)
+        )
+      : [];
     const resUsers = data.users?.data.filter(
-      (item) => item.email.toLowerCase().includes(val) || item.name.toLowerCase().includes(val)
+      (item) =>
+        (item.email.toLowerCase().includes(val) || item.name.toLowerCase().includes(val)) &&
+        (!niche || (niche && item.niche === niche))
     );
     const finalRes = [...resLeads, ...resUsers];
-    console.log('Final res: ', val, finalRes);
+    // console.log('Final res: ', val, finalRes);
     setSearch({ users: resUsers, leads: resLeads, resCount: finalRes.length });
   };
 
   return (
-    <Box width={1} sx={{ dir: 'rtl' }} textAlign="start">
+    <Box width={1} sx={{ dir: 'rtl', mt: 2 }} textAlign="start">
       <Typography variant="h4">היי מנהל אתר 👋🏽,</Typography>
       <Typography color="text.secondary" variant="body1">
         כאן ניתן לראות נתוני משתמשים ולשנות הגדרות
@@ -668,15 +693,43 @@ function Admin() {
         ))}
       </Stack>
       {activeButton !== 'הגדרות אתר' && (
-        <Box width={isMobile ? 1 : '60%'} mx="auto" display="flex" justifyContent="center">
-          <TextField
-            fullWidth
-            onChange={handleSearch}
-            variant="filled"
-            value={searchInput.current}
-            label="חיפוש לפי שם/אימייל"
-          />
-        </Box>
+        <div className="w-full">
+          <div className="flex justify-center">
+            <RadioGroup sx={{ alignSelf: 'center' }} name="niche" color={mainColor}>
+              <Stack justifyContent="start" direction="row" flexWrap="wrap">
+                {Niches.map((subNiche, indx) => (
+                  <FormControlLabel
+                    key={`${indx} ${subNiche}`}
+                    name="nice"
+                    value={subNiche}
+                    checked={subNiche === searchKey.niche}
+                    control={
+                      <Radio
+                        name="niche"
+                        size="small"
+                        onClick={(e) => {
+                          handleSearch(e, subNiche === searchKey.niche ? undefined : subNiche);
+                        }}
+                        color="secondary"
+                      />
+                    }
+                    label={subNiche.split(' ')[0]}
+                  />
+                ))}
+              </Stack>
+            </RadioGroup>
+          </div>
+          <Box width={isMobile ? 1 : '60%'} mx="auto" display="flex" justifyContent="center">
+            <TextField
+              fullWidth
+              name="input"
+              onChange={handleSearch}
+              variant="filled"
+              value={searchKey.input}
+              label="חיפוש לפי שם/אימייל"
+            />
+          </Box>
+        </div>
       )}
       <Box my={4}>
         {loader ? (
@@ -762,13 +815,7 @@ const nicheData = {
   'ספורט ואקסטרים': ['סקי', 'גלישת גלים', 'טיפוס הרים', 'ספורט אתגרי'],
   'חיות מחמד': ['מדריכים לטיפול בחיות', 'סקירות מוצרים לחיות מחמד', 'אימונים וטיפים'],
 };
-const ContentNiches = [
-  'אופנה וטקסטיל',
-  'מותגי מזון',
-  'הייטק',
-  'מדיה ורשתות חברתיות',
-  'מותגי יוקרה',
-];
+
 const aiDescription =
   "כל מה שצריך זה לבחור נישה של תוכן ולכתוב כמה מילים משלכם (לא חובה). הצ'אט שלנו יבנה לכם סקריפט ליצרת סרטון ואתם תוכלו להשתמש בו ככלי לימודי ומקור לרעיונות";
 

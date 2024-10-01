@@ -51,6 +51,14 @@ import { Carousel, useCarousel, CarouselDotButtons } from 'src/components/carous
 
 const terms = require('../../../utils/terms.json');
 
+export const Niches = [
+  'ספורט ובריאות',
+  'ביוטי וטיפוח',
+  'אופנה ו-Lifestyle',
+  'טכנולוגיה והייטק',
+  'הורות',
+];
+
 export const gradients = {
   g1: 'to right, #007bff, #607d8b',
   g2: 'to right, #008000, #404040',
@@ -358,14 +366,6 @@ export function StepTwo({ name, setValue }) {
     const finalGoals = tempGoals.map((item) => goalsDict[item]);
     setValue('goals', finalGoals);
   };
-
-  const Niches = [
-    'ספורט ובריאות',
-    'ביוטי וטיפוח',
-    'אופנה ו-Lifestyle',
-    'טכנולוגיה והייטק',
-    'הורות',
-  ];
 
   return (
     <div className="z-30 flex flex-col gap-6">

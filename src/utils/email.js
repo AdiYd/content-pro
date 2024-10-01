@@ -135,8 +135,8 @@ export const geminiTamplate = (data) => {
   <div style="display: flex; align-items: center; margin-top: 20px;">
     <div style="flex: 1;">
       ${data.name ? `<h3 style="margin: 10px; font-size: 20px;">היי ${data.name}, </h3>` : ''}
-        <h4 style="margin: 10px; font-size: 14px;"> אנחנו שמחים שבחרתם להצטרף לקורס ולקהילה שלנו, ללמוד איך ליצור תוכן איכותי שמושך אליו קהל ולקוחות.</h4>
-        <h4 style="margin: 10px; font-size: 14px;"> מאחלים לכם בהצלחה בתהליך ואנחנו פה לכל שאלה ותמיכה</h4>
+        <h4 style="margin: 10px; font-size: 14px;"> אנחנו שמחים שבחרת להצטרף לקורס ולקהילה שלנו, ללמוד איך ליצור תוכן איכותי שמושך אליו קהל ולקוחות.</h4>
+        <h4 style="margin: 10px; font-size: 14px;"> מאחלים לך בהצלחה בתהליך ואנחנו פה לכל שאלה ותמיכה</h4>
         <h4 style="margin: 10px; font-size: 14px;"> מצורפים הקישורים לקורס (יש לבצע רישום פשוט וליצור לעצמכם שם משתמש) ולקבוצת הוואטסאפ שלנו: </h4>
         <p style="margin: 10px; font-size: 14px;"><b>קישור לאיזור האישי:</b> ${'https://VideoPro.webly.digital/login'}</p>
         <p style="margin: 10px; font-size: 14px;"><b>קישור לקורס:</b> ${'https://eranfarkash.thinkific.com/courses/social-platforms'}</p>
@@ -297,8 +297,8 @@ export const signupTemaplate = (data) => `
   <div style="display: flex; align-items: center; margin-top: 20px;">
     <div style="flex: 1;">
       ${data.name ? `<h3 style="margin: 10px; font-size: 20px;">היי ${data.name}, </h3>` : ''}
-        <h4 style="margin: 10px; font-size: 14px;"> אנחנו שמחים שבחרתם להצטרף לקורס ולקהילה שלנו, ללמוד איך ליצור תוכן איכותי שמושך אליו קהל ולקוחות.</h4>
-        <h4 style="margin: 10px; font-size: 14px;"> מאחלים לכם בהצלחה בתהליך ואנחנו פה לכל שאלה ותמיכה</h4>
+        <h4 style="margin: 10px; font-size: 14px;"> אנחנו שמחים שבחרת להצטרף לקורס ולקהילה שלנו, ללמוד איך ליצור תוכן איכותי שמושך אליו קהל ולקוחות.</h4>
+        <h4 style="margin: 10px; font-size: 14px;"> מאחלים לך בהצלחה בתהליך ואנחנו פה לכל שאלה ותמיכה</h4>
         <h4 style="margin: 10px; font-size: 14px;"> מצורפים הקישורים לקורס (יש לבצע רישום פשוט וליצור לעצמכם שם משתמש) ולקבוצת הוואטסאפ שלנו: </h4>
         <p style="margin: 10px; font-size: 14px;"><b>קישור לאיזור האישי:</b> ${'https://VideoPro.webly.digital/login'}</p>
         <p style="margin: 10px; font-size: 14px;"><b>קישור לקורס:</b> ${'https://eranfarkash.thinkific.com/courses/social-platforms'}</p>

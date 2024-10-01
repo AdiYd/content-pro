@@ -381,7 +381,7 @@ function Considering({
                     // alignSelf: 'center',
                     // mx: 8,
                     px: 4,
-                    // borderRadius: 25,
+                    borderRadius: 25,
                     transition: 'all 0.3s ease-in',
                     fontSize: { md: '24px', xs: '18px' },
                     maxWidth: '80vw',
