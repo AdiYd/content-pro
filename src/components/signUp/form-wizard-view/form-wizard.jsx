@@ -10,12 +10,14 @@ import { useState, useContext, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { Card, useTheme, Container, CircularProgress } from '@mui/material';
+import { Card, useTheme, Container, Typography, CircularProgress } from '@mui/material';
 
+import { getUserByEmail } from 'src/utils/firebaseFunctions';
 import { trackEvent, trackPurchase } from 'src/utils/GAEvents';
 
 import { customShadows } from 'src/theme/core';
 import { ColorContext } from 'src/context/colorMain';
+import { bgGradientAnimate } from 'src/theme/styles';
 
 import { Form } from 'src/components/hook-form';
 import { AnimateBorder } from 'src/components/animate';
@@ -101,6 +103,7 @@ const packageTypesDict = {
 export function FormWizard({ coursePrice }) {
   const [activeStep, setActiveStep] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [exist, setExist] = useState(false);
   const [url, setUrl] = useState();
   const [paymentLoad, setPaymentLoad] = useState(false);
   const theme = useTheme();
@@ -131,6 +134,11 @@ export function FormWizard({ coursePrice }) {
       if (step) {
         let isValid = true;
         if (step === 'stepOne') {
+          const isExist = await getUserByEmail(methods.getValues().email.toLowerCase().trim());
+          if (isExist?.length) {
+            setExist(isExist[0]?.id || true);
+            return;
+          }
           isValid = await trigger(['email', 'name', 'approveTerms']);
         } else {
           await trigger(['age', 'niche', 'goals', 'gender']);
@@ -228,7 +236,7 @@ export function FormWizard({ coursePrice }) {
   const onSubmit = handleSubmit(async (data) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
-      data.email = data.email.toLowerCase();
+      data.email = data.email.toLowerCase().trim();
       console.info('DATA', data);
       console.log('Price: ', data.totalPrice);
 
@@ -299,29 +307,46 @@ export function FormWizard({ coursePrice }) {
               // background: theme.palette.background.paper,
             }}
           >
-            {activeStep === 0 && <StepOne errors={errors} control={control} setValue={setValue} />}
-            {activeStep === 1 && <StepTwo setValue={setValue} name={name} />}
-            {activeStep === 2 && (
-              <StepThree
-                setValue={setValue}
-                coursePrice={coursePrice}
-                loading={loading}
-                name={name}
-                email={email}
-              />
+            {exist ? (
+              <Container sx={{ textAlign: 'center', my: 2 }}>
+                <Typography variant="h4">לפי הרישומים שלנו, יש לך כבר חשבון</Typography>
+                <Button
+                  variant="outlined"
+                  href={`/login?id=${exist}`}
+                  sx={{ mt: 8, borderRadius: 10, ...bgGradientAnimate }}
+                >
+                  למעבר לאיזור האישי
+                </Button>
+              </Container>
+            ) : (
+              <>
+                {activeStep === 0 && (
+                  <StepOne errors={errors} control={control} setValue={setValue} />
+                )}
+                {activeStep === 1 && <StepTwo setValue={setValue} name={name} />}
+                {activeStep === 2 && (
+                  <StepThree
+                    setValue={setValue}
+                    coursePrice={coursePrice}
+                    loading={loading}
+                    name={name}
+                    email={email}
+                  />
+                )}
+                {activeStep === 'pay' &&
+                  (paymentLoad && !url ? (
+                    <Circles
+                      wrapperClass="flex justify-center width-full my-8"
+                      height={80}
+                      color={theme.palette[mainColor]?.main}
+                      width={80}
+                      visible
+                    />
+                  ) : (
+                    <PaymentForm paymentUrl={url} />
+                  ))}
+              </>
             )}
-            {activeStep === 'pay' &&
-              (paymentLoad && !url ? (
-                <Circles
-                  wrapperClass="flex justify-center width-full my-8"
-                  height={80}
-                  color={theme.palette[mainColor]?.main}
-                  width={80}
-                  visible
-                />
-              ) : (
-                <PaymentForm paymentUrl={url} />
-              ))}
             {/* {completedStep && <StepCompleted onReset={handleReset} />} */}
           </Card>
           {!completedStep && (
@@ -338,17 +363,19 @@ export function FormWizard({ coursePrice }) {
                 (loading ? (
                   <CircularProgress />
                 ) : (
-                  <Button
-                    sx={{ zIndex: 30 }}
-                    variant="contained"
-                    color={mainColor}
-                    onClick={() => {
-                      setLoading(true);
-                      handleNext('stepOne').then(() => setLoading(false));
-                    }}
-                  >
-                    הבא
-                  </Button>
+                  !exist && (
+                    <Button
+                      sx={{ zIndex: 30 }}
+                      variant="contained"
+                      color={mainColor}
+                      onClick={() => {
+                        setLoading(true);
+                        handleNext('stepOne').then(() => setLoading(false));
+                      }}
+                    >
+                      הבא
+                    </Button>
+                  )
                 ))}
               {activeStep === 1 &&
                 (loading ? (
