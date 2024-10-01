@@ -10,17 +10,17 @@ export async function POST(request) {
     const data = await request.json();
     const { Id, Fild1, Fild2, CCode, Amount } = data;
     const name = Fild1?.toLowerCase();
-    const email = Fild2?.toLowerCase();
+    const email = Fild2?.toLowerCase().trim();
     const prePayer = await getPrePayerByEmail(email);
-    const isValid = Boolean(prePayer.length);
+    const isValid = Boolean(prePayer.length) || process.env.NODE_ENV === 'development';
     console.log('Query prePayer resulted with: ', isValid, prePayer);
-    if (email && isValid && Number(CCode) === 0) {
+    if (email && isValid && Number(CCode) === 0 && process.env.NODE_ENV === 'production') {
       // const approve = await fetch();
+
       await addUser({ ...prePayer[0], payment: Amount || prePayer[0].payment });
       await deletePrePayer(prePayer[0]?.id);
-      if (true) {
-        await sendInvoiceEmail(prePayer[0]);
-      }
+      await sendInvoiceEmail(prePayer[0]);
+
       return new Response(JSON.stringify({ message: `Message Received`, payment: true }), {
         status: 200,
         headers: {

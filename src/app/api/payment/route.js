@@ -27,7 +27,9 @@ export async function POST(request) {
     const tempUser = { ...data };
     delete tempUser.apiUrl;
 
-    await addPrePayer(tempUser);
+    if (process.env.NODE_ENV === 'production') {
+      await addPrePayer(tempUser);
+    }
 
     return new Response(JSON.stringify({ message: `Message Received`, url }), {
       status: 200,

@@ -5,6 +5,44 @@ import { db } from './firebaseConfig'; // Import your Firebase configuration
 import { getIsraelTimestamp } from './format-time';
 
 // Add Tables
+
+export async function addGift({
+  email,
+  name = null,
+  age = null,
+  gender = null,
+  niche = null,
+  location = null,
+  packageType = null,
+  goals = [],
+  payment = 0,
+  approveTerms = false,
+}) {
+  try {
+    const timeStamp = getIsraelTimestamp();
+    const isUser = await getUserByEmail(email);
+    if (isUser.length === 0) {
+      const docRef = await addDoc(collection(db, 'gift'), {
+        email,
+        name,
+        age,
+        gender,
+        niche,
+        location,
+        packageType,
+        goals,
+        payment,
+        approveTerms,
+        timeStamp,
+      });
+      console.log('User added with ID: ', docRef.id);
+    } else {
+      console.log(`User ${email} already exist!`, isUser[0]);
+    }
+  } catch (e) {
+    console.error('Error adding user: ', e);
+  }
+}
 export async function addUser({
   email,
   name = null,

@@ -851,7 +851,7 @@ function User({ userData = {} }) {
           >
             מעבר לאתר הקורס
           </Button>
-          {userData.payment && userData.payment > 249 && (
+          {userData.payment && (userData.payment > 249 || userData.packageType !== 'Base-Pro') && (
             <Button
               href="https://chat.whatsapp.com/DE2HSwpg9ABJpaEYj4ZAfv"
               variant="text"

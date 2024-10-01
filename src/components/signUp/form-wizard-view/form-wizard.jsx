@@ -12,8 +12,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { Card, useTheme, Container, Typography, CircularProgress } from '@mui/material';
 
-import { getUserByEmail } from 'src/utils/firebaseFunctions';
 import { trackEvent, trackPurchase } from 'src/utils/GAEvents';
+import { addGift, getUserByEmail } from 'src/utils/firebaseFunctions';
 
 import { customShadows } from 'src/theme/core';
 import { ColorContext } from 'src/context/colorMain';
@@ -103,6 +103,7 @@ const packageTypesDict = {
 export function FormWizard({ coursePrice }) {
   const [activeStep, setActiveStep] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [gift, setGift] = useState(false);
   const [exist, setExist] = useState(false);
   const [url, setUrl] = useState();
   const [paymentLoad, setPaymentLoad] = useState(false);
@@ -212,22 +213,9 @@ export function FormWizard({ coursePrice }) {
       // setLoading(false);
       const urlRes = `https://pay.hyp.co.il/p/?action=pay&${result.url}`;
       // const urlRes = `https://icom.yaad.net/p/?action=pay&${result.url}`;
-      const testUrl = `${process.env.NODE_ENV === 'development' ? 'http://localhost:3033' : 'https://videopro.webly.digital'}/success?Id=12788261&CCode=0&Amount=${totalPrice || '499.0'}&ACode=0012345&Order=12345678910&Fild1=${name || 'ישראל ישראלי'}&Fild2=${email || 'aDmin@webly.digital'}&Fild3=&Sign=13cccf141e2fc2e2dd8d8201a90d58929514d97e00084cb9436cab087f1ba8c6&Bank=6&Payments=1&UserId=203269535&Brand=2&Issuer=2&L4digit=0000&street=levanon%203&city=netanya&zip=42361&cell=098610338&Coin=1&Tmonth=03&Tyear=2022&errMsg=%20(0)&Hesh=31`;
-      router.push(testUrl);
+      const giftUrl = `${process.env.NODE_ENV === 'development' ? 'http://localhost:3033' : 'https://videopro.webly.digital'}/success?Id=12788261&CCode=0&Amount=${totalPrice || '0.0'}&ACode=0012345&Order=12345678910&Fild1=${name || 'ישראל ישראלי'}&Fild2=${email || 'aDmin@webly.digital'}&Fild3=&Sign=13cccf141e2fc2e2dd8d8201a90d58929514d97e00084cb9436cab087f1ba8c6&Bank=6&Payments=1&UserId=203269535&Brand=2&Issuer=2&L4digit=0000&street=levanon%203&city=netanya&zip=42361&cell=098610338&Coin=1&Tmonth=03&Tyear=2022&errMsg=%20(0)&Hesh=31`;
+      router.push(gift ? giftUrl : urlRes);
       // setUrl(urlRes);
-
-      // console.log('this is api result: ', result);
-      // console.log(formData.totalPrice);
-      // window.location.href =
-      //   formData.totalPrice === 499
-      //     ? 'https://meshulam.co.il/quick_payment?b=66e0d1ec8b97738b8e3f0fafa7826855'
-      //     : formData.totalPrice === 449
-      //       ? 'https://meshulam.co.il/quick_payment?b=b525a66f1ebef00df2e9f11ed69ad593'
-      //       : formData.totalPrice === 249
-      //         ? 'https://meshulam.co.il/quick_payment?b=75ffe208cc1d655af87be053046ee040'
-      //         : formData.totalPrice === 224
-      //           ? 'https://meshulam.co.il/quick_payment?b=d9d1186a167d4e7df7d9e341297a7ca4'
-      //           : 'https://meshulam.co.il/quick_payment?b=7f441e3b9b0a82f40c07e05e67e36835';
     } catch (error) {
       console.error('Error submitting data:', error);
     }
@@ -247,6 +235,15 @@ export function FormWizard({ coursePrice }) {
       console.error(error);
     }
   });
+
+  const handleGift = async () => {
+    setLoading(true);
+    await addGift(methods.getValues());
+    setGift(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 0.6 * 1e3);
+  };
 
   const completedStep = activeStep === steps.length;
   const name = methods.getValues().name.split(' ')[0];
@@ -327,6 +324,7 @@ export function FormWizard({ coursePrice }) {
                 {activeStep === 2 && (
                   <StepThree
                     setValue={setValue}
+                    setGift={handleGift}
                     coursePrice={coursePrice}
                     loading={loading}
                     name={name}

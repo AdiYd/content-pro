@@ -255,8 +255,7 @@ export const leadTemplate = (data) => `
 <div style="font-family: 'Alef', Arial, sans-serif; direction: rtl; text-align: right; line-height: 1.6; padding: 20px;">
   <h2 style="
     font-size: 24px;
-    background: linear-gradient(to right, #8bc34a, #4caf50, #8bc34a);
-    color: white;
+    color: black;
     text-align: center;
     border-radius: 8px;
     margin: 0;

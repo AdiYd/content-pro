@@ -22,20 +22,18 @@ export async function POST(request) {
     console.log('Leads - Message from client: ', data);
     const lead = await getLeadByEmail(data.email);
     const isLead = Boolean(lead?.length);
-    if (!isLead) {
-      if (true) {
-        await addLead(data);
-        const template = leadTemplate(data);
-        await sendEmail({
-          data,
-          template,
-          title: data.contactForm ? 'מתעניין חדש (טופס צרו קשר)' : 'מתעניין חדש (טופס הצטרפות)',
-        });
-      }
+    if (!isLead && process.env.NODE_ENV === 'production') {
+      await addLead(data);
+      const template = leadTemplate(data);
+      await sendEmail({
+        data,
+        template,
+        title: data.contactForm ? 'מתעניין חדש (טופס צרו קשר)' : 'מתעניין חדש (טופס הצטרפות)',
+      });
     } else if (isLead) {
       console.log('Lead already exist: ', lead[0]);
     } else {
-      console.log("Lead didn't saved");
+      console.log("Lead didn't saved", data?.email);
     }
     return new Response(JSON.stringify({ message: `Received: ${data.email}` }), {
       status: 200,

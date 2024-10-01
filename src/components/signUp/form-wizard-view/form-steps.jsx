@@ -389,7 +389,7 @@ export function StepTwo({ name, setValue }) {
         <Typography textAlign="start" variant="body1">
           בחירת נישה ליצירת תוכן:
         </Typography>
-        <div className="flex flex-wrap max-md:flex-col gap-4">
+        <div className="flex justify-start flex-wrap max-md:flex-col mx-2 gap-4">
           <RadioGroup name="niche" color={mainColor}>
             <Stack justifyContent="start" direction="row" flexWrap="wrap">
               {Niches.map((subNiche, indx) => (
@@ -498,10 +498,11 @@ export function StepTwo({ name, setValue }) {
   );
 }
 
-export function StepThree({ name, email, coursePrice, setValue, loading }) {
+export function StepThree({ name, email, coursePrice, setValue, loading, setGift = () => {} }) {
   const theme = useTheme();
   const { mainColor, mode, textGradient } = useContext(ColorContext);
   const [update, setUpdate] = useState(false);
+  const [isGift, setIsGift] = useState(false);
   const [coupon, setCoupon] = useState(false);
   const [validCoupon, setValidCoupon] = useState(false);
   const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
@@ -540,10 +541,17 @@ export function StepThree({ name, email, coursePrice, setValue, loading }) {
     setUpdate((p) => !p);
   }, [loading]);
 
-  const handleCoupon = (e) => {
+  const handleCoupon = async (e) => {
     const isCoupon = Cookies.get('counting');
-    console.log('This is active: ', active);
-    if (
+
+    if (e.target.value === 'MasterPro_Gift') {
+      totalPrice.current = 0;
+      setValue('totalPrice', totalPrice.current);
+      setGift();
+      setValidCoupon(true);
+      trackEvent('Coupon Redeem', 'Coupons', `GIFT`);
+      setIsGift(true);
+    } else if (
       e.target.value === `MasterPro_${NumOfDiscount}` &&
       !validCoupon &&
       isCoupon &&
@@ -784,21 +792,28 @@ export function StepThree({ name, email, coursePrice, setValue, loading }) {
         {loading ? (
           <CircularProgress />
         ) : (
-          <Button
-            sx={{
-              ...bgGradientAnimate(
-                `45deg, ${theme.palette.success.light},${theme.palette.success.dark} ,${theme.palette.success.dark}`
-              ),
-              width: '50%',
-              minWidth: 200,
-            }}
-            type="submit"
-            variant="contained"
-            size="large"
-            color="success"
-          >
-            מעבר לתשלום
-          </Button>
+          <Box>
+            {isGift && (
+              <Typography mb={2} variant="body1">
+                קיבלת את הקורס במתנה 🎁
+              </Typography>
+            )}
+            <Button
+              sx={{
+                ...bgGradientAnimate(
+                  `45deg, ${theme.palette.success.light},${theme.palette.success.dark} ,${theme.palette.success.dark}`
+                ),
+                width: '50%',
+                minWidth: 200,
+              }}
+              type="submit"
+              variant="contained"
+              size="large"
+              color="success"
+            >
+              {isGift ? 'לסיום הרשמה' : 'מעבר לתשלום'}
+            </Button>
+          </Box>
         )}
       </div>
       {paymentLogos(mode)}
