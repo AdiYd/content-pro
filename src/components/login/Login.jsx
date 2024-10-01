@@ -774,6 +774,29 @@ function User({ userData = {} }) {
     dataRes = (
       <Box textAlign="center" my={4}>
         <ActiveUser user={userData} showMail={false} active typoVariant="body1" />
+        <div className="text-center my-4 flex flex-wrap justify-center gap-8">
+          <Button
+            href="https://eranfarkash.thinkific.com/courses/social-platforms"
+            variant="outlined"
+            color={mainColor}
+            size="medium"
+            // size="small"
+            sx={{ fontSize: '0.8rem' }}
+          >
+            מעבר לאתר הקורס
+          </Button>
+          {userData.payment && userData.payment > 249 && (
+            <Button
+              href="https://chat.whatsapp.com/DE2HSwpg9ABJpaEYj4ZAfv"
+              variant="text"
+              size="small"
+              // sx={{ mb: 2 }}
+            >
+              <Iconify icon="logos:whatsapp-icon" />
+              &nbsp; &nbsp; הצטרפות לקהילה
+            </Button>
+          )}
+        </div>
       </Box>
     );
   }
@@ -800,32 +823,6 @@ function User({ userData = {} }) {
       <Typography color="text.secondary" variant="body1">
         באיזור האישי ניתן לראות פרטים על הקורס, תיק העבודות, בחירת נישה להתמחות ורעיונות לתכני וידאו
       </Typography>
-      {isMobile && (
-        <div className="flex items-center flex-col justify-center">
-          <Button
-            href="https://eranfarkash.thinkific.com/courses/social-platforms"
-            variant="outlined"
-            color={mainColor}
-            size="small"
-            // size="small"
-            sx={{ my: 2, width: '80%' }}
-          >
-            מעבר לאתר הקורס
-          </Button>
-
-          {userData.payment && userData.payment > 249 && (
-            <Button
-              href="https://chat.whatsapp.com/DE2HSwpg9ABJpaEYj4ZAfv"
-              variant="text"
-              size="small"
-              sx={{ mb: 2 }}
-            >
-              <Iconify icon="logos:whatsapp-icon" />
-              &nbsp; &nbsp; הצטרפות לקהילה
-            </Button>
-          )}
-        </div>
-      )}
       <Stack mb={4} justifyContent="center" direction="row" spacing={4}>
         {UserOptionsDict.map((item, index) => (
           <Button
@@ -847,29 +844,16 @@ function User({ userData = {} }) {
           </Button>
         ))}
         {!isMobile && (
-          <div className="text-center flex gap-4">
-            <Button
-              href="https://eranfarkash.thinkific.com/courses/social-platforms"
-              variant="outlined"
-              color={mainColor}
-              size="medium"
-              // size="small"
-              sx={{ fontSize: '0.8rem' }}
-            >
-              מעבר לאתר הקורס
-            </Button>
-            {userData.payment && userData.payment > 249 && (
-              <Button
-                href="https://chat.whatsapp.com/DE2HSwpg9ABJpaEYj4ZAfv"
-                variant="text"
-                size="small"
-                // sx={{ mb: 2 }}
-              >
-                <Iconify icon="logos:whatsapp-icon" />
-                &nbsp; &nbsp; הצטרפות לקהילה
-              </Button>
-            )}
-          </div>
+          <Button
+            href="https://eranfarkash.thinkific.com/courses/social-platforms"
+            variant="outlined"
+            color={mainColor}
+            size="medium"
+            // size="small"
+            sx={{ fontSize: '0.8rem' }}
+          >
+            מעבר לאתר הקורס
+          </Button>
         )}
       </Stack>
 
