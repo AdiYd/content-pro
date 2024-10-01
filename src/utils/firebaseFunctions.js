@@ -13,8 +13,8 @@ export async function addUser({
   niche = null,
   location = null,
   packageType = null,
-  goals = null,
-  payment = null,
+  goals = [],
+  payment = 500,
   approveTerms = false,
 }) {
   try {
@@ -50,8 +50,8 @@ export async function addPrePayer({
   niche = null,
   location = null,
   packageType = null,
-  goals = null,
-  totalPrice = null,
+  goals = [],
+  totalPrice = 500,
   approveTerms = false,
 }) {
   try {

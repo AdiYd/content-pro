@@ -97,7 +97,7 @@ function Login({ id }) {
 
   const setUser = (user, userID) => {
     console.log('This is user:', user);
-    if (user === 'admin') {
+    if (user === 'adminpro') {
       setLoading(true);
       setTimeout(() => {
         setLoading(false);
@@ -183,7 +183,7 @@ function Login({ id }) {
       )}
       <Container component={MotionContainer}>
         <m.div style={{ width: '100%' }} variants={varScale({ delay: 1, durationIn: 1 }).inX}>
-          <Box my={4} display="flex" justifyContent="center" width={1}>
+          <Box my={4} display="flex" justifyContent="center" gap={4} width={1}>
             <Button
               size="small"
               startIcon={<Iconify icon="lucide-lab:home" />}
@@ -198,6 +198,25 @@ function Login({ id }) {
             >
               &nbsp; לדף הבית
             </Button>
+            {isActive && (
+              <Button
+                size="small"
+                startIcon={<Iconify icon="ic:round-logout" />}
+                sx={{
+                  alignSelf: 'center',
+                  // textDecoration: 'underline',
+                  opacity: 0.8,
+                }}
+                href="/login"
+                // color="text.secondary"
+                onClick={() => {
+                  Cookies.remove('signin');
+                }}
+                px={1}
+              >
+                &nbsp; יציאה
+              </Button>
+            )}
           </Box>
         </m.div>
       </Container>
@@ -248,11 +267,11 @@ export function EmailVerificationForm({ callback = () => {}, noAdmin = false }) 
       }
       return false;
     });
-    console.log(userID);
+    // console.log(userID);
     callback(data.email, userID);
   };
   const isValidInput = Boolean(
-    !(!isValid && ((emailValue && emailValue?.toLowerCase() !== 'admin') || !emailValue))
+    !(!isValid && ((emailValue && emailValue?.toLowerCase() !== 'adminpro') || !emailValue))
   );
   // Check if email is in the predefined list
   const isSignedEmail = (email) => emails?.includes(email);
@@ -289,7 +308,7 @@ export function EmailVerificationForm({ callback = () => {}, noAdmin = false }) 
                 // },
                 validate: {
                   isSignedUser: (value) =>
-                    (!noAdmin && value.toLowerCase() === 'admin') ||
+                    (!noAdmin && value.toLowerCase() === 'adminpro') ||
                     isSignedEmail(value.toLowerCase()) ||
                     'משתמש לא רשום',
                 },
@@ -951,6 +970,10 @@ function ScriptAI({ userData, ...props }) {
               <div className="animate-pulse">
                 <Typography sx={{ direction: 'ltr', ...textGradientAnimation }} variant="h4">
                   Generating content...
+                </Typography>
+                <Typography color="text.secondary" sx={{ direction: 'ltr' }} variant="body1">
+                  (In construction &nbsp;
+                  <Iconify icon="carbon:construction" />)
                 </Typography>
               </div>
               <div className="my-20 flex justify-center">

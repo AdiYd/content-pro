@@ -320,8 +320,8 @@ export function StepTwo({ name, setValue }) {
 
   const onChangeHandler = (e) => {
     let newGoals;
-    const tempGoals = Object.keys(goals).filter((item) => goals[item]);
-    let numOfGoals = tempGoals.length;
+    const tempGoals = Object.keys(goals).filter((item) => goals[item]); // ['learn']
+    let numOfGoals = tempGoals.length; // 1
 
     if (e.target.checked) {
       numOfGoals += 1;
@@ -334,14 +334,14 @@ export function StepTwo({ name, setValue }) {
           </Typography>
         );
         setUpdate((p) => !p);
-      } else {
-        goalsErrors.current = undefined;
-        newGoals = {
-          ...goals,
-          [e.target.name]: true,
-        };
-        setGoals(newGoals);
+        return;
       }
+      goalsErrors.current = undefined;
+      newGoals = {
+        ...goals,
+        [e.target.name]: true,
+      };
+      setGoals(newGoals);
     } else {
       if (goalsErrors.current) {
         goalsErrors.current = undefined;
