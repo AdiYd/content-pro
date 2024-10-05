@@ -299,9 +299,9 @@ export const feedBackTemplate = (data) => `
       ${data['אתר-הקורס'] ? `<p style="margin: 10px; font-size: 14px;"><b>אתר-הקורס:</b> ${data['אתר-הקורס']}</p>` : ''}
       ${data.Thinkific ? `<p style="margin: 10px; font-size: 14px;"><b>Thinkific: </b> ${data.Thinkific}</p>` : ''}
       ${data['מחיר-הקורס'] ? `<p style="margin: 10px; font-size: 14px;"><b>מחיר-הקורס:</b> ${data['מחיר-הקורס']}</p>` : ''}
-      ${data['חוויה-כללית'] ? `<p style="margin: 10px; font-size: 14px;"><b>חוויה-כללית:</b> ${data['חוויה-כללית']}</p>` : ''}
-      ${data['חווית-הרשמה'] ? `<p style="margin: 10px; font-size: 14px;"><b>חווית-הרשמה:</b> ${data['חווית-הרשמה']}</p>` : ''}
-      ${data['תוספות-לקורס'] ? `<p style="margin: 10px; font-size: 14px;"><b>תוספות-לקורס:</b> ${data['תוספות-לקורס']}</p>` : ''}
+      ${data['חוויה-כללית'] ? `<pre style="margin: 10px; font-size: 14px;"><b>חוויה-כללית:</b> ${data['חוויה-כללית']}</pre>` : ''}
+      ${data['חווית-הרשמה'] ? `<pre style="margin: 10px; font-size: 14px;"><b>חווית-הרשמה:</b> ${data['חווית-הרשמה']}</pre>` : ''}
+      ${data['תוספות-לקורס'] ? `<pre style="margin: 10px; font-size: 14px;"><b>תוספות-לקורס:</b> ${data['תוספות-לקורס']}</pre>` : ''}
     </div>
   </div>
   <div>

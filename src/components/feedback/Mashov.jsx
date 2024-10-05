@@ -439,7 +439,7 @@ function FeebackForm({ email }) {
       }}
     >
       {finish ? (
-        <Typography variant="h2" mt={2} textAlign="center" sx={textGradientAnimation}>
+        <Typography variant="h2" mt={2} textAlign="center">
           תודה על המשוב!
         </Typography>
       ) : loading ? (
