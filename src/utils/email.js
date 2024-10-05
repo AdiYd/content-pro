@@ -277,6 +277,41 @@ export const leadTemplate = (data) => `
 </div>
 `;
 
+
+export const feedBackTemplate = (data) => `
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Alef:wght@400;500;600;700&display=swap');
+  </style>
+<div style="font-family: 'Alef', Arial, sans-serif; direction: rtl; text-align: right; line-height: 1.6; padding: 20px;">
+  <h2 style="
+    font-size: 24px;
+    color: black;
+    text-align: center;
+    border-radius: 8px;
+    margin: 0;
+    padding: 10px;
+  ">פרטי המשוב:</h2>
+
+  <div style="display: flex; align-items: center; margin-top: 20px;">
+    <div style="flex: 1;">
+      ${data['אימייל'] ? `<p style="margin: 10px; font-size: 14px;"><b>אימייל:</b> ${data['אימייל']}</p>` : ''}
+      ${data['אורך-הקורס'] ? `<p style="margin: 10px; font-size: 14px;"><b>אורך-הקורס:</b> ${data['אורך-הקורס']}</p>` : ''}
+      ${data['אתר-הקורס'] ? `<p style="margin: 10px; font-size: 14px;"><b>אתר-הקורס:</b> ${data['אתר-הקורס']}</p>` : ''}
+      ${data.Thinkific ? `<p style="margin: 10px; font-size: 14px;"><b>Thinkific: </b> ${data.Thinkific}</p>` : ''}
+      ${data['מחיר-הקורס'] ? `<p style="margin: 10px; font-size: 14px;"><b>מחיר-הקורס:</b> ${data['מחיר-הקורס']}</p>` : ''}
+      ${data['חוויה-כללית'] ? `<p style="margin: 10px; font-size: 14px;"><b>חוויה-כללית:</b> ${data['חוויה-כללית']}</p>` : ''}
+      ${data['חווית-הרשמה'] ? `<p style="margin: 10px; font-size: 14px;"><b>חווית-הרשמה:</b> ${data['חווית-הרשמה']}</p>` : ''}
+      ${data['תוספות-לקורס'] ? `<p style="margin: 10px; font-size: 14px;"><b>תוספות-לקורס:</b> ${data['תוספות-לקורס']}</p>` : ''}
+    </div>
+  </div>
+  <div>
+    <h3 style="font-size: 14px; color: #333333; margin: 8px 0;">
+    Video-Pro
+    </h3>
+  <div>
+</div>
+`;
+
 export const signupTemaplate = (data) => `
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Alef:wght@400;500;700&display=swap');

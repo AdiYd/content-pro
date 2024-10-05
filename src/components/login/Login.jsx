@@ -921,6 +921,10 @@ function User({ userData = {} }) {
             מעבר לאתר הקורס
           </Button>
         )}
+        <Button href={`/mashov?email=${userData.email}`} variant="text" size="small">
+          {' '}
+          למילוי משוב{' '}
+        </Button>
       </Stack>
 
       <Box my={4}>
