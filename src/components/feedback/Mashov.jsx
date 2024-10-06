@@ -140,6 +140,7 @@ function FeebackForm({ email }) {
   } = useForm({ mode: 'onSubmit' });
 
   const onSubmit = async (data) => {
+    setLoader(true);
     await fetch('/api/feedback', {
       method: 'POST',
       headers: {
@@ -147,17 +148,16 @@ function FeebackForm({ email }) {
       },
       body: JSON.stringify(data),
     });
-    setLoader(true);
     setTimeout(() => {
       setFinish(true);
       setLoader(false);
-    }, 1 * 1000);
+    }, 0.2 * 1000);
   };
 
   const form = (
     <>
       <Typography variant="h4" mt={1} textAlign="center" color="text.primary">
-        משוב לקורס Video-Pro
+        משוב לקורס
       </Typography>
       {/* Email Input */}
       <Controller
@@ -349,7 +349,7 @@ function FeebackForm({ email }) {
         render={({ field }) => (
           <>
             <Typography variant="body1" color="text.primary">
-              5. כמה הייתם משלמים על הקורס, בהנחה שנעשו התיקונים שציינת?
+              5. כמה הייתם משלמים על הקורס, בהנחה שנעשו התיקונים והשיפורים הנדרשים?
             </Typography>
             <RadioGroup {...field} row>
               <FormControlLabel
@@ -404,11 +404,43 @@ function FeebackForm({ email }) {
         render={({ field }) => (
           <>
             <Typography variant="body1" color="text.primary">
-              7. האם יש משהו שהייתם מוסיפים לקורס? האם הרגשתם שחסר משהו?
+              7. האם יש משהו שהייתם מוסיפים לקורס? מה הייתם משפרים?
+              {/* <br />
+              <Typography variant="body2" color="text.secondary">
+                זה המקום שלכם לרשום את כל ההערות שלכם עד עכשיו
+              </Typography> */}
             </Typography>
+
             <TextField
               {...field}
-              label="האם יש משהו שצריך להוסיף לקורס לדעתך?"
+              label="זה המקום שלכם לרשום את כל ההערות שלכם עד עכשיו"
+              variant="filled"
+              multiline
+              rows={3}
+              fullWidth
+            />
+          </>
+        )}
+      />
+
+      {/* Text Area: "מה דעתכם על הקהילה? (תכנים, בניית תיק עבודות  ואתגרים שניתנו)" */}
+      <Controller
+        name="קהילה"
+        control={control}
+        defaultValue=""
+        render={({ field }) => (
+          <>
+            <Typography variant="body1" color="text.primary">
+              8. מה דעתכם על הקהילה? האם אהבתם את התכנים, האתגרים ותהליך בניית תיק העבודות?
+              <br />
+              <Typography variant="body2" color="text.secondary">
+                מיועד למי שהשתתף בקהילה באופן פעיל, לקח חלק באתגרים ובנה תיק עבודות
+              </Typography>
+            </Typography>
+
+            <TextField
+              {...field}
+              label="ספרו לנו מה חשבתם על הקהילה ועל התהליך שעברתם שם"
               variant="filled"
               multiline
               rows={3}

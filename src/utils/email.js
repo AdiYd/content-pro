@@ -301,6 +301,7 @@ export const feedBackTemplate = (data) => `
       ${data['מחיר-הקורס'] ? `<p style="margin: 10px; font-size: 14px;"><b>מחיר-הקורס:</b> ${data['מחיר-הקורס']}</p>` : ''}
       ${data['חוויה-כללית'] ? `<pre style="margin: 10px; font-size: 14px;"><b>חוויה-כללית:</b> ${data['חוויה-כללית']}</pre>` : ''}
       ${data['חווית-הרשמה'] ? `<pre style="margin: 10px; font-size: 14px;"><b>חווית-הרשמה:</b> ${data['חווית-הרשמה']}</pre>` : ''}
+      ${data['קהילה'] ? `<pre style="margin: 10px; font-size: 14px;"><b>קהילה:</b> ${data['קהילה']}</pre>` : ''}
       ${data['תוספות-לקורס'] ? `<pre style="margin: 10px; font-size: 14px;"><b>תוספות-לקורס:</b> ${data['תוספות-לקורס']}</pre>` : ''}
     </div>
   </div>

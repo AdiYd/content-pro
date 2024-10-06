@@ -841,10 +841,10 @@ function User({ userData = {} }) {
       <Box textAlign="center" my={4}>
         <ActiveUser user={userData} showMail={false} active typoVariant="body1" />
         <div className="text-center my-4 flex flex-wrap justify-center gap-8">
-          <Button href={`/mashov?email=${userData.email}`} variant="outlined" size="small">
+          {/* <Button href={`/mashov?email=${userData.email}`} variant="outlined" size="small">
             {' '}
             למילוי משוב{' '}
-          </Button>
+          </Button> */}
           <Button
             href="https://eranfarkash.thinkific.com/courses/social-platforms"
             variant="outlined"
