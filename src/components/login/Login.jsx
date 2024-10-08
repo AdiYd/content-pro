@@ -840,7 +840,6 @@ function User({ userData = {}, callback }) {
   let dataRes;
 
   useEffect(() => {
-    console.log('Updating videos');
     setUpdate((p) => !p);
   }, [userData, userData.videoList?.length]);
 

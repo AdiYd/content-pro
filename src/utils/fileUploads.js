@@ -1,11 +1,10 @@
-import fs from 'fs';
 import { Readable } from 'stream';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { google } from 'googleapis';
 
 import { getUserByEmail, updateItemParam } from './firebaseFunctions';
 
-const tokenPath = 'token.json';
+
 const rootFolderId = process.env.NEXT_GGL_DRIVE_CLIENT_ROOT; // Set the root folder ID where files should be uploaded
 
 const [client_id, client_secret, redirect_uris] = [
@@ -35,14 +34,21 @@ export function getAuthUrl() {
 
 // Function to initialize OAuth2Client with existing tokens
 export function initializeOAuthClient() {
-    console.log('Checking if tokens exist...');
-    if (fs.existsSync(tokenPath)) {
-      const tokens = JSON.parse(fs.readFileSync(tokenPath));
-      oAuth2Client.setCredentials(tokens);
-      console.log('Tokens exist.');
-      return true;
-    }
-  return false;
+  console.log('Checking if tokens exist...');
+  try {
+    const tokens = {
+      access_token: process.env.NEXT_DRIVE_ACC_TOKEN,
+      refresh_token: process.env.NEXT_DRIVE_REF_TOKEN,
+      scope: process.env.NEXT_DRIVE_SCOPE,
+      token_type: process.env.NEXT_DRIVE_TOKEN_TYPE,
+      expiry_date: process.env.NEXT_DRIVE_EXP_DATE,
+    };
+    oAuth2Client.setCredentials(tokens);
+    console.log('Tokens exist.');
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 function bufferToStream(buffer) {

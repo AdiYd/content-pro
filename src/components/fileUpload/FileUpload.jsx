@@ -34,7 +34,6 @@ export default function UploadFile({ email, number = -1, callback = () => {} }) 
       // Adjust the API URL based on your backend route
       const response = await fetch('/api/uploadApi', {
         method: 'POST',
-
         body: formData,
       });
 

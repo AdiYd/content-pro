@@ -1,3 +1,4 @@
+import open from 'open';
 import { NextResponse } from 'next/server';
 
 import { getAuthUrl, uploadFileToDrive, initializeOAuthClient } from 'src/utils/fileUploads';
@@ -10,6 +11,7 @@ export async function POST(req) {
     if (!isAuthenticated) {
       // If not authenticated, redirect user to get permission
       const authUrl = getAuthUrl();
+      open(authUrl);
       return NextResponse.json({
         message: 'Authorization required. Please visit this URL to authorize the app:',
         authUrl,
@@ -19,7 +21,7 @@ export async function POST(req) {
     // Handle file upload after user has authenticated
     const data = await req.formData();
     const file = data.get('file');
-    // console.log('This is the data: ', data);
+    console.log('This is the data: ', data);
     const email = data.get('email');
     const number = data.get('number');
 
