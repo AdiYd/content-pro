@@ -50,6 +50,7 @@ import {
 } from 'src/components/animate';
 
 import { Iconify } from '../iconify';
+import UploadFile from '../fileUpload/FileUpload';
 import { setCookie } from '../considering/Considering';
 import { Niches } from '../signUp/form-wizard-view/form-steps';
 
@@ -74,6 +75,16 @@ function Login({ id }) {
       // console.log('SIGNIN: ', signed);
     }
   }, [router]);
+
+  const handleUpdate = async () => {
+    const user = await getUserById(id);
+    console.log('Handle Upate!', user);
+    if (user) {
+      user.goals = user.goals?.join(', ');
+      console.log('Updating userData');
+      setUserData(user);
+    }
+  };
 
   useEffect(() => {
     if (id) {
@@ -113,7 +124,7 @@ function Login({ id }) {
   const data = isAdmin ? (
     <Admin />
   ) : userData ? (
-    <User userData={userData} />
+    <User callback={handleUpdate} userData={userData} />
   ) : (
     <EmailVerificationForm callback={setUser} />
   );
@@ -819,13 +830,19 @@ const nicheData = {
 const aiDescription =
   "כל מה שצריך זה לבחור נישה של תוכן ולכתוב כמה מילים משלכם (לא חובה). הצ'אט שלנו יבנה לכם סקריפט ליצרת סרטון ואתם תוכלו להשתמש בו ככלי לימודי ומקור לרעיונות";
 
-function User({ userData = {} }) {
+function User({ userData = {}, callback }) {
   const { mainColor, textGradientAnimation, mode } = useContext(ColorContext);
+  const [update, setUpdate] = useState(false);
   const [activeButton, setActiveButton] = useState('פרטים');
   const [loader, setLoader] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   let dataRes;
+
+  useEffect(() => {
+    console.log('Updating videos');
+    setUpdate((p) => !p);
+  }, [userData, userData.videoList?.length]);
 
   const setLoaderActive = (duration = 0.2) => {
     setLoader(true);
@@ -867,6 +884,34 @@ function User({ userData = {} }) {
             </Button>
           )}
         </div>
+      </Box>
+    );
+  } else if (activeButton === 'תיק עבודות') {
+    dataRes = (
+      <Box>
+        <Stack spacing={2} direction="column">
+          {userData.videoList?.map((item, index) => (
+            <div key={index}>
+              <Typography mb={1} ml={1} variant="body1">
+                {index + 1} .
+              </Typography>
+              <Videoframe videoId={item} />
+            </div>
+          ))}
+          {(userData.videoList?.length < 7 || true) && (
+            <>
+              {' '}
+              <Typography ml={1} variant="body1">
+                {(userData.videoList?.length || 0) + 1} .
+              </Typography>
+              <UploadFile
+                callback={callback}
+                email={userData.email}
+                number={userData.videoList?.length || 0}
+              />
+            </>
+          )}
+        </Stack>
       </Box>
     );
   }
@@ -1133,4 +1178,22 @@ function ScriptAI({ userData, ...props }) {
       </AnimateBorder>
     </Box>
   );
+}
+
+export function Videoframe({ videoId }) {
+  return videoId ? (
+    <Box sx={{ position: 'relative' }} maxWidth={800} width="fit-content" overflow="hidden">
+      <iframe
+        title="videoIntro"
+        // width={500}
+        allowFullScreen
+        allow="fullscreen"
+        // src="https://drive.google.com/file/d/1GPVCyit_PuX4sUh5FMlAjTKVRCVdW0mY/preview"
+        src={`https://drive.google.com/file/d/${videoId}/preview`}
+        className="relative border-[0.7px] border-grey-500/40 rounded-md shadow-md z-20 w-full h-full aspect-video"
+        // controls
+      />
+      <div className="absolute z-20 top-0 right-0 bg-transparent w-1/4 h-1/4" />
+    </Box>
+  ) : null;
 }

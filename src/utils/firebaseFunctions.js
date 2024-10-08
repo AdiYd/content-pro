@@ -1,5 +1,15 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { doc, query, where, addDoc, getDoc, getDocs, deleteDoc, collection } from 'firebase/firestore';
+import {
+  doc,
+  query,
+  where,
+  addDoc,
+  getDoc,
+  getDocs,
+  deleteDoc,
+  updateDoc,
+  collection,
+} from 'firebase/firestore';
 
 import { db } from './firebaseConfig'; // Import your Firebase configuration
 import { getIsraelTimestamp } from './format-time';
@@ -269,5 +279,17 @@ export async function getAllDataFromCollection(collectionName) {
   } catch (error) {
     console.error('Error getting documents: ', error);
     return null;
+  }
+}
+
+export async function updateItemParam(tableName, itemId, paramName, paramValue) {
+  try {
+    const itemDocRef = doc(db, tableName, itemId);
+    await updateDoc(itemDocRef, {
+      [paramName]: paramValue,
+    });
+    console.log(`Successfully updated ${paramName} in ${tableName} with ID: ${itemId}`);
+  } catch (error) {
+    console.error('Error updating item parameter:', error);
   }
 }
