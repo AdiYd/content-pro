@@ -29,11 +29,11 @@ export async function GET(req, res) {
     const { tokens } = await oAuth2Client.getToken(code);
     console.log('Token: ', tokens);
     // Store the token in a file.
-    process.env.NEXT_DRIVE_ACC_TOKEN = tokens.access_token;
-    process.env.NEXT_DRIVE_REF_TOKEN = tokens.refresh_token;
-    process.env.NEXT_DRIVE_SCOPE = tokens.scope;
-    process.env.NEXT_DRIVE_TOKEN_TYPE = tokens.token_type;
-    process.env.NEXT_DRIVE_EXP_DATE = tokens.expiry_date;
+    process.env.NEXT_PUBLIC_DRIVE_ACC_TOKEN = tokens.access_token;
+    process.env.NEXT_PUBLIC_DRIVE_REF_TOKEN = tokens.refresh_token;
+    process.env.NEXT_PUBLIC_DRIVE_SCOPE = tokens.scope;
+    process.env.NEXT_PUBLIC_DRIVE_TOKEN_TYPE = tokens.token_type;
+    process.env.NEXT_PUBLIC_DRIVE_EXP_DATE = tokens.expiry_date;
     res.status(200).json({ message: 'Token successfully stored' });
   } catch (error) {
     console.error('Error retrieving access token', error);

@@ -83,6 +83,10 @@ export default function Page() {
         buttonBefore="רוצים לקבל חוברת הדרכה עם טיפים והסברים? לחצו כאן "
         buttonAfter="🎉 עוד כמה צעדים ואתם מתחילים ליצור את הקהילה שתמיד חלמתם עליה  🎉"
       /> */}
+
+      {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
+      <SignUp coursePrice={CoursePrice} />
+
       {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
       <AboutLead />
 

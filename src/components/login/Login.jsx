@@ -78,10 +78,9 @@ function Login({ id }) {
 
   const handleUpdate = async () => {
     const user = await getUserById(id);
-    console.log('Handle Upate!', user);
     if (user) {
       user.goals = user.goals?.join(', ');
-      console.log('Updating userData');
+      console.log('Updating user data...');
       setUserData(user);
     }
   };
@@ -124,7 +123,7 @@ function Login({ id }) {
   const data = isAdmin ? (
     <Admin />
   ) : userData ? (
-    <User callback={handleUpdate} userData={userData} />
+    <User callback={handleUpdate} userData={{ ...userData, id }} />
   ) : (
     <EmailVerificationForm callback={setUser} />
   );
@@ -830,7 +829,7 @@ const nicheData = {
 const aiDescription =
   "כל מה שצריך זה לבחור נישה של תוכן ולכתוב כמה מילים משלכם (לא חובה). הצ'אט שלנו יבנה לכם סקריפט ליצרת סרטון ואתם תוכלו להשתמש בו ככלי לימודי ומקור לרעיונות";
 
-function User({ userData = {}, callback }) {
+function User({ userData = {}, callback, userID }) {
   const { mainColor, textGradientAnimation, mode } = useContext(ColorContext);
   const [update, setUpdate] = useState(false);
   const [activeButton, setActiveButton] = useState('פרטים');
@@ -904,6 +903,7 @@ function User({ userData = {}, callback }) {
                 {(userData.videoList?.length || 0) + 1} .
               </Typography>
               <UploadFile
+                user={userData}
                 callback={callback}
                 email={userData.email}
                 number={userData.videoList?.length || 0}

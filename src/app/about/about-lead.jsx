@@ -292,7 +292,7 @@ export function AboutLead({ contentType = 'aboutCourse' }) {
     >
       <m.div variants={varFade().inDown}>
         <Typography variant="h3" sx={{ mb: 3 }}>
-          עדיין מתלבטים? הרשמו כאן לעוד פרטים ותקבלו חוברת עם
+          עדיין מתלבטים? השאירו פרטים ונחזור אליכם עם
           <Box component="a" mx={1} sx={textGradient} color={`${mainColor}.main`}>
             כל מה שיוצר תוכן מתחיל צריך
           </Box>

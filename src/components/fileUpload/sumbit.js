@@ -1,9 +1,14 @@
 'use server';
 
 const { NextResponse } = require('next/server');
-const { uploadFileToDrive, getAuthUrl, initializeOAuthClient } = require('src/utils/fileUploads');
+const {
+  uploadFileToDrive,
+  getAuthUrl,
+  initializeOAuthClient,
+  refreshAccessToken,
+} = require('src/utils/fileUploads');
 
-export const handleSubmitFile = async ({ formData }) => {
+export const handleSubmitFile = async ({ email, number }) => {
   try {
     console.log('Starting upload with handleSubmit API...');
     // Check if tokens are already saved
@@ -18,20 +23,14 @@ export const handleSubmitFile = async ({ formData }) => {
     }
 
     // Handle file upload after user has authenticated
-    const file = formData.get('file');
-    console.log('This is the data: ', formData);
-    const email = formData.get('email');
-    const number = formData.get('number');
-
-    if (!file) {
-      return {
-        status: 404,
-        message: 'No file provided!',
-      };
-    }
-
+    // const file = formData.get('file');
+    // console.log('This is the data: ', formData);
+    // const email = formData.get('email');
+    // const number = formData.get('number');
+    const file = undefined;
     // Upload the file to Google Drive
     const uploadedFile = await uploadFileToDrive(file, email, number);
+    const access_token = await refreshAccessToken();
     if (!uploadedFile) {
       return {
         status: 400,
@@ -42,6 +41,8 @@ export const handleSubmitFile = async ({ formData }) => {
     return {
       status: 200,
       message: 'Successfuly uploaded the file',
+      id: uploadedFile,
+      access_token,
     };
   } catch (error) {
     console.error('Error handling request:', error);

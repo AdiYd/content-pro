@@ -35,17 +35,15 @@ export async function getAuthUrl() {
 
 // Function to initialize OAuth2Client with existing tokens
 export async function initializeOAuthClient() {
-  console.log('Checking if tokens exist...');
   try {
     const tokens = {
-      access_token: process.env.NEXT_DRIVE_ACC_TOKEN,
-      refresh_token: process.env.NEXT_DRIVE_REF_TOKEN,
-      scope: process.env.NEXT_DRIVE_SCOPE,
-      token_type: process.env.NEXT_DRIVE_TOKEN_TYPE,
-      expiry_date: process.env.NEXT_DRIVE_EXP_DATE,
+      access_token: process.env.NEXT_PUBLIC_DRIVE_ACC_TOKEN,
+      refresh_token: process.env.NEXT_PUBLIC_DRIVE_REF_TOKEN,
+      scope: process.env.NEXT_PUBLIC_DRIVE_SCOPE,
+      token_type: process.env.NEXT_PUBLIC_DRIVE_TOKEN_TYPE,
+      expiry_date: process.env.NEXT_PUBLIC_DRIVE_EXP_DATE,
     };
     oAuth2Client.setCredentials(tokens);
-    console.log('Tokens exist.');
     return true;
   } catch {
     return false;
@@ -98,34 +96,58 @@ export async function uploadFileToDrive(file, email, number) {
       resource: folderMetadata,
       fields: 'id',
     });
-
-    // Upload the file to the created folder
-    const fileMetadata = {
-      name: file.name,
-      parents: [folder.data?.id],
-    };
-
-    const buffer = Buffer.from(await file.arrayBuffer());
-
-    const media = {
-      mimeType: file.type,
-      body: bufferToStream(buffer),
-    };
-
-    const response = await drive.files.create({
-      resource: fileMetadata,
-      media,
-      fields: 'id, webViewLink',
-    });
-    let videoList = [];
-    if (user.videoList) {
-      videoList = [...user.videoList];
+    if (!file) {
+      return folder.data.id;
     }
-    videoList.push(response.data?.id);
-    await updateItemParam('users', user.id, 'videoList', videoList);
+
+    if (file) {
+      // Upload the file to the created folder
+      const fileMetadata = {
+        name: file.name,
+        parents: [folder.data?.id],
+      };
+
+      const buffer = Buffer.from(await file.arrayBuffer());
+
+      const media = {
+        mimeType: file.type,
+        body: bufferToStream(buffer),
+      };
+
+      const response = await drive.files.create({
+        resource: fileMetadata,
+        media,
+        fields: 'id, webViewLink',
+      });
+      let videoList = [];
+      if (user.videoList) {
+        videoList = [...user.videoList];
+      }
+      videoList.push(response.data?.id);
+      await updateItemParam('users', user.id, 'videoList', videoList);
+      return true;
+    }
     return true;
   } catch (err) {
     console.log('Error in uploading file: ', err);
     return false;
   }
 }
+
+export async function refreshAccessToken() {
+  const response = await fetch('https://oauth2.googleapis.com/token', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: new URLSearchParams({
+      client_id: process.env.NEXT_GGL_DRIVE_CLIENT_ID,
+      client_secret: process.env.NEXT_GGL_DRIVE_CLIENT_SEC,
+      refresh_token: process.env.NEXT_PUBLIC_DRIVE_REF_TOKEN,
+      grant_type: 'refresh_token',
+    }),
+  });
+  const data = await response.json();
+  return data.access_token;
+}
+  
