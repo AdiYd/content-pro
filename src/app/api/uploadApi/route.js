@@ -1,32 +1,58 @@
-import { IncomingForm } from 'formidable';
 import { NextResponse } from 'next/server';
 
-import { uploadFileToDrive } from 'src/utils/fileUploads';
+import { getAuthUrl, uploadFileToDrive, initializeOAuthClient } from 'src/utils/fileUploads';
 
-export async function POST(req) {
-  const form = new IncomingForm();
+export default async function handler(req, res) {
+  const dataTemp = req.body;
+  try {
+    console.log('Starting upload API...', dataTemp);
+    // Check if tokens are already saved
+    const isAuthenticated = initializeOAuthClient();
+    if (!isAuthenticated) {
+      // If not authenticated, redirect user to get permission
+      const authUrl = getAuthUrl();
+      return NextResponse.json({
+        message: 'Authorization required. Please visit this URL to authorize the app:',
+        authUrl,
+      });
+    }
 
-  return new Promise((resolve, reject) => {
-    form.parse(req, async (err, fields, files) => {
-      if (err) {
-        reject(new Error('Error parsing the form data'));
-        return;
-      }
+    // Handle file upload after user has authenticated
+    const data = await req.formData();
+    const file = data.get('file');
+    console.log('This is the data: ', data);
+    const email = data.get('email');
+    const number = data.get('number');
 
-      // Get the uploaded file
-      const { file } = files;
-      const { email } = fields;
-      const { number } = fields;
+    if (!file) {
+      return NextResponse.json({ message: 'No file provided' }, { status: 400 });
+    }
 
-      // Handle file upload logic here
-      const uploadedFile = await uploadFileToDrive(file, email, number);
-      if (!uploadedFile) {
-        resolve(NextResponse.json({ message: 'Something went wrong' }, { status: 400 }));
-      }
+    // Upload the file to Google Drive
+    const uploadedFile = await uploadFileToDrive(file, email, number);
+    if (!uploadedFile) {
+      return NextResponse.json({ message: 'Somthing went wrong' }, { status: 400 });
+    }
 
-      resolve(
-        NextResponse.json({ message: 'File uploaded successfully', fileId: uploadedFile.id })
-      );
+    return NextResponse.json({
+      message: 'File uploaded successfully',
+      fileId: uploadedFile.id,
     });
-  });
+  } catch (error) {
+    console.error('Error handling request:', error);
+
+    if (error.message.includes('invalid_grant')) {
+      // If there's an issue with the token, prompt for re-authorization
+      const authUrl = getAuthUrl();
+      return NextResponse.json({
+        message: 'Authorization expired or invalid. Please visit this URL to re-authorize the app:',
+        authUrl,
+      });
+    }
+
+    return NextResponse.json(
+      { message: 'Error handling the request', error: error.message },
+      { status: 500 }
+    );
+  }
 }

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { Oval } from 'react-loader-spinner';
 import { useRouter } from 'next/navigation';
 import React, { useState, useContext } from 'react';
@@ -34,10 +35,16 @@ export default function UploadFile({ email, number = -1, callback = () => {} }) 
       setLoading(true);
       console.log('sending upload request to server...', formData);
       // Adjust the API URL based on your backend route
-      const response = await fetch('/api/uploadApi', {
-        method: 'POST',
-        headers: { 'Content-Type': 'multipart/form-data' },
-        body: formData,
+      //   const response = await fetch('/api/uploadApi', {
+      //     method: 'POST',
+      //     // headers: { 'Content-Type': 'multipart/form-data' },
+      //     body: formData,
+      //   });
+
+      const response = await axios.post('/api/uploadApi', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       });
 
       if (response.status === 200) {
