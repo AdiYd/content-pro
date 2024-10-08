@@ -1,4 +1,5 @@
 import { Oval } from 'react-loader-spinner';
+import { useRouter } from 'next/navigation';
 import React, { useState, useContext } from 'react';
 
 import { Box, Button, useTheme, Typography } from '@mui/material';
@@ -11,6 +12,7 @@ export default function UploadFile({ email, number = -1, callback = () => {} }) 
   const [uploadStatus, setUploadStatus] = useState('');
   const theme = useTheme();
   const { mainColor } = useContext(ColorContext);
+  const router = useRouter();
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -30,10 +32,11 @@ export default function UploadFile({ email, number = -1, callback = () => {} }) 
     try {
       setUploadStatus('מעלה קובץ...');
       setLoading(true);
-      console.log('sending upload request to server...');
+      console.log('sending upload request to server...', formData);
       // Adjust the API URL based on your backend route
       const response = await fetch('/api/uploadApi', {
         method: 'POST',
+        headers: { 'Content-Type': 'multipart/form-data' },
         body: formData,
       });
 
@@ -43,6 +46,10 @@ export default function UploadFile({ email, number = -1, callback = () => {} }) 
         setUploadStatus('');
         callback();
       } else {
+        const res = await response.json();
+        if (res.authUrl) {
+          router.push(res.authUrl);
+        }
         setLoading(false);
         setUploadStatus('משהו השתבש, יש לנסות במועד אחר');
       }
