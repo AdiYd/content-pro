@@ -28,7 +28,6 @@ export function NotFoundView() {
           <Typography
             variant="h1"
             sx={{
-              mb: 2,
               ...textGradientAnimation,
             }}
           >
