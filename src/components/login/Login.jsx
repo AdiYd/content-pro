@@ -12,6 +12,7 @@ import { DarkModeTwoTone, LightModeTwoTone } from '@mui/icons-material';
 import {
   Box,
   Card,
+  Grid,
   Stack,
   Radio,
   Button,
@@ -39,6 +40,7 @@ import {
 import { getUserById, getAllDataFromCollection } from 'src/utils/firebaseFunctions';
 
 import ColorPicker from 'src/app/colorPalette';
+import { customShadows } from 'src/theme/core';
 import { ColorContext } from 'src/context/colorMain';
 
 import {
@@ -828,148 +830,216 @@ const nicheData = {
 const aiDescription =
   "כל מה שצריך זה לבחור נישה של תוכן ולכתוב כמה מילים משלכם (לא חובה). הצ'אט שלנו יבנה לכם סקריפט ליצרת סרטון ואתם תוכלו להשתמש בו ככלי לימודי ומקור לרעיונות";
 
-  // const videoDescriptions = [
-  //   { level: 1, description: 'סאונד על סיטואציה' },
-  //   { level: 2, description: 'העתקה מסרטון ויראלי' },
-  //   { level: 3, description: 'דיבור למצלמה (אנבוקסינג / שיתוף חוויה)' },
-  //   { level: 4, description: 'טרנד לנישה שלנו' },
-  //   { level: 5, description: 'וולוג תיעודי' },
-  //   { level: 6, description: 'סרטון רחוב' },
-  //   { level: 7, description: 'אתגרים (בנים vs בנות / הכי גדול ...)' },
-  // ];
+// const videoDescriptions = [
+//   { level: 1, description: 'סאונד על סיטואציה' },
+//   { level: 2, description: 'העתקה מסרטון ויראלי' },
+//   { level: 3, description: 'דיבור למצלמה (אנבוקסינג / שיתוף חוויה)' },
+//   { level: 4, description: 'טרנד לנישה שלנו' },
+//   { level: 5, description: 'וולוג תיעודי' },
+//   { level: 6, description: 'סרטון רחוב' },
+//   { level: 7, description: 'אתגרים (בנים vs בנות / הכי גדול ...)' },
+// ];
 
-  const videoTypes = [
-    {
-      type: 'סאונד על סיטואציה',
-      level: 1,
-      links: [
-        'https://www.instagram.com/p/C455NzHow8X/',
-        'https://www.tiktok.com/@eranfarkash1/video/7162287618200194306',
-      ],
-      description:
-        'קחו את הסאונד, הסתכלו מה רוב היוצרים עושים עם הסאונד (מה הקונטקסט) וצרו ממנו סיטואציה שקשורה לנישה שלכם - למציאת סאונדים או שירים טרנדים בטיקטוק כנסו לקישור הבא : https://ads.tiktok.com/business/creativecenter/inspiration/popular/music/pc/en',
-    },
-    {
-      type: 'העתקה מסרטון ויראלי',
-      level: 2,
-      links: [
-        'https://www.instagram.com/p/C7oMZMboGCT/',
-        'https://www.youtube.com/shorts/E-CAdEhgvFI',
-      ],
-      description: 'תוכן רגעי, שלא קשור בעיקר לנישה. מראה את הצד הכיפי שבכם.',
-    },
-    {
-      type: 'דיבור למצלמה (אנבוקסינג / שיתוף חוויה)',
-      level: 3,
-      links: [
-        'https://www.instagram.com/p/C8b1of_I9SZ/',
-        'https://www.tiktok.com/@eranfarkash1/video/7177378508543479042',
-      ],
-      description:
-        'כאן הדגש המרכזי הוא סרטונים בנישה שלנו שבהכרח תפסו לאחרים - פשוט כנסו לשורת חיפוש בטיקטוק, חפשו נושא בנישה שלכם שתרצו לעשות עליו סרטון - לחצו על פילטר ואז בחרו בשורה הראשונה את הלייקים ובתאריכים ב-30 או 60 יום האחרונים .',
-    },
-    {
-      type: 'טרנד לנישה שלנו',
-      level: 4,
-      links: [
-        'https://www.instagram.com/p/C2C7m2UIoYo/',
-        'https://www.youtube.com/shorts/D4bIMN0al40',
-        'https://www.instagram.com/p/C0HfJW6oqcv/',
-      ],
-      description:
-        'בשונה מהעתקה מסרטון ויראלי - כאן אפשר לחשוב יצירתי ולהשתמש בעריכות שונות, אביזרים שונים - הרעיון הוא להשאיר את הקרייאטיב והמסר ולהשתמש בו לתוכן משלנו תעקבו אחרי הדפים הבאים בשביל לדעת מה הטרנדים שהיו בחודש הקודם והחודש ומה המשמעות שלהם ותנסו למצוא את האחד שיכול לעבוד גם בנישה שלכם - גם חודש קודם רלוונטי לעכשיו טרנד נמשך כ-3 חודשים.',
-    },
-    {
-      type: 'וולוג תיעודי',
-      level: 5,
-      links: ['https://www.tiktok.com/@eranfarkash1/video/7279820611583544584'],
-      description:
-        'במידה ואתם לא ״נושמים״ את הרשת החברתית יהיה לכם קשה לעקוב אחרי הטרנדים אז תעקבו אחרי האתרים האלו :אתר2 אתר1',
-    },
-    {
-      type: 'סרטון רחוב',
-      level: 6,
-      links: [
-        'https://www.tiktok.com/@eranfarkash1/video/7330312190794255634',
-        'https://www.tiktok.com/@eranfarkash1/video/7117720238304677121',
-        'https://www.tiktok.com/@eranfarkash1/video/7127585134425001218',
-      ],
-      description:
-        'לתעד תהליך כלשהו שאתם עוברים ובכל שלב לספר מה אתם עובריםטיפ : לא להכין את האנשים, לגשת אליהם. האינטראקציה הראשונית משמעותית. המטרה להראות אינטראקציה עם עוד אנשים מחוץ לבית - זה יכול להיות במסעדה, בקניון, לשבת ברחוב',
-    },
-    {
-      type: 'אתגרים (בנים vs בנות / הכי גדול …)',
-      level: 7,
-      links: [
-        'https://www.instagram.com/p/C7jRgWVIAiU/',
-        'https://www.youtube.com/shorts/wWgnlF0KSns',
-      ],
-      description:
-        'הדבר הכי חשוב שמאפיין סרטון רחוב הוא שאנחנו היוצרים ניגשים למישהו.יסרטון אתגרים הוא הסרטון הכי קשה ליוצרי תוכן - הסרטון הזה דורש את כל המיומנות והידע הכי נרחב שיוצר תוכן יכול לדעת. כאן תצטרכו לרשום תסריט לסרטון מראש עם חוקים ברורים : מה המסר שאתם רוצים להעביר בסוף הסרטון לקהל (עם איזה מסר אתם רוצים שהוא יצא), מה הטקסט לפי המבנה הבא (מה הדבר שאתם עומדים לעשות בסרטון שכל כך מעניין + להראות את התהליך + מה היה הקושי בלעשות את הדבר הזה + להראות איך התגבתם על הקושי + להראות את התוצאה ואת המסר), איפה -כל חלק בסרטון יצולם (האם בבית, אולי חלק בבית וחלק בכמה מקומות שונים - אתם תחליטו) לאחר מכן תצטרכו לערוך את הסרטון להוסיף טקסטים אפקטים או מה שצריך והסרטון מוכן ,',
-    },
-  ];
+const videoTypes = [
+  {
+    type: 'סאונד על סיטואציה',
+    level: 1,
+    links: [
+      'https://www.instagram.com/p/C455NzHow8X/',
+      'https://www.tiktok.com/@eranfarkash1/video/7162287618200194306',
+    ],
+    description:
+      'קחו את הסאונד, הסתכלו מה רוב היוצרים עושים עם הסאונד (מה הקונטקסט) וצרו ממנו סיטואציה שקשורה לנישה שלכם - למציאת סאונדים או שירים טרנדים בטיקטוק כנסו לקישור הבא : https://ads.tiktok.com/business/creativecenter/inspiration/popular/music/pc/en',
+  },
+  {
+    type: 'העתקה מסרטון ויראלי',
+    level: 2,
+    links: [
+      'https://www.instagram.com/p/C7oMZMboGCT/',
+      'https://www.youtube.com/shorts/E-CAdEhgvFI',
+    ],
+    description: 'תוכן רגעי, שלא קשור בעיקר לנישה. מראה את הצד הכיפי שבכם.',
+  },
+  {
+    type: 'דיבור למצלמה (אנבוקסינג/שיתוף)',
+    level: 3,
+    links: [
+      'https://www.instagram.com/p/C8b1of_I9SZ/',
+      'https://www.tiktok.com/@eranfarkash1/video/7177378508543479042',
+    ],
+    description:
+      'כאן הדגש המרכזי הוא סרטונים בנישה שלנו שבהכרח תפסו לאחרים - פשוט כנסו לשורת חיפוש בטיקטוק, חפשו נושא בנישה שלכם שתרצו לעשות עליו סרטון - לחצו על פילטר ואז בחרו בשורה הראשונה את הלייקים ובתאריכים ב-30 או 60 יום האחרונים .',
+  },
+  {
+    type: 'טרנד לנישה שלנו',
+    level: 4,
+    links: [
+      'https://www.instagram.com/p/C2C7m2UIoYo/',
+      'https://www.youtube.com/shorts/D4bIMN0al40',
+      'https://www.instagram.com/p/C0HfJW6oqcv/',
+    ],
+    description:
+      'בשונה מהעתקה מסרטון ויראלי - כאן אפשר לחשוב יצירתי ולהשתמש בעריכות שונות, אביזרים שונים - הרעיון הוא להשאיר את הקרייאטיב והמסר ולהשתמש בו לתוכן משלנו תעקבו אחרי הדפים הבאים בשביל לדעת מה הטרנדים שהיו בחודש הקודם והחודש ומה המשמעות שלהם ותנסו למצוא את האחד שיכול לעבוד גם בנישה שלכם - גם חודש קודם רלוונטי לעכשיו טרנד נמשך כ-3 חודשים.',
+  },
+  {
+    type: 'וולוג תיעודי',
+    level: 5,
+    links: ['https://www.tiktok.com/@eranfarkash1/video/7279820611583544584'],
+    description:
+      'במידה ואתם לא ״נושמים״ את הרשת החברתית יהיה לכם קשה לעקוב אחרי הטרנדים אז תעקבו אחרי האתרים האלו :אתר2 אתר1',
+  },
+  {
+    type: 'סרטון רחוב',
+    level: 6,
+    links: [
+      'https://www.tiktok.com/@eranfarkash1/video/7330312190794255634',
+      'https://www.tiktok.com/@eranfarkash1/video/7117720238304677121',
+      'https://www.tiktok.com/@eranfarkash1/video/7127585134425001218',
+    ],
+    description:
+      'לתעד תהליך כלשהו שאתם עוברים ובכל שלב לספר מה אתם עובריםטיפ : לא להכין את האנשים, לגשת אליהם. האינטראקציה הראשונית משמעותית. המטרה להראות אינטראקציה עם עוד אנשים מחוץ לבית - זה יכול להיות במסעדה, בקניון, לשבת ברחוב',
+  },
+  {
+    type: 'אתגרים (בנים vs בנות/הכי גדול …)',
+    level: 7,
+    links: [
+      'https://www.instagram.com/p/C7jRgWVIAiU/',
+      'https://www.youtube.com/shorts/wWgnlF0KSns',
+    ],
+    description:
+      'הדבר הכי חשוב שמאפיין סרטון רחוב הוא שאנחנו היוצרים ניגשים למישהו.יסרטון אתגרים הוא הסרטון הכי קשה ליוצרי תוכן - הסרטון הזה דורש את כל המיומנות והידע הכי נרחב שיוצר תוכן יכול לדעת. כאן תצטרכו לרשום תסריט לסרטון מראש עם חוקים ברורים : מה המסר שאתם רוצים להעביר בסוף הסרטון לקהל (עם איזה מסר אתם רוצים שהוא יצא), מה הטקסט לפי המבנה הבא (מה הדבר שאתם עומדים לעשות בסרטון שכל כך מעניין + להראות את התהליך + מה היה הקושי בלעשות את הדבר הזה + להראות איך התגבתם על הקושי + להראות את התוצאה ואת המסר), איפה -כל חלק בסרטון יצולם (האם בבית, אולי חלק בבית וחלק בכמה מקומות שונים - אתם תחליטו) לאחר מכן תצטרכו לערוך את הסרטון להוסיף טקסטים אפקטים או מה שצריך והסרטון מוכן ,',
+  },
+];
 
-  function User({ userData = {}, callback, userID }) {
-    const { mainColor, textGradientAnimation, mode } = useContext(ColorContext);
-    const [update, setUpdate] = useState(false);
-    const [activeButton, setActiveButton] = useState('פרטים');
-    const [loader, setLoader] = useState(false);
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    let dataRes;
+function User({ userData = {}, callback }) {
+  const { mainColor, themeColor, textGradientAnimation, mode } = useContext(ColorContext);
+  const [update, setUpdate] = useState(false);
+  const [activeButton, setActiveButton] = useState('פרטים');
+  const [loader, setLoader] = useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isSmallScreen = useMediaQuery('(max-width: 330px)');
+  const [showGrid, setGrid] = useState(isMobile ? undefined : 'col');
+  let dataRes;
 
-    useEffect(() => {
-      setUpdate((p) => !p);
-    }, [userData, userData.videoList?.length]);
+  useEffect(() => {
+    setUpdate((p) => !p);
+  }, [userData, userData.videoList?.length]);
 
-    const setLoaderActive = (duration = 0.2) => {
-      setLoader(true);
-      setTimeout(() => {
-        setLoader(false);
-      }, [duration * 1e3]);
-    };
+  const setLoaderActive = (duration = 0.2) => {
+    setLoader(true);
+    setTimeout(() => {
+      setLoader(false);
+    }, [duration * 1e3]);
+  };
 
-    if (activeButton === 'AI Creator Agent') {
-      dataRes = <ScriptAI userData={userData} />;
-    } else if (activeButton === 'פרטים') {
-      dataRes = (
-        <Box textAlign="center" my={4}>
-          <ActiveUser user={userData} showMail={false} active typoVariant="body1" />
-          <div className="text-center my-4 flex flex-wrap justify-center gap-8">
-            {/* <Button href={`/mashov?email=${userData.email}`} variant="outlined" size="small">
+  if (activeButton === 'AI Creator Agent') {
+    dataRes = <ScriptAI userData={userData} />;
+  } else if (activeButton === 'פרטים') {
+    dataRes = (
+      <Box textAlign="center" my={4}>
+        <ActiveUser user={userData} showMail={false} active typoVariant="body1" />
+        <div className="text-center my-4 flex flex-wrap justify-center gap-8">
+          {/* <Button href={`/mashov?email=${userData.email}`} variant="outlined" size="small">
             {' '}
             למילוי משוב{' '}
           </Button> */}
+          <Button
+            href="https://eranfarkash.thinkific.com/courses/social-platforms"
+            variant="outlined"
+            color={mainColor}
+            size="medium"
+            // size="small"
+            sx={{ fontSize: '0.8rem' }}
+          >
+            מעבר לאתר הקורס
+          </Button>
+          {userData.payment && (userData.payment > 249 || userData.packageType !== 'Base-Pro') && (
             <Button
-              href="https://eranfarkash.thinkific.com/courses/social-platforms"
-              variant="outlined"
-              color={mainColor}
-              size="medium"
-              // size="small"
-              sx={{ fontSize: '0.8rem' }}
+              href="https://chat.whatsapp.com/DE2HSwpg9ABJpaEYj4ZAfv"
+              variant="text"
+              size="small"
+              // sx={{ mb: 2 }}
             >
-              מעבר לאתר הקורס
+              <Iconify icon="logos:whatsapp-icon" />
+              &nbsp; &nbsp; הצטרפות לקהילה
             </Button>
-            {userData.payment &&
-              (userData.payment > 249 || userData.packageType !== 'Base-Pro') && (
-                <Button
-                  href="https://chat.whatsapp.com/DE2HSwpg9ABJpaEYj4ZAfv"
-                  variant="text"
-                  size="small"
-                  // sx={{ mb: 2 }}
+          )}
+        </div>
+      </Box>
+    );
+  } else if (activeButton === 'תיק עבודות') {
+    dataRes = (
+      <Box>
+        <Stack justifyContent="center" mb={2} direction="row" spacing={4}>
+          {/* <Typography>תצוגה:</Typography> */}
+          <Iconify
+            onClick={() => setGrid('col')}
+            color={showGrid === 'col' ? themeColor : ''}
+            className="cursor-pointer hover:opacity-80"
+            icon="mynaui:grid-solid"
+          />
+          <Iconify
+            onClick={() => setGrid('row')}
+            color={showGrid === 'row' ? themeColor : ''}
+            className="cursor-pointer hover:opacity-80"
+            icon="fluent:row-triple-24-filled"
+          />
+          <Iconify
+            onClick={() => setGrid(undefined)}
+            color={!showGrid ? themeColor : ''}
+            className="cursor-pointer hover:opacity-80"
+            icon="fluent:list-rtl-16-filled"
+          />
+        </Stack>
+        <Stack spacing={4} direction="column">
+          {showGrid ? (
+            <Grid container spacing={showGrid === 'row' ? 2 : 0.7}>
+              {userData.videoList?.map((item, index) => (
+                <Grid
+                  display="flex"
+                  item
+                  xs={showGrid === 'row' ? 12 : 6}
+                  sm={showGrid === 'row' ? 12 : 6}
+                  md={showGrid === 'row' ? 12 : 6}
+                  lg={showGrid === 'row' ? 6 : 4}
+                  key={index}
                 >
-                  <Iconify icon="logos:whatsapp-icon" />
-                  &nbsp; &nbsp; הצטרפות לקהילה
-                </Button>
-              )}
-          </div>
-        </Box>
-      );
-    } else if (activeButton === 'תיק עבודות') {
-      dataRes = (
-        <Box>
-          <Stack spacing={4} direction="column">
-            {userData.videoList?.map((item, index) => (
+                  <Box
+                    width={1}
+                    maxWidth={900}
+                    display="flex"
+                    flexDirection="column"
+                    justifyContent="space-between"
+                    textAlign="center"
+                    alignItems="center"
+                    sx={{
+                      backgroundColor: theme.palette.background.paper,
+                      boxShadow: customShadows().dropdown,
+                      borderRadius: 1,
+                    }}
+                  >
+                    <Videoframe top videoId={item} className="border-none rounded-b-none" />
+                    <Typography
+                      sx={{ alignContent: 'center' }}
+                      mb={4}
+                      my={2}
+                      maxWidth={0.9}
+                      variant="body1"
+                    >
+                      <span className="text-green-400 ml-4">
+                        <Iconify icon="ic:round-verified" color="currentColor" />
+                      </span>
+                      Level {videoTypes[index]?.level}
+                      <br />
+                      {videoTypes[index]?.type}
+                    </Typography>
+                  </Box>
+                </Grid>
+              ))}
+            </Grid>
+          ) : (
+            userData.videoList?.map((item, index) => (
               <div key={index}>
                 <Typography variant="p">
                   Level {videoTypes[index]?.level} -{videoTypes[index]?.type}
@@ -979,341 +1049,344 @@ const aiDescription =
                 </Typography>
                 <Videoframe videoId={item} />
               </div>
-            ))}
-            {(userData.videoList?.length < 7 || true) && (
-              <div>
-                {' '}
-                <Typography mb={1} variant="p">
-                  Level {videoTypes[userData.videoList?.length || 0]?.level} -{' '}
-                  {videoTypes[userData.videoList?.length || 0]?.type}
-                </Typography>
-                <Typography mr={1} variant="body1" color="text.secondary">
-                  {videoTypes[userData.videoList?.length || 0]?.description}
-                </Typography>
-                <Typography mr={1} variant="body1">
-                  דוגמאות:
-                  <Stack flexWrap="wrap">
-                    {videoTypes[userData.videoList?.length || 0]?.links.map((item, index) => (
-                      <div className="flex gap-1">
-                        •
-                        <Typography
-                          mr={1}
-                          color="text.secondary"
-                          sx={{
-                            textDecoration: 'underline',
-                            cursor: 'pointer',
-                            '&:hover': { opacity: 0.8 },
-                          }}
-                          key={index}
-                          width="fit-content"
-                          component="a"
-                          href={item}
-                          target="_blank"
-                        >
-                          קישור {index + 1}
-                        </Typography>
-                      </div>
-                    ))}
-                  </Stack>
-                </Typography>
-                <UploadFile
-                  user={userData}
-                  callback={callback}
-                  email={userData.email}
-                  number={userData.videoList?.length || 0}
-                />
-              </div>
-            )}
-          </Stack>
-        </Box>
-      );
-    }
-    return (
-      <Box textAlign="start" my={2}>
-        <ColorPicker
-          sx={{
-            position: 'static',
-            flexDirection: 'row',
-            mx: 'auto',
-            bgcolor: 'transparent',
-            gap: { md: 6, xs: 2 },
-          }}
-          showSwitch={false}
-        />
-        <Box display="flex" gap={1}>
-          <Typography variant="h3">היי </Typography>
-          <Typography sx={textGradientAnimation} variant="h3">
-            {userData.name}{' '}
-          </Typography>
-          <Typography variant="h3">, </Typography>
-          {/* <Typography variant="h3">👋🏽</Typography> */}
-        </Box>
-        <Typography color="text.secondary" variant="body1">
-          באיזור האישי ניתן לראות פרטים על הקורס, תיק העבודות, בחירת נישה להתמחות ורעיונות לתכני
-          וידאו
-        </Typography>
-        <Stack mb={4} justifyContent="center" direction="row" spacing={4}>
-          {UserOptionsDict.map((item, index) => (
-            <Button
-              onClick={() => {
-                setLoaderActive(0.5);
-                setActiveButton(item === activeButton ? undefined : item);
-              }}
-              key={index}
-              color={activeButton === item ? mainColor : undefined}
-              size={isMobile ? 'small' : 'medium'}
-              sx={{ fontSize: isMobile ? '0.8rem' : '0.8rem', textWrap: 'nowrap' }}
-              variant={activeButton === item ? 'contained' : 'outlined'}
-            >
-              {item === 'AI Creator Agent'
-                ? isMobile
-                  ? '✨ AI Agent'
-                  : '✨ AI Creator Agent'
-                : item}
-            </Button>
-          ))}
-          {!isMobile && (
-            <Button
-              href="https://eranfarkash.thinkific.com/courses/social-platforms"
-              variant="outlined"
-              color={mainColor}
-              size="medium"
-              // size="small"
-              sx={{ fontSize: '0.8rem' }}
-            >
-              מעבר לאתר הקורס
-            </Button>
+            ))
+          )}
+          {(userData.videoList?.length < 7 || true) && (
+            <div>
+              {' '}
+              <Typography mb={1} variant="p">
+                Level {videoTypes[userData.videoList?.length || 0]?.level} -{' '}
+                {videoTypes[userData.videoList?.length || 0]?.type}
+              </Typography>
+              <Typography mr={1} variant="body1" color="text.secondary">
+                {videoTypes[userData.videoList?.length || 0]?.description}
+              </Typography>
+              <Typography mr={1} variant="body1">
+                דוגמאות:
+                <Stack flexWrap="wrap">
+                  {videoTypes[userData.videoList?.length || 0]?.links.map((item, index) => (
+                    <div className="flex gap-1">
+                      •
+                      <Typography
+                        mr={1}
+                        color="text.secondary"
+                        sx={{
+                          textDecoration: 'underline',
+                          cursor: 'pointer',
+                          '&:hover': { opacity: 0.8 },
+                        }}
+                        key={index}
+                        width="fit-content"
+                        component="a"
+                        href={item}
+                        target="_blank"
+                      >
+                        קישור {index + 1}
+                      </Typography>
+                    </div>
+                  ))}
+                </Stack>
+              </Typography>
+              <UploadFile
+                user={userData}
+                callback={callback}
+                email={userData.email}
+                number={userData.videoList?.length || 0}
+              />
+            </div>
           )}
         </Stack>
-
-        <Box my={4}>
-          {loader ? (
-            <Circles
-              wrapperClass="flex justify-center width-full my-8"
-              height={80}
-              color={theme.palette[mainColor]?.main}
-              width={80}
-              visible
-            />
-          ) : (
-            dataRes
-          )}
-        </Box>
       </Box>
     );
   }
-
-  function ScriptAI({ userData, ...props }) {
-    const [loaderGenerate, setLoaderGenerate] = useState(false);
-    const [focus, setFocus] = useState(false);
-    const [inputRef, setInput] = useState();
-    const [category, setCategory] = useState('');
-    const [selectRef, setSelect] = useState('');
-    const isMaster = userData.packageType === 'Master-Pro' || false;
-    const theme = useTheme();
-    const { mainColor, textGradientAnimation, mode } = useContext(ColorContext);
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
-    const generateScript = () => {
-      setLoaderGenerate(true);
-      setTimeout(() => {
-        setLoaderGenerate(false);
-      }, 15 * 1e3);
-    };
-
-    const handleInput = (e) => {
-      if (e.target.value.length <= 250) {
-        setInput(e.target.value);
-      }
-    };
-    const handleSelect = (e) => {
-      setSelect(e.target.value);
-    };
-    const handleCategory = (e) => {
-      setCategory(e.target.value);
-    };
-
-    const hundleSubmit = (e) => {
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      console.log('This is submit data: ', { category: category || 'כללי', inputRef, selectRef });
-      generateScript();
-    };
-
-    return (
-      <Box textAlign="center" my={4}>
-        <Typography variant="body1" color="text.secondary">
-          בנינו לכם מודל AI שמבין ביצירת תוכן ויעזור לכם ליצור תוכן יצירתי, מתוחכם ומקורי
+  return (
+    <Box textAlign="start" my={2}>
+      <ColorPicker
+        sx={{
+          position: 'static',
+          flexDirection: 'row',
+          mx: 'auto',
+          bgcolor: 'transparent',
+          gap: { md: 6, xs: 2 },
+        }}
+        showSwitch={false}
+      />
+      <Box display="flex" gap={1}>
+        <Typography variant="h3">היי </Typography>
+        <Typography sx={textGradientAnimation} variant="h3">
+          {userData.name}{' '}
         </Typography>
-        <Typography mb={2} variant="body1" color="text.secondary">
-          {aiDescription}
-        </Typography>
-        <AnimateBorder
-          sx={{ borderRadius: 2, borderWidth: 1, borderColor: 'transparent' }}
-          animate={{
-            angle: 250,
-            // outline: 'none',
-            distance: 8,
-            // disableDoubleline: true,
-            length: 15,
-            color: theme.palette.success.main,
-            // width: '2px',
-          }}
-        >
-          <Card
-            sx={{
-              display: 'flex',
-              zIndex: 80,
-              flexDirection: 'column',
-              gap: 4,
-              m: 0.4,
-              px: { md: 6, xs: 2 },
-              py: 4,
-              mx: 'auto',
-              width: isMobile ? 1 : 1,
+        <Typography variant="h3">, </Typography>
+        {/* <Typography variant="h3">👋🏽</Typography> */}
+      </Box>
+      <Typography color="text.secondary" variant="body1">
+        באיזור האישי ניתן לראות פרטים על הקורס, תיק העבודות, בחירת נישה להתמחות ורעיונות לתכני וידאו
+      </Typography>
+      <Stack mb={4} justifyContent="center" direction="row" spacing={4}>
+        {UserOptionsDict.map((item, index) => (
+          <Button
+            onClick={() => {
+              setLoaderActive(0.5);
+              setActiveButton(item === activeButton ? undefined : item);
             }}
-            component="form"
-            onSubmit={hundleSubmit}
+            key={index}
+            color={activeButton === item ? mainColor : undefined}
+            size={isMobile ? 'small' : 'medium'}
+            sx={{ fontSize: isMobile ? '0.8rem' : '0.8rem', textWrap: 'nowrap' }}
+            variant={activeButton === item ? 'contained' : 'outlined'}
           >
-            {loaderGenerate ? (
-              <div>
-                <div className="animate-pulse">
-                  <Typography sx={{ direction: 'ltr', ...textGradientAnimation }} variant="h4">
-                    Generating content...
-                  </Typography>
-                  <Typography color="text.secondary" sx={{ direction: 'ltr' }} variant="body1">
-                    (In construction &nbsp;
-                    <Iconify icon="carbon:construction" />)
-                  </Typography>
-                </div>
-                <div className="my-20 flex justify-center">
-                  <InfinitySpin
-                    height="200"
-                    // width=
-                    colors={[theme.palette[mainColor]?.dark, theme.palette[mainColor]?.light]}
-                    color={
-                      theme.palette[mainColor][mode === 'dark' ? 'light' : 'dark'] ||
-                      theme.palette.secondary.main
-                    }
-                  />
-                </div>
-              </div>
-            ) : (
-              <Box display="flex" flexDirection="column" gap={4} width={1}>
-                <Typography variant="h4">© Video-Pro Script Generator</Typography>
-                <FormControl required fullWidth variant="outlined">
-                  <InputLabel>בחירת נישה</InputLabel>
-                  {/* <InputLabel className='w-full flex justify-start text-start' id="select">בחירת נישה ליצירת תוכן</InputLabel> */}
-                  <Select
-                    displayEmpty
-                    name="niche"
-                    variant="filled"
-                    sx={{ textAlign: 'center', my: 0 }}
-                    onChange={handleSelect}
-                    value={selectRef}
-                  >
-                    {Object.keys(nicheData).map((item, index) => (
-                      <MenuItem selected={index === 0} key={index} value={item}>
-                        {item}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  <FormHelperText>נא לבחור נישה</FormHelperText>
-                  {nicheData[selectRef] && (
-                    <Box>
-                      <Typography my={2} textAlign="start" variant="body2" color="text.secondary">
-                        בחרו תת-קטגוריה:
-                      </Typography>
-                      <RadioGroup color={mainColor} value={category} onChange={handleCategory}>
-                        <Stack justifyContent="start" direction="row" flexWrap="wrap">
-                          {nicheData[selectRef].map((subNiche, indx) => (
-                            <FormControlLabel
-                              key={`${indx} ${subNiche}`}
-                              value={subNiche}
-                              control={<Radio color={mainColor} />}
-                              label={subNiche}
-                            />
-                          ))}
-                        </Stack>
-                      </RadioGroup>
-                    </Box>
-                  )}
-                </FormControl>
-                <Box textAlign="start">
-                  <TextField
-                    fullWidth
-                    multiline
-                    name="free-text"
-                    disabled={!isMaster}
-                    rows={4}
-                    onChange={handleInput}
-                    onBlur={() => setFocus(false)}
-                    onFocus={() => setFocus(true)}
-                    variant={isMaster ? 'outlined' : 'filled'}
-                    // InputLabelProps={{dir:'rtl',sx:{px:2, float:'right'}, style:{margin: '0px 10px', width:'max-content'}}}
-                    value={inputRef}
-                    label={focus ? '.    תנו לנו כיוון, אנחנו נמשיך משם    .' : ''}
-                    placeholder="טקסט חופשי - רעיונות, לוקיישנים וכל הכוונה אחרת ל AI"
-                  />
-                  <Box mb={2} width={1} display="flex" justifyContent="space-between">
-                    <Typography
-                      variant="body2"
-                      component="div"
-                      color={isMaster ? theme.palette.success.main : theme.palette.error.main}
-                    >
-                      לתלמידי מסלול Master בלבד
-                    </Typography>
-                    <Typography variant="body2" fontSize="0.7" color="text.secondary">
-                      {!isMobile && 'עד 250 תווים'}({250 - (inputRef?.length || 0)})
-                    </Typography>
-                  </Box>
-                </Box>
-                <Button
-                  sx={{
-                    ...textGradientAnimation,
-                    animationDuration: '10s',
-                    WebkitBackgroundClip: 'inherit',
-                    WebkitTextFillColor: 'inherit',
-                    backgroundClip: 'inherit',
-                    textFillColor: 'inherit',
-                    color: 'inherit',
-                  }}
-                  size={isMobile ? 'medium' : 'large'}
-                  type="submit"
-                  variant="contained"
-                  fullWidth
-                >
-                  {' '}
-                  ✨ Generate AI sctipt
-                </Button>
-              </Box>
-            )}
-          </Card>
-        </AnimateBorder>
-      </Box>
-    );
-  }
+            {item === 'AI Creator Agent'
+              ? isMobile
+                ? '✨ AI Agent'
+                : '✨ AI Creator Agent'
+              : item}
+          </Button>
+        ))}
+        {!isMobile && (
+          <Button
+            href="https://eranfarkash.thinkific.com/courses/social-platforms"
+            variant="outlined"
+            color={mainColor}
+            size="medium"
+            // size="small"
+            sx={{ fontSize: '0.8rem' }}
+          >
+            מעבר לאתר הקורס
+          </Button>
+        )}
+      </Stack>
 
-  export function Videoframe({ videoId }) {
-    return videoId ? (
-      <Box
-        sx={{ position: 'relative' }}
-        maxWidth={800}
-        my={1}
-        width="fit-content"
-        overflow="hidden"
-      >
-        <iframe
-          title="videoIntro"
-          // width={500}
-          allowFullScreen
-          allow="fullscreen"
-          // src="https://drive.google.com/file/d/1GPVCyit_PuX4sUh5FMlAjTKVRCVdW0mY/preview"
-          src={`https://drive.google.com/file/d/${videoId}/preview`}
-          className="relative border-[0.7px] border-grey-500/40 rounded-md shadow-md z-20 w-full h-full aspect-video"
-          // controls
-        />
-        <div className="absolute z-20 top-0 right-0 bg-transparent w-1/4 h-1/4" />
+      <Box my={4}>
+        {loader ? (
+          <Circles
+            wrapperClass="flex justify-center width-full my-8"
+            height={80}
+            color={theme.palette[mainColor]?.main}
+            width={80}
+            visible
+          />
+        ) : (
+          dataRes
+        )}
       </Box>
-    ) : null;
-  }
+    </Box>
+  );
+}
+
+function ScriptAI({ userData, ...props }) {
+  const [loaderGenerate, setLoaderGenerate] = useState(false);
+  const [focus, setFocus] = useState(false);
+  const [inputRef, setInput] = useState();
+  const [category, setCategory] = useState('');
+  const [selectRef, setSelect] = useState('');
+  const isMaster = userData.packageType === 'Master-Pro' || false;
+  const theme = useTheme();
+  const { mainColor, textGradientAnimation, mode } = useContext(ColorContext);
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const generateScript = () => {
+    setLoaderGenerate(true);
+    setTimeout(() => {
+      setLoaderGenerate(false);
+    }, 15 * 1e3);
+  };
+
+  const handleInput = (e) => {
+    if (e.target.value.length <= 250) {
+      setInput(e.target.value);
+    }
+  };
+  const handleSelect = (e) => {
+    setSelect(e.target.value);
+  };
+  const handleCategory = (e) => {
+    setCategory(e.target.value);
+  };
+
+  const hundleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    console.log('This is submit data: ', { category: category || 'כללי', inputRef, selectRef });
+    generateScript();
+  };
+
+  return (
+    <Box textAlign="center" my={4}>
+      <Typography variant="body1" color="text.secondary">
+        בנינו לכם מודל AI שמבין ביצירת תוכן ויעזור לכם ליצור תוכן יצירתי, מתוחכם ומקורי
+      </Typography>
+      <Typography mb={2} variant="body1" color="text.secondary">
+        {aiDescription}
+      </Typography>
+      <AnimateBorder
+        sx={{ borderRadius: 2, borderWidth: 1, borderColor: 'transparent' }}
+        animate={{
+          angle: 250,
+          // outline: 'none',
+          distance: 8,
+          // disableDoubleline: true,
+          length: 15,
+          color: theme.palette.success.main,
+          // width: '2px',
+        }}
+      >
+        <Card
+          sx={{
+            display: 'flex',
+            zIndex: 80,
+            flexDirection: 'column',
+            gap: 4,
+            m: 0.4,
+            px: { md: 6, xs: 2 },
+            py: 4,
+            mx: 'auto',
+            width: isMobile ? 1 : 1,
+          }}
+          component="form"
+          onSubmit={hundleSubmit}
+        >
+          {loaderGenerate ? (
+            <div>
+              <div className="animate-pulse">
+                <Typography sx={{ direction: 'ltr', ...textGradientAnimation }} variant="h4">
+                  Generating content...
+                </Typography>
+                <Typography color="text.secondary" sx={{ direction: 'ltr' }} variant="body1">
+                  (In construction &nbsp;
+                  <Iconify icon="carbon:construction" />)
+                </Typography>
+              </div>
+              <div className="my-20 flex justify-center">
+                <InfinitySpin
+                  height="200"
+                  // width=
+                  colors={[theme.palette[mainColor]?.dark, theme.palette[mainColor]?.light]}
+                  color={
+                    theme.palette[mainColor][mode === 'dark' ? 'light' : 'dark'] ||
+                    theme.palette.secondary.main
+                  }
+                />
+              </div>
+            </div>
+          ) : (
+            <Box display="flex" flexDirection="column" gap={4} width={1}>
+              <Typography variant="h4">© Video-Pro Script Generator</Typography>
+              <FormControl required fullWidth variant="outlined">
+                <InputLabel>בחירת נישה</InputLabel>
+                {/* <InputLabel className='w-full flex justify-start text-start' id="select">בחירת נישה ליצירת תוכן</InputLabel> */}
+                <Select
+                  displayEmpty
+                  name="niche"
+                  variant="filled"
+                  sx={{ textAlign: 'center', my: 0 }}
+                  onChange={handleSelect}
+                  value={selectRef}
+                >
+                  {Object.keys(nicheData).map((item, index) => (
+                    <MenuItem selected={index === 0} key={index} value={item}>
+                      {item}
+                    </MenuItem>
+                  ))}
+                </Select>
+                <FormHelperText>נא לבחור נישה</FormHelperText>
+                {nicheData[selectRef] && (
+                  <Box>
+                    <Typography my={2} textAlign="start" variant="body2" color="text.secondary">
+                      בחרו תת-קטגוריה:
+                    </Typography>
+                    <RadioGroup color={mainColor} value={category} onChange={handleCategory}>
+                      <Stack justifyContent="start" direction="row" flexWrap="wrap">
+                        {nicheData[selectRef].map((subNiche, indx) => (
+                          <FormControlLabel
+                            key={`${indx} ${subNiche}`}
+                            value={subNiche}
+                            control={<Radio color={mainColor} />}
+                            label={subNiche}
+                          />
+                        ))}
+                      </Stack>
+                    </RadioGroup>
+                  </Box>
+                )}
+              </FormControl>
+              <Box textAlign="start">
+                <TextField
+                  fullWidth
+                  multiline
+                  name="free-text"
+                  disabled={!isMaster}
+                  rows={4}
+                  onChange={handleInput}
+                  onBlur={() => setFocus(false)}
+                  onFocus={() => setFocus(true)}
+                  variant={isMaster ? 'outlined' : 'filled'}
+                  // InputLabelProps={{dir:'rtl',sx:{px:2, float:'right'}, style:{margin: '0px 10px', width:'max-content'}}}
+                  value={inputRef}
+                  label={focus ? '.    תנו לנו כיוון, אנחנו נמשיך משם    .' : ''}
+                  placeholder="טקסט חופשי - רעיונות, לוקיישנים וכל הכוונה אחרת ל AI"
+                />
+                <Box mb={2} width={1} display="flex" justifyContent="space-between">
+                  <Typography
+                    variant="body2"
+                    component="div"
+                    color={isMaster ? theme.palette.success.main : theme.palette.error.main}
+                  >
+                    לתלמידי מסלול Master בלבד
+                  </Typography>
+                  <Typography variant="body2" fontSize="0.7" color="text.secondary">
+                    {!isMobile && 'עד 250 תווים'}({250 - (inputRef?.length || 0)})
+                  </Typography>
+                </Box>
+              </Box>
+              <Button
+                sx={{
+                  ...textGradientAnimation,
+                  animationDuration: '10s',
+                  WebkitBackgroundClip: 'inherit',
+                  WebkitTextFillColor: 'inherit',
+                  backgroundClip: 'inherit',
+                  textFillColor: 'inherit',
+                  color: 'inherit',
+                }}
+                size={isMobile ? 'medium' : 'large'}
+                type="submit"
+                variant="contained"
+                fullWidth
+              >
+                {' '}
+                ✨ Generate AI sctipt
+              </Button>
+            </Box>
+          )}
+        </Card>
+      </AnimateBorder>
+    </Box>
+  );
+}
+
+export function Videoframe({ videoId, className, top = false }) {
+  return videoId ? (
+    <Box
+      sx={{ position: 'relative' }}
+      maxWidth={900}
+      display="flex"
+      mt={top ? 0 : 1}
+      mb={top ? 1 : 0}
+      width={1}
+      // width="fit-content"
+      overflow="hidden"
+    >
+      <iframe
+        title="videoIntro"
+        // width={500}
+        allowFullScreen
+        allow="fullscreen"
+        // src="https://drive.google.com/file/d/1GPVCyit_PuX4sUh5FMlAjTKVRCVdW0mY/preview"
+        src={`https://drive.google.com/file/d/${videoId}/preview`}
+        className={`relative border-[0.7px] border-grey-500/40 rounded-md shadow-md z-20 w-full h-full aspect-video ${className}`}
+        // controls
+      />
+      <div className="absolute z-20 top-0 right-0 bg-transparent w-1/4 h-1/3" />
+    </Box>
+  ) : null;
+}
