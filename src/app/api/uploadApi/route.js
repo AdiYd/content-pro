@@ -2,10 +2,9 @@ import { NextResponse } from 'next/server';
 
 import { getAuthUrl, uploadFileToDrive, initializeOAuthClient } from 'src/utils/fileUploads';
 
-export default async function handler(req, res) {
-  const dataTemp = req.body;
+export default async function POST(req) {
   try {
-    console.log('Starting upload API...', dataTemp);
+    console.log('Starting upload API...');
     // Check if tokens are already saved
     const isAuthenticated = initializeOAuthClient();
     if (!isAuthenticated) {

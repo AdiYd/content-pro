@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { Oval } from 'react-loader-spinner';
 import { useRouter } from 'next/navigation';
 import React, { useState, useContext } from 'react';
@@ -6,6 +5,8 @@ import React, { useState, useContext } from 'react';
 import { Box, Button, useTheme, Typography } from '@mui/material';
 
 import { ColorContext } from 'src/context/colorMain';
+
+import { handleSubmitFile } from './sumbit';
 
 export default function UploadFile({ email, number = -1, callback = () => {} }) {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -32,20 +33,21 @@ export default function UploadFile({ email, number = -1, callback = () => {} }) 
 
     try {
       setUploadStatus('מעלה קובץ...');
+      console.log('lsdkfjhkj');
       setLoading(true);
       console.log('sending upload request to server...', formData);
-      // Adjust the API URL based on your backend route
-      //   const response = await fetch('/api/uploadApi', {
+      const response = await handleSubmitFile({ formData });
+      console.log('This is the response: ', response);
+      //   const response = await fetch(`${process.env.URL}/api/uploadApi`, {
       //     method: 'POST',
-      //     // headers: { 'Content-Type': 'multipart/form-data' },
       //     body: formData,
       //   });
 
-      const response = await axios.post('/api/uploadApi', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      //   const response = await axios.post('/api/uploadApi', formData, {
+      //     headers: {
+      //       'Content-Type': 'multipart/form-data',
+      //     },
+      //   });
 
       if (response.status === 200) {
         setUploadStatus('הקובץ נשמר בהצלחה!');
@@ -53,9 +55,8 @@ export default function UploadFile({ email, number = -1, callback = () => {} }) 
         setUploadStatus('');
         callback();
       } else {
-        const res = await response.json();
-        if (res.authUrl) {
-          router.push(res.authUrl);
+        if (response.authUrl) {
+          router.push(response.authUrl);
         }
         setLoading(false);
         setUploadStatus('משהו השתבש, יש לנסות במועד אחר');
