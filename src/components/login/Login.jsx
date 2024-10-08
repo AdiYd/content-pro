@@ -900,7 +900,7 @@ const videoTypes = [
       'לתעד תהליך כלשהו שאתם עוברים ובכל שלב לספר מה אתם עובריםטיפ : לא להכין את האנשים, לגשת אליהם. האינטראקציה הראשונית משמעותית. המטרה להראות אינטראקציה עם עוד אנשים מחוץ לבית - זה יכול להיות במסעדה, בקניון, לשבת ברחוב',
   },
   {
-    type: 'אתגרים (בנים vs בנות/הכי גדול …)',
+    type: 'אתגרים (בנים vs בנות/הכי גדול…)',
     level: 7,
     links: [
       'https://www.instagram.com/p/C7jRgWVIAiU/',
@@ -994,7 +994,7 @@ function User({ userData = {}, callback }) {
         </Stack>
         <Stack spacing={4} direction="column">
           {showGrid ? (
-            <Grid container spacing={showGrid === 'row' ? 2 : 0.7}>
+            <Grid container rowSpacing={2.5} columnSpacing={0.5}>
               {userData.videoList?.map((item, index) => (
                 <Grid
                   display="flex"
@@ -1008,18 +1008,24 @@ function User({ userData = {}, callback }) {
                   <Box
                     width={1}
                     maxWidth={900}
+                    minHeight={150}
                     display="flex"
                     flexDirection="column"
-                    justifyContent="space-between"
+                    justifyContent="flex-start"
                     textAlign="center"
                     alignItems="center"
                     sx={{
                       backgroundColor: theme.palette.background.paper,
                       boxShadow: customShadows().dropdown,
-                      borderRadius: 1,
+                      borderColor: theme.palette.background.paper,
+                      borderRadius: 0.75,
                     }}
                   >
-                    <Videoframe top videoId={item} className="border-none rounded-b-none" />
+                    <Videoframe
+                      top
+                      videoId={item}
+                      className="border-none rounded-t-md rounded-b-none"
+                    />
                     <Typography
                       sx={{ alignContent: 'center' }}
                       mb={4}
@@ -1027,9 +1033,9 @@ function User({ userData = {}, callback }) {
                       maxWidth={0.9}
                       variant="body1"
                     >
-                      <span className="text-green-400 ml-4">
-                        <Iconify icon="ic:round-verified" color="currentColor" />
-                      </span>
+                      <div className="text-green-500 mb-2">
+                        <Iconify icon="ic:round-verified" />
+                      </div>
                       Level {videoTypes[index]?.level}
                       <br />
                       {videoTypes[index]?.type}
@@ -1043,7 +1049,7 @@ function User({ userData = {}, callback }) {
               <div key={index}>
                 <Typography variant="p">
                   Level {videoTypes[index]?.level} -{videoTypes[index]?.type}
-                  <span className="text-green-400 mx-4">
+                  <span className="text-green-500 mx-4">
                     <Iconify icon="ic:round-verified" color="currentColor" />
                   </span>
                 </Typography>
