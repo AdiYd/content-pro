@@ -829,164 +829,177 @@ const nicheData = {
 const aiDescription =
   "כל מה שצריך זה לבחור נישה של תוכן ולכתוב כמה מילים משלכם (לא חובה). הצ'אט שלנו יבנה לכם סקריפט ליצרת סרטון ואתם תוכלו להשתמש בו ככלי לימודי ומקור לרעיונות";
 
-function User({ userData = {}, callback, userID }) {
-  const { mainColor, textGradientAnimation, mode } = useContext(ColorContext);
-  const [update, setUpdate] = useState(false);
-  const [activeButton, setActiveButton] = useState('פרטים');
-  const [loader, setLoader] = useState(false);
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  let dataRes;
+  const videoDescriptions = [
+    { level: 1, description: 'סאונד על סיטואציה' },
+    { level: 2, description: 'העתקה מסרטון ויראלי' },
+    { level: 3, description: 'דיבור למצלמה (אנבוקסינג / שיתוף חוויה)' },
+    { level: 4, description: 'טרנד לנישה שלנו' },
+    { level: 5, description: 'וולוג תיעודי' },
+    { level: 6, description: 'סרטון רחוב' },
+    { level: 7, description: 'אתגרים (בנים vs בנות / הכי גדול ...)' },
+  ];
 
-  useEffect(() => {
-    setUpdate((p) => !p);
-  }, [userData, userData.videoList?.length]);
+  function User({ userData = {}, callback, userID }) {
+    const { mainColor, textGradientAnimation, mode } = useContext(ColorContext);
+    const [update, setUpdate] = useState(false);
+    const [activeButton, setActiveButton] = useState('פרטים');
+    const [loader, setLoader] = useState(false);
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    let dataRes;
 
-  const setLoaderActive = (duration = 0.2) => {
-    setLoader(true);
-    setTimeout(() => {
-      setLoader(false);
-    }, [duration * 1e3]);
-  };
+    useEffect(() => {
+      setUpdate((p) => !p);
+    }, [userData, userData.videoList?.length]);
 
-  if (activeButton === 'AI Creator Agent') {
-    dataRes = <ScriptAI userData={userData} />;
-  } else if (activeButton === 'פרטים') {
-    dataRes = (
-      <Box textAlign="center" my={4}>
-        <ActiveUser user={userData} showMail={false} active typoVariant="body1" />
-        <div className="text-center my-4 flex flex-wrap justify-center gap-8">
-          {/* <Button href={`/mashov?email=${userData.email}`} variant="outlined" size="small">
+    const setLoaderActive = (duration = 0.2) => {
+      setLoader(true);
+      setTimeout(() => {
+        setLoader(false);
+      }, [duration * 1e3]);
+    };
+
+    if (activeButton === 'AI Creator Agent') {
+      dataRes = <ScriptAI userData={userData} />;
+    } else if (activeButton === 'פרטים') {
+      dataRes = (
+        <Box textAlign="center" my={4}>
+          <ActiveUser user={userData} showMail={false} active typoVariant="body1" />
+          <div className="text-center my-4 flex flex-wrap justify-center gap-8">
+            {/* <Button href={`/mashov?email=${userData.email}`} variant="outlined" size="small">
             {' '}
             למילוי משוב{' '}
           </Button> */}
-          <Button
-            href="https://eranfarkash.thinkific.com/courses/social-platforms"
-            variant="outlined"
-            color={mainColor}
-            size="medium"
-            // size="small"
-            sx={{ fontSize: '0.8rem' }}
-          >
-            מעבר לאתר הקורס
-          </Button>
-          {userData.payment && (userData.payment > 249 || userData.packageType !== 'Base-Pro') && (
             <Button
-              href="https://chat.whatsapp.com/DE2HSwpg9ABJpaEYj4ZAfv"
-              variant="text"
-              size="small"
-              // sx={{ mb: 2 }}
+              href="https://eranfarkash.thinkific.com/courses/social-platforms"
+              variant="outlined"
+              color={mainColor}
+              size="medium"
+              // size="small"
+              sx={{ fontSize: '0.8rem' }}
             >
-              <Iconify icon="logos:whatsapp-icon" />
-              &nbsp; &nbsp; הצטרפות לקהילה
+              מעבר לאתר הקורס
+            </Button>
+            {userData.payment &&
+              (userData.payment > 249 || userData.packageType !== 'Base-Pro') && (
+                <Button
+                  href="https://chat.whatsapp.com/DE2HSwpg9ABJpaEYj4ZAfv"
+                  variant="text"
+                  size="small"
+                  // sx={{ mb: 2 }}
+                >
+                  <Iconify icon="logos:whatsapp-icon" />
+                  &nbsp; &nbsp; הצטרפות לקהילה
+                </Button>
+              )}
+          </div>
+        </Box>
+      );
+    } else if (activeButton === 'תיק עבודות') {
+      dataRes = (
+        <Box>
+          <Stack spacing={2} direction="column">
+            {userData.videoList?.map((item, index) => (
+              <div key={index}>
+                <Typography mb={1} ml={1} variant="body1">
+                  Level {videoDescriptions[index]?.level} -{videoDescriptions[index]?.description}
+                </Typography>
+                <Videoframe videoId={item} />
+              </div>
+            ))}
+            {(userData.videoList?.length < 7 || true) && (
+              <>
+                {' '}
+                <Typography ml={1} variant="body1">
+                  Level {videoDescriptions[userData.videoList?.length || 0]?.level} -{' '}
+                  {videoDescriptions[userData.videoList?.length || 0]?.description}
+                </Typography>
+                <UploadFile
+                  user={userData}
+                  callback={callback}
+                  email={userData.email}
+                  number={userData.videoList?.length || 0}
+                />
+              </>
+            )}
+          </Stack>
+        </Box>
+      );
+    }
+    return (
+      <Box textAlign="start" my={2}>
+        <ColorPicker
+          sx={{
+            position: 'static',
+            flexDirection: 'row',
+            mx: 'auto',
+            bgcolor: 'transparent',
+            gap: { md: 6, xs: 2 },
+          }}
+          showSwitch={false}
+        />
+        <Box display="flex" gap={1}>
+          <Typography variant="h3">היי </Typography>
+          <Typography sx={textGradientAnimation} variant="h3">
+            {userData.name}{' '}
+          </Typography>
+          <Typography variant="h3">, </Typography>
+          {/* <Typography variant="h3">👋🏽</Typography> */}
+        </Box>
+        <Typography color="text.secondary" variant="body1">
+          באיזור האישי ניתן לראות פרטים על הקורס, תיק העבודות, בחירת נישה להתמחות ורעיונות לתכני
+          וידאו
+        </Typography>
+        <Stack mb={4} justifyContent="center" direction="row" spacing={4}>
+          {UserOptionsDict.map((item, index) => (
+            <Button
+              onClick={() => {
+                setLoaderActive(0.5);
+                setActiveButton(item === activeButton ? undefined : item);
+              }}
+              key={index}
+              color={activeButton === item ? mainColor : undefined}
+              size={isMobile ? 'small' : 'medium'}
+              sx={{ fontSize: isMobile ? '0.8rem' : '0.8rem', textWrap: 'nowrap' }}
+              variant={activeButton === item ? 'contained' : 'outlined'}
+            >
+              {item === 'AI Creator Agent'
+                ? isMobile
+                  ? '✨ AI Agent'
+                  : '✨ AI Creator Agent'
+                : item}
+            </Button>
+          ))}
+          {!isMobile && (
+            <Button
+              href="https://eranfarkash.thinkific.com/courses/social-platforms"
+              variant="outlined"
+              color={mainColor}
+              size="medium"
+              // size="small"
+              sx={{ fontSize: '0.8rem' }}
+            >
+              מעבר לאתר הקורס
             </Button>
           )}
-        </div>
-      </Box>
-    );
-  } else if (activeButton === 'תיק עבודות') {
-    dataRes = (
-      <Box>
-        <Stack spacing={2} direction="column">
-          {userData.videoList?.map((item, index) => (
-            <div key={index}>
-              <Typography mb={1} ml={1} variant="body1">
-                {index + 1} .
-              </Typography>
-              <Videoframe videoId={item} />
-            </div>
-          ))}
-          {(userData.videoList?.length < 7 || true) && (
-            <>
-              {' '}
-              <Typography ml={1} variant="body1">
-                {(userData.videoList?.length || 0) + 1} .
-              </Typography>
-              <UploadFile
-                user={userData}
-                callback={callback}
-                email={userData.email}
-                number={userData.videoList?.length || 0}
-              />
-            </>
-          )}
         </Stack>
+
+        <Box my={4}>
+          {loader ? (
+            <Circles
+              wrapperClass="flex justify-center width-full my-8"
+              height={80}
+              color={theme.palette[mainColor]?.main}
+              width={80}
+              visible
+            />
+          ) : (
+            dataRes
+          )}
+        </Box>
       </Box>
     );
   }
-  return (
-    <Box textAlign="start" my={2}>
-      <ColorPicker
-        sx={{
-          position: 'static',
-          flexDirection: 'row',
-          mx: 'auto',
-          bgcolor: 'transparent',
-          gap: { md: 6, xs: 2 },
-        }}
-        showSwitch={false}
-      />
-      <Box display="flex" gap={1}>
-        <Typography variant="h3">היי </Typography>
-        <Typography sx={textGradientAnimation} variant="h3">
-          {userData.name}{' '}
-        </Typography>
-        <Typography variant="h3">, </Typography>
-        {/* <Typography variant="h3">👋🏽</Typography> */}
-      </Box>
-      <Typography color="text.secondary" variant="body1">
-        באיזור האישי ניתן לראות פרטים על הקורס, תיק העבודות, בחירת נישה להתמחות ורעיונות לתכני וידאו
-      </Typography>
-      <Stack mb={4} justifyContent="center" direction="row" spacing={4}>
-        {UserOptionsDict.map((item, index) => (
-          <Button
-            onClick={() => {
-              setLoaderActive(0.5);
-              setActiveButton(item === activeButton ? undefined : item);
-            }}
-            key={index}
-            color={activeButton === item ? mainColor : undefined}
-            size={isMobile ? 'small' : 'medium'}
-            sx={{ fontSize: isMobile ? '0.8rem' : '0.8rem', textWrap: 'nowrap' }}
-            variant={activeButton === item ? 'contained' : 'outlined'}
-          >
-            {item === 'AI Creator Agent'
-              ? isMobile
-                ? '✨ AI Agent'
-                : '✨ AI Creator Agent'
-              : item}
-          </Button>
-        ))}
-        {!isMobile && (
-          <Button
-            href="https://eranfarkash.thinkific.com/courses/social-platforms"
-            variant="outlined"
-            color={mainColor}
-            size="medium"
-            // size="small"
-            sx={{ fontSize: '0.8rem' }}
-          >
-            מעבר לאתר הקורס
-          </Button>
-        )}
-      </Stack>
-
-      <Box my={4}>
-        {loader ? (
-          <Circles
-            wrapperClass="flex justify-center width-full my-8"
-            height={80}
-            color={theme.palette[mainColor]?.main}
-            width={80}
-            visible
-          />
-        ) : (
-          dataRes
-        )}
-      </Box>
-    </Box>
-  );
-}
 
 function ScriptAI({ userData, ...props }) {
   const [loaderGenerate, setLoaderGenerate] = useState(false);
