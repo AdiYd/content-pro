@@ -35,11 +35,13 @@ export function getAuthUrl() {
 
 // Function to initialize OAuth2Client with existing tokens
 export function initializeOAuthClient() {
-  if (fs.existsSync(tokenPath)) {
-    const tokens = JSON.parse(fs.readFileSync(tokenPath));
-    oAuth2Client.setCredentials(tokens);
-    return true;
-  }
+    console.log('Checking if tokens exist...');
+    if (fs.existsSync(tokenPath)) {
+      const tokens = JSON.parse(fs.readFileSync(tokenPath));
+      oAuth2Client.setCredentials(tokens);
+      console.log('Tokens exist.');
+      return true;
+    }
   return false;
 }
 

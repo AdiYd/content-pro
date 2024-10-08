@@ -30,6 +30,7 @@ export default function UploadFile({ email, number = -1, callback = () => {} }) 
     try {
       setUploadStatus('מעלה קובץ...');
       setLoading(true);
+      console.log('sending upload request to server...');
       // Adjust the API URL based on your backend route
       const response = await fetch('/api/uploadApi', {
         method: 'POST',
