@@ -92,8 +92,8 @@ export default function UploadFile({ email, number = -1, user = {}, callback = (
   };
 
   return (
-    <Box sx={{ p: 3 }}>
-      <input type="file" onChange={handleFileChange} style={{ marginTop: 16 }} />
+    <Box sx={{ p: 3, pt: 1 }}>
+      <input type="file" onChange={handleFileChange} />
       {loading ? (
         <Oval
           wrapperClass="flex justify-center"

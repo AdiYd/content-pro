@@ -829,15 +829,61 @@ const nicheData = {
 const aiDescription =
   "כל מה שצריך זה לבחור נישה של תוכן ולכתוב כמה מילים משלכם (לא חובה). הצ'אט שלנו יבנה לכם סקריפט ליצרת סרטון ואתם תוכלו להשתמש בו ככלי לימודי ומקור לרעיונות";
 
-  const videoDescriptions = [
-    { level: 1, description: 'סאונד על סיטואציה' },
-    { level: 2, description: 'העתקה מסרטון ויראלי' },
-    { level: 3, description: 'דיבור למצלמה (אנבוקסינג / שיתוף חוויה)' },
-    { level: 4, description: 'טרנד לנישה שלנו' },
-    { level: 5, description: 'וולוג תיעודי' },
-    { level: 6, description: 'סרטון רחוב' },
-    { level: 7, description: 'אתגרים (בנים vs בנות / הכי גדול ...)' },
+  // const videoDescriptions = [
+  //   { level: 1, description: 'סאונד על סיטואציה' },
+  //   { level: 2, description: 'העתקה מסרטון ויראלי' },
+  //   { level: 3, description: 'דיבור למצלמה (אנבוקסינג / שיתוף חוויה)' },
+  //   { level: 4, description: 'טרנד לנישה שלנו' },
+  //   { level: 5, description: 'וולוג תיעודי' },
+  //   { level: 6, description: 'סרטון רחוב' },
+  //   { level: 7, description: 'אתגרים (בנים vs בנות / הכי גדול ...)' },
+  // ];
+
+  const videoTypes = [
+    {
+      type: 'סאונד על סיטואציה',
+      level: 1,
+      link: 'קישור 1',
+      description: 'קחו את הסאונד, הסתכלו מה רוב היוצרים עושים עם הסאונד (מה הקונטקסט) וצרו ממנו סיטואציה שקשורה לנישה שלכם - למציאת סאונדים או שירים טרנדים בטיקטוק כנסו לקישור הבא : https://ads.tiktok.com/business/creativecenter/inspiration/popular/music/pc/en'
+    },
+    {
+      type: 'העתקה מסרטון ויראלי',
+      level: 2,
+      link: 'קישור 2',
+      description: 'תוכן רגעי, שלא קשור בעיקר לנישה. מראה את הצד הכיפי שבכם.'
+    },
+    {
+      type: 'דיבור למצלמה (אנבוקסינג / שיתוף חוויה)',
+      level: 3,
+      link: 'קישור 3',
+      description: 'כאן הדגש המרכזי הוא סרטונים בנישה שלנו שבהכרח תפסו לאחרים - פשוט כנסו לשורת חיפוש בטיקטוק, חפשו נושא בנישה שלכם שתרצו לעשות עליו סרטון - לחצו על פילטר ואז בחרו בשורה הראשונה את הלייקים ובתאריכים ב-30 או 60 יום האחרונים .'
+    },
+    {
+      type: 'טרנד לנישה שלנו',
+      level: 4,
+      link: 'קישור 4',
+      description: 'בשונה מהעתקה מסרטון ויראלי - כאן אפשר לחשוב יצירתי ולהשתמש בעריכות שונות, אביזרים שונים - הרעיון הוא להשאיר את הקרייאטיב והמסר ולהשתמש בו לתוכן משלנו תעקבו אחרי הדפים הבאים בשביל לדעת מה הטרנדים שהיו בחודש הקודם והחודש ומה המשמעות שלהם ותנסו למצוא את האחד שיכול לעבוד גם בנישה שלכם - גם חודש קודם רלוונטי לעכשיו טרנד נמשך כ-3 חודשים.'
+    },
+    {
+      type: 'וולוג תיעודי',
+      level: 5,
+      link: 'קישור 1',
+      description: 'במידה ואתם לא ״נושמים״ את הרשת החברתית יהיה לכם קשה לעקוב אחרי הטרנדים אז תעקבו אחרי האתרים האלו :אתר2 אתר1'
+    },
+    {
+      type: 'סרטון רחוב',
+      level: 6,
+      link: 'קישור 2',
+      description: 'לתעד תהליך כלשהו שאתם עוברים ובכל שלב לספר מה אתם עובריםטיפ : לא להכין את האנשים, לגשת אליהם. האינטראקציה הראשונית משמעותית. המטרה להראות אינטראקציה עם עוד אנשים מחוץ לבית - זה יכול להיות במסעדה, בקניון, לשבת ברחוב'
+    },
+    {
+      type: 'אתגרים (בנים vs בנות / הכי גדול …)',
+      level: 7,
+      link: 'קישור 3',
+      description: 'הדבר הכי חשוב שמאפיין סרטון רחוב הוא שאנחנו היוצרים ניגשים למישהו.יסרטון אתגרים הוא הסרטון הכי קשה ליוצרי תוכן - הסרטון הזה דורש את כל המיומנות והידע הכי נרחב שיוצר תוכן יכול לדעת. כאן תצטרכו לרשום תסריט לסרטון מראש עם חוקים ברורים : מה המסר שאתם רוצים להעביר בסוף הסרטון לקהל (עם איזה מסר אתם רוצים שהוא יצא), מה הטקסט לפי המבנה הבא (מה הדבר שאתם עומדים לעשות בסרטון שכל כך מעניין + להראות את התהליך + מה היה הקושי בלעשות את הדבר הזה + להראות איך התגבתם על הקושי + להראות את התוצאה ואת המסר), איפה -כל חלק בסרטון יצולם (האם בבית, אולי חלק בבית וחלק בכמה מקומות שונים - אתם תחליטו) לאחר מכן תצטרכו לערוך את הסרטון להוסיף טקסטים אפקטים או מה שצריך והסרטון מוכן ,'
+    }
   ];
+
 
   function User({ userData = {}, callback, userID }) {
     const { mainColor, textGradientAnimation, mode } = useContext(ColorContext);
@@ -902,7 +948,7 @@ const aiDescription =
             {userData.videoList?.map((item, index) => (
               <div key={index}>
                 <Typography mb={1} ml={1} variant="body1">
-                  Level {videoDescriptions[index]?.level} -{videoDescriptions[index]?.description}
+                  Level {videoTypes[index]?.level} -{videoTypes[index]?.type}
                 </Typography>
                 <Videoframe videoId={item} />
               </div>
@@ -911,8 +957,11 @@ const aiDescription =
               <>
                 {' '}
                 <Typography ml={1} variant="body1">
-                  Level {videoDescriptions[userData.videoList?.length || 0]?.level} -{' '}
-                  {videoDescriptions[userData.videoList?.length || 0]?.description}
+                  Level {videoTypes[userData.videoList?.length || 0]?.level} -{' '}
+                  {videoTypes[userData.videoList?.length || 0]?.type}
+                </Typography>
+                <Typography ml={1} variant='body1' color="text.secondary">
+                {videoTypes[userData.videoList?.length || 0]?.description}
                 </Typography>
                 <UploadFile
                   user={userData}
