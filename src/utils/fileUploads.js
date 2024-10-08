@@ -148,6 +148,7 @@ export async function refreshAccessToken() {
     }),
   });
   const data = await response.json();
+  process.env.NEXT_PUBLIC_DRIVE_ACC_TOKEN = data.access_token;
   return data.access_token;
 }
   

@@ -27,7 +27,6 @@ export async function GET(req, res) {
   try {
     // Exchange the authorization code for access and refresh tokens.
     const { tokens } = await oAuth2Client.getToken(code);
-    console.log('Token: ', tokens);
     // Store the token in a file.
     process.env.NEXT_PUBLIC_DRIVE_ACC_TOKEN = tokens.access_token;
     process.env.NEXT_PUBLIC_DRIVE_REF_TOKEN = tokens.refresh_token;
