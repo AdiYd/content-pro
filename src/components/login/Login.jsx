@@ -954,17 +954,18 @@ function User({ userData = {}, callback }) {
           >
             מעבר לאתר הקורס
           </Button>
-          {userData.payment && (userData.payment > 249 || userData.packageType !== 'Base-Pro') && (
-            <Button
-              href="https://chat.whatsapp.com/DE2HSwpg9ABJpaEYj4ZAfv"
-              variant="text"
-              size="small"
-              // sx={{ mb: 2 }}
-            >
-              <Iconify icon="logos:whatsapp-icon" />
-              &nbsp; &nbsp; הצטרפות לקהילה
-            </Button>
-          )}
+          {(Boolean(userData.payment) || userData.payment === 0) &&
+            userData.packageType !== 'Base-Pro' && (
+              <Button
+                href="https://chat.whatsapp.com/DE2HSwpg9ABJpaEYj4ZAfv"
+                variant="text"
+                size="small"
+                // sx={{ mb: 2 }}
+              >
+                <Iconify icon="logos:whatsapp-icon" />
+                &nbsp; &nbsp; הצטרפות לקהילה
+              </Button>
+            )}
         </div>
       </Box>
     );
