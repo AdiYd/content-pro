@@ -37,7 +37,10 @@ export default function UploadFile({ email, number = -1, user = {}, callback = (
       setUploadStatus('מעלה קובץ...');
       setLoading(true);
       const rootId = await handleSubmitFile({ email, number: number + 1 });
-
+      console.log('This is rootId: ', rootId);
+      if (rootId?.authUrl) {
+        // open(rootId.authUrl);
+      }
       const metadata = {
         name: selectedFile.name, // Filename at Google Drive
         mimeType: selectedFile.type, // File type (e.g., video/mp4)
@@ -62,6 +65,7 @@ export default function UploadFile({ email, number = -1, user = {}, callback = (
       const data = await response.json();
 
       if (!response.ok) {
+        console.log(data);
         throw new Error(`Error uploading file: ${response.statusText}`);
       }
 

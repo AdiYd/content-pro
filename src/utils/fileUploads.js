@@ -13,16 +13,16 @@ const [client_id, client_secret, redirect_uris] = [
   process.env.NEXT_GGL_DRIVE_CLIENT_SEC,
   process.env.NEXT_GGL_DRIVE_CLIENT_URI,
 ];
-
+console.log(client_id, redirect_uris);
 // Set up OAuth 2.0 client
-const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris);
+export const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris);
 
 // Function to get authentication URL for user permission
 export async function getAuthUrl() {
   return oAuth2Client.generateAuthUrl({
     access_type: 'offline',
     scope: ['https://www.googleapis.com/auth/drive.file'],
-    redirect_uri: 'https://videopro.webly.digital/api/oauth2callback',
+    redirect_uri: 'http://localhost:3033/api/oauth2callback',
   });
 }
 
@@ -129,7 +129,8 @@ export async function uploadFileToDrive(file, email, number) {
     }
     return true;
   } catch (err) {
-    console.log('Error in uploading file: ', err);
+    console.log('Error in uploading file ');
+    // console.log('Error in uploading file: ', err);
     return false;
   }
 }

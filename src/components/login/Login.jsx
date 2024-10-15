@@ -917,6 +917,7 @@ function User({ userData = {}, callback }) {
   const [activeButton, setActiveButton] = useState('פרטים');
   const [loader, setLoader] = useState(false);
   const theme = useTheme();
+  const router = useRouter();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const isSmallScreen = useMediaQuery('(max-width: 330px)');
   const [showGrid, setGrid] = useState(isMobile ? undefined : 'col');
@@ -1033,8 +1034,15 @@ function User({ userData = {}, callback }) {
                       my={2}
                       maxWidth={0.9}
                       variant="body1"
+                      component="a"
+                      target="_blank"
+                      href={
+                        userData.rootFolder
+                          ? `https://drive.google.com/drive/folders/${userData.rootFolder}`
+                          : '#'
+                      }
                     >
-                      <div className="text-green-500 mb-2">
+                      <div className="text-green-500 mb-2 hover:opacity-80 cursor-pointer">
                         <Iconify icon="ic:round-verified" />
                       </div>
                       Level {videoTypes[index]?.level}
@@ -1048,9 +1056,18 @@ function User({ userData = {}, callback }) {
           ) : (
             userData.videoList?.map((item, index) => (
               <div key={index}>
-                <Typography variant="p">
+                <Typography
+                  component="a"
+                  target="_blank"
+                  href={
+                    userData.rootFolder
+                      ? `https://drive.google.com/drive/folders/${userData.rootFolder}`
+                      : '#'
+                  }
+                  variant="p"
+                >
                   Level {videoTypes[index]?.level} -{videoTypes[index]?.type}
-                  <span className="text-green-500 mx-4">
+                  <span className="text-green-500 mx-4 hover:opacity-80 cursor-pointer">
                     <Iconify icon="ic:round-verified" color="currentColor" />
                   </span>
                 </Typography>
@@ -1072,7 +1089,7 @@ function User({ userData = {}, callback }) {
                 דוגמאות:
                 <Stack flexWrap="wrap">
                   {videoTypes[userData.videoList?.length || 0]?.links.map((item, index) => (
-                    <div className="flex gap-1">
+                    <div key={index} className="flex gap-1">
                       •
                       <Typography
                         mr={1}

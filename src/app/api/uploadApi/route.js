@@ -6,9 +6,11 @@ export default async function POST(req) {
   try {
     console.log('Starting upload API...');
     // Check if tokens are already saved
-    const isAuthenticated = initializeOAuthClient();
+    const isAuthenticated = await initializeOAuthClient();
+    console.log('This is isAuth: ', isAuthenticated);
     if (!isAuthenticated) {
       // If not authenticated, redirect user to get permission
+      console.log('This is not auth: ', isAuthenticated);
       const authUrl = getAuthUrl();
       return NextResponse.json({
         message: 'Authorization required. Please visit this URL to authorize the app:',

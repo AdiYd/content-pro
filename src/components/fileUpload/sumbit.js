@@ -15,7 +15,8 @@ export const handleSubmitFile = async ({ email, number }) => {
     const isAuthenticated = initializeOAuthClient();
     if (!isAuthenticated) {
       // If not authenticated, redirect user to get permission
-      const authUrl = getAuthUrl();
+      const authUrl = await getAuthUrl();
+      console.log('Im in !isAuth with res: ', authUrl);
       return {
         message: 'Authorization required. Please visit this URL to authorize the app:',
         authUrl,
@@ -32,10 +33,17 @@ export const handleSubmitFile = async ({ email, number }) => {
     const uploadedFile = await uploadFileToDrive(file, email, number);
     const access_token = await refreshAccessToken();
     if (!uploadedFile) {
+      const authUrl = await getAuthUrl();
+      console.log('Im in !isAuth with res: ', authUrl);
       return {
         status: 400,
-        message: 'file did not save to drive',
+        message: 'Authorization required. Please visit this URL to authorize the app:',
+        authUrl,
       };
+      // return {
+      //   status: 400,
+      //   message: 'file did not save to drive',
+      // };
     }
 
     return {
@@ -49,7 +57,7 @@ export const handleSubmitFile = async ({ email, number }) => {
 
     if (error.message.includes('invalid_grant')) {
       // If there's an issue with the token, prompt for re-authorization
-      const authUrl = getAuthUrl();
+      const authUrl = await getAuthUrl();
       return {
         status: 500,
         message: 'Need to authoraize the api',
