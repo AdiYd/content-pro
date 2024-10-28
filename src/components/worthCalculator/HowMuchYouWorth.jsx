@@ -16,6 +16,7 @@ import {
   Alert,
   Button,
   Select,
+  Dialog,
   Divider,
   useTheme,
   MenuItem,
@@ -24,14 +25,19 @@ import {
   Typography,
   InputLabel,
   FormControl,
+  DialogTitle,
+  DialogContent,
   useColorScheme,
 } from '@mui/material';
 
+import { textGradient } from 'src/theme/styles';
 import { ColorContext } from 'src/context/colorMain';
 
 import { varScale, varBounce, MotionContainer } from 'src/components/animate';
 
+import Footer from '../footer/Footer';
 import { Iconify, SocialIcon } from '../iconify';
+import COLORS from '../../theme/core/colors.json';
 
 function HowMuchYouWorth({ courseName = 'Video-Pro', id }) {
   const theme = useTheme();
@@ -126,7 +132,7 @@ function HowMuchYouWorth({ courseName = 'Video-Pro', id }) {
       )}
       <Container component={MotionContainer}>
         <m.div style={{ width: '100%' }} variants={varScale({ delay: 1, durationIn: 1 }).inX}>
-          <Typography variant="h4" color="secondary">
+          <Typography variant="h4" color="text.secondary">
             איך עושים את זה? לחצו על הכפתור למטה לגלות
           </Typography>
           <Box my={4} display="flex" justifyContent="center" gap={4} width={1}>
@@ -141,6 +147,7 @@ function HowMuchYouWorth({ courseName = 'Video-Pro', id }) {
           </Box>
         </m.div>
       </Container>
+      <Footer />
     </Box>
   );
 }
@@ -221,9 +228,13 @@ const WorthCalculatorGPT = () => {
     setError,
     clearErrors,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      niche: 'Fashion/Beauty/Fitness',
+    },
+  });
   const [earnings, setEarnings] = useState(null);
-
+  const { textGradientAnimation } = useContext(ColorContext);
   // Watch for values to calculate real-time
   const followers = watch('followers');
   const likes = watch('likes');
@@ -255,9 +266,22 @@ const WorthCalculatorGPT = () => {
     let N = 1.0;
     if (niche === 'Fashion/Beauty/Fitness') N = 1.5;
     else if (niche === 'Home Goods/DIY') N = 0.8;
+    else if (niche === 'Technology/Gaming') N = 1.05;
 
     const E_final = E_adjusted * N;
-    setEarnings(Math.ceil(E_final.toFixed(0)));
+    console.log('Social: ', {
+      M,
+      N,
+      ER,
+      niche,
+      likes,
+      followers,
+      E,
+      E_adjusted,
+      E_final,
+    });
+
+    setEarnings(Number(Math.min(Math.ceil(E_final.toFixed(0)), 10000)));
   };
 
   return (
@@ -267,7 +291,7 @@ const WorthCalculatorGPT = () => {
         alignContent: 'center',
         alignItems: 'center',
         my: 4,
-        mx: 2,
+        mx: { xs: 2, sm: 'auto' },
         p: 4,
         pt: 1,
       }}
@@ -286,11 +310,28 @@ const WorthCalculatorGPT = () => {
           control={control}
           defaultValue=""
           rules={{ required: 'מהי כמות העוקבים שלך?', min: 1 }}
-          render={({ field }) => (
+          render={({ field: { value, onChange, ...field } }) => (
             <TextField
               {...field}
-              label=" הכנס את מספר העוקבים שלך "
-              type="number"
+              inputProps={{
+                sx: {
+                  textAlign: 'center',
+                  direction: 'ltr',
+                },
+              }}
+              label=" מספר העוקבים שלך "
+              //   color={value && value > 10000 ? 'success' : 'info'}
+              type="text"
+              value={value ? value.toLocaleString() : ''}
+              onChange={(e) => {
+                // Remove commas for storage, but format the displayed value
+                const rawValue = e.target.value.replace(/,/g, '');
+                if (/^\d*$/.test(rawValue)) {
+                  // Check for valid number
+                  onChange(Number(rawValue));
+                }
+              }}
+              sx={inputColor(value && value > 9900 ? '#22C55E' : '#006C9C')}
               variant="standard"
               error={!!errors.followers}
               helperText={errors.followers?.message}
@@ -306,11 +347,27 @@ const WorthCalculatorGPT = () => {
           defaultValue=""
           fullWidth
           rules={{ required: 'כמה לייקים בממוצע מקבל כל פוסט?', min: 1 }}
-          render={({ field }) => (
+          render={({ field: { onChange, value, ...field } }) => (
             <TextField
               {...field}
+              inputProps={{
+                sx: {
+                  textAlign: 'center',
+                  direction: 'ltr',
+                },
+              }}
+              sx={inputColor(value && value > 990 ? '#22C55E' : '#006C9C')}
               label=" מספר הלייקים הממוצע לפוסט "
-              type="number"
+              type="text"
+              value={value ? value.toLocaleString() : ''}
+              onChange={(e) => {
+                // Remove commas for storage, but format the displayed value
+                const rawValue = e.target.value.replace(/,/g, '');
+                if (/^\d*$/.test(rawValue)) {
+                  // Check for valid number
+                  onChange(Number(rawValue));
+                }
+              }}
               variant="standard"
               error={!!errors.likes}
               helperText={errors.likes?.message}
@@ -326,12 +383,22 @@ const WorthCalculatorGPT = () => {
           defaultValue=""
           rules={{ required: 'באיזה תחום הפוסטים שלכם?' }}
           render={({ field }) => (
-            <FormControl fullWidth error={!!errors.niche}>
+            <FormControl sx={{ mt: 2 }} fullWidth error={!!errors.niche}>
               <InputLabel> בחרו תחום </InputLabel>
-              <Select sx={{ mt: 2 }} variant="filled" {...field}>
-                <MenuItem selected value="Fashion/Beauty/Fitness">
-                  אופנה / יופי / כושר
-                </MenuItem>
+              <Select
+                // defaultValue="אופנה / יופי / כושר
+                color="info"
+                SelectDisplayProps={{
+                  sx: {
+                    color: 'success',
+                    textAlign: 'center',
+                    direction: 'ltr',
+                  },
+                }}
+                variant="standard"
+                {...field}
+              >
+                <MenuItem value="Fashion/Beauty/Fitness">אופנה / יופי / כושר</MenuItem>
                 <MenuItem value="Technology/Gaming">טכנולוגיה / גיימינג</MenuItem>
                 <MenuItem value="Home Goods/DIY">בית / עשה זאת בעצמך</MenuItem>
               </Select>
@@ -347,8 +414,18 @@ const WorthCalculatorGPT = () => {
           render={({ field }) => (
             <TextField
               {...field}
-              label=" מהו אחוז המעורבות (לא חובה) "
+              label=" מהו אחוז המעורבות של העוקבים (לא חובה) "
               type="number"
+              color="info"
+              inputProps={{
+                sx: {
+                  min: 0, // Set minimum value
+                  max: 99, // Set maximum value
+                  textAlign: 'center',
+                  direction: 'ltr',
+                },
+              }}
+              sx={inputColor(field?.value > 5 ? '#22C55E' : '#006C9C')}
               variant="standard"
               helperText="אם לא נתון, יחושב אוטומטית"
               fullWidth
@@ -358,13 +435,26 @@ const WorthCalculatorGPT = () => {
         />
 
         <Button variant="contained" color="primary" type="submit" fullWidth sx={{ mt: 2 }}>
-          חשבו רווח
+          כמה מגיע לי?
         </Button>
 
         {earnings && (
-          <Typography variant="h6" sx={{ mt: 3 }}>
-            רווח מוערך לפוסט: ₪{earnings}
-          </Typography>
+          <Box width={1}>
+            <Divider />
+            <Typography variant="h5" sx={{ mt: 3 }}>
+              רווח מוערך לפוסט:
+            </Typography>
+            <Typography
+              variant="h4"
+              sx={{
+                ...textGradient(
+                  `45deg, ${COLORS.error?.dark} 25%, ${COLORS.error?.main} 40%, ${COLORS.error?.main} 50%,${COLORS.error?.light} 80%, ${COLORS.error?.main} 95%`
+                ),
+              }}
+            >
+              ₪ {Number(earnings).toLocaleString()}
+            </Typography>
+          </Box>
         )}
       </Box>
     </Card>
@@ -433,3 +523,45 @@ export const SocialStack = ({ spacing = 2, width = 30 }) => (
     </Link>
   </Stack>
 );
+
+const MessageDialog = ({ worth, open = false, title = 'פוטנציאל הרווח שלך' }) => {
+  const router = useRouter();
+  const message = (
+    <Dialog
+      sx={{
+        // minWidth: '50%',
+        // width: 'fit-content',
+        // p: 15,
+        // position: 'relative',
+        pt: 4,
+        direction: 'rtl',
+        textAlign: 'center',
+      }}
+      open={open}
+    >
+      <DialogTitle>
+        {title} {worth > 700 ? 'מדהים!' : ''}
+      </DialogTitle>
+      <Divider />
+      <DialogContent>
+        <Typography variant="h4">{worth?.toLo}</Typography>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+const inputColor = (color = '#22C55E') => ({
+  direction: 'ltr',
+  '& .MuiInputBase-input': {
+    textAlign: 'center', // Center the text when typing
+  },
+  '& .MuiInput-underline:before': {
+    borderBottomColor: color, // Default underline color
+  },
+  '& .MuiInput-underline:after': {
+    borderBottomColor: color, // Color of underline when focused
+  },
+  '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
+    borderBottomColor: color, // Color of underline on hover
+  },
+});
