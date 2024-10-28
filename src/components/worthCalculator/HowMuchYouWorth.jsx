@@ -17,6 +17,7 @@ import {
   Button,
   Select,
   Dialog,
+  colors,
   Divider,
   useTheme,
   MenuItem,
@@ -27,11 +28,12 @@ import {
   FormControl,
   DialogTitle,
   DialogContent,
+  DialogActions,
   useColorScheme,
 } from '@mui/material';
 
-import { textGradient } from 'src/theme/styles';
 import { ColorContext } from 'src/context/colorMain';
+import { textGradient, bgGradientAnimate } from 'src/theme/styles';
 
 import { varScale, varBounce, MotionContainer } from 'src/components/animate';
 
@@ -133,14 +135,20 @@ function HowMuchYouWorth({ courseName = 'Video-Pro', id }) {
       <Container component={MotionContainer}>
         <m.div style={{ width: '100%' }} variants={varScale({ delay: 1, durationIn: 1 }).inX}>
           <Typography variant="h4" color="text.secondary">
-            איך עושים את זה? לחצו על הכפתור למטה לגלות
+            איך עושים את זה? לחצו על הכפתור
           </Typography>
+          <Iconify icon="fa6-solid:hand-point-down" />
           <Box my={4} display="flex" justifyContent="center" gap={4} width={1}>
             <Button
               variant="contained"
               onClick={() => router.push('/influencer')}
               fullWidth
-              sx={{ fontSize: { xs: '0.8rem', sm: 'inherit' } }}
+              sx={{
+                ...bgGradientAnimate(
+                  `45deg, ${theme.palette.success.light},${theme.palette.success.dark} ,${theme.palette.success.dark}`
+                ),
+                minWidth: 200,
+              }}
             >
               &nbsp; לחצו כאן להפוך למשפיענים בתשלום
             </Button>
@@ -234,7 +242,11 @@ const WorthCalculatorGPT = () => {
     },
   });
   const [earnings, setEarnings] = useState(null);
-  const { textGradientAnimation } = useContext(ColorContext);
+  const theme = useTheme();
+  const [open, setOpen] = useState(false);
+//   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+  const isMobile = true;
+  //   const { textGradientAnimation } = useContext(ColorContext);
   // Watch for values to calculate real-time
   const followers = watch('followers');
   const likes = watch('likes');
@@ -282,6 +294,7 @@ const WorthCalculatorGPT = () => {
     });
 
     setEarnings(Number(Math.min(Math.ceil(E_final.toFixed(0)), 10000)));
+    setOpen(true);
   };
 
   return (
@@ -331,7 +344,7 @@ const WorthCalculatorGPT = () => {
                   onChange(Number(rawValue));
                 }
               }}
-              sx={inputColor(value && value > 9900 ? '#22C55E' : '#006C9C')}
+              sx={inputColor(value && value > 9900 ? '#22C55E' : colors.green[200])}
               variant="standard"
               error={!!errors.followers}
               helperText={errors.followers?.message}
@@ -356,7 +369,7 @@ const WorthCalculatorGPT = () => {
                   direction: 'ltr',
                 },
               }}
-              sx={inputColor(value && value > 990 ? '#22C55E' : '#006C9C')}
+              sx={inputColor(value && value > 990 ? '#22C55E' : colors.green[200])}
               label=" מספר הלייקים הממוצע לפוסט "
               type="text"
               value={value ? value.toLocaleString() : ''}
@@ -388,9 +401,11 @@ const WorthCalculatorGPT = () => {
               <Select
                 // defaultValue="אופנה / יופי / כושר
                 color="info"
+                // sx={inputColor(colors.green[200])}
                 SelectDisplayProps={{
                   sx: {
-                    color: 'success',
+                    color: colors.green[200],
+                    borderColor: colors.green[200],
                     textAlign: 'center',
                     direction: 'ltr',
                   },
@@ -425,7 +440,7 @@ const WorthCalculatorGPT = () => {
                   direction: 'ltr',
                 },
               }}
-              sx={inputColor(field?.value > 5 ? '#22C55E' : '#006C9C')}
+              sx={inputColor(field?.value > 5 ? '#22C55E' : colors.green[200])}
               variant="standard"
               helperText="אם לא נתון, יחושב אוטומטית"
               fullWidth
@@ -434,7 +449,7 @@ const WorthCalculatorGPT = () => {
           )}
         />
 
-        <Button variant="contained" color="primary" type="submit" fullWidth sx={{ mt: 2 }}>
+        <Button variant="contained" type="submit" fullWidth sx={{ mt: 2 }}>
           כמה מגיע לי?
         </Button>
 
@@ -455,6 +470,9 @@ const WorthCalculatorGPT = () => {
               ₪ {Number(earnings).toLocaleString()}
             </Typography>
           </Box>
+        )}
+        {open && earnings && isMobile && (
+          <MessageDialog worth={earnings} open={open} setOpen={setOpen} />
         )}
       </Box>
     </Card>
@@ -524,33 +542,60 @@ export const SocialStack = ({ spacing = 2, width = 30 }) => (
   </Stack>
 );
 
-const MessageDialog = ({ worth, open = false, title = 'פוטנציאל הרווח שלך' }) => {
+const MessageDialog = ({
+  worth,
+  open = false,
+  title = 'פוטנציאל הרווח שלך',
+  setOpen = () => {},
+}) => {
   const router = useRouter();
+  const { textGradientAnimation } = useContext(ColorContext);
   const message = (
     <Dialog
+      fullWidth
       sx={{
         // minWidth: '50%',
         // width: 'fit-content',
         // p: 15,
         // position: 'relative',
-        pt: 4,
+        // minWidth: 350,
+        py: 4,
+        px: 'auto',
         direction: 'rtl',
         textAlign: 'center',
       }}
       open={open}
+      onClose={() => setOpen(false)}
     >
       <DialogTitle>
-        {title} {worth > 700 ? 'מדהים!' : ''}
+        <Iconify width={30} icon="emojione:party-popper" />
+        <Typography color="text.secondary" variant="h4">
+          {title} {worth > 500 ? (worth > 1500 ? 'מדהים!' : 'גדול!') : ''}
+        </Typography>
       </DialogTitle>
-      <Divider />
       <DialogContent>
-        <Typography variant="h4">{worth?.toLo}</Typography>
+        <Typography sx={{ ...textGradientAnimation }} variant="h3">
+          {worth?.toLocaleString()} ₪
+        </Typography>
+        <Typography color="text.secondary" variant="h4">
+          {worth > 500 ? 'אצלנו תרוויחו אפילו יותר' : 'אנחנו נעזור לכם להשתפר ולהרוויח יותר'}
+        </Typography>
       </DialogContent>
+      <Divider variant="middle" sx={{ borderStyle: 'dashed', mt: 2 }} />
+      <DialogActions sx={{ display: 'flex', justifyContent: 'space-around' }}>
+        <Button onClick={() => router.push('/influencer')} size="small" variant="contained">
+          ספרו לי איך
+        </Button>
+        <Button onClick={() => setOpen(false)} size="small" variant="outlined">
+          סגירה
+        </Button>
+      </DialogActions>
     </Dialog>
   );
+  return message;
 };
 
-const inputColor = (color = '#22C55E') => ({
+const inputColor = (color = colors.green[200]) => ({
   direction: 'ltr',
   '& .MuiInputBase-input': {
     textAlign: 'center', // Center the text when typing
