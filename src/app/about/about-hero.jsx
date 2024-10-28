@@ -102,7 +102,14 @@ const emph = (colorPalette, gradient = false) => (
 
 // ----------------------------------------------------------------------
 
-export function AboutHero() {
+export function AboutHero({
+  courseName = 'Video-Pro',
+  subTitle = 'ההכשרה שעוזרת ליוצרי תוכן לייצר עבודה באופן שוטף',
+  subTitle2 = 'כל הידע שעזר לי להשיג את העבודה הראשונה שלי בפחות מ-3 שעות',
+  CTA = 'הצטרפו לקהילת יוצרי תוכן',
+  CTA2 = 'איזור אישי',
+  cta2Href = '/login',
+}) {
   const theme = useTheme();
   const [update, setUpdate] = useState(false);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -112,6 +119,7 @@ export function AboutHero() {
 
   useEffect(() => {
     waveVector.current = `${CONFIG.site.basePath}/assets/background/waveVector_${mode}.svg`;
+    console.log('Uploading wave: ', waveVector.current);
     setUpdate((p) => !p);
   }, [mode]);
 
@@ -138,17 +146,17 @@ export function AboutHero() {
         <Box
           sx={{
             top: { md: 100 },
-            right: { md: 50, xs: 'unset' },
+            right: { md: 50 },
             // bottom: { md: 80 },
             position: { md: 'absolute' },
-            textAlign: { xs: 'center', md: 'unset' },
-            alignItems: { xs: 'center', md: 'unset' },
+            textAlign: { xs: 'center', md: 'right' },
+            alignItems: { xs: 'center', md: 'right' },
           }}
         >
           <AnimateText
             component="h1"
             variant="h1"
-            text="Video-Pro"
+            text={courseName}
             // variants={varSlide().inDown}
             sx={{
               ...textGradientAnimation,
@@ -169,8 +177,8 @@ export function AboutHero() {
           /> */}
           <div className="w-fit h-fit relative max-lg:mx-auto">
             <m.div variants={varFade().in}>
-              <Typography maxWidth={400} color="common.white" variant="h3">
-                ההכשרה שעוזרת ליוצרי תוכן לייצר עבודה באופן שוטף
+              <Typography maxWidth={500} color="common.white" variant="h3">
+                {subTitle}
                 {/* <br /> */}
               </Typography>
             </m.div>
@@ -199,77 +207,83 @@ export function AboutHero() {
               </Box> */}
             </m.div>
           </div>
-
-          <m.div variants={varFade({ distance: 240, duration: 0.5 }).inDown}>
-            <Typography
-              variant="p"
-              component="div"
-              sx={{ color: 'common.white', mt: 4, fontWeight: 'fontWeightSemiBold', opacity: 0.8 }}
-            >
-              כל הידע שעזר לי להשיג את העבודה הראשונה שלי בפחות מ-3 שעות
-            </Typography>
-            <Stack
-              mt={4}
-              mb={1}
-              direction="row"
-              sx={{
-                justifyContent: { md: 'inherit', xs: 'center' },
-                borderRadius: 4,
-                p: 1,
-                mx: { xs: 'auto', md: 'inherit' },
-                width: 'fit-content',
-                color: 'common.white',
-                // background: { xs: varAlpha('255 255 255', 0.2), md: 'transparent' },
-              }}
-              spacing={3}
-            >
-              <Link
-                className="hover:opacity-80 cursor-pointer"
-                passHref
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://www.tiktok.com/@eranfarkash1"
+          <div className="w-fit h-fit relative max-lg:mx-auto">
+            <m.div variants={varFade({ distance: 240, duration: 0.5 }).inDown}>
+              <Typography
+                variant="p"
+                component="div"
+                maxWidth={500}
+                sx={{
+                  color: 'common.white',
+                  mt: 4,
+                  fontWeight: 'fontWeightSemiBold',
+                  opacity: 0.8,
+                }}
               >
-                <Iconify width={25} icon="bi:tiktok" />
-              </Link>
-              <Link
-                className="hover:opacity-80 cursor-pointer"
-                passHref
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://www.instagram.com/eranfarkash/"
+                {subTitle2}
+              </Typography>
+              <Stack
+                mt={4}
+                mb={1}
+                direction="row"
+                sx={{
+                  justifyContent: { md: 'inherit', xs: 'center' },
+                  borderRadius: 4,
+                  p: 1,
+                  mx: { xs: 'auto', md: 'inherit' },
+                  width: 'fit-content',
+                  color: 'common.white',
+                  // background: { xs: varAlpha('255 255 255', 0.2), md: 'transparent' },
+                }}
+                spacing={3}
               >
-                <Iconify width={25} icon="lucide:instagram" />
-              </Link>
-              <Link
-                className="hover:opacity-80 cursor-pointer"
-                passHref
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://www.linkedin.com/in/eran-farkash-543b42232/?originalSubdomain=il"
-              >
-                <Iconify width={25} icon="bi:linkedin" />
-              </Link>
-              <Link
-                className="hover:opacity-80 cursor-pointer"
-                passHref
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://www.youtube.com/@eranfarkash"
-              >
-                <Iconify width={25} icon="bi:youtube" />
-              </Link>
-              <Link
-                className="hover:opacity-80 cursor-pointer"
-                passHref
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://www.facebook.com/eran.farkash"
-              >
-                <Iconify width={25} icon="ri:facebook-fill" />
-              </Link>
-            </Stack>
-            {/* <Stack
+                <Link
+                  className="hover:opacity-80 cursor-pointer"
+                  passHref
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://www.tiktok.com/@eranfarkash1"
+                >
+                  <Iconify width={25} icon="bi:tiktok" />
+                </Link>
+                <Link
+                  className="hover:opacity-80 cursor-pointer"
+                  passHref
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://www.instagram.com/eranfarkash/"
+                >
+                  <Iconify width={25} icon="lucide:instagram" />
+                </Link>
+                <Link
+                  className="hover:opacity-80 cursor-pointer"
+                  passHref
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://www.linkedin.com/in/eran-farkash-543b42232/?originalSubdomain=il"
+                >
+                  <Iconify width={25} icon="bi:linkedin" />
+                </Link>
+                <Link
+                  className="hover:opacity-80 cursor-pointer"
+                  passHref
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://www.youtube.com/@eranfarkash"
+                >
+                  <Iconify width={25} icon="bi:youtube" />
+                </Link>
+                <Link
+                  className="hover:opacity-80 cursor-pointer"
+                  passHref
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://www.facebook.com/eran.farkash"
+                >
+                  <Iconify width={25} icon="ri:facebook-fill" />
+                </Link>
+              </Stack>
+              {/* <Stack
               mt={4}
               mb={1}
               direction="row"
@@ -329,7 +343,7 @@ export function AboutHero() {
                 <SocialIcon width={30} icon="facebook" />
               </Link>
             </Stack> */}
-            {/* <Box
+              {/* <Box
               sx={{
                 display: 'flex',
                 justifyContent: { lg: 'inherit', md: 'center', xs: 'center' },
@@ -337,39 +351,42 @@ export function AboutHero() {
             >
               {emph(theme.palette[mainColor])}
             </Box> */}
-            <Container
-              sx={{
-                display: 'flex',
-                flexDirection: { md: 'row', xs: 'column' },
-                gap: 4,
-                mt: { md: 6, xs: 6 },
-                pr: { md: 0, xs: 'auto' },
-                justifyContent: { md: 'inherit', xs: 'center' },
-              }}
-            >
-              <Button
-                sx={{ fontSize: { md: '1rem', xs: '1rem' }, borderRadius: 1 }}
-                variant={isMobile ? 'contained' : 'contained'}
-                color={mainColor}
-                onClick={() => ScrollComponent('signUp')}
-              >
-                הצטרפו לקהילת יוצרי תוכן
-              </Button>
-              <Button
+              <Container
                 sx={{
-                  fontSize: { md: '1rem', xs: '1rem' },
-                  borderRadius: 1,
-                  // display: { md: 'inherit', xs: 'none' },
+                  display: 'flex',
+                  flexDirection: { md: 'row', xs: 'column' },
+                  gap: 4,
+                  mt: { md: 6, xs: 6 },
+                  pr: { md: 0, xs: 'auto' },
+                  justifyContent: { md: 'inherit', xs: 'center' },
                 }}
-                variant="outlined"
-                color={mainColor}
-                href="/login"
-                // onClick={() => ScrollComponent('contactUs')}
               >
-                לאיזור אישי
-              </Button>
-            </Container>
-          </m.div>
+                <Button
+                  sx={{ fontSize: { md: '1rem', xs: '1rem' }, borderRadius: 1 }}
+                  variant={isMobile ? 'contained' : 'contained'}
+                  color={mainColor}
+                  onClick={() => ScrollComponent('signUp')}
+                >
+                  {CTA}
+                </Button>
+                {CTA2 && (
+                  <Button
+                    sx={{
+                      fontSize: { md: '1rem', xs: '1rem' },
+                      borderRadius: 1,
+                      // display: { md: 'inherit', xs: 'none' },
+                    }}
+                    variant="outlined"
+                    color={mainColor}
+                    href={cta2Href}
+                    // onClick={() => ScrollComponent('contactUs')}
+                  >
+                    {CTA2}
+                  </Button>
+                )}
+              </Container>
+            </m.div>
+          </div>
         </Box>
       </Container>
       {waveVector.current && (
