@@ -7,7 +7,7 @@ import { Circles } from 'react-loader-spinner';
 import { useForm, Controller } from 'react-hook-form';
 import { useState, useEffect, useContext } from 'react';
 
-import { DarkModeTwoTone, LightModeTwoTone } from '@mui/icons-material';
+import { HomeTwoTone, DarkModeTwoTone, LightModeTwoTone } from '@mui/icons-material';
 import {
   Box,
   Link,
@@ -32,16 +32,22 @@ import {
   useColorScheme,
 } from '@mui/material';
 
+import { CONFIG } from 'src/config-global';
+import { customShadows } from 'src/theme/core';
 import { ColorContext } from 'src/context/colorMain';
+import { AboutWhat } from 'src/app/about/about-what';
+import { AboutLead } from 'src/app/about/about-lead';
 import { textGradient, bgGradientAnimate } from 'src/theme/styles';
 
-import { varScale, varBounce, MotionContainer } from 'src/components/animate';
+import { varFade, varScale, varBounce, MotionContainer } from 'src/components/animate';
 
+import { Image } from '../image';
 import Footer from '../footer/Footer';
 import { Iconify, SocialIcon } from '../iconify';
 import COLORS from '../../theme/core/colors.json';
+import WhatsAppShareButton from './shareWhatsApp';
 
-function HowMuchYouWorth({ courseName = 'Video-Pro', id }) {
+function HowMuchYouWorth({ courseName = 'Video-Pro', id, followers, likes, niche }) {
   const theme = useTheme();
   const { setMode } = useColorScheme();
   const { mainColor, mode, textGradientAnimation } = useContext(ColorContext);
@@ -62,7 +68,7 @@ function HowMuchYouWorth({ courseName = 'Video-Pro', id }) {
     setMode(mode === 'dark' ? 'light' : 'dark');
   };
 
-  const data = <WorthCalculatorGPT />;
+  const data = <WorthCalculatorGPT followersCount={followers} likesCount={likes} niches={niche} />;
 
   return (
     <Box
@@ -102,22 +108,27 @@ function HowMuchYouWorth({ courseName = 'Video-Pro', id }) {
               </div>
             </Stack>
             <Typography
+              component="a"
+              href="/influencer"
               variant="h1"
               sx={{
+                cursor: 'pointer',
                 ...textGradientAnimation,
               }}
             >
               {courseName}
             </Typography>
             <Typography variant="h4">הבית של יוצרי התוכן הטובים בישראל</Typography>
-            {isActive && <Divider sx={{ width: 1, mb: 0 }} />}
+            <Divider sx={{ width: 1, mb: 2 }} />
           </m.div>
         </Container>
-        <Divider />
       </div>
-      <Box mt={4} width={1}>
-        <Typography color="text.secondary" variant="h5">
-          בואו לגלות כמה אתם שווים - המחשבון שלנו יעזור לכם להעריך כמה שווה כל סרטון שלכם
+      <Box width={1}>
+        <Typography variant="h4" color="text.secondary">
+          בואו לגלות כמה אתם שווים
+        </Typography>
+        <Typography variant="h5" gutterBottom>
+          מחשבון רווחים מהסושיאל
         </Typography>
       </Box>
 
@@ -142,8 +153,9 @@ function HowMuchYouWorth({ courseName = 'Video-Pro', id }) {
             <Button
               variant="contained"
               onClick={() => router.push('/influencer')}
-              fullWidth
+              //   fullWidth
               sx={{
+                maxWidth: 800,
                 ...bgGradientAnimate(
                   `45deg, ${theme.palette.success.light},${theme.palette.success.dark} ,${theme.palette.success.dark}`
                 ),
@@ -154,6 +166,48 @@ function HowMuchYouWorth({ courseName = 'Video-Pro', id }) {
             </Button>
           </Box>
         </m.div>
+        <Box mt={4} width={1}>
+          <DivPics path1="Eran2.png" path2="hero4.jpg" />
+          <AboutWhat influencer />
+          <Box my={4} display="flex" justifyContent="center" gap={4} width={1}>
+            <Button
+              variant="contained"
+              onClick={() => router.push('/influencer#signUp')}
+              //   fullWidth
+              sx={{
+                maxWidth: 800,
+                ...bgGradientAnimate(
+                  `45deg, ${theme.palette.warning.light},${theme.palette.warning.dark} ,${theme.palette.warning.dark}`
+                ),
+                minWidth: 200,
+              }}
+            >
+              לחצו כאן והתחילו להרוויח כסף
+            </Button>
+          </Box>
+          <AboutWhat contentType="aboutMe" />
+          <AboutLead showMsg={false} />
+          <Box my={4} display="flex" justifyContent="center" gap={4} width={1}>
+            <Button
+              variant="contained"
+              startIcon={<HomeTwoTone />}
+              onClick={() => router.push('/influencer')}
+              //   fullWidth
+              sx={{
+                maxWidth: 800,
+                ...bgGradientAnimate(
+                  `45deg, ${theme.palette.error.dark},${theme.palette.error.main} `
+                ),
+                minWidth: 200,
+              }}
+            >
+              &nbsp; &nbsp; בחזרה לדף הבית &nbsp;
+            </Button>
+          </Box>
+          {/* <Typography color="text.secondary" variant="h5">
+          בואו לגלות כמה אתם שווים - המחשבון שלנו יעזור לכם להעריך כמה שווה כל סרטון שלכם
+        </Typography> */}
+        </Box>
       </Container>
       <Footer />
     </Box>
@@ -221,14 +275,14 @@ const WorthCalculatorGemini = () => {
       {error && <Alert severity="error">{error}</Alert>}
       {earnings && (
         <Typography variant="h6" marginTop={2}>
-          הכנסה מוערכת: ${earnings.toFixed(2)}
+          הכנסה מוערכת לסירטון / סטורי: ${earnings.toLocaleString()}
         </Typography>
       )}
     </form>
   );
 };
 
-const WorthCalculatorGPT = () => {
+const WorthCalculatorGPT = ({ likesCount, followersCount, niches }) => {
   const {
     handleSubmit,
     control,
@@ -238,13 +292,15 @@ const WorthCalculatorGPT = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      niche: 'Fashion/Beauty/Fitness',
+      niche: niches || 'Fashion/Beauty/Fitness',
+      likes: likesCount,
+      followers: followersCount,
     },
   });
   const [earnings, setEarnings] = useState(null);
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-//   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+  //   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const isMobile = true;
   //   const { textGradientAnimation } = useContext(ColorContext);
   // Watch for values to calculate real-time
@@ -255,15 +311,14 @@ const WorthCalculatorGPT = () => {
   const calculateEarnings = (data) => {
     // const { followers, likes, niche, engagementRate } = data;
     const { engagementRate } = data;
-
     // Calculate Engagement Rate if not provided
     const ER = engagementRate || (likes / followers) * 100;
-    let M = 0.01;
 
+    let M = 0.01;
     if (ER > 8) {
-      M = 0.1;
+      M *= 2;
     } else if (ER >= 3 && ER <= 8) {
-      M = 0.05;
+      M *= 1.5;
     } else {
       M = 0.01;
     }
@@ -272,15 +327,27 @@ const WorthCalculatorGPT = () => {
     const E = followers * M;
 
     // Adjusted Earnings based on Engagement Rate
-    const E_adjusted = E * (ER / 3);
 
     // Apply Niche Modifier
     let N = 1.0;
-    if (niche === 'Fashion/Beauty/Fitness') N = 1.5;
-    else if (niche === 'Home Goods/DIY') N = 0.8;
+    if (niche === 'Fashion/Beauty/Fitness') N = 1.15;
+    else if (niche === 'Home Goods/DIY') N = 0.85;
     else if (niche === 'Technology/Gaming') N = 1.05;
 
-    const E_final = E_adjusted * N;
+    const minWorth = {
+      followers: 1900,
+      ER: 8,
+      likes: 690,
+      money: 190,
+    };
+
+    const E_final =
+      E *
+      N *
+      (ER / minWorth.ER) *
+      (followers / (3 * minWorth.followers)) *
+      (likes / minWorth.likes);
+
     console.log('Social: ', {
       M,
       N,
@@ -289,11 +356,16 @@ const WorthCalculatorGPT = () => {
       likes,
       followers,
       E,
-      E_adjusted,
       E_final,
     });
-
-    setEarnings(Number(Math.min(Math.ceil(E_final.toFixed(0)), 10000)));
+    let finalWorth = E_final;
+    finalWorth =
+      finalWorth < minWorth.money || followers < minWorth.followers || likes < minWorth.likes
+        ? 10
+        : finalWorth;
+    finalWorth = Math.min(Math.ceil(finalWorth), followers - 12, likes - 9);
+    finalWorth = Number(Math.min(finalWorth, 10000));
+    setEarnings(finalWorth);
     setOpen(true);
   };
 
@@ -310,9 +382,6 @@ const WorthCalculatorGPT = () => {
       }}
     >
       <Box display="flex" flexDirection="column" justifyContent="center" width={1}>
-        <Typography variant="h5" gutterBottom>
-          מחשבון רווחים מהסושיאל
-        </Typography>
         <div className="w-full flex justify-center">
           <SocialStack spacing={3} width={25} />
         </div>
@@ -457,7 +526,7 @@ const WorthCalculatorGPT = () => {
           <Box width={1}>
             <Divider />
             <Typography variant="h5" sx={{ mt: 3 }}>
-              רווח מוערך לפוסט:
+              רווח מוערך לסטורי/סירטון:
             </Typography>
             <Typography
               variant="h4"
@@ -469,6 +538,11 @@ const WorthCalculatorGPT = () => {
             >
               ₪ {Number(earnings).toLocaleString()}
             </Typography>
+            <Box my={1} width={1} mx="auto">
+              <WhatsAppShareButton
+                queryParams={`followers=${followers}&niche=${niche}&likes=${likes}`}
+              />
+            </Box>
           </Box>
         )}
         {open && earnings && isMobile && (
@@ -496,46 +570,46 @@ export const SocialStack = ({ spacing = 2, width = 30 }) => (
   >
     <Link
       className="hover:opacity-80 cursor-pointer"
-      passHref
-      target="_blank"
-      rel="noopener noreferrer"
-      href="https://www.tiktok.com/"
+      //   passHref
+      //   target="_blank"
+      //   rel="noopener noreferrer"
+      //   href="https://www.tiktok.com/"
     >
       <Iconify width={width} icon="logos:tiktok-icon" />
     </Link>
     <Link
       className="hover:opacity-80 cursor-pointer"
-      passHref
-      target="_blank"
-      rel="noopener noreferrer"
-      href="https://www.instagram.com/eranfarkash/"
+      //   passHref
+      //   target="_blank"
+      //   rel="noopener noreferrer"
+      //   href="https://www.instagram.com/eranfarkash/"
     >
       <SocialIcon width={width} icon="instagram" />
     </Link>
     <Link
       className="hover:opacity-80 cursor-pointer"
-      passHref
-      target="_blank"
-      rel="noopener noreferrer"
-      href="https://www.linkedin.com/"
+      //   passHref
+      //   target="_blank"
+      //   rel="noopener noreferrer"
+      //   href="https://www.linkedin.com/"
     >
       <SocialIcon width={width} icon="linkedin" />
     </Link>
     <Link
       className="hover:opacity-80 cursor-pointer"
-      passHref
-      target="_blank"
-      rel="noopener noreferrer"
-      href="https://www.youtube.com/"
+      //   passHref
+      //   target="_blank"
+      //   rel="noopener noreferrer"
+      //   href="https://www.youtube.com/"
     >
       <Iconify width={width} icon="logos:youtube-icon" />
     </Link>
     <Link
       className="hover:opacity-80 cursor-pointer"
-      passHref
-      target="_blank"
-      rel="noopener noreferrer"
-      href="https://www.facebook.com/"
+      //   passHref
+      //   target="_blank"
+      //   rel="noopener noreferrer"
+      //   href="https://www.facebook.com/"
     >
       <SocialIcon width={width} icon="facebook" />
     </Link>
@@ -569,7 +643,7 @@ const MessageDialog = ({
     >
       <DialogTitle>
         <Iconify width={30} icon="emojione:party-popper" />
-        <Typography color="text.secondary" variant="h4">
+        <Typography variant="h3">
           {title} {worth > 500 ? (worth > 1500 ? 'מדהים!' : 'גדול!') : ''}
         </Typography>
       </DialogTitle>
@@ -578,7 +652,10 @@ const MessageDialog = ({
           {worth?.toLocaleString()} ₪
         </Typography>
         <Typography color="text.secondary" variant="h4">
-          {worth > 500 ? 'אצלנו תרוויחו אפילו יותר' : 'אנחנו נעזור לכם להשתפר ולהרוויח יותר'}
+          לסטורי / סרטון
+        </Typography>
+        <Typography color="text.secondary" variant="body1">
+          {worth > 499 ? '(אצלנו תרוויחו אפילו יותר)' : 'אנחנו נעזור לך להשתפר ולהרוויח יותר'}
         </Typography>
       </DialogContent>
       <Divider variant="middle" sx={{ borderStyle: 'dashed', mt: 2 }} />
@@ -610,3 +687,50 @@ const inputColor = (color = colors.green[200]) => ({
     borderBottomColor: color, // Color of underline on hover
   },
 });
+
+const DivPics = ({ path1, path2 }) => {
+  const theme = useTheme();
+  const { mode } = useContext(ColorContext);
+  return (
+    <div className="w-2/3 my-8 max-sm:w-full mx-auto flex justify-center">
+      <m.div className="w-1/2 mx-2" variants={varFade().inUp}>
+        <Image
+          alt="מקצוע גלובלי"
+          src={`${CONFIG.site.basePath}/assets/images/about/${path1}`}
+          ratio="1/1"
+          sx={{
+            right: 20,
+            '&:hover': {
+              boxShadow: `-20px 20px 40px ${theme.vars.palette.success.light}`,
+            },
+            transition: 'transform 0.7s ease-in',
+            borderRadius: 2,
+            transform: 'rotate(0deg)',
+            width: { xs: '80%', md: 'inherit' },
+            boxShadow: customShadows(mode).dialog,
+            // boxShadow: `-40px 40px 80px ${theme.vars.palette.secondary.main}`,
+          }}
+        />
+      </m.div>
+      <m.div className="w-1/2 mx-2" variants={varFade().inUp}>
+        <Image
+          alt="יוצרת תוכן"
+          src={`${CONFIG.site.basePath}/assets/images/about/${path2}`}
+          ratio="1/1"
+          sx={{
+            left: 20,
+            '&:hover': {
+              boxShadow: `-20px 20px 40px ${theme.vars.palette.error.light}`,
+            },
+            transition: 'transform 0.7s ease-in',
+            borderRadius: 2,
+            width: { xs: '80%', md: 'inherit' },
+            transform: 'rotate(0deg)',
+            // boxShadow: customShadows(mode).dialog,
+            // boxShadow: `-40px 40px 80px ${theme.vars.palette.primary.dark}`,
+          }}
+        />
+      </m.div>
+    </div>
+  );
+};

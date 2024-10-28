@@ -6,6 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3033",
+    "amend": "git add . && git commit --amend --no-edit",
     "start": "next start -p 3033",
     "build": "next build",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",

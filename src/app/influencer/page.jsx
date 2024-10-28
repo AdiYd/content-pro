@@ -65,10 +65,13 @@ export default function Page() {
       <ImageDiv />
       {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
 
-      <SignUp coursePrice={CoursePrice} />
+      <SignUp coursName="Influencer-Pro" coursePrice={CoursePrice} />
       {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
 
-      <AccordionSection />
+      <AccordionSection
+        title="רק רגע, זה מתאים לי בכלל? למה דווקא Influencer-Pro"
+        courseName="Influencer-Pro"
+      />
       {/* <StepperSection /> */}
       {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
       <AboutTestimonials />

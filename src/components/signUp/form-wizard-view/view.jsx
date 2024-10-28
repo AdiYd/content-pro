@@ -13,14 +13,14 @@ import { FormWizard } from './form-wizard';
 
 // ----------------------------------------------------------------------
 
-export function FormWizardView({ coursePrice }) {
+export function FormWizardView({ courseName = 'Video-Pro', coursePrice }) {
   const { textGradient } = useContext(ColorContext);
   return (
     <>
       <Typography sx={{ mb: 2 }} variant="h2">
         איך מצטרפים ל
         <Typography mx={1} variant="h2" component="a" sx={{ ...textGradient }}>
-          Video-Pro
+          {courseName}
         </Typography>
         ?
       </Typography>

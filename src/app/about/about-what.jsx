@@ -23,7 +23,7 @@ export const SKILLS = [...Array(3)].map((_, index) => ({
 
 const contentDict = {
   aboutCourse: {
-    title: ['Video-Pro', 'מה זה '].reverse(),
+    title: [ 'מה זה ', 'Video-Pro'],
   },
   aboutMe: {
     title: ['מי אני - ', 'ערן פרקש'],
@@ -32,11 +32,13 @@ const contentDict = {
 
 // ----------------------------------------------------------------------
 
-export function AboutWhat({ contentType = 'aboutCourse' }) {
+export function AboutWhat({ contentType = 'aboutCourse', influencer = false }) {
   const theme = useTheme();
   const { mainColor, textGradient, mode } = useContext(ColorContext);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
+  if (influencer){
+    contentDict.aboutCourse = ['מה זה ', 'Influencer-Pro'];
+  }
   const imageDiv = (
     <Container sx={{ my: 4, display: { md: 'none', xs: 'flex' }, gap: 2, alignItems: 'center' }}>
       <m.div variants={varFade().inRight}>
@@ -117,7 +119,7 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
       sx={{
         pb: { xs: 8, md: 10 },
         alignItems: 'center',
-        textAlign: { xs: 'center', md: 'unset', direction: 'rtl' },
+        textAlign: { xs: 'center', sm: 'start', direction: 'rtl' },
       }}
     >
       <Grid container columnSpacing={{ md: 3 }} alignItems="flex-start">
@@ -167,11 +169,11 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
               </Box>
             )}
             <Typography variant="h2" sx={{ mb: 3 }}>
-              {contentDict[contentType]?.title[0]}
+              {!influencer && contentDict[contentType]?.title[0]}
               <Box component="a" sx={textGradient} color={`${mainColor}.main`}>
-                {contentDict[contentType]?.title[1]}
+                {influencer ? 'Influencer-Pro' : contentDict[contentType]?.title[1]}
               </Box>
-              {contentType === 'aboutCourse' && '?'}
+              {contentType === 'aboutCourse' && !influencer && '?'}
             </Typography>
           </m.div>
 
@@ -240,13 +242,13 @@ export function AboutWhat({ contentType = 'aboutCourse' }) {
                   variant="p"
                   sx={{ color: 'text.dark.main', lineHeight: 1.7, opacity: 0.8, mb: 4 }}
                 >
-                  Video-Pro היא קהילה שמפתחת יוצרי תוכן איכותיים. אחרי שתעברו את הקורס, תהיו חלק
-                  מקבוצה של יוצרים כמוכם – אנשים שיודעים ליצור סרטונים איכותיים, לבנות קהילה נאמנה
-                  ולהפוך את התוכן להכנסה יציבה. כאן לא תישארו לבד - תעבדו ביחד עם יוצרי תוכן נוספים,
-                  תשתפו רעיונות, תתייעצו, תלמדו מטעויות של אחרים, תהנו מהרצאות שוטפות כל חודש ותתמכו
-                  אחד בשני. זו ההזדמנות שלכם להצטרף לקהילה יוצרת ולבנות קריירה מצליחה. בקהילה נעזור
-                  גם להפיץ את תיק העבודות שלכם ללקוחות פוטנציאליים, והטובים ביותר יקבלו הזדמנויות
-                  לעבודות ייחודיות מבחוץ
+                  {influencer ? 'Influencer' : 'Video'}-Pro היא קהילה שמפתחת יוצרי תוכן איכותיים.
+                  אחרי שתעברו את הקורס, תהיו חלק מקבוצה של יוצרים כמוכם – אנשים שיודעים ליצור
+                  סרטונים איכותיים, לבנות קהילה נאמנה ולהפוך את התוכן להכנסה יציבה. כאן לא תישארו
+                  לבד - תעבדו ביחד עם יוצרי תוכן נוספים, תשתפו רעיונות, תתייעצו, תלמדו מטעויות של
+                  אחרים, תהנו מהרצאות שוטפות כל חודש ותתמכו אחד בשני. זו ההזדמנות שלכם להצטרף לקהילה
+                  יוצרת ולבנות קריירה מצליחה. בקהילה נעזור גם להפיץ את תיק העבודות שלכם ללקוחות
+                  פוטנציאליים, והטובים ביותר יקבלו הזדמנויות לעבודות ייחודיות מבחוץ
                 </Typography>
                 <br />
                 <br />

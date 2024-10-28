@@ -33,11 +33,11 @@ import terms from '../../utils/terms.json';
 
 // ----------------------------------------------------------------------
 
-export function AboutLead({ contentType = 'aboutCourse' }) {
+export function AboutLead({ showMsg = true }) {
   const theme = useTheme();
   const { mainColor, textGradient, mode } = useContext(ColorContext);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const [activeTxtfield, setActiveTxtField] = useState(true);
+  const [activeTxtfield, setActiveTxtField] = useState(showMsg);
   const [active, setActive] = useState(false);
   const [loading, setLoading] = useState(false);
   const [thanks, setThanks] = useState(false);
