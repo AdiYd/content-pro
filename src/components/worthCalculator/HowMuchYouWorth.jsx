@@ -31,6 +31,8 @@ import {
   useColorScheme,
 } from '@mui/material';
 
+import { createTokenFromQueryParams } from 'src/utils/webToken';
+
 import { CONFIG } from 'src/config-global';
 import { customShadows } from 'src/theme/core';
 import { ColorContext } from 'src/context/colorMain';
@@ -162,7 +164,7 @@ function HowMuchYouWorth({
             איך עושים את זה? לחצו על הכפתור
           </Typography>
           <Iconify icon="fa6-solid:hand-point-down" />
-          <Box my={4} display="flex" justifyContent="center" gap={4} width={1}>
+          <Box mt={4} mb={8} display="flex" justifyContent="center" gap={4} width={1}>
             <Button
               variant="contained"
               onClick={() => router.push('/influencer')}
@@ -198,7 +200,7 @@ function HowMuchYouWorth({
               לחצו כאן והתחילו להרוויח כסף
             </Button>
           </Box>
-          <AboutWhat influencer contentType="aboutMe" />
+          {/* <AboutWhat influencer contentType="aboutMe" /> */}
           <AboutLead showMsg={false} />
           <Box my={4} display="flex" justifyContent="center" gap={4} width={1}>
             <Button
@@ -308,14 +310,14 @@ const WorthCalculatorGPT = ({ likesCount, followersCount, niches, engagementRate
       niche: niches || 'Fashion/Beauty/Fitness',
       likes: likesCount,
       followers: followersCount,
-      engagementRate: engagementRateCount && Number(engagementRateCount).toFixed(1),
+      //   engagementRate: !Number.isNaN(engagementRateCount) && Number(Math.ceil(engagementRateCount)),
     },
   });
   const [earnings, setEarnings] = useState(null);
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const router = useRouter();
-  const firstTime = useRef(true);
+  const numOfAlerts = useRef(1);
   //   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const isMobile = true;
   //   const { textGradientAnimation } = useContext(ColorContext);
@@ -327,17 +329,21 @@ const WorthCalculatorGPT = ({ likesCount, followersCount, niches, engagementRate
 
   const calculateEarnings = useCallback(
     (data) => {
-      const { followers_count, likes_count } = data;
+      const { followers_count, likes_count, submitted } = data;
       // Calculate Engagement Rate if not provided
-      const eff_likes = likes_count ? Number(likes_count.replace(/,/g, '')) : likes;
-      const eff_followers = followers_count ? Number(followers_count.replace(/,/g, '')) : followers;
+      const eff_likes =
+        typeof likes_count === 'string' ? Number(likes_count.replace(/,/g, '')) : likes_count;
+      const eff_followers =
+        typeof followers_count === 'string'
+          ? Number(followers_count.replace(/,/g, ''))
+          : followers_count;
       const eff_niche = niche || niches;
       const eff_ER =
-        engagementRate && !Number.isNaN(engagementRate)
-          ? Number(engagementRate).toFixed(1)
-          : engagementRateCount && !Number.isNaN(engagementRateCount)
-            ? Number(engagementRateCount).toFixed(1)
-            : Number((eff_likes / eff_followers) * 100).toFixed(1);
+        typeof engagementRate === 'number' && engagementRate !== 0
+          ? Math.ceil(engagementRate)
+          : typeof engagementRateCount === 'number'
+            ? Math.ceil(engagementRateCount)
+            : Number(Math.ceil((eff_likes / eff_followers) * 100));
 
       let M = 0.01;
       if (eff_ER > 8) {
@@ -362,8 +368,8 @@ const WorthCalculatorGPT = ({ likesCount, followersCount, niches, engagementRate
       const minWorth = {
         followers: 1900,
         ER: 8,
-        likes: 690,
-        money: 99,
+        likes: 550,
+        money: 88,
       };
 
       const E_final =
@@ -390,34 +396,48 @@ const WorthCalculatorGPT = ({ likesCount, followersCount, niches, engagementRate
         eff_likes < minWorth.likes
           ? 10
           : finalWorth;
-      finalWorth = Math.min(Math.ceil(finalWorth), eff_followers - 12, eff_likes - 9);
+      finalWorth = Math.min(
+        Math.ceil(finalWorth),
+        eff_followers - Math.random() * 100,
+        (eff_likes - Math.random() * 20) * (eff_followers / (3 * minWorth.followers))
+      );
       finalWorth = Number(Math.min(finalWorth, 10000));
       finalWorth = Number(Math.max(finalWorth, 1));
-      if (!Number.isNaN(finalWorth)) {
+      if (typeof finalWorth === 'number' && submitted) {
         setEarnings(finalWorth);
-        if (firstTime.current) {
-          firstTime.current = false;
+        if (numOfAlerts.current <= 3) {
+          numOfAlerts.current += 1;
           setOpen(true);
         }
       }
     },
-    [engagementRate, followers, likes, niche, engagementRateCount, niches]
+    [engagementRateCount, engagementRate, niches, niche]
   );
 
   useEffect(() => {
     if (followersCount && likesCount) {
-      calculateEarnings(
-        firstTime.current && { likes_count: likesCount, followers_count: followersCount }
-      );
+      //   console.log('Params useEffect: ', followersCount, likesCount, niches, engagementRateCount);
+      calculateEarnings({
+        submitted: true,
+        likes_count: Number(likesCount.replace(/,/g, '')),
+        followers_count: Number(followersCount.replace(/,/g, '')),
+      });
     }
   }, [likesCount, followersCount, calculateEarnings]);
 
   const handleSubmitRoute = (data) => {
     if (likes && niche && followers) {
       const engR = engagementRate ? Number(engagementRate) : Number((likes / followers) * 100);
-      router.push(
-        `/worthCalculator?followers=${followers}&niche=${niche}&likes=${likes}${engR && !Number.isNaN(engR) && `&engagementRate=${engR}`}#calculator`
-      );
+      const tokenObj = {
+        likes: typeof likes === 'string' ? Number(likes?.replace(/,/g, '')) : likes,
+        niche,
+        followers: typeof followers === 'string' ? Number(followers?.replace(/,/g, '')) : followers,
+        engagementRate: typeof engR === 'number' ? Math.ceil(engR) : null,
+      };
+      const token = createTokenFromQueryParams(tokenObj) || '';
+      //   console.log('Token Params: ', tokenObj, ' Created token: ', token);
+
+      router.push(`/worthCalculator?token=${token}#calculator`);
     }
   };
 
@@ -461,6 +481,7 @@ const WorthCalculatorGPT = ({ likesCount, followersCount, niches, engagementRate
                 if (/^\d*$/.test(rawValue)) {
                   // Check for valid number
                   onChange(Number(rawValue));
+                  setEarnings(null);
                 }
               }}
               sx={inputColor(value && value > 9900 ? '#22C55E' : colors.green[200])}
@@ -498,6 +519,7 @@ const WorthCalculatorGPT = ({ likesCount, followersCount, niches, engagementRate
                 if (/^\d*$/.test(rawValue)) {
                   // Check for valid number
                   onChange(Number(rawValue));
+                  setEarnings(null);
                 }
               }}
               variant="standard"
@@ -590,7 +612,15 @@ const WorthCalculatorGPT = ({ likesCount, followersCount, niches, engagementRate
             </Typography>
             <Box my={1} width={1} mx="auto">
               <WhatsAppShareButton
-                queryParams={`followers=${followers}&niche=${niche}&likes=${likes}${`&engagementRate=${engagementRate && !Number.isNaN(engagementRate) ? Number(engagementRate).toFixed(1) : Number((likes / followers) * 100).toFixed(1)}`}`}
+                token={{
+                  followers,
+                  niche,
+                  likes,
+                  engagementRate:
+                    engagementRate && !Number.isNaN(engagementRate)
+                      ? Number(Math.ceil(engagementRate))
+                      : Number(Math.ceil((likes / followers) * 100)),
+                }}
               />
             </Box>
           </Box>
