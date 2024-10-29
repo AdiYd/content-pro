@@ -117,7 +117,7 @@ export function AboutTestimonials() {
     containScroll: 'trim', // Limits scroll to fit exactly within visible slides
     skipSnaps: true,
     dragFree: true,
-    speed: 10,
+    speed: 50,
     plugins: [{ name: 'autoScroll' }],
     thumbs: {
       slidesToShow: 'auto',

@@ -297,7 +297,15 @@ export default HowMuchYouWorth;
 //   );
 // };
 
-export const WorthCalculatorGPT = ({ likesCount, followersCount, niches, engagementRateCount }) => {
+export const WorthCalculatorGPT = ({
+  likesCount,
+  followersCount,
+  niches,
+  direct = false, // Weather preform calculation through url query params (Landing page) or directly call the calculation function (Inside the course page)
+  engagementRateCount,
+  blockAlert = false,
+  hideLink = false,
+}) => {
   const {
     handleSubmit,
     control,
@@ -338,13 +346,13 @@ export const WorthCalculatorGPT = ({ likesCount, followersCount, niches, engagem
           ? Number(followers_count.replace(/,/g, ''))
           : followers_count;
       const eff_niche = niche || niches;
-      const eff_ER =
+      let eff_ER =
         typeof engagementRate === 'number' && engagementRate !== 0
           ? engagementRate.toFixed(1)
           : typeof engagementRateCount === 'number'
             ? engagementRateCount.toFixed(1)
             : Number((eff_likes / eff_followers) * 100).toFixed(1);
-
+      eff_ER = Number(eff_ER);
       let M = 0.01;
       if (eff_ER > 10) {
         M *= 2;
@@ -375,7 +383,7 @@ export const WorthCalculatorGPT = ({ likesCount, followersCount, niches, engagem
       };
 
       const E_final =
-        E * N * (eff_followers / (5 * minWorth.followers)) * (eff_likes / (2 * minWorth.likes));
+        E * N * (eff_followers / (5 * minWorth.followers)) * (eff_likes / minWorth.likes);
 
       console.log('Social: ', {
         M,
@@ -397,7 +405,8 @@ export const WorthCalculatorGPT = ({ likesCount, followersCount, niches, engagem
       finalWorth = Math.min(
         Math.ceil(finalWorth),
         eff_followers - Math.ceil(Math.random() * 20),
-        (eff_likes - Math.ceil(Math.random() * 20))(1 + eff_followers / (20 * minWorth.followers))
+        (eff_likes - Math.ceil(Math.random() * 20)) *
+          (1 + eff_followers / (20 * minWorth.followers))
       );
       finalWorth = Number(Math.min(finalWorth, 10000));
       finalWorth = Number(Math.max(finalWorth, 1));
@@ -426,16 +435,26 @@ export const WorthCalculatorGPT = ({ likesCount, followersCount, niches, engagem
   const handleSubmitRoute = (data) => {
     if (likes && niche && followers) {
       const engR = engagementRate ? Number(engagementRate) : Number((likes / followers) * 100);
-      const tokenObj = {
-        likes: typeof likes === 'string' ? Number(likes?.replace(/,/g, '')) : likes,
-        niche,
-        followers: typeof followers === 'string' ? Number(followers?.replace(/,/g, '')) : followers,
-        engagementRate: typeof engR === 'number' ? Math.ceil(engR) : null,
-      };
-      const token = createTokenFromQueryParams(tokenObj) || '';
-      //   console.log('Token Params: ', tokenObj, ' Created token: ', token);
+      if (direct) {
+        calculateEarnings({
+          submitted: true,
+          likes_count: typeof likes === 'number' ? likes : Number(likes.replace(/,/g, '')),
+          followers_count:
+            typeof followers === 'number' ? followers : Number(followers.replace(/,/g, '')),
+        });
+      } else {
+        const tokenObj = {
+          likes: typeof likes === 'string' ? Number(likes?.replace(/,/g, '')) : likes,
+          niche,
+          followers:
+            typeof followers === 'string' ? Number(followers?.replace(/,/g, '')) : followers,
+          engagementRate: typeof engR === 'number' ? Math.ceil(engR) : null,
+        };
+        const token = createTokenFromQueryParams(tokenObj) || '';
+        //   console.log('Token Params: ', tokenObj, ' Created token: ', token);
 
-      router.push(`/worthCalculator?token=${token}#calculator`);
+        router.push(`/worthCalculator?token=${token}#calculator`);
+      }
     }
   };
 
@@ -594,7 +613,15 @@ export const WorthCalculatorGPT = ({ likesCount, followersCount, niches, engagem
 
         {earnings && (
           <Box width={1}>
-            <Divider />
+            {earnings > 999 && (
+              <Iconify
+                color={colors.amber[600]}
+                width={35}
+                className="animate-pulse mt-2"
+                icon="solar:cup-bold-duotone"
+              />
+            )}
+            <Divider variant="middle" sx={{ borderStyle: 'dashed', mt: 2 }} />
             <Typography variant="h5" sx={{ mt: 3 }}>
               רווח מוערך לסטורי/סירטון:
             </Typography>
@@ -623,8 +650,8 @@ export const WorthCalculatorGPT = ({ likesCount, followersCount, niches, engagem
             </Box>
           </Box>
         )}
-        {open && earnings && isMobile && (
-          <MessageDialog worth={earnings} open={open} setOpen={setOpen} />
+        {open && earnings && !blockAlert && (
+          <MessageDialog hideLink={hideLink} worth={earnings} open={open} setOpen={setOpen} />
         )}
       </Box>
     </Card>
@@ -697,6 +724,7 @@ export const SocialStack = ({ spacing = 2, width = 30 }) => (
 const MessageDialog = ({
   worth,
   open = false,
+  hideLink = false,
   title = 'פוטנציאל הרווח שלך',
   setOpen = () => {},
 }) => {
@@ -722,7 +750,7 @@ const MessageDialog = ({
       <DialogTitle>
         <Iconify width={30} icon="emojione:party-popper" />
         <Typography variant="h3">
-          {title} {worth > 500 ? (worth > 1500 ? 'מדהים!' : 'גדול!') : ''}
+          {title} {worth > 500 ? (worth > 1000 ? 'מדהים!' : 'גדול!') : ''}
         </Typography>
       </DialogTitle>
       <DialogContent>
@@ -738,9 +766,11 @@ const MessageDialog = ({
       </DialogContent>
       <Divider variant="middle" sx={{ borderStyle: 'dashed', mt: 2 }} />
       <DialogActions sx={{ display: 'flex', justifyContent: 'space-around' }}>
-        <Button onClick={() => router.push('/influencer')} size="small" variant="contained">
-          ספרו לי איך
-        </Button>
+        {!hideLink && (
+          <Button onClick={() => router.push('/influencer')} size="small" variant="contained">
+            ספרו לי איך
+          </Button>
+        )}
         <Button onClick={() => setOpen(false)} size="small" variant="outlined">
           סגירה
         </Button>

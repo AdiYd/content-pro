@@ -335,7 +335,7 @@ const stepsGPT2 = [
     href: '#',
     id: 'step 2',
     iconName: 'fluent:certificate-20-regular',
-    InnerSteps: ['לומדים מיוצרי תוכן עם הצלחה יציבה'],
+    InnerSteps: ['לומדים מיוצרי תוכן עם הצלחה יציבה', 'שיטות להעלאת ערך התוכן'],
   },
   {
     name: 'תמיכה רציפה בקבוצת WhatsApp קהילתית ואקסקלוסיבית',
@@ -351,7 +351,7 @@ const stepsGPT2 = [
     ],
   },
   {
-    name: 'תבנו תיק עבודות מקצועי – ומתחילים לבלוט',
+    name: 'תבנו תיק עבודות מקצועי ותתחילו לבלוט',
     description: 'השקעה בתיק עבודות ייחודי לשיתופי פעולה ארוכי טווח',
     href: '#',
     id: 'step 4',
@@ -866,12 +866,10 @@ export default function StepperSection({ influencer = false, ...props }) {
           },
         }}
       /> */}
-      <Container component={MotionContainer}>
+      <Container sx={{ textAlign: { xs: 'center', sm: 'justify' } }} component={MotionContainer}>
         <m.div animate={varBounce().in}>
           <Typography mb={2} variant="h3">
-            {influencer
-              ? 'איך תכלס מכניסים כסף מהדפים שלכם ?'
-              : 'איך הופכים תוכן מקורי למקור הכנסה ?'}
+            {influencer ? "איך תכל'ס מכניסים כסף מסרטונים" : 'איך הופכים תוכן מקורי למקור הכנסה ?'}
           </Typography>
         </m.div>
         <m.div animate={varBounce({ delay: 0.1 }).in}>

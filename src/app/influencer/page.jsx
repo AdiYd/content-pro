@@ -15,6 +15,7 @@ import { AboutWhat } from '../about/about-what';
 import { AboutHero } from '../about/about-hero';
 import { AboutLead } from '../about/about-lead';
 import { AboutOrder } from '../about/about-order';
+import { AboutMoney } from '../about/about-money';
 import { AboutYouTwo } from '../about/about-youTwo';
 import SocialProof from '../about/view/social-proof';
 import { AboutTestimonials } from '../about/about-testimonials';
@@ -80,14 +81,13 @@ export default function Page() {
       {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
       <AboutTestimonials />
 
+      <AboutMoney />
+
       {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
       <Considering confettiOnly />
 
       {/* <Promotion1 /> */}
       {/* <AboutVision /> */}
-
-      {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
-      <SocialProof />
 
       {/* <Considering
         booklet
@@ -97,6 +97,9 @@ export default function Page() {
 
       {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
       <SignUp influencer coursName="Influencers-Pro" coursePrice={CoursePrice} />
+
+      {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
+      <SocialProof />
 
       {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
       <AboutLead />

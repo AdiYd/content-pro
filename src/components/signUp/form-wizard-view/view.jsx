@@ -27,7 +27,7 @@ export function FormWizardView({ courseName = 'Video-Pro', coursePrice, ...props
 
       <Typography color="text.secondary" component="div" sx={{ mb: 4 }} variant="p">
         {props?.influencer
-          ? 'בשלשה צעדים פשוטים ומהירים משלמים ומתחילים לקבל את כל התכנים והפרטים ההרלוונטים ישירות למייל שלכם'
+          ? 'בשלשה צעדים פשוטים ומהירים תתחילו את ההכשרה ותקבלו את כל התכנים והפרטים הרלוונטים ישירות למייל שלכם'
           : 'בשלשה צעדים פשוטים ומהירים תקבלו את כל הפרטים והקישורים להצטרפות אלינו ישירות למייל שלכם'}
       </Typography>
       <ComponentContainer sx={{ m: 0, p: 0 }}>
