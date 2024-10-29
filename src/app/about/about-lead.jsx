@@ -329,7 +329,7 @@ export function AboutLead({ showMsg = true }) {
           >
             <form onSubmit={handleSubmit} noValidate>
               <Typography textAlign="center" variant="h4" gutterBottom>
-                צרו קשר
+                השאירו פרטים
               </Typography>
 
               <TextField

@@ -297,7 +297,7 @@ export default HowMuchYouWorth;
 //   );
 // };
 
-const WorthCalculatorGPT = ({ likesCount, followersCount, niches, engagementRateCount }) => {
+export const WorthCalculatorGPT = ({ likesCount, followersCount, niches, engagementRateCount }) => {
   const {
     handleSubmit,
     control,
@@ -340,14 +340,16 @@ const WorthCalculatorGPT = ({ likesCount, followersCount, niches, engagementRate
       const eff_niche = niche || niches;
       const eff_ER =
         typeof engagementRate === 'number' && engagementRate !== 0
-          ? Math.ceil(engagementRate)
+          ? engagementRate.toFixed(1)
           : typeof engagementRateCount === 'number'
-            ? Math.ceil(engagementRateCount)
-            : Number(Math.ceil((eff_likes / eff_followers) * 100));
+            ? engagementRateCount.toFixed(1)
+            : Number((eff_likes / eff_followers) * 100).toFixed(1);
 
       let M = 0.01;
-      if (eff_ER > 8) {
+      if (eff_ER > 10) {
         M *= 2;
+      } else if (eff_ER > 8 && eff_ER <= 10) {
+        M *= 1.7;
       } else if (eff_ER >= 3 && eff_ER <= 8) {
         M *= 1.5;
       } else {
@@ -366,18 +368,14 @@ const WorthCalculatorGPT = ({ likesCount, followersCount, niches, engagementRate
       else if (eff_niche === 'Technology/Gaming') N = 1.05;
 
       const minWorth = {
-        followers: 1900,
+        followers: 2000,
         ER: 8,
         likes: 550,
         money: 88,
       };
 
       const E_final =
-        E *
-        N *
-        (eff_ER / minWorth.ER) *
-        (eff_followers / (3 * minWorth.followers)) *
-        (eff_likes / minWorth.likes);
+        E * N * (eff_followers / (5 * minWorth.followers)) * (eff_likes / (2 * minWorth.likes));
 
       console.log('Social: ', {
         M,
@@ -398,13 +396,13 @@ const WorthCalculatorGPT = ({ likesCount, followersCount, niches, engagementRate
           : finalWorth;
       finalWorth = Math.min(
         Math.ceil(finalWorth),
-        eff_followers - Math.random() * 100,
-        (eff_likes - Math.random() * 20) * (eff_followers / (3 * minWorth.followers))
+        eff_followers - Math.ceil(Math.random() * 20),
+        (eff_likes - Math.ceil(Math.random() * 20))(1 + eff_followers / (20 * minWorth.followers))
       );
       finalWorth = Number(Math.min(finalWorth, 10000));
       finalWorth = Number(Math.max(finalWorth, 1));
       if (typeof finalWorth === 'number' && submitted) {
-        setEarnings(finalWorth);
+        setEarnings(Math.ceil(finalWorth));
         if (numOfAlerts.current <= 3) {
           numOfAlerts.current += 1;
           setOpen(true);

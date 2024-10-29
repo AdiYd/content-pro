@@ -19,7 +19,7 @@ async function Page({ searchParams, ...props }) {
       followers={followers && followers?.toLocaleString()}
       engagementRate={engagementRate && Number(engagementRate)}
       niche={niche}
-      likes={likes && likes.toLocaleString()}
+      likes={likes && likes?.toLocaleString()}
     />
   );
 }

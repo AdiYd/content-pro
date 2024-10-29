@@ -35,28 +35,31 @@ export default function Page() {
     >
       {/* <ColorPicker /> */}
       <AboutHero
-        courseName="Influencer-Pro"
+        influencer
+        courseName="Influencers-Pro"
         subTitle="ההכשרה שתיקח אתכם מעבודות מזדמנות לשיתופי פעולה קבועים עם מותגים"
         subTitle2="כל הידע והכלים שאתם צריכים כדי להפוך להיות פרזנטורים מבוקשים, עם חוזים יציבים והכנסה קבועה מהתוכן שלכם"
-        CTA="לחצו כאן להיות פרזנטורים"
+        CTA="לחצו כאן להפוך לפרזנטורים למותגים"
         CTA2={false}
       />
       {/* {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />} */}
       <AboutWhat influencer contentType="aboutCourse" />
       {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
+
+      <AboutYouTwo influencer />
+      {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
+
       <AboutWhat contentType="aboutMe" />
       {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
       {/* <IconSection /> */}
-      <AboutYouTwo />
-      {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
 
-      <StepperSection />
+      <StepperSection influencer />
       {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
 
       <AboutOrder />
       {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
 
-      <AccordionSyllabus />
+      <AccordionSyllabus influencer />
       {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
 
       <Considering color="mainColor" buttonBefore="סקרנים?! לחצו כאן 😉" />
@@ -65,12 +68,13 @@ export default function Page() {
       <ImageDiv />
       {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
 
-      <SignUp coursName="Influencer-Pro" coursePrice={CoursePrice} />
+      <SignUp influencer coursName="Influencers-Pro" coursePrice={CoursePrice} />
       {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
 
       <AccordionSection
+        influencer
         title="רק רגע, זה מתאים לי בכלל? למה דווקא Influencer-Pro"
-        courseName="Influencer-Pro"
+        courseName="Influencers-Pro"
       />
       {/* <StepperSection /> */}
       {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
@@ -92,7 +96,7 @@ export default function Page() {
       /> */}
 
       {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
-      <SignUp coursePrice={CoursePrice} />
+      <SignUp influencer coursName="Influencers-Pro" coursePrice={CoursePrice} />
 
       {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
       <AboutLead />

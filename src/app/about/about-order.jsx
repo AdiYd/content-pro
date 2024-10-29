@@ -103,7 +103,7 @@ export function AboutOrder({ contentType = 'aboutCourse' }) {
           </Box>
         </Typography> */}
         <Typography variant="h3" mb={4}>
-          אחרי ההכשרה הזו אתם תצליחו להתמודד עם כל האתגרים שביצירת תוכן
+          מה שתקבלו פה לא תקבלו בשום קורס אחר
         </Typography>
       </m.div>
       {/* <m.div variants={varFade({ delay: 0.5 }).inLeft}>

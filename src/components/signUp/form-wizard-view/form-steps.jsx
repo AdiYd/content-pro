@@ -498,7 +498,15 @@ export function StepTwo({ name, setValue }) {
   );
 }
 
-export function StepThree({ name, email, coursePrice, setValue, loading, setGift = () => {} }) {
+export function StepThree({
+  name,
+  email,
+  coursePrice,
+  setValue,
+  loading,
+  setGift = () => {},
+  influencer,
+}) {
   const theme = useTheme();
   const { mainColor, mode, textGradient } = useContext(ColorContext);
   const [update, setUpdate] = useState(false);
@@ -593,7 +601,15 @@ export function StepThree({ name, email, coursePrice, setValue, loading, setGift
       <Typography textAlign="center" mb={0} variant="h6">
         כדי שכולם יוכלו להינות מהתכנים שלנו, הוספנו הנחות לזמן מוגבל ומבצעים למספר מצומצם של נרשמים
       </Typography>
-      <CourseOptions active={active} setActive={setActive} isMobile={isMobile || false} />
+      {influencer ? (
+        <CourseOptionsInfluencer
+          active={active}
+          setActive={setActive}
+          isMobile={isMobile || false}
+        />
+      ) : (
+        <CourseOptions active={active} setActive={setActive} isMobile={isMobile || false} />
+      )}
       <Box textAlign="center" width={1}>
         <Typography component="div" variant="h4" sx={{ my: 0, textAlign: 'center' }}>
           {active}
@@ -1017,6 +1033,70 @@ const courseOptions = [
     currPrice: '₪499',
   },
 ];
+const CourseOptionsInfluence = [
+  {
+    title: 'Master-Pro',
+    subTitle: 'פרמיום הכל כלול',
+    bullets: [
+      'קורס + מנוי לקהילה',
+      'כל מה שיוצר תוכן צריך',
+      'הדרכה בהכנת תיק עבודות',
+      // 'גישה מלאה ל- AI-CGI',
+      'גישה מלאה ל AI Agent',
+      // 'גישה מלאה ל-AI Creator',
+      'הצטרפות לנבחרת וקבלת הצעות עבודה*',
+      // 'קבלת הצעות עבודה',
+    ],
+    oldPrice: '₪1,099',
+    currPrice: '₪749',
+    master: true,
+  },
+  {
+    title: 'Extra-Pro',
+    subTitle: 'קורס + מנוי לקהילה',
+    bullets: [
+      'כל מה שיש ב Base-Pro',
+      'מנוי לקהילת יוצרי תוכן',
+      // 'הדרכה בבנית תיק עבודות',
+      'גישה לתכני AI',
+      'המשך קבלת תכני העשרה ומדריכים',
+    ],
+    oldPrice: '₪749',
+    currPrice: '₪499',
+  },
+];
+const CourseOptions2Influence = [
+  {
+    title: 'Master-Pro',
+    subTitle: 'פרמיום הכל כלול',
+    bullets: [
+      'קורס + מנוי לקהילה',
+      'כל מה שיוצר תוכן צריך',
+      'הדרכה בהכנת תיק עבודות',
+      // 'גישה מלאה ל- AI-CGI',
+      'גישה מלאה ל AI Agent',
+      // 'גישה מלאה ל-AI Creator',
+      'הצטרפות לנבחרת וקבלת הצעות עבודה*',
+      // 'קבלת הצעות עבודה',
+    ],
+    oldPrice: '₪1,099',
+    currPrice: '₪749',
+    master: true,
+  },
+  {
+    title: 'Extra-Pro',
+    subTitle: 'קורס + מנוי לקהילה',
+    bullets: [
+      'כל תכני הקורס',
+      'מנוי לקהילת יוצרי תוכן',
+      // 'הדרכה בבנית תיק עבודות',
+      'גישה לתכני AI',
+      'המשך קבלת תכני העשרה ומדריכים',
+    ],
+    oldPrice: '₪749',
+    currPrice: '₪499',
+  },
+];
 
 const CourseOptions = ({ active, setActive, isMobile }) => {
   const { mainColor, themeColor } = useContext(ColorContext);
@@ -1097,6 +1177,87 @@ const CourseOptions = ({ active, setActive, isMobile }) => {
 
   return courseOptionDiv;
 };
+const CourseOptionsInfluencer = ({ active, setActive, isMobile }) => {
+  const { mainColor, themeColor } = useContext(ColorContext);
+  const carousel = useCarousel({
+    loop: true,
+    plugins: [{ name: 'autoScroll' }],
+    thumbs: {
+      slidesToShow: 'auto',
+    },
+  });
+  carousel.mainApi?.on('select', () =>
+    setActive(CourseOptions2Influence[carousel.mainApi.selectedScrollSnap()]?.title)
+  );
+  const courseOptionDiv = isMobile ? (
+    <div>
+      <Carousel
+        // sx={{ m: 0, p: 0, display: 'block' }}
+        slotProps={{ slide: { display: 'flex', px: 1, m: 1 } }}
+        carousel={carousel}
+      >
+        {CourseOptions2Influence.map((option, index) => (
+          <CourseCard
+            key={index}
+            active={active}
+            onClick={() => setActive(option.title)}
+            index={index - 1}
+            title={option.title}
+            subTitle={option.subTitle}
+            bullets={option.bullets}
+            oldPrice={option.oldPrice}
+            currPrice={option.currPrice}
+            master={option.master}
+            sx={{ transform: 'none', '&:hover': { transform: 'none' } }}
+          />
+        ))}
+      </Carousel>
+      {/* <CarouselArrowFloatButtons
+        onClickPrev={carousel.arrows.onClickNext}
+        onClickNext={carousel.arrows.onClickPrev}
+        slotProps={{ prevBtn: { sx: { left: 0 } }, nextBtn: { sx: { right: -0 } } }}
+      /> */}
+      <div className="w-full flex justify-center">
+        <CarouselDotButtons
+          scrollSnaps={carousel.dots.scrollSnaps}
+          selectedIndex={carousel.dots.selectedIndex}
+          onClickDot={carousel.dots.onClickDot}
+          sx={{ color: themeColor, direction: 'ltr' }}
+        />
+      </div>
+    </div>
+  ) : (
+    <Grid
+      alignItems="center"
+      overflow="visible"
+      // display="flex"
+      sx={{ position: 'relative', right: '-10px' }}
+      container
+      spacing={1}
+      paddingX={1}
+      justifyContent="center"
+    >
+      {CourseOptionsInfluence.map((option, index) => (
+        <Grid height={1} display="flex" item xs={12} sm={6} md={6} lg={4} key={index}>
+          <CourseCard
+            active={active}
+            onClick={() => setActive(option.title)}
+            index={index - 1}
+            title={option.title}
+            subTitle={option.subTitle}
+            bullets={option.bullets}
+            oldPrice={option.oldPrice}
+            currPrice={option.currPrice}
+            master={option.master}
+            sx={{ transform: 'none', '&:hover': { transform: 'none' } }}
+          />
+        </Grid>
+      ))}
+    </Grid>
+  );
+
+  return courseOptionDiv;
+};
 
 const CourseCard = ({
   title,
@@ -1108,6 +1269,8 @@ const CourseCard = ({
   master,
   active,
   onClick,
+  sx = {},
+  ...props
 }) => {
   const { textGradient, mainColor, mode } = useContext(ColorContext);
   const [update, setUpdate] = useState(false);
@@ -1135,6 +1298,7 @@ const CourseCard = ({
           boxShadow: isMobile ? '' : customShadows().z16,
         },
         transform: isMobile ? `` : `rotate(${-1 * (index * 6)}deg)`,
+        ...sx,
       }}
       animate={{
         color: theme.palette.error.main,

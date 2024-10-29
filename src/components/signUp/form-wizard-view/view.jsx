@@ -13,7 +13,7 @@ import { FormWizard } from './form-wizard';
 
 // ----------------------------------------------------------------------
 
-export function FormWizardView({ courseName = 'Video-Pro', coursePrice }) {
+export function FormWizardView({ courseName = 'Video-Pro', coursePrice, ...props }) {
   const { textGradient } = useContext(ColorContext);
   return (
     <>
@@ -26,10 +26,12 @@ export function FormWizardView({ courseName = 'Video-Pro', coursePrice }) {
       </Typography>
 
       <Typography color="text.secondary" component="div" sx={{ mb: 4 }} variant="p">
-        בשלשה צעדים פשוטים ומהירים תקבלו את כל הפרטים והקישורים להצטרפות אלינו ישירות למייל שלכם
+        {props?.influencer
+          ? 'בשלשה צעדים פשוטים ומהירים משלמים ומתחילים לקבל את כל התכנים והפרטים ההרלוונטים ישירות למייל שלכם'
+          : 'בשלשה צעדים פשוטים ומהירים תקבלו את כל הפרטים והקישורים להצטרפות אלינו ישירות למייל שלכם'}
       </Typography>
       <ComponentContainer sx={{ m: 0, p: 0 }}>
-        <FormWizard coursePrice={coursePrice} />
+        <FormWizard coursePrice={coursePrice} influencer={props?.influencer} />
       </ComponentContainer>
     </>
   );

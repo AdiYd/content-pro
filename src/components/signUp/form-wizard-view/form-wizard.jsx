@@ -100,7 +100,7 @@ const packageTypesDict = {
   },
 };
 
-export function FormWizard({ coursePrice }) {
+export function FormWizard({ coursePrice, influencer }) {
   const [activeStep, setActiveStep] = useState(0);
   const [loading, setLoading] = useState(false);
   const [gift, setGift] = useState(false);
@@ -323,6 +323,7 @@ export function FormWizard({ coursePrice }) {
                 {activeStep === 1 && <StepTwo setValue={setValue} name={name} />}
                 {activeStep === 2 && (
                   <StepThree
+                    influencer={influencer}
                     setValue={setValue}
                     setGift={handleGift}
                     coursePrice={coursePrice}

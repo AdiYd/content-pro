@@ -103,6 +103,7 @@ const emph = (colorPalette, gradient = false) => (
 // ----------------------------------------------------------------------
 
 export function AboutHero({
+  influencer = false,
   courseName = 'Video-Pro',
   subTitle = 'ההכשרה שעוזרת ליוצרי תוכן לייצר עבודה באופן שוטף',
   subTitle2 = 'כל הידע שעזר לי להשיג את העבודה הראשונה שלי בפחות מ-3 שעות',
@@ -224,7 +225,7 @@ export function AboutHero({
               </Typography>
               <Stack
                 mt={4}
-                mb={1}
+                mb={influencer ? 0 : 1}
                 direction="row"
                 sx={{
                   justifyContent: { md: 'inherit', xs: 'center' },
@@ -356,7 +357,7 @@ export function AboutHero({
                   display: 'flex',
                   flexDirection: { md: 'row', xs: 'column' },
                   gap: 4,
-                  mt: { md: 6, xs: 6 },
+                  mt: influencer ? { md: 3, xs: 3 } : { md: 6, xs: 6 },
                   pr: { md: 0, xs: 'auto' },
                   justifyContent: { md: 'inherit', xs: 'center' },
                 }}
@@ -365,6 +366,7 @@ export function AboutHero({
                   sx={{ fontSize: { md: '1rem', xs: '1rem' }, borderRadius: 1 }}
                   variant={isMobile ? 'contained' : 'contained'}
                   color={mainColor}
+                  size={influencer ? 'large' : 'medium'}
                   onClick={() => ScrollComponent('signUp')}
                 >
                   {CTA}

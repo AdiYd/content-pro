@@ -11,7 +11,12 @@ import { AccordionView } from './view';
 
 const defaultTitle = 'רק רגע, זה מתאים לי בכלל? למה דווקא Video-Pro?';
 
-function AccordionSyllabus({ title = defaultTitle, accordions = [], ...props }) {
+function AccordionSyllabus({
+  title = defaultTitle,
+  accordions = [],
+  influencer = false,
+  ...props
+}) {
   const { textGradient } = useContext(ColorContext);
   const theme = useTheme();
   return (
@@ -32,14 +37,29 @@ function AccordionSyllabus({ title = defaultTitle, accordions = [], ...props }) 
               סילבוס
             </Typography> */}
           </Typography>
-          <Typography color="text.secondary" variant="p">
-            אנחנו כל כך גאים בתכנים שלנו ורוצים שתראו מה אתם מקבלים.
-          </Typography>
-          <br />
-          <Typography color="text.secondary" variant="p">
-            מזכירים לכם שבקהילה שלנו תמשיכו לקבל באופן שוטף עדכונים, מדריכים, וובינרים, טיפים ועוד
-            😎
-          </Typography>
+          {influencer ? (
+            <Typography
+              sx={{ textAlign: { md: 'justify', xs: 'center' } }}
+              color="text.secondary"
+              variant="p"
+              component="div"
+            >
+              אנחנו גאים בתכנים שבנינו עבורכם ומזמינים אתכם לגלות איך הקורס יקדם אתכם לרמה הבאה
+              כיצרני תוכן מקצועיים ומבוקשים. בנוסף, כחלק מהקהילה שלנו תמשיכו לקבל עדכונים שוטפים,
+              מדריכים, וובינרים וטיפים שיאפשרו לכם להישאר תמיד בחזית התעשייה 😎
+            </Typography>
+          ) : (
+            <>
+              <Typography color="text.secondary" variant="p">
+                אנחנו כל כך גאים בתכנים שלנו ורוצים שתראו מה אתם מקבלים.
+              </Typography>
+              <br />
+              <Typography color="text.secondary" variant="p">
+                מזכירים לכם שבקהילה שלנו תמשיכו לקבל באופן שוטף עדכונים, מדריכים, וובינרים, טיפים
+                ועוד 😎
+              </Typography>
+            </>
+          )}
           <AccordionView mode={1} />
         </m.div>
       </Container>

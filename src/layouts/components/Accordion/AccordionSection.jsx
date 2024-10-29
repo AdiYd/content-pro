@@ -15,6 +15,7 @@ function AccordionSection({
   courseName = 'Video-Pro',
   title = defaultTitle,
   accordions = [],
+  influencer = false,
   ...props
 }) {
   const { mainColor } = useContext(ColorContext);
@@ -35,7 +36,7 @@ function AccordionSection({
           >
             {title}
           </Typography>
-          <AccordionView title={title} />
+          <AccordionView influencer={influencer} title={title} />
         </m.div>
       </Container>
     </section>

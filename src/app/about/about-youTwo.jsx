@@ -112,6 +112,51 @@ const bulletsWithIcons = [
   },
 ];
 
+const bulletsWithIconsInfluecner = [
+  {
+    title: 'הכנסה קבועה ויציבות כלכלית',
+    text: 'תקבלו חוזי עבודה ארוכי טווח עם מותגים, מה שיאפשר הכנסה חודשית קבועה ולא רק מזדמנת',
+    icons: ['mdi:handshake-outline', 'mdi:cash-multiple', 'carbon:contract'],
+    imageUrl: `${CONFIG.site.basePath}/assets/background/back1.jpg`,
+    imageUrl2: `https://picsum.photos/seed/${Math.random()}/300/200`,
+  },
+  {
+    title: 'חיבור עם מותגים גדולים ויצירת קשרים עם אנשי מפתח',
+    text: 'תיצרו חיבור חזק למותגים שיאפשרו לכם להיות פרזנטורים קבועים, לקבל הכרה מקצועית, ולעבוד עם מותגים גדולים ומוכרים בתעשייה',
+    icons: ['mdi:account-tie', 'mdi:star-outline', 'mdi:briefcase-check'],
+    imageUrl: `${CONFIG.site.basePath}/assets/background/back2.jpg`,
+    imageUrl2: `https://picsum.photos/seed/${Math.random()}/300/200`,
+  },
+  {
+    title: 'נוכחות מקצועית ומובחנת בתעשייה',
+    text: 'תתבלטו בנישה שלכם ותהפכו לשם מוכר שמותגים לא יכולים להתעלם ממנו, עם מיתוג אישי ונוכחות בולטת',
+    icons: ['mdi:bullhorn-outline', 'mdi:account-star-outline', 'mdi:store'],
+    imageUrl: `${CONFIG.site.basePath}/assets/background/back3.jpg`,
+    imageUrl2: `https://picsum.photos/seed/${Math.random()}/300/200`,
+  },
+  {
+    title: 'תיק עבודות מקצועי שמגביר את ערככם בשוק',
+    text: 'תבנו תיק עבודות מקצועי ומרשים שימחיש את הערך שלכם בעיני מותגים ויוביל להזדמנויות איכותיות',
+    icons: ['mdi:portfolio-outline', 'mdi:rocket-outline', 'mdi:chart-line'],
+    imageUrl: `${CONFIG.site.basePath}/assets/background/back4.jpg`,
+    imageUrl2: `https://picsum.photos/seed/${Math.random()}/300/200`,
+  },
+  {
+    title: 'הדרכה ותמיכה מתמשכת להצלחה ארוכת טווח',
+    text: 'תקבלו הדרכה ותמיכה מקבוצה מקצועית שתספק להם כלים, תכנים מעשירים והדרכה בשוק התחרותי כדי להשיג הצלחה יציבה לאורך זמן',
+    icons: ['mdi:teach', 'mdi:account-group-outline', 'mdi:medal-outline'],
+    imageUrl: `${CONFIG.site.basePath}/assets/background/back5.jpg`,
+    imageUrl2: `https://picsum.photos/seed/${Math.random()}/300/200`,
+  },
+  {
+    title: 'תחושת ביטחון ומסגרת מוגדרת להצלחה',
+    text: 'תקבלו ביטחון ביכולותיכם והזדמנות לעבוד במסלול ברור שמציע רשת ביטחון ומסגרת מוגדרת להשגת תוצאות משמעותיות, עם תמיכה ברורה לכל אורך הדרך',
+    icons: ['mdi:shield-check-outline', 'mdi:road-variant', 'mdi:security'],
+    imageUrl: `${CONFIG.site.basePath}/assets/background/back6.jpg`,
+    imageUrl2: `https://picsum.photos/seed/${Math.random()}/300/200`,
+  },
+];
+
 const renderCard = (item, mode = 'dark') => (
   <Card
     sx={{
@@ -149,16 +194,16 @@ const renderCard = (item, mode = 'dark') => (
       sx={{
         zIndex: 15,
         position: 'relative',
-        // height: 1,
-        display: 'flex',
+        height: '50%',
+        display: 'grid',
         flexDirection: 'column',
-        // justifyContent: 'end',
+        justifyContent: 'space-between',
       }}
     >
-      <Typography mt={0} mb={3} colors="common.white" variant="h5" component="div">
+      <Typography mt={0} mb={3} variant="h5" component="div">
         {item.title}
       </Typography>
-      <Typography variant="body2" colors="common.white" sx={{ marginBottom: 2 }}>
+      <Typography variant="body1" sx={{ marginBottom: 2, opacity: 0.8 }}>
         {item.text}
       </Typography>
       <Box sx={{ display: 'flex', gap: 3, justifyContent: 'center', _color: 'white' }}>
@@ -172,7 +217,7 @@ const renderCard = (item, mode = 'dark') => (
 
 // ----------------------------------------------------------------------
 
-export function AboutYouTwo({ contentType = 'aboutCourse' }) {
+export function AboutYouTwo({ contentType = 'aboutCourse', influencer = false }) {
   const theme = useTheme();
   const { mainColor, textGradient, mode } = useContext(ColorContext);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -198,11 +243,17 @@ export function AboutYouTwo({ contentType = 'aboutCourse' }) {
       </m.div>
       <Box sx={{ flexGrow: 1, padding: 1 }}>
         <Grid container spacing={3}>
-          {bulletsWithIcons.map((item, index) => (
-            <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
-              {renderCard(item, mode)}
-            </Grid>
-          ))}
+          {influencer
+            ? bulletsWithIconsInfluecner.map((item, index) => (
+                <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
+                  {renderCard(item, mode)}
+                </Grid>
+              ))
+            : bulletsWithIcons.map((item, index) => (
+                <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
+                  {renderCard(item, mode)}
+                </Grid>
+              ))}
         </Grid>
       </Box>
     </Container>

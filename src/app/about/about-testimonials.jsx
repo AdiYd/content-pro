@@ -14,12 +14,14 @@ import ListItemText from '@mui/material/ListItemText';
 import { useResponsive } from 'src/hooks/use-responsive';
 
 import { CONFIG } from 'src/config-global';
+import { customShadows } from 'src/theme/core';
 import { ColorContext } from 'src/context/colorMain';
 import { bgBlur, varAlpha, bgGradient, hideScrollY } from 'src/theme/styles';
 
 import { Image } from 'src/components/image';
 import { Iconify } from 'src/components/iconify';
 import { MotionViewport } from 'src/components/animate';
+import { Carousel, useCarousel, CarouselDotButtons } from 'src/components/carousel';
 
 export const testimonials = [
   {
@@ -101,12 +103,26 @@ export const testimonials = [
   },
 ];
 
+const COLORS = ['info', 'success', 'secondary', 'warning', 'error', 'primary'];
+
 // ----------------------------------------------------------------------
 
 export function AboutTestimonials() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const { textGradient, mode } = useContext(ColorContext);
+  const { textGradient, mode, themeColor } = useContext(ColorContext);
+  const carousel = useCarousel({
+    loop: true,
+    align: 'center', // Or "start", "end" based on scroll alignment
+    containScroll: 'trim', // Limits scroll to fit exactly within visible slides
+    skipSnaps: true,
+    dragFree: true,
+    speed: 10,
+    plugins: [{ name: 'autoScroll' }],
+    thumbs: {
+      slidesToShow: 'auto',
+    },
+  });
   const mdUp = useResponsive('up', 'md');
 
   const getGradient = useMemo(() => {
@@ -168,16 +184,45 @@ export function AboutTestimonials() {
         overflowY: { xs: 'unset', md: 'auto' },
       }}
     >
-      <Masonry spacing={3} columns={{ xs: 1, md: 2 }} sx={{ ml: 0 }}>
-        {testimonials.map(
-          (testimonial, i) =>
-            ((!mdUp && i < 5) || mdUp) && (
-              <div key={testimonial.name}>
-                <TestimonialCard testimonial={testimonial} />
-              </div>
-            )
-        )}
-      </Masonry>
+      <Box width={1} sx={{ display: { xs: 'block', sm: 'none' } }}>
+        <Carousel
+          // sx={{ m: 0, p: 0, display: 'block' }}
+          slotProps={{ slide: { display: 'flex', px: 1, m: 1 } }}
+          carousel={carousel}
+        >
+          {testimonials.map(
+            (testimonial, i) =>
+              ((!mdUp && i < 5) || mdUp) && (
+                <div className="w-full pb-4 mx-auto" key={testimonial.name}>
+                  <TestimonialCard
+                    sx={{ width: 1, boxShadow: customShadows().card }}
+                    testimonial={testimonial}
+                  />
+                </div>
+              )
+          )}
+        </Carousel>
+        <div className="w-full flex justify-center">
+          <CarouselDotButtons
+            scrollSnaps={carousel.dots.scrollSnaps}
+            selectedIndex={carousel.dots.selectedIndex}
+            onClickDot={carousel.dots.onClickDot}
+            sx={{ color: theme.palette.error.main, direction: 'ltr' }}
+          />
+        </div>
+      </Box>
+      <Box width={1} sx={{ display: { xs: 'none', sm: 'block' } }}>
+        <Masonry spacing={3} columns={{ xs: 1, md: 2 }} sx={{ ml: 0 }}>
+          {testimonials.map(
+            (testimonial, i) =>
+              ((!mdUp && i < 5) || mdUp) && (
+                <div key={testimonial.name}>
+                  <TestimonialCard testimonial={testimonial} />
+                </div>
+              )
+          )}
+        </Masonry>
+      </Box>
     </Box>
   );
 
