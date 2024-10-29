@@ -21,14 +21,6 @@ export const SKILLS = [...Array(3)].map((_, index) => ({
   value: [20, 40, 60][index],
 }));
 
-const contentDict = {
-  aboutCourse: {
-    title: [ 'מה זה ', 'Video-Pro'],
-  },
-  aboutMe: {
-    title: ['מי אני - ', 'ערן פרקש'],
-  },
-};
 
 // ----------------------------------------------------------------------
 
@@ -36,9 +28,15 @@ export function AboutWhat({ contentType = 'aboutCourse', influencer = false }) {
   const theme = useTheme();
   const { mainColor, textGradient, mode } = useContext(ColorContext);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  if (influencer){
-    contentDict.aboutCourse = ['מה זה ', 'Influencer-Pro'];
-  }
+  const contentDict = {
+    aboutCourse: {
+      title: ['מה זה ', influencer ? 'Influencer-Pro' : 'Video-Pro'],
+    },
+    aboutMe: {
+      title: ['מי אני - ', 'ערן פרקש'],
+    },
+  };
+  
   const imageDiv = (
     <Container sx={{ my: 4, display: { md: 'none', xs: 'flex' }, gap: 2, alignItems: 'center' }}>
       <m.div variants={varFade().inRight}>
@@ -171,7 +169,9 @@ export function AboutWhat({ contentType = 'aboutCourse', influencer = false }) {
             <Typography variant="h2" sx={{ mb: 3 }}>
               {!influencer && contentDict[contentType]?.title[0]}
               <Box component="a" sx={textGradient} color={`${mainColor}.main`}>
-                {influencer ? 'Influencer-Pro' : contentDict[contentType]?.title[1]}
+                {influencer && contentType === 'aboutCourse'
+                  ? 'Influencer-Pro'
+                  : contentDict[contentType]?.title[1]}
               </Box>
               {contentType === 'aboutCourse' && !influencer && '?'}
             </Typography>
@@ -202,14 +202,15 @@ export function AboutWhat({ contentType = 'aboutCourse', influencer = false }) {
                   component="p"
                   sx={{ lineHeight: 1.7, opacity: 0.8, display: { md: 'inherit', xs: 'none' } }}
                 >
-                  עם Video-Pro, תלמדו ליצור תוכן איכותי וברמה גבוהה, תוכן שישאיר את הצופים שלכם
-                  פעורי פה וירצו עוד. אני ערן פרקש, יוצר, מפיק ועורך תוכן ברשתות בערוצי סושיאל עם
-                  עשרות אלפי עוקבים, עם הזמן והניסיון פיצחתי את הנוסחה להצלחה בעולם הדיגיטלי ויצירת
-                  תוכן שייחד אתכם מאחרים ויעזור לכם בדרך לייצר הכנסה קבועה ויציבה, ולהקים קהילה של
-                  עוקבים שאוהבים אתכם ואת התכנים המיוחדים שלכם. בקורס Video-Pro, אני אחלוק אתכם את
-                  כל הסודות שלי, את הטעויות שכדאי להימנע מהן, ואת הדרך הבטוחה להפוך את התשוקה שלכם
-                  לתוכן למקצוע מניב ומשגשג. אל תפספסו את ההזדמנות לקבל טיפים של אלופים ולהגשים את
-                  החלום שלכם!
+                  עם {influencer ? 'Influencer-Pro' : 'Video-Pro'}, תלמדו ליצור תוכן איכותי וברמה
+                  גבוהה, תוכן שישאיר את הצופים שלכם פעורי פה וירצו עוד. אני ערן פרקש, יוצר, מפיק
+                  ועורך תוכן ברשתות בערוצי סושיאל עם עשרות אלפי עוקבים, עם הזמן והניסיון פיצחתי את
+                  הנוסחה להצלחה בעולם הדיגיטלי ויצירת תוכן שייחד אתכם מאחרים ויעזור לכם בדרך לייצר
+                  הכנסה קבועה ויציבה, ולהקים קהילה של עוקבים שאוהבים אתכם ואת התכנים המיוחדים שלכם.
+                  בקורס {influencer ? 'Influencer-Pro' : 'Video-Pro'}, אני אחלוק אתכם את כל הסודות
+                  שלי, את הטעויות שכדאי להימנע מהן, ואת הדרך הבטוחה להפוך את התשוקה שלכם לתוכן
+                  למקצוע מניב ומשגשג. אל תפספסו את ההזדמנות לקבל טיפים של אלופים ולהגשים את החלום
+                  שלכם!
                 </Typography>
                 <Box
                   // maxWidth="70%"
@@ -242,13 +243,13 @@ export function AboutWhat({ contentType = 'aboutCourse', influencer = false }) {
                   variant="p"
                   sx={{ color: 'text.dark.main', lineHeight: 1.7, opacity: 0.8, mb: 4 }}
                 >
-                  {influencer ? 'Influencer' : 'Video'}-Pro היא קהילה שמפתחת יוצרי תוכן איכותיים.
-                  אחרי שתעברו את הקורס, תהיו חלק מקבוצה של יוצרים כמוכם – אנשים שיודעים ליצור
-                  סרטונים איכותיים, לבנות קהילה נאמנה ולהפוך את התוכן להכנסה יציבה. כאן לא תישארו
-                  לבד - תעבדו ביחד עם יוצרי תוכן נוספים, תשתפו רעיונות, תתייעצו, תלמדו מטעויות של
-                  אחרים, תהנו מהרצאות שוטפות כל חודש ותתמכו אחד בשני. זו ההזדמנות שלכם להצטרף לקהילה
-                  יוצרת ולבנות קריירה מצליחה. בקהילה נעזור גם להפיץ את תיק העבודות שלכם ללקוחות
-                  פוטנציאליים, והטובים ביותר יקבלו הזדמנויות לעבודות ייחודיות מבחוץ
+                  {influencer ? 'Influencer-Pro' : 'Video-Pro'} היא קהילה שמפתחת יוצרי תוכן
+                  איכותיים. אחרי שתעברו את הקורס, תהיו חלק מקבוצה של יוצרים כמוכם – אנשים שיודעים
+                  ליצור סרטונים איכותיים, לבנות קהילה נאמנה ולהפוך את התוכן להכנסה יציבה. כאן לא
+                  תישארו לבד - תעבדו ביחד עם יוצרי תוכן נוספים, תשתפו רעיונות, תתייעצו, תלמדו
+                  מטעויות של אחרים, תהנו מהרצאות שוטפות כל חודש ותתמכו אחד בשני. זו ההזדמנות שלכם
+                  להצטרף לקהילה יוצרת ולבנות קריירה מצליחה. בקהילה נעזור גם להפיץ את תיק העבודות
+                  שלכם ללקוחות פוטנציאליים, והטובים ביותר יקבלו הזדמנויות לעבודות ייחודיות מבחוץ
                 </Typography>
                 <br />
                 <br />

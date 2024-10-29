@@ -35,14 +35,14 @@ export default function Page() {
     >
       {/* <ColorPicker /> */}
       <AboutHero
-        courseName="Influencers-Pro"
+        courseName="Influencer-Pro"
         subTitle="ההכשרה שתיקח אתכם מעבודות מזדמנות לשיתופי פעולה קבועים עם מותגים"
         subTitle2="כל הידע והכלים שאתם צריכים כדי להפוך להיות פרזנטורים מבוקשים, עם חוזים יציבים והכנסה קבועה מהתוכן שלכם"
         CTA="לחצו כאן להיות פרזנטורים"
         CTA2={false}
       />
       {/* {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />} */}
-      <AboutWhat contentType="aboutCourse" />
+      <AboutWhat influencer contentType="aboutCourse" />
       {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
       <AboutWhat contentType="aboutMe" />
       {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}

@@ -7,10 +7,12 @@ const WhatsAppShareButton = ({ queryParams }) => {
   isMobile = isMobile && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
   const shareOnWhatsApp = () => {
+    // const url = encodeURIComponent(window.location.href); // Current page URL
     const url = encodeURIComponent(window.location.href); // Current page URL
-    const message = encodeURIComponent(
-      `Check out this site: ${url}${queryParams && `?${queryParams}`}`
-    ); // Custom message
+    // const message = encodeURIComponent(
+    //   `Check out this site: ${url}${queryParams && `?${queryParams}`}`
+    const message = `See how much you can make: ${url}${queryParams && `?${queryParams}`}`;
+    // Custom message
     const whatsappUrl = isMobile
       ? `whatsapp://send?text=${message}`
       : `https://wa.me/?text=${message}`;

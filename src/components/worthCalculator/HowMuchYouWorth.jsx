@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Circles } from 'react-loader-spinner';
 import { useForm, Controller } from 'react-hook-form';
-import { useState, useEffect, useContext } from 'react';
+import { useRef, useState, useEffect, useContext, useCallback } from 'react';
 
 import { HomeTwoTone, DarkModeTwoTone, LightModeTwoTone } from '@mui/icons-material';
 import {
@@ -13,7 +13,6 @@ import {
   Link,
   Card,
   Stack,
-  Alert,
   Button,
   Select,
   Dialog,
@@ -47,7 +46,14 @@ import { Iconify, SocialIcon } from '../iconify';
 import COLORS from '../../theme/core/colors.json';
 import WhatsAppShareButton from './shareWhatsApp';
 
-function HowMuchYouWorth({ courseName = 'Video-Pro', id, followers, likes, niche }) {
+function HowMuchYouWorth({
+  courseName = 'Video-Pro',
+  id,
+  followers,
+  likes,
+  niche,
+  engagementRate,
+}) {
   const theme = useTheme();
   const { setMode } = useColorScheme();
   const { mainColor, mode, textGradientAnimation } = useContext(ColorContext);
@@ -68,7 +74,14 @@ function HowMuchYouWorth({ courseName = 'Video-Pro', id, followers, likes, niche
     setMode(mode === 'dark' ? 'light' : 'dark');
   };
 
-  const data = <WorthCalculatorGPT followersCount={followers} likesCount={likes} niches={niche} />;
+  const data = (
+    <WorthCalculatorGPT
+      engagementRateCount={engagementRate}
+      followersCount={followers}
+      likesCount={likes}
+      niches={niche}
+    />
+  );
 
   return (
     <Box
@@ -185,7 +198,7 @@ function HowMuchYouWorth({ courseName = 'Video-Pro', id, followers, likes, niche
               לחצו כאן והתחילו להרוויח כסף
             </Button>
           </Box>
-          <AboutWhat contentType="aboutMe" />
+          <AboutWhat influencer contentType="aboutMe" />
           <AboutLead showMsg={false} />
           <Box my={4} display="flex" justifyContent="center" gap={4} width={1}>
             <Button
@@ -216,73 +229,73 @@ function HowMuchYouWorth({ courseName = 'Video-Pro', id, followers, likes, niche
 
 export default HowMuchYouWorth;
 
-const WorthCalculatorGemini = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm();
+// const WorthCalculatorGemini = () => {
+//   const {
+//     register,
+//     handleSubmit,
+//     formState: { errors },
+//     reset,
+//   } = useForm();
 
-  const [earnings, setEarnings] = useState(null);
-  const [error, setError] = useState(null);
+//   const [earnings, setEarnings] = useState(null);
+//   const [error, setError] = useState(null);
 
-  const niches = [
-    { value: 'fashion', label: 'אופנה/יופי/כושר' },
-    { value: 'tech', label: 'טכנולוגיה/משחקים' },
-    { value: 'home', label: 'מוצרי בית/DIY' },
-  ];
+//   const niches = [
+//     { value: 'fashion', label: 'אופנה/יופי/כושר' },
+//     { value: 'tech', label: 'טכנולוגיה/משחקים' },
+//     { value: 'home', label: 'מוצרי בית/DIY' },
+//   ];
 
-  const calculateEarnings = (data) => {
-    const { followers, likes, niche } = data;
+//   const calculateEarnings = (data) => {
+//     const { followers, likes, niche } = data;
 
-    if (followers <= 0 || likes <= 0) {
-      setError('מספר העוקבים והלייקים חייבים להיות גדולים מאפס');
-      return;
-    }
+//     if (followers <= 0 || likes <= 0) {
+//       setError('מספר העוקבים והלייקים חייבים להיות גדולים מאפס');
+//       return;
+//     }
 
-    const engagementRate = (likes / followers) * 100;
-    let multiplier;
+//     const engagementRate = (likes / followers) * 100;
+//     let multiplier;
 
-    if (engagementRate > 8) {
-      multiplier = 0.15;
-    } else if (engagementRate >= 3) {
-      multiplier = 0.1;
-    } else {
-      multiplier = 0.05;
-    }
+//     if (engagementRate > 8) {
+//       multiplier = 0.15;
+//     } else if (engagementRate >= 3) {
+//       multiplier = 0.1;
+//     } else {
+//       multiplier = 0.05;
+//     }
 
-    const baseEarnings = followers * multiplier;
-    const adjustedEarnings = baseEarnings * (engagementRate / 3);
-    const finalEarnings = adjustedEarnings * niches.find((n) => n.value === niche).multiplier;
+//     const baseEarnings = followers * multiplier;
+//     const adjustedEarnings = baseEarnings * (engagementRate / 3);
+//     const finalEarnings = adjustedEarnings * niches.find((n) => n.value === niche).multiplier;
 
-    setEarnings(finalEarnings);
-    setError(null);
-  };
+//     setEarnings(finalEarnings);
+//     setError(null);
+//   };
 
-  return (
-    <form onSubmit={handleSubmit(calculateEarnings)}>
-      <TextField
-        {...register('followers', { required: true })}
-        label="הכנס את מספר העוקבים שלך באינסטגרם"
-        type="number"
-        fullWidth
-        error={!!errors.followers}
-        helperText={errors.followers?.message}
-      />
-      {/* ... other input fields and error messages in Hebrew */}
+//   return (
+//     <form onSubmit={handleSubmit(calculateEarnings)}>
+//       <TextField
+//         {...register('followers', { required: true })}
+//         label="הכנס את מספר העוקבים שלך באינסטגרם"
+//         type="number"
+//         fullWidth
+//         error={!!errors.followers}
+//         helperText={errors.followers?.message}
+//       />
+//       {/* ... other input fields and error messages in Hebrew */}
 
-      {error && <Alert severity="error">{error}</Alert>}
-      {earnings && (
-        <Typography variant="h6" marginTop={2}>
-          הכנסה מוערכת לסירטון / סטורי: ${earnings.toLocaleString()}
-        </Typography>
-      )}
-    </form>
-  );
-};
+//       {error && <Alert severity="error">{error}</Alert>}
+//       {earnings && (
+//         <Typography variant="h6" marginTop={2}>
+//           הכנסה מוערכת לסירטון / סטורי: ${earnings.toLocaleString()}
+//         </Typography>
+//       )}
+//     </form>
+//   );
+// };
 
-const WorthCalculatorGPT = ({ likesCount, followersCount, niches }) => {
+const WorthCalculatorGPT = ({ likesCount, followersCount, niches, engagementRateCount }) => {
   const {
     handleSubmit,
     control,
@@ -295,11 +308,14 @@ const WorthCalculatorGPT = ({ likesCount, followersCount, niches }) => {
       niche: niches || 'Fashion/Beauty/Fitness',
       likes: likesCount,
       followers: followersCount,
+      engagementRate: engagementRateCount && Number(engagementRateCount).toFixed(1),
     },
   });
   const [earnings, setEarnings] = useState(null);
   const theme = useTheme();
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+  const firstTime = useRef(true);
   //   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const isMobile = true;
   //   const { textGradientAnimation } = useContext(ColorContext);
@@ -307,66 +323,102 @@ const WorthCalculatorGPT = ({ likesCount, followersCount, niches }) => {
   const followers = watch('followers');
   const likes = watch('likes');
   const niche = watch('niche');
+  const engagementRate = watch('engagementRate');
 
-  const calculateEarnings = (data) => {
-    // const { followers, likes, niche, engagementRate } = data;
-    const { engagementRate } = data;
-    // Calculate Engagement Rate if not provided
-    const ER = engagementRate || (likes / followers) * 100;
+  const calculateEarnings = useCallback(
+    (data) => {
+      const { followers_count, likes_count } = data;
+      // Calculate Engagement Rate if not provided
+      const eff_likes = likes_count ? Number(likes_count.replace(/,/g, '')) : likes;
+      const eff_followers = followers_count ? Number(followers_count.replace(/,/g, '')) : followers;
+      const eff_niche = niche || niches;
+      const eff_ER =
+        engagementRate && !Number.isNaN(engagementRate)
+          ? Number(engagementRate).toFixed(1)
+          : engagementRateCount && !Number.isNaN(engagementRateCount)
+            ? Number(engagementRateCount).toFixed(1)
+            : Number((eff_likes / eff_followers) * 100).toFixed(1);
 
-    let M = 0.01;
-    if (ER > 8) {
-      M *= 2;
-    } else if (ER >= 3 && ER <= 8) {
-      M *= 1.5;
-    } else {
-      M = 0.01;
+      let M = 0.01;
+      if (eff_ER > 8) {
+        M *= 2;
+      } else if (eff_ER >= 3 && eff_ER <= 8) {
+        M *= 1.5;
+      } else {
+        M = 0.01;
+      }
+
+      // Calculate Base Estimated Earnings
+      const E = eff_followers * M;
+
+      // Adjusted Earnings based on Engagement Rate
+
+      // Apply Niche Modifier
+      let N = 1.0;
+      if (eff_niche === 'Fashion/Beauty/Fitness') N = 1.15;
+      else if (eff_niche === 'Home Goods/DIY') N = 0.85;
+      else if (eff_niche === 'Technology/Gaming') N = 1.05;
+
+      const minWorth = {
+        followers: 1900,
+        ER: 8,
+        likes: 690,
+        money: 99,
+      };
+
+      const E_final =
+        E *
+        N *
+        (eff_ER / minWorth.ER) *
+        (eff_followers / (3 * minWorth.followers)) *
+        (eff_likes / minWorth.likes);
+
+      console.log('Social: ', {
+        M,
+        N,
+        eff_ER,
+        eff_niche,
+        eff_likes,
+        eff_followers,
+        E,
+        E_final,
+      });
+      let finalWorth = E_final;
+      finalWorth =
+        finalWorth < minWorth.money ||
+        eff_followers < minWorth.followers ||
+        eff_likes < minWorth.likes
+          ? 10
+          : finalWorth;
+      finalWorth = Math.min(Math.ceil(finalWorth), eff_followers - 12, eff_likes - 9);
+      finalWorth = Number(Math.min(finalWorth, 10000));
+      finalWorth = Number(Math.max(finalWorth, 1));
+      if (!Number.isNaN(finalWorth)) {
+        setEarnings(finalWorth);
+        if (firstTime.current) {
+          firstTime.current = false;
+          setOpen(true);
+        }
+      }
+    },
+    [engagementRate, followers, likes, niche, engagementRateCount, niches]
+  );
+
+  useEffect(() => {
+    if (followersCount && likesCount) {
+      calculateEarnings(
+        firstTime.current && { likes_count: likesCount, followers_count: followersCount }
+      );
     }
+  }, [likesCount, followersCount, calculateEarnings]);
 
-    // Calculate Base Estimated Earnings
-    const E = followers * M;
-
-    // Adjusted Earnings based on Engagement Rate
-
-    // Apply Niche Modifier
-    let N = 1.0;
-    if (niche === 'Fashion/Beauty/Fitness') N = 1.15;
-    else if (niche === 'Home Goods/DIY') N = 0.85;
-    else if (niche === 'Technology/Gaming') N = 1.05;
-
-    const minWorth = {
-      followers: 1900,
-      ER: 8,
-      likes: 690,
-      money: 190,
-    };
-
-    const E_final =
-      E *
-      N *
-      (ER / minWorth.ER) *
-      (followers / (3 * minWorth.followers)) *
-      (likes / minWorth.likes);
-
-    console.log('Social: ', {
-      M,
-      N,
-      ER,
-      niche,
-      likes,
-      followers,
-      E,
-      E_final,
-    });
-    let finalWorth = E_final;
-    finalWorth =
-      finalWorth < minWorth.money || followers < minWorth.followers || likes < minWorth.likes
-        ? 10
-        : finalWorth;
-    finalWorth = Math.min(Math.ceil(finalWorth), followers - 12, likes - 9);
-    finalWorth = Number(Math.min(finalWorth, 10000));
-    setEarnings(finalWorth);
-    setOpen(true);
+  const handleSubmitRoute = (data) => {
+    if (likes && niche && followers) {
+      const engR = engagementRate ? Number(engagementRate) : Number((likes / followers) * 100);
+      router.push(
+        `/worthCalculator?followers=${followers}&niche=${niche}&likes=${likes}${engR && !Number.isNaN(engR) && `&engagementRate=${engR}`}#calculator`
+      );
+    }
   };
 
   return (
@@ -378,20 +430,18 @@ const WorthCalculatorGPT = ({ likesCount, followersCount, niches }) => {
         my: 4,
         mx: { xs: 2, sm: 'auto' },
         p: 4,
-        pt: 1,
+        pt: 3,
       }}
     >
-      <Box display="flex" flexDirection="column" justifyContent="center" width={1}>
-        <div className="w-full flex justify-center">
-          <SocialStack spacing={3} width={25} />
-        </div>
+      <Box id="calculator" display="flex" justifyContent="center" width={1}>
+        <SocialStack spacing={3} width={25} />
       </Box>
-      <Box width={1} component="form" onSubmit={handleSubmit(calculateEarnings)}>
+      <Box width={1} component="form" onSubmit={handleSubmit(handleSubmitRoute)}>
         <Controller
           name="followers"
           control={control}
           defaultValue=""
-          rules={{ required: 'מהי כמות העוקבים שלך?', min: 1 }}
+          rules={{ required: 'כמה עוקבים יש לך?', min: 1 }}
           render={({ field: { value, onChange, ...field } }) => (
             <TextField
               {...field}
@@ -439,7 +489,7 @@ const WorthCalculatorGPT = ({ likesCount, followersCount, niches }) => {
                 },
               }}
               sx={inputColor(value && value > 990 ? '#22C55E' : colors.green[200])}
-              label=" מספר הלייקים הממוצע לפוסט "
+              label=" מספר לייקים ממוצע לפוסט "
               type="text"
               value={value ? value.toLocaleString() : ''}
               onChange={(e) => {
@@ -540,7 +590,7 @@ const WorthCalculatorGPT = ({ likesCount, followersCount, niches }) => {
             </Typography>
             <Box my={1} width={1} mx="auto">
               <WhatsAppShareButton
-                queryParams={`followers=${followers}&niche=${niche}&likes=${likes}`}
+                queryParams={`followers=${followers}&niche=${niche}&likes=${likes}${`&engagementRate=${engagementRate && !Number.isNaN(engagementRate) ? Number(engagementRate).toFixed(1) : Number((likes / followers) * 100).toFixed(1)}`}`}
               />
             </Box>
           </Box>
