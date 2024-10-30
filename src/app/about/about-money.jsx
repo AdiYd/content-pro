@@ -3,7 +3,7 @@ import { useContext } from 'react';
 
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import { Box, useMediaQuery } from '@mui/material';
+import { Box, Container, useMediaQuery } from '@mui/material';
 
 import { ColorContext } from 'src/context/colorMain';
 
@@ -66,7 +66,7 @@ export function AboutMoney() {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-    <Box
+    <Container
       component={MotionViewport}
       // maxWidth="lg"
       sx={{
@@ -81,12 +81,12 @@ export function AboutMoney() {
           כמה אתם שווים
         </Box>
       </Typography>
-      <Typography color="text.secondary" variant="p">
+      <Typography textAlign="center" component="div" color="text.secondary" variant="p">
         מחשבון תשלומי סושיאל
       </Typography>
       <m.div variants={varBounce({ duration: 1 }).in}>
         <WorthCalculatorGPT hideLink direct />
       </m.div>
-    </Box>
+    </Container>
   );
 }

@@ -188,7 +188,7 @@ export function AboutWhat({ contentType = 'aboutCourse', influencer = false }) {
                   ואותנטי שמושך אליו קהל חם שרק מחכה לעוד. אני מלווה יוצרי תוכן בתחילת דרכם, תוך דגש
                   על יצירת נישה אישית שתגרום ללקוחות שלכם להתאהב ולחזור לעוד
                 </Typography> */}
-                <Typography variant="p" sx={{ lineHeight: 1.7, opacity: 0.8 }}>
+                <Typography variant="p" sx={{ lineHeight: 1.7, opacity: 0.9 }}>
                   {influencer
                     ? 'אני ערן פרקש, יזם דיגיטלי ויוצר תוכן עם ניסיון רב. צברתי 80 אלף עוקבים וסרטונים עם מאות אלפי צפיות, תוך שמירה על אותנטיות וללא מעורבות בנושאים פוליטיים או שנויים במחלוקת. פיצחתי את הנוסחה ליצירת תוכן איכותי שמושך קהל ומניב תגובות רבות. בקורס Influencers-Pro, אשתף אתכם את כל הסודות שלי, את הטעויות שכדאי להימנע מהן, ואת הדרך הבטוחה להפוך את התשוקה שלכם לתוכן למקצוע מניב ומצליח.'
                     : 'אני ערן פרקש, יזם דיגיטלי ויוצר תוכן עם ניסיון רב. צברתי 80 אלף עוקבים וסרטונים עם מאות אלפי צפיות, תוך שמירה על אותנטיות וללא מעורבות בנושאים פוליטיים או שנויים במחלוקת. פיצחתי את הנוסחה ליצירת תוכן איכותי שמושך קהל ומניב תגובות רבות. בקורס Video-Pro, אשתף אתכם את כל הסודות שלי, את הטעויות שכדאי להימנע מהן, ואת הדרך הבטוחה להפוך את התשוקה שלכם לתוכן למקצוע מניב ומצליח.'}
@@ -197,8 +197,7 @@ export function AboutWhat({ contentType = 'aboutCourse', influencer = false }) {
                 <br />
                 <Typography
                   variant="p"
-                  component="p"
-                  sx={{ lineHeight: 1.7, opacity: 0.8, display: { md: 'inherit', xs: 'none' } }}
+                  sx={{ lineHeight: 1.7, opacity: 0.9, display: { md: 'inherit', xs: 'none' } }}
                 >
                   עם {influencer ? 'Influencers-Pro' : 'Video-Pro'}, תלמדו ליצור תוכן איכותי וברמה
                   גבוהה, תוכן שישאיר את הצופים שלכם פעורי פה וירצו עוד. אני ערן פרקש, יוצר, מפיק
@@ -238,7 +237,7 @@ export function AboutWhat({ contentType = 'aboutCourse', influencer = false }) {
                   😉
                 </Typography> */}
                 {influencer ? (
-                  <Typography>
+                  <Typography sx={{ opacity: 0.9, lineHeight: 1.7 }} variant="p">
                     הוא קורס מקצועי וחדשני שמעניק ליוצרי תוכן את כל הכלים, הטכניקות והקשרים הדרושים
                     כדי להפוך לתעשיינים מצליחים ומשפיענים מבוקשים. בתהליך מעשי, תקבלו הדרכה ממומחים
                     בתחום, תלמדו כיצד לבנות תיק עבודות חזק, להגדיל את הנוכחות ברשתות החברתיות,
@@ -247,10 +246,7 @@ export function AboutWhat({ contentType = 'aboutCourse', influencer = false }) {
                     ולהתעדכן.
                   </Typography>
                 ) : (
-                  <Typography
-                    variant="p"
-                    sx={{ color: 'text.dark.main', lineHeight: 1.7, opacity: 0.8, mb: 4 }}
-                  >
+                  <Typography variant="p" sx={{ lineHeight: 1.7, opacity: 0.9, mb: 4 }}>
                     {influencer ? 'Influencers-Pro' : 'Video-Pro'} היא קהילה שמפתחת יוצרי תוכן
                     איכותיים. אחרי שתעברו את הקורס, תהיו חלק מקבוצה של יוצרים כמוכם – אנשים שיודעים
                     ליצור סרטונים איכותיים, לבנות קהילה נאמנה ולהפוך את התוכן להכנסה יציבה. כאן לא

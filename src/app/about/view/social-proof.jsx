@@ -115,7 +115,7 @@ const RowX = ({
       </Typography>
       <List>
         {bullets.map((item, indx) => (
-          <ListItem key={indx} sx={{ padding: 0, textAlign: 'justify' }}>
+          <ListItem key={indx} sx={{ padding: 0, textAlign: 'start' }}>
             <Iconify icon="lets-icons:check-fill" width={20} />
             <Typography
               // color="text.secondary"

@@ -28,7 +28,7 @@ function AccordionSection({
           <Typography
             sx={{
               pb: 2,
-              textAlign: { md: 'justify', xs: 'center' },
+              textAlign: { md: 'start', xs: 'center' },
               //   color: theme.palette[mainColor]?.main,
             }}
             variant="h3"

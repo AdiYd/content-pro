@@ -390,7 +390,7 @@ const stepsGPT2 = [
     href: '#',
     id: 'final step',
     final: true,
-    iconName: 'mdi:currency-ils',
+    iconName: 'solar:cup-star-linear',
     InnerSteps: [],
   },
 ];
@@ -400,13 +400,13 @@ function classNames(...classes) {
 }
 function Stepper({ influencer = false, children }) {
   const theme = useTheme();
-  const { mainColor, themeColor, textGradient } = useContext(ColorContext);
+  const { mainColor, themeColor, textGradient, mode } = useContext(ColorContext);
   const [activeStep, setActive] = useState(0);
   const stepsId = influencer ? stepsGPT2.map((item) => item.id) : steps.map((item) => item.id);
   useScrollTrigger(stepsId, (index) => setActive(index));
 
   return (
-    <nav dir="rtl" className="mx-0" aria-label="Progress">
+    <nav dir="rtl" className="mx-0 text-start" aria-label="Progress">
       <ol className="overflow-hidden">
         {influencer
           ? stepsGPT2.map((step, stepIdx) => (
@@ -494,23 +494,15 @@ function Stepper({ influencer = false, children }) {
                     ) : null}
                     <a aria-current="step" className="group relative flex items-start">
                       <span aria-hidden="true" className="flex h-10 items-center">
-                        <span
-                          style={{
-                            borderColor: themeColor,
-                          }}
-                          className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 bg-white"
-                        >
-                          {stepIdx !== stepsGPT2.length - 1 ? (
+                        {stepIdx !== stepsGPT2.length - 1 ? (
+                          <span className="relative border-zinc-800 z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 bg-white">
                             <Iconify color={themeColor} icon={step.iconName} />
-                          ) : (
-                            <span
-                              style={{
-                                background: themeColor,
-                              }}
-                              className={`h-2.5 w-2.5 rounded-full `}
-                            />
-                          )}
-                        </span>
+                          </span>
+                        ) : (
+                          <span className="relative bg-gradient-to-br from-amber-300 to-amber-500 z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 bg-white">
+                            <Iconify color={theme.palette.text.primary} icon={step.iconName} />
+                          </span>
+                        )}
                       </span>
                       <Typography
                         variant="h4"
@@ -523,18 +515,17 @@ function Stepper({ influencer = false, children }) {
                         }}
                         className="mr-4 flex min-w-0 flex-col"
                       >
-                        <div className="">
-                          <span
-                            style={{
-                              // color: themeColor,
-                              marginBottom: '10px',
-                              ...textGradient,
-                            }}
-                            // className="text-2xl font-medium"
-                          >
-                            {step.name}
-                          </span>
-                        </div>
+                        <span
+                          style={{
+                            // color: themeColor,
+                            ...textGradient,
+                            marginBottom: '10px',
+                          }}
+                          // className="text-2xl font-medium"
+                        >
+                          {step.name}
+                        </span>
+
                         <Typography variant="body1" component="span" sx={{ opacity: 0.8 }}>
                           {step.description}
                         </Typography>
@@ -576,18 +567,22 @@ function Stepper({ influencer = false, children }) {
                       className="group relative flex items-start"
                     >
                       <span aria-hidden="true" className="flex h-10 items-center">
-                        <span className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 border-gray-300 bg-white group-hover:border-gray-400">
-                          <span className="h-2.5 w-2.5 rounded-full bg-transparent group-hover:bg-gray-300" />
+                        <span className="relative bg-gradient-to-br from-zinc-400 to-zinc-600 z-10 flex h-10 w-10 items-center justify-center rounded-full group-hover:bg-info-dark">
+                          {/* <CheckIcon aria-hidden="true" className="h-5 w-5 text-white" /> */}
+                          <Iconify width={30} color="white" icon={step.iconName} />
                         </span>
+                        {/* <span className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 border-gray-300 bg-white group-hover:border-gray-400">
+                          <span className="h-2.5 w-2.5 rounded-full bg-transparent group-hover:bg-gray-300" />
+                        </span> */}
                       </span>
                       <Typography
                         variant="h4"
                         component="div"
                         sx={{ display: 'flex', mr: 4, flexDirection: 'column', minWidth: 0 }}
-                        className="mr-4 flex min-w-0 flex-col"
                       >
                         <span
-                        // className="text-2xl font-medium "
+                          style={{ marginBottom: '10px' }}
+                          // className="text-2xl font-medium "
                         >
                           {step.name} {step.emoji}
                         </span>
@@ -866,7 +861,7 @@ export default function StepperSection({ influencer = false, ...props }) {
           },
         }}
       /> */}
-      <Container sx={{ textAlign: { xs: 'center', sm: 'justify' } }} component={MotionContainer}>
+      <Container sx={{ textAlign: { xs: 'center', sm: 'start' } }} component={MotionContainer}>
         <m.div animate={varBounce().in}>
           <Typography mb={2} variant="h3">
             {influencer ? "איך תכל'ס מכניסים כסף מסרטונים" : 'איך הופכים תוכן מקורי למקור הכנסה ?'}

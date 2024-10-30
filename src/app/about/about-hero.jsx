@@ -135,7 +135,7 @@ export function AboutHero({
         position: 'relative',
         backgroundSize: { md: 'cover', xs: 'auto' },
         backgroundPosition: { md: 'center', xs: 'right' },
-        textAlign: 'justify',
+        textAlign: 'start',
         direction: 'rtl',
         backgroundImage: {
           md: `url(${CONFIG.site.basePath}/assets/images/about/hero.webp)`,

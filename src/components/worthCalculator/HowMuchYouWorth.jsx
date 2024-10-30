@@ -10,6 +10,7 @@ import { useRef, useState, useEffect, useContext, useCallback } from 'react';
 import { HomeTwoTone, DarkModeTwoTone, LightModeTwoTone } from '@mui/icons-material';
 import {
   Box,
+  Fab,
   Link,
   Card,
   Stack,
@@ -37,7 +38,6 @@ import { CONFIG } from 'src/config-global';
 import { customShadows } from 'src/theme/core';
 import { ColorContext } from 'src/context/colorMain';
 import { AboutWhat } from 'src/app/about/about-what';
-import { AboutLead } from 'src/app/about/about-lead';
 import { textGradient, bgGradientAnimate } from 'src/theme/styles';
 
 import { varFade, varScale, varBounce, MotionContainer } from 'src/components/animate';
@@ -201,9 +201,21 @@ function HowMuchYouWorth({
             </Button>
           </Box>
           {/* <AboutWhat influencer contentType="aboutMe" /> */}
-          <AboutLead showMsg={false} />
+          {/* <AboutLead showMsg={false} /> */}
           <Box my={4} display="flex" justifyContent="center" gap={4} width={1}>
-            <Button
+            <Fab
+              variant="circular"
+              size="small"
+              onClick={() => router.push('/influencer')}
+              sx={{
+                ...bgGradientAnimate(
+                  `45deg, ${theme.palette.info.dark},${theme.palette.info.main} `
+                ),
+              }}
+            >
+              <HomeTwoTone />
+            </Fab>
+            {/* <Button
               variant="contained"
               startIcon={<HomeTwoTone />}
               onClick={() => router.push('/influencer')}
@@ -217,7 +229,7 @@ function HowMuchYouWorth({
               }}
             >
               &nbsp; &nbsp; בחזרה לדף הבית &nbsp;
-            </Button>
+            </Button> */}
           </Box>
           {/* <Typography color="text.secondary" variant="h5">
           בואו לגלות כמה אתם שווים - המחשבון שלנו יעזור לכם להעריך כמה שווה כל סרטון שלכם
@@ -617,8 +629,8 @@ export const WorthCalculatorGPT = ({
               <Iconify
                 color={colors.amber[600]}
                 width={35}
-                className="animate-pulse mt-2"
-                icon="solar:cup-bold-duotone"
+                className="animate-pulse mt-4"
+                icon="solar:cup-bold"
               />
             )}
             <Divider variant="middle" sx={{ borderStyle: 'dashed', mt: 2 }} />

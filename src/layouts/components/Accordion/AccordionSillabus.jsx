@@ -26,7 +26,7 @@ function AccordionSyllabus({
           <Typography
             sx={{
               mb: 2,
-              textAlign: { md: 'justify', xs: 'center' },
+              textAlign: { md: 'start', xs: 'center' },
               //   color: theme.palette[mainColor]?.main,
             }}
             variant="h3"
@@ -39,7 +39,7 @@ function AccordionSyllabus({
           </Typography>
           {influencer ? (
             <Typography
-              sx={{ textAlign: { md: 'justify', xs: 'center' } }}
+              sx={{ textAlign: { md: 'start', xs: 'center' } }}
               color="text.secondary"
               variant="p"
               component="div"
