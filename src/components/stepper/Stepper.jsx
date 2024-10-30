@@ -495,7 +495,12 @@ function Stepper({ influencer = false, children }) {
                     <a aria-current="step" className="group relative flex items-start">
                       <span aria-hidden="true" className="flex h-10 items-center">
                         {stepIdx !== stepsGPT2.length - 1 ? (
-                          <span className="relative border-zinc-800 z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 bg-white">
+                          <span
+                            style={{
+                              borderColor: themeColor,
+                            }}
+                            className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 bg-white"
+                          >
                             <Iconify color={themeColor} icon={step.iconName} />
                           </span>
                         ) : (
@@ -864,7 +869,7 @@ export default function StepperSection({ influencer = false, ...props }) {
       <Container sx={{ textAlign: { xs: 'center', sm: 'start' } }} component={MotionContainer}>
         <m.div animate={varBounce().in}>
           <Typography mb={2} variant="h3">
-            {influencer ? "איך תכל'ס מכניסים כסף מסרטונים" : 'איך הופכים תוכן מקורי למקור הכנסה ?'}
+            {influencer ? "איך תכל'ס מכניסים כסף מסרטונים?" : 'איך הופכים תוכן מקורי למקור הכנסה ?'}
           </Typography>
         </m.div>
         <m.div animate={varBounce({ delay: 0.1 }).in}>

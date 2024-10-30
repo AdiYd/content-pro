@@ -22,13 +22,13 @@ export function AboutOrder({ contentType = 'aboutCourse' }) {
 
   const promoVideo = (
     <AnimateBorder
-      sx={{ borderRadius: 4 }}
+      sx={{ borderRadius: 2 }}
       animate={{ distance: 40, outline: '', color: theme.palette.secondary?.main || '#fff' }}
     >
       <div
         // onClick={() => console.log('Video clicked!')}
         style={{ width: isMobile ? '90vw' : '70vw', boxShadow: customShadows(mode).z12 }}
-        className="overflow-hidden aspect-video rounded-3xl shadow-md shadow-warning-lighter/40"
+        className="overflow-hidden aspect-video rounded-lg shadow-md shadow-warning-lighter/40"
       >
         <Box
           sx={{ position: 'relative', zIndex: 30 }}
@@ -36,7 +36,7 @@ export function AboutOrder({ contentType = 'aboutCourse' }) {
           width="100%"
           // height="100%"
           p={0.4}
-          borderRadius={4}
+          borderRadius={2}
         >
           {/* <ReactPlayer
             style={{
@@ -67,8 +67,9 @@ export function AboutOrder({ contentType = 'aboutCourse' }) {
             width={500}
             allowFullScreen
             allow="fullscreen"
-            src="https://drive.google.com/file/d/1OGBM8l4lhNwYmCDsHa6jCAkRkwPhmb0u/preview"
-            className="relative z-20 w-full rounded-3xl h-full aspect-video"
+            // src="https://drive.google.com/file/d/1OGBM8l4lhNwYmCDsHa6jCAkRkwPhmb0u/preview" //old video
+            src="https://drive.google.com/file/d/1mmltj7x8LfpfZmMAfECKb5Zfx4uwuix7/preview"
+            className="relative z-20 w-full rounded-lg h-full aspect-video"
 
             // controls
           />
@@ -131,7 +132,8 @@ export function AboutOrder({ contentType = 'aboutCourse' }) {
         </Box>
       </div>
       <m.div variants={varFade({ delay: 0.7 }).inLeft}>
-        <Typography color="text.secondary" variant="p" sx={{ mb: 3 }}>
+        <Box width={1}>
+          {/* <Typography color="text.secondary" variant="p" sx={{ mb: 3 }}>
           אני יודע כמה זה מתסכל לנסות ליצור תוכן איכותי ובסוף לגלות שיש עוד 1000 כמוכם שעשו את זה
           כבר לפניכם.
           <br />
@@ -147,7 +149,33 @@ export function AboutOrder({ contentType = 'aboutCourse' }) {
           <Box component="a" mx={1}>
             הנישה הפרטית שלכם שמתאימה לאופי שלכם
           </Box>
-        </Typography>
+        </Typography> */}
+          <Typography mb={2} variant="h4">
+            בעוד שקורסים אחרים מתמקדים רק בכלים וטכניקות, הקורס שלנו מלמד איך לייצר מערכת יציבה של
+            עבודה שוטפת עם מותגים ולא רק עבודות מזדמנות
+          </Typography>
+          <Typography
+            textAlign="start"
+            // color="text.secondary"
+            variant="p"
+            component="ul"
+            sx={{ mr: 4 }}
+          >
+            <li className="list-disc">
+              אנחנו לא רק מכשירים אתכם מקצועית – אלא גם מציעים חיבורים ישירים למותגים שמעוניינים
+              בשיתופי פעולה ארוכי טווח
+            </li>
+            <li className="list-disc">
+              בעוד שקורסים אחרים עוסקים במיומנויות יצירת תוכן כלליות, אנו עוזרים לכם לבנות תיק
+              עבודות מותאם בדיוק לצרכים של מותגים, שיבטא את הערך של התוכן שלכם ויוביל להצעות עבודה
+              בפועל
+            </li>
+            <li className="list-disc">
+              מעבר לתכנים עצמם, יש מנטור מקצועי שילווה אתכם לאורך הדרך, עם גישה ישירה לנטוורקינג
+              ומותגים
+            </li>
+          </Typography>
+        </Box>
       </m.div>
     </Container>
   );

@@ -114,10 +114,10 @@ export function AboutTestimonials() {
   const carousel = useCarousel({
     loop: true,
     align: 'center', // Or "start", "end" based on scroll alignment
-    containScroll: 'trim', // Limits scroll to fit exactly within visible slides
+    // containScroll: 'trim', // Limits scroll to fit exactly within visible slides
     skipSnaps: true,
     dragFree: true,
-    speed: 50,
+    speed: 100,
     plugins: [{ name: 'autoScroll' }],
     thumbs: {
       slidesToShow: 'auto',
@@ -207,7 +207,7 @@ export function AboutTestimonials() {
             scrollSnaps={carousel.dots.scrollSnaps}
             selectedIndex={carousel.dots.selectedIndex}
             onClickDot={carousel.dots.onClickDot}
-            sx={{ color: theme.palette.error.main, direction: 'ltr' }}
+            sx={{ color: themeColor, direction: 'ltr' }}
           />
         </div>
       </Box>

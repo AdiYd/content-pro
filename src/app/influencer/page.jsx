@@ -11,13 +11,13 @@ import StepperSection from 'src/components/stepper/Stepper';
 import Considering from 'src/components/considering/Considering';
 
 import ImageDiv from '../about/view/ImageDiv';
-import { AboutWhat } from '../about/about-what';
 import { AboutHero } from '../about/about-hero';
 import { AboutLead } from '../about/about-lead';
 import { AboutOrder } from '../about/about-order';
 import { AboutMoney } from '../about/about-money';
 import { AboutYouTwo } from '../about/about-youTwo';
 import SocialProof from '../about/view/social-proof';
+import { AboutWhat, TwoImageDiv } from '../about/about-what';
 import { AboutTestimonials } from '../about/about-testimonials';
 // ----------------------------------------------------------------------
 
@@ -37,12 +37,16 @@ export default function Page() {
       {/* <ColorPicker /> */}
       <AboutHero
         influencer
+        showTheme
         courseName="Influencers-Pro"
         subTitle="ההכשרה שתיקח אתכם מעבודות מזדמנות לשיתופי פעולה קבועים עם מותגים"
         subTitle2="כל הידע והכלים שאתם צריכים כדי להפוך להיות פרזנטורים מבוקשים, עם חוזים יציבים והכנסה קבועה מהתוכן שלכם"
         CTA="לחצו כאן להפוך לפרזנטורים למותגים"
         CTA2={false}
       />
+
+      <TwoImageDiv />
+
       {/* {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />} */}
       <AboutWhat influencer contentType="aboutCourse" />
       {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
@@ -50,23 +54,19 @@ export default function Page() {
       <AboutYouTwo influencer />
       {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
 
-      <AboutWhat contentType="aboutMe" influencer />
-      {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
-      {/* <IconSection /> */}
-
-      <StepperSection influencer />
-      {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
-
       <AboutOrder />
-      {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
-
-      <AccordionSyllabus influencer />
       {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
 
       <Considering color="mainColor" buttonBefore="סקרנים?! לחצו כאן 😉" />
       {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
 
-      <ImageDiv />
+      <StepperSection influencer />
+      {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
+
+      <AccordionSyllabus influencer />
+      {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
+
+      <ImageDiv influencer />
       {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
 
       <SignUp influencer coursName="Influencers-Pro" coursePrice={CoursePrice} />
@@ -82,6 +82,10 @@ export default function Page() {
       <AboutTestimonials />
 
       <AboutMoney />
+
+      <AboutWhat contentType="aboutMe" influencer />
+      {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
+      {/* <IconSection /> */}
 
       {divider && <Divider my={0} sx={{ borderStyle: 'dashed' }} variant="middle" />}
       <Considering confettiOnly />

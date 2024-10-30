@@ -3,9 +3,9 @@
 import './slideIn.css';
 
 import { m } from 'framer-motion';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, Suspense, useEffect } from 'react';
 
-import { useTheme, ImageList, Container, ImageListItem } from '@mui/material';
+import { useTheme, Skeleton, ImageList, Container, ImageListItem } from '@mui/material';
 
 import { CONFIG } from 'src/config-global';
 import colors from 'src/theme/core/colors.json';
@@ -13,26 +13,45 @@ import colors from 'src/theme/core/colors.json';
 import { Image } from 'src/components/image';
 import { varFade, MotionViewport } from 'src/components/animate';
 
-const promoImag = {
-  img1: {
+const promoImag = [
+  {
     alt: 'Social media',
     src: 'promo1.webp',
   },
-  img2: {
+  {
     alt: 'Social media',
     src: 'promo2.webp',
   },
-  img3: {
+  {
     alt: 'Design',
     src: 'promo3.jpg',
   },
-  img4: {
+  {
     alt: 'Video content',
     src: 'promo4.jpg',
   },
-};
+];
 
-function ImageDiv({ ...props }) {
+const promoImagInfluencer = [
+  {
+    alt: 'Watch',
+    src: 'back2.jpg',
+  },
+  {
+    alt: 'Video content',
+    src: 'promotion.jpg',
+  },
+  {
+    alt: 'Colorful phone',
+    src: 'hero1.jpg',
+  },
+  {
+    alt: 'Social media',
+    src: 'fire.jpg',
+  },
+];
+
+function ImageDiv({ influencer = false, ...props }) {
   const theme = useTheme();
   return (
     <Container sx={{ mb: 4, maxWidth: 1, overflow: 'visible' }} component={MotionViewport}>
@@ -47,21 +66,27 @@ function ImageDiv({ ...props }) {
             justifyContent: 'space-between',
           }}
         >
-          {Object.keys(promoImag).map((item, index) => (
+          {(influencer ? promoImagInfluencer : promoImag).map((item, index) => (
             <ImageListItem key={index} sx={{ width: '20%' }}>
-              <Image
-                alt="Our office small"
-                src={`${CONFIG.site.basePath}/assets/images/about/${promoImag[item].src}`}
-                ratio="3/4"
-                sx={{
-                  transform: `rotate(${(-1) ** index * (index * 2 - 8)}deg)`,
-                  borderRadius: 1,
-                  objectFit: 'cover',
-                  '&:hover': { transform: 'scale(1.15)' },
-                  transition: 'transform 0.3s ease-in',
-                  boxShadow: `-10px 10px 10px ${theme.vars.palette[`${Object.keys(colors)[index + 1]}`]?.main}`,
-                }}
-              />
+              <Suspense
+                fallback={
+                  <Skeleton variant="rectangular" animation="wave" sx={{ width: 1, height: 1 }} />
+                }
+              >
+                <Image
+                  alt="Together is Better"
+                  src={`${CONFIG.site.basePath}/assets/images/about/${item.src}`}
+                  ratio="3/4"
+                  sx={{
+                    transform: `rotate(${(-1) ** index * (index * 2 - 8)}deg)`,
+                    borderRadius: 1,
+                    objectFit: 'cover',
+                    '&:hover': { transform: 'scale(1.15)' },
+                    transition: 'transform 0.3s ease-in',
+                    boxShadow: `-10px 10px 10px ${theme.vars.palette[`${Object.keys(colors)[index + 1]}`]?.main}`,
+                  }}
+                />
+              </Suspense>
             </ImageListItem>
           ))}
           {/* <ImageListItem sx={{ width: '20%' }}>

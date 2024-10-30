@@ -16,6 +16,7 @@ import { ColorContext } from 'src/context/colorMain';
 
 import { Image } from 'src/components/image';
 import { Iconify } from 'src/components/iconify';
+import ThemeModePicker from 'src/components/themeMode/themeModePicker';
 import { ScrollComponent } from 'src/components/considering/Considering';
 import {
   varFade,
@@ -104,6 +105,7 @@ const emph = (colorPalette, gradient = false) => (
 
 export function AboutHero({
   influencer = false,
+  showTheme = false,
   courseName = 'Video-Pro',
   subTitle = 'ההכשרה שעוזרת ליוצרי תוכן לייצר עבודה באופן שוטף',
   subTitle2 = 'כל הידע שעזר לי להשיג את העבודה הראשונה שלי בפחות מ-3 שעות',
@@ -143,6 +145,7 @@ export function AboutHero({
         },
       }}
     >
+      <ThemeModePicker className="absolute top-2 w-full flex justify-center" />
       <Container sx={{ py: 2 }} component={MotionContainer}>
         <Box
           sx={{

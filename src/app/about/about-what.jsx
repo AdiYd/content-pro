@@ -36,7 +36,7 @@ export function AboutWhat({ contentType = 'aboutCourse', influencer = false }) {
       title: ['מי אני - ', 'ערן פרקש'],
     },
   };
-  
+
   const imageDiv = (
     <Container sx={{ my: 4, display: { md: 'none', xs: 'flex' }, gap: 2, alignItems: 'center' }}>
       <m.div variants={varFade().inRight}>
@@ -220,7 +220,7 @@ export function AboutWhat({ contentType = 'aboutCourse', influencer = false }) {
                 >
                   {introVideo}
                 </Box>
-                {imageDiv}
+                {!influencer && imageDiv}
               </>
             )}
             {contentType === 'aboutCourse' && (
@@ -339,3 +339,53 @@ export function AboutWhat({ contentType = 'aboutCourse', influencer = false }) {
     </Container>
   );
 }
+
+export const TwoImageDiv = ({
+  url1 = 'pexels-nurseryart-346885.jpg',
+  url2 = 'pexels-thelazyartist-1467277.jpg',
+  alt1 = 'מקצוע גלובלי',
+  alt2 = 'יוצרת תוכן',
+}) => {
+  const theme = useTheme();
+  const { mode, themeColor } = useContext(ColorContext);
+
+  return (
+    <Container sx={{ my: 4, display: { md: 'none', xs: 'flex' }, gap: 2, alignItems: 'center' }}>
+      <m.div variants={varFade().inRight}>
+        <Image
+          alt={alt1}
+          src={`${CONFIG.site.basePath}/assets/images/about/${url1}`}
+          ratio="1/1"
+          sx={{
+            '&:hover': {
+              boxShadow: `-40px 40px 80px ${theme.vars.palette.secondary.light}`,
+            },
+            transition: 'transform 0.7s ease-in',
+            borderRadius: 1.5,
+            width: { xs: '90%', md: 'inherit' },
+            boxShadow: customShadows(mode).dialog,
+            // boxShadow: `-40px 40px 80px ${theme.vars.palette.secondary.main}`,
+          }}
+        />
+      </m.div>
+      <m.div variants={varFade().inLeft}>
+        <Image
+          alt={alt2}
+          src={`${CONFIG.site.basePath}/assets/images/about/${url2}`}
+          ratio="3/4"
+          sx={{
+            '&:hover': {
+              boxShadow: `-40px 40px 80px ${theme.vars.palette.primary.light}`,
+            },
+            transition: 'transform 0.7s ease-in',
+            borderRadius: 1.5,
+            width: { xs: '90%', md: 'inherit' },
+            transform: 'rotate(-5deg)',
+
+            // boxShadow: `-40px 40px 80px ${theme.vars.palette.primary.dark}`,
+          }}
+        />
+      </m.div>
+    </Container>
+  );
+};

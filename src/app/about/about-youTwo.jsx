@@ -115,44 +115,45 @@ const bulletsWithIcons = [
 const bulletsWithIconsInfluecner = [
   {
     title: 'הכנסה קבועה ויציבות כלכלית',
+    isVideo: true,
     text: 'תקבלו חוזי עבודה ארוכי טווח עם מותגים, מה שיאפשר הכנסה חודשית קבועה ולא רק מזדמנת',
     icons: ['mdi:handshake-outline', 'mdi:cash-multiple', 'carbon:contract'],
-    imageUrl: `${CONFIG.site.basePath}/assets/background/back1.jpg`,
+    imageUrl: `${CONFIG.site.basePath}/assets/background/7677193-hd_1080_1920_25fps.mp4`,
     imageUrl2: `https://picsum.photos/seed/${Math.random()}/300/200`,
   },
   {
     title: 'חיבור עם מותגים גדולים ויצירת קשרים עם אנשי מפתח',
     text: 'תיצרו חיבור חזק למותגים שיאפשרו לכם להיות פרזנטורים קבועים, לקבל הכרה מקצועית, ולעבוד עם מותגים גדולים ומוכרים בתעשייה',
     icons: ['mdi:account-tie', 'mdi:star-outline', 'mdi:briefcase-check'],
-    imageUrl: `${CONFIG.site.basePath}/assets/background/back2.jpg`,
+    imageUrl: `${CONFIG.site.basePath}/assets/background/manHappy.jpg`,
     imageUrl2: `https://picsum.photos/seed/${Math.random()}/300/200`,
   },
   {
     title: 'נוכחות מקצועית ומובחנת בתעשייה',
     text: 'תתבלטו בנישה שלכם ותהפכו לשם מוכר שמותגים לא יכולים להתעלם ממנו, עם מיתוג אישי ונוכחות בולטת',
     icons: ['mdi:bullhorn-outline', 'mdi:account-star-outline', 'mdi:store'],
-    imageUrl: `${CONFIG.site.basePath}/assets/background/back3.jpg`,
+    imageUrl: `${CONFIG.site.basePath}/assets/background/happyWomen.jpg`,
     imageUrl2: `https://picsum.photos/seed/${Math.random()}/300/200`,
   },
   {
     title: 'תיק עבודות מקצועי שמגביר את ערככם בשוק',
     text: 'תבנו תיק עבודות מקצועי ומרשים שימחיש את הערך שלכם בעיני מותגים ויוביל להזדמנויות איכותיות',
     icons: ['mdi:portfolio-outline', 'mdi:rocket-outline', 'mdi:chart-line'],
-    imageUrl: `${CONFIG.site.basePath}/assets/background/back4.jpg`,
+    imageUrl: `${CONFIG.site.basePath}/assets/background/noLikes.jpg`,
     imageUrl2: `https://picsum.photos/seed/${Math.random()}/300/200`,
   },
   {
     title: 'הדרכה ותמיכה מתמשכת להצלחה ארוכת טווח',
     text: 'תקבלו הדרכה ותמיכה מקבוצה מקצועית שתספק להם כלים, תכנים מעשירים והדרכה בשוק התחרותי כדי להשיג הצלחה יציבה לאורך זמן',
     icons: ['mdi:teach', 'mdi:account-group-outline', 'mdi:medal-outline'],
-    imageUrl: `${CONFIG.site.basePath}/assets/background/back5.jpg`,
+    imageUrl: `${CONFIG.site.basePath}/assets/background/booklet.jpg`,
     imageUrl2: `https://picsum.photos/seed/${Math.random()}/300/200`,
   },
   {
     title: 'תחושת ביטחון ומסגרת מוגדרת להצלחה',
     text: 'תקבלו ביטחון ביכולותיכם והזדמנות לעבוד במסלול ברור שמציע רשת ביטחון ומסגרת מוגדרת להשגת תוצאות משמעותיות, עם תמיכה ברורה לכל אורך הדרך',
     icons: ['mdi:shield-check-outline', 'mdi:road-variant', 'mdi:security'],
-    imageUrl: `${CONFIG.site.basePath}/assets/background/back6.jpg`,
+    imageUrl: `${CONFIG.site.basePath}/assets/background/pexels-pixabay-237272.jpg`,
     imageUrl2: `https://picsum.photos/seed/${Math.random()}/300/200`,
   },
 ];
@@ -182,11 +183,14 @@ const renderCard = (item, mode = 'dark') => (
     <div className="relative">
       <CardMedia
         className="absolute* w-full h-full"
-        component="img"
+        component={item.isVideo ? 'video' : 'img'}
+        autoPlay
+        muted
+        loop
         height="100"
-        image={item.imageUrl}
+        image={item.imageUrl || `https://picsum.photos/seed/${Math.random()}/300/200`}
         alt={item.title}
-        sx={{ borderRadius: '16px 16px 0 0', height: 250 }}
+        sx={{ borderRadius: '16px 16px 0 0', height: 250, objectFit: 'cover' }}
       />
       {halfWave(mode)}
     </div>
