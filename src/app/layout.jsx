@@ -22,12 +22,11 @@ import { SettingsDrawer, defaultSettings, SettingsProvider } from 'src/component
 
 import { AuthProvider } from 'src/auth/context/jwt';
 
+
+
 // ----------------------------------------------------------------------
 
-
-
-
-export default async function RootLayout({ children }) {
+export default async function RootLayout({ children, title }) {
   const settings = CONFIG.isStaticExport ? defaultSettings : await detectSettings();
 
   return (
@@ -46,7 +45,7 @@ export default async function RootLayout({ children }) {
         <meta name="author" content="ערן פרקש" />
         <meta name="language" content="he" />
 
-        <meta property="og:title" content="וידאו-פרו: האקדמיה המקצועית ליצירת תוכן וידאו" />
+        <meta property="og:title" content="Influencers-Pro: האקדמיה המקצועית ליצירת תוכן וידאו" />
         <meta
           property="og:description"
           content="הצטרף לוידאו-פרו, האקדמיה המקצועית ליצירת תוכן וידאו. למד ליצירת תוכן איכותי, הצטרף לקהילה תומכת, והרוויח מתוכן דיגיטלי."
@@ -57,13 +56,15 @@ export default async function RootLayout({ children }) {
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:title"
-          content="וידאו-פרו:   
+          content="Influencres-Pro:   
  האקדמיה המקצועית ליצירת תוכן וידאו"
         />
         <meta
           name="twitter:description"
-          content="הצטרף לוידאו-פרו, האקדמיה המקצועית ליצירת תוכן וידאו. למד ליצירת תוכן איכותי, הצטרף לקהילה תומכת, והרוויח מתוכן דיגיטלי."
+          content="הצטרף ל Influencers-Pro, האקדמיה המקצועית ליצירת תוכן וידאו. למד ליצירת תוכן איכותי, הצטרף לקהילה תומכת, והרוויח מתוכן דיגיטלי."
         />
+        <title>{title || 'influencers-pro - קורס אונליין ליצירת תוכן וידאו ומדיה חברתית | ערן פרקש'}</title>
+
         <link
           href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&amp;display=swap"
           rel="stylesheet"
@@ -73,7 +74,6 @@ export default async function RootLayout({ children }) {
           rel="stylesheet"
         />
 
-        <title>Video-pro - קורס אונליין ליצירת תוכן וידאו ומדיה חברתית | ערן פרקש</title>
         <meta
           name="description"
           content="קורס Video-pro של ערן פרקש - קורס אונליין ליצירת תוכן וידאו ומדיה חברתית. הצטרפו לאקדמיה, הקהילה הבלעדית וקבלו הדרכה ליצירת הכנסה מתוכן דיגיטלי והפכו ליוצרי תוכן מקצועיים."

@@ -33,6 +33,7 @@ import {
 } from '@mui/material';
 
 import { createTokenFromQueryParams } from 'src/utils/webToken';
+import { trackEvent, trackButtonClick } from 'src/utils/GAEvents';
 
 import { CONFIG } from 'src/config-global';
 import { customShadows } from 'src/theme/core';
@@ -167,7 +168,10 @@ function HowMuchYouWorth({
           <Box mt={4} mb={8} display="flex" justifyContent="center" gap={4} width={1}>
             <Button
               variant="contained"
-              onClick={() => router.push('/influencer')}
+              onClick={() => {
+                trackButtonClick('Calculator-to-Home');
+                router.push('/influencer');
+              }}
               //   fullWidth
               sx={{
                 maxWidth: 800,
@@ -187,7 +191,10 @@ function HowMuchYouWorth({
           <Box my={4} display="flex" justifyContent="center" gap={4} width={1}>
             <Button
               variant="contained"
-              onClick={() => router.push('/influencer#signUp')}
+              onClick={() => {
+                trackButtonClick('Calculator-to-Home');
+                router.push('/influencer#signUp');
+              }}
               //   fullWidth
               sx={{
                 maxWidth: 800,
@@ -206,7 +213,10 @@ function HowMuchYouWorth({
             <Fab
               variant="circular"
               size="small"
-              onClick={() => router.push('/influencer')}
+              onClick={() => {
+                trackButtonClick('Calculator-to-Home');
+                router.push('/influencer');
+              }}
               sx={{
                 ...bgGradientAnimate(
                   `45deg, ${theme.palette.info.dark},${theme.palette.info.main} `
@@ -390,8 +400,8 @@ export const WorthCalculatorGPT = ({
       const minWorth = {
         followers: 2000,
         ER: 8,
-        likes: 550,
-        money: 88,
+        likes: 450,
+        money: 30,
       };
 
       const E_final =
@@ -410,8 +420,7 @@ export const WorthCalculatorGPT = ({
       let finalWorth = E_final;
       finalWorth =
         finalWorth < minWorth.money ||
-        eff_followers < minWorth.followers ||
-        eff_likes < minWorth.likes
+        (eff_followers < minWorth.followers && eff_likes < minWorth.likes)
           ? 10
           : finalWorth;
       finalWorth = Math.min(
@@ -423,6 +432,13 @@ export const WorthCalculatorGPT = ({
       finalWorth = Number(Math.min(finalWorth, 10000));
       finalWorth = Number(Math.max(finalWorth, 1));
       if (typeof finalWorth === 'number' && submitted) {
+        trackButtonClick('calculator');
+        trackEvent(
+          'calculator',
+          'Form',
+          `${eff_niche}L${eff_likes}F${eff_followers}`,
+          Math.ceil(finalWorth)
+        );
         setEarnings(Math.ceil(finalWorth));
         if (numOfAlerts.current <= 3) {
           numOfAlerts.current += 1;
@@ -476,6 +492,7 @@ export const WorthCalculatorGPT = ({
         maxWidth: 600,
         alignContent: 'center',
         alignItems: 'center',
+        textAlign: 'center',
         my: 4,
         mx: { xs: 2, sm: 'auto' },
         p: 4,
@@ -585,7 +602,7 @@ export const WorthCalculatorGPT = ({
               >
                 <MenuItem value="Fashion/Beauty/Fitness">אופנה / יופי / כושר</MenuItem>
                 <MenuItem value="Technology/Gaming">טכנולוגיה / גיימינג</MenuItem>
-                <MenuItem value="Home Goods/DIY">בית / עשה זאת בעצמך</MenuItem>
+                <MenuItem value="Home Goods/DIY">בית / אוכל / DIY</MenuItem>
               </Select>
               {errors.niche && <Typography color="error">{errors.niche.message}</Typography>}
             </FormControl>
@@ -619,9 +636,11 @@ export const WorthCalculatorGPT = ({
           )}
         />
 
-        <Button variant="contained" type="submit" fullWidth sx={{ mt: 2 }}>
-          כמה מגיע לי?
-        </Button>
+        <Box width={1} display="flex" justifyContent="center" mt={2}>
+          <Button variant="contained" type="submit" fullWidth>
+            כמה מגיע לי?
+          </Button>
+        </Box>
 
         {earnings && (
           <Box width={1}>
@@ -645,7 +664,7 @@ export const WorthCalculatorGPT = ({
                 ),
               }}
             >
-              ₪ {Number(earnings).toLocaleString()}
+              {Number(earnings).toLocaleString()} ₪
             </Typography>
             <Box my={1} width={1} mx="auto">
               <WhatsAppShareButton
@@ -779,7 +798,14 @@ const MessageDialog = ({
       <Divider variant="middle" sx={{ borderStyle: 'dashed', mt: 2 }} />
       <DialogActions sx={{ display: 'flex', justifyContent: 'space-around' }}>
         {!hideLink && (
-          <Button onClick={() => router.push('/influencer')} size="small" variant="contained">
+          <Button
+            onClick={() => {
+              trackButtonClick('Calculator-to-Home');
+              router.push('/influencer');
+            }}
+            size="small"
+            variant="contained"
+          >
             ספרו לי איך
           </Button>
         )}

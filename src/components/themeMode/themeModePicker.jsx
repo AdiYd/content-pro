@@ -16,17 +16,19 @@ export default function ThemeModePicker({ className = '' }) {
         bottom={0}
         spacing={4}
       >
-        <div className={`p-2 rounded-full ${mode === 'light' && ' bg-slate-400/30'}`}>
+        <div className={`p-2 text-white rounded-full ${mode === 'light' && ' bg-slate-400/30'}`}>
           <LightModeTwoTone
             onClick={changeMode}
-            className="cursor-pointer hover:opacity-50"
+            color="common.white"
+            className="cursor-pointer hover:opacity-80"
             titleAccess="Light mode"
           />
         </div>
-        <div className={`p-2 rounded-full ${mode === 'dark' && ' bg-slate-400/30'}`}>
+        <div className={`p-2 text-white rounded-full ${mode === 'dark' && ' bg-slate-400/30'}`}>
           <DarkModeTwoTone
             onClick={changeMode}
-            className="cursor-pointer hover:opacity-50"
+            color="common.white"
+            className="cursor-pointer hover:opacity-80"
             titleAccess="DarkModeTwoTone"
           />
         </div>
