@@ -11,6 +11,8 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { Stack, Button, useTheme, useMediaQuery } from '@mui/material';
 
+import { trackEvent } from 'src/utils/GAEvents';
+
 import { CONFIG } from 'src/config-global';
 import { ColorContext } from 'src/context/colorMain';
 
@@ -370,7 +372,10 @@ export function AboutHero({
                   variant={isMobile ? 'contained' : 'contained'}
                   color={mainColor}
                   size={influencer ? 'large' : 'medium'}
-                  onClick={() => ScrollComponent('signUp')}
+                  onClick={() => {
+                    trackEvent('CTA', 'Button', 'CTA');
+                    ScrollComponent('signUp');
+                  }}
                 >
                   {CTA}
                 </Button>

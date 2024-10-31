@@ -32,8 +32,8 @@ import {
   useColorScheme,
 } from '@mui/material';
 
+import { trackEvent } from 'src/utils/GAEvents';
 import { createTokenFromQueryParams } from 'src/utils/webToken';
-import { trackEvent, trackButtonClick } from 'src/utils/GAEvents';
 
 import { CONFIG } from 'src/config-global';
 import { customShadows } from 'src/theme/core';
@@ -164,12 +164,12 @@ function HowMuchYouWorth({
           <Typography variant="h4" color="text.secondary">
             איך עושים את זה? לחצו על הכפתור
           </Typography>
-          <Iconify icon="fa6-solid:hand-point-down" />
+          <Iconify className="animate-bounce top-4 relative" icon="fa6-solid:hand-point-down" />
           <Box mt={4} mb={8} display="flex" justifyContent="center" gap={4} width={1}>
             <Button
               variant="contained"
               onClick={() => {
-                trackButtonClick('Calculator-to-Home');
+                trackEvent('Calculator-to-Home', 'Button');
                 router.push('/influencer');
               }}
               //   fullWidth
@@ -192,7 +192,7 @@ function HowMuchYouWorth({
             <Button
               variant="contained"
               onClick={() => {
-                trackButtonClick('Calculator-to-Home');
+                trackEvent('Calculator-to-Home', 'Button');
                 router.push('/influencer#signUp');
               }}
               //   fullWidth
@@ -214,7 +214,7 @@ function HowMuchYouWorth({
               variant="circular"
               size="small"
               onClick={() => {
-                trackButtonClick('Calculator-to-Home');
+                trackEvent('Calculator-to-Home', 'Button');
                 router.push('/influencer');
               }}
               sx={{
@@ -432,11 +432,13 @@ export const WorthCalculatorGPT = ({
       finalWorth = Number(Math.min(finalWorth, 10000));
       finalWorth = Number(Math.max(finalWorth, 1));
       if (typeof finalWorth === 'number' && submitted) {
-        trackButtonClick('calculator');
+        if (numOfAlerts.current === 1) {
+          trackEvent('calculator', 'Button');
+        }
         trackEvent(
-          'calculator',
+          'calculatorData',
           'Form',
-          `${eff_niche}L${eff_likes}F${eff_followers}`,
+          `L-${eff_likes} ; F-${eff_followers} ; N-${eff_niche}`,
           Math.ceil(finalWorth)
         );
         setEarnings(Math.ceil(finalWorth));
@@ -800,7 +802,7 @@ const MessageDialog = ({
         {!hideLink && (
           <Button
             onClick={() => {
-              trackButtonClick('Calculator-to-Home');
+              trackEvent('Calculator-to-Home', 'Button');
               router.push('/influencer');
             }}
             size="small"

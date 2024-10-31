@@ -18,23 +18,43 @@ export const varFade = (props) => {
       exit: { opacity: 0, transition: varTranExit },
     },
     inUp: {
-      initial: { y: distance, opacity: 0 },
-      animate: { y: 0, opacity: 1, transition: varTranEnter({ durationIn, easeIn, delay }) },
+      initial: { y: distance, opacity: 0, zIndex: -10, position: 'relative' },
+      animate: {
+        y: 0,
+        opacity: 1,
+        zIndex: 1,
+        transition: varTranEnter({ durationIn, easeIn, delay }),
+      },
       exit: { y: distance, opacity: 0, transition: varTranExit({ durationOut, easeOut }) },
     },
     inDown: {
-      initial: { y: -distance, opacity: 0 },
-      animate: { y: 0, opacity: 1, transition: varTranEnter({ durationIn, easeIn, delay }) },
+      initial: { y: -distance, opacity: 0, zIndex: -10, position: 'relative' },
+      animate: {
+        y: 0,
+        opacity: 1,
+        zIndex: 1,
+        transition: varTranEnter({ durationIn, easeIn, delay }),
+      },
       exit: { y: -distance, opacity: 0, transition: varTranExit({ durationOut, easeOut }) },
     },
     inLeft: {
-      initial: { x: -distance, opacity: 0 },
-      animate: { x: 0, opacity: 1, transition: varTranEnter({ durationIn, easeIn, delay }) },
+      initial: { x: -distance, opacity: 0, zIndex: -10, position: 'relative' },
+      animate: {
+        x: 0,
+        opacity: 1,
+        zIndex: 1,
+        transition: varTranEnter({ durationIn, easeIn, delay }),
+      },
       exit: { x: -distance, opacity: 0, transition: varTranExit({ durationOut, easeOut }) },
     },
     inRight: {
-      initial: { x: distance, opacity: 0 },
-      animate: { x: 0, opacity: 1, transition: varTranEnter({ durationIn, easeIn, delay }) },
+      initial: { x: distance, opacity: 0, zIndex: -10, position: 'relative' },
+      animate: {
+        x: 0,
+        opacity: 1,
+        zIndex: 1,
+        transition: varTranEnter({ durationIn, easeIn, delay }),
+      },
       exit: { x: distance, opacity: 0, transition: varTranExit({ durationOut, easeOut }) },
     },
 

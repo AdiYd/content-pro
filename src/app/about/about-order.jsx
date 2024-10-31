@@ -28,7 +28,7 @@ export function AboutOrder({ contentType = 'aboutCourse' }) {
       <div
         // onClick={() => console.log('Video clicked!')}
         style={{ width: isMobile ? '90vw' : '70vw', boxShadow: customShadows(mode).z12 }}
-        className="overflow-hidden aspect-video rounded-lg shadow-md shadow-warning-lighter/40"
+        className="overflow-hidden aspect-video rounded-xl shadow-md shadow-warning-lighter/40"
       >
         <Box
           sx={{ position: 'relative', zIndex: 30 }}
@@ -69,7 +69,7 @@ export function AboutOrder({ contentType = 'aboutCourse' }) {
             allow="fullscreen"
             // src="https://drive.google.com/file/d/1OGBM8l4lhNwYmCDsHa6jCAkRkwPhmb0u/preview" //old video
             src="https://drive.google.com/file/d/1mmltj7x8LfpfZmMAfECKb5Zfx4uwuix7/preview"
-            className="relative z-20 w-full rounded-lg h-full aspect-video"
+            className="relative z-20 w-full rounded-xl h-full aspect-video"
 
             // controls
           />

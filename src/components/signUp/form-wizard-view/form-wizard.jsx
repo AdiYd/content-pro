@@ -27,7 +27,7 @@ import { StepTwo, Stepper, StepOne, StepThree } from './form-steps';
 
 // ----------------------------------------------------------------------
 
-const steps = ['פרטי התקשרות', 'פרטים כלליים', 'תשלום'];
+const steps = ['פרטי התקשרות', 'בחירת נישה', 'תשלום'];
 
 const StepOneSchema = zod.object({
   fullName: zod.string().min(2, { message: 'נא למלא שם מלא' }),
@@ -101,7 +101,7 @@ const packageTypesDict = {
 };
 
 export function FormWizard({ coursePrice, influencer }) {
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(process.env.NODE_ENV === 'development' ? 2 : 0);
   const [loading, setLoading] = useState(false);
   const [gift, setGift] = useState(false);
   const [exist, setExist] = useState(false);
@@ -135,12 +135,17 @@ export function FormWizard({ coursePrice, influencer }) {
       if (step) {
         let isValid = true;
         if (step === 'stepOne') {
-          const isExist = await getUserByEmail(methods.getValues().email.toLowerCase().trim());
-          if (isExist?.length) {
-            setExist(isExist[0]?.id || true);
+          isValid = await trigger(['email', 'name', 'approveTerms']);
+          if (isValid) {
+            const isExist = await getUserByEmail(methods.getValues().email.toLowerCase().trim());
+            if (isExist?.length) {
+              setExist(isExist[0]?.id || true);
+              return;
+            }
+          } else {
             return;
           }
-          isValid = await trigger(['email', 'name', 'approveTerms']);
+          
         } else {
           await trigger(['age', 'niche', 'goals', 'gender']);
         }
