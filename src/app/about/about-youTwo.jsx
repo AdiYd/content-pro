@@ -115,10 +115,10 @@ const bulletsWithIcons = [
 const bulletsWithIconsInfluecner = [
   {
     title: 'הכנסה קבועה ויציבות כלכלית',
-    isVideo: true,
+    objectPosition: '0px -80px',
     text: 'תקבלו חוזי עבודה ארוכי טווח עם מותגים, מה שיאפשר הכנסה חודשית קבועה ולא רק מזדמנת',
     icons: ['mdi:handshake-outline', 'mdi:cash-multiple', 'carbon:contract'],
-    imageUrl: `${CONFIG.site.basePath}/assets/background/7677193-hd_1080_1920_25fps.mp4`,
+    imageUrl: `${CONFIG.site.basePath}/assets/background/happyWomen.jpg`,
     imageUrl2: `https://picsum.photos/seed/${Math.random()}/300/200`,
   },
   {
@@ -130,9 +130,11 @@ const bulletsWithIconsInfluecner = [
   },
   {
     title: 'נוכחות מקצועית ומובחנת בתעשייה',
+    isVideo: true,
+    // objectPosition: '0px -200px',
     text: 'תתבלטו בנישה שלכם ותהפכו לשם מוכר שמותגים לא יכולים להתעלם ממנו, עם מיתוג אישי ונוכחות בולטת',
     icons: ['mdi:bullhorn-outline', 'mdi:account-star-outline', 'mdi:store'],
-    imageUrl: `${CONFIG.site.basePath}/assets/background/happyWomen.jpg`,
+    imageUrl: `${CONFIG.site.basePath}/assets/background/7677193-hd_1080_1920_25fps.mp4`,
     imageUrl2: `https://picsum.photos/seed/${Math.random()}/300/200`,
   },
   {
@@ -182,7 +184,7 @@ const renderCard = (item, mode = 'dark') => (
   >
     <div className="relative">
       <CardMedia
-        className="absolute* w-full h-full"
+        className="absolute* w-full h-full*"
         component={item.isVideo ? 'video' : 'img'}
         autoPlay
         muted
@@ -190,7 +192,12 @@ const renderCard = (item, mode = 'dark') => (
         height="100"
         image={item.imageUrl || `https://picsum.photos/seed/${Math.random()}/300/200`}
         alt={item.title}
-        sx={{ borderRadius: '16px 16px 0 0', height: 250, objectFit: 'cover' }}
+        sx={{
+          borderRadius: '16px 16px 0 0',
+          height: 250,
+          objectFit: 'cover',
+          objectPosition: item?.objectPosition || '',
+        }}
       />
       {halfWave(mode)}
     </div>
