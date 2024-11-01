@@ -9,6 +9,8 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { Box, Stack, Divider, useTheme, useColorScheme } from '@mui/material';
 
+import { trackPurchase } from 'src/utils/GAEvents';
+
 import { ColorContext } from 'src/context/colorMain';
 
 import { varSlide, varBounce, MotionContainer } from 'src/components/animate';
@@ -47,13 +49,15 @@ export function NewUser({ params, ...props }) {
           if (res.payment) {
             console.log('User assigned sucessfully');
             router.push(`/success/?Fild1=${Fild1}&Approved=${true}`, undefined, { shallow: true });
+
+            trackPurchase(email, Number(Amount), 'ILS', 'Course');
             setLoader(false);
           } else {
             router.push('/');
           }
         });
     }
-  }, [params, Fild1, Approved, router]);
+  }, [params, Fild1, Amount, email, Approved, router]);
 
   return (
     <Box my={8} textAlign="center" mx="auto">

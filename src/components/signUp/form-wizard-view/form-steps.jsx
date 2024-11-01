@@ -553,7 +553,7 @@ export function StepThree({
     const isCoupon = Cookies.get('counting');
 
     if (e.target.value === 'MasterPro_Gift') {
-      totalPrice.current = 0;
+      totalPrice.current = 1;
       setValue('totalPrice', totalPrice.current);
       setGift();
       setValidCoupon(true);

@@ -12,7 +12,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { Card, useTheme, Container, Typography, CircularProgress } from '@mui/material';
 
-import { trackEvent, trackPurchase } from 'src/utils/GAEvents';
+import { trackEvent } from 'src/utils/GAEvents';
 import { addGift, getUserByEmail } from 'src/utils/firebaseFunctions';
 
 import { customShadows } from 'src/theme/core';
@@ -233,7 +233,6 @@ export function FormWizard({ coursePrice, influencer }) {
       console.info('DATA', data);
       console.log('Price: ', data.totalPrice);
 
-      trackPurchase(data.email, data.totalPrice, 'ILS', 'Course');
       handlePyament(data);
       // handleNext();
     } catch (error) {
