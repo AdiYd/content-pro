@@ -23,7 +23,7 @@ export async function sendEmail({ data = {}, recipients = [], title, template, a
     from: 'video-pro <no-reply@VideoPro>', // Sender address
     // to: toRecipients,
     bcc: toRecipients,
-    subject: title || (data.totalPrice ? 'ברוכים הבאים ל Video-Pro' : 'רישום חדש'), // Subject line
+    subject: title || (data.totalPrice ? 'ברוכים הבאים ל Influencers-Pro' : 'רישום חדש'), // Subject line
     html: htmlTamplate,
     // attachments,
   };
@@ -46,7 +46,7 @@ export const geminiTamplate = (data) => {
   </style>
 
   <h2 style="font-size: 20px; background: linear-gradient(to right, #2ecc71, #95dc4f); color: white; text-align: center; border-radius: 8px; margin: 0; padding: 10px;">
-    הצטרפתם למשפחת Video-pro 😎
+    הצטרפתם למשפחת Influencers-pro 😎
   </h2>
 
   <div style="display: flex; align-items: center; margin-top: 20px;">
@@ -77,7 +77,7 @@ export const geminiTamplate = (data) => {
   <h3 style="margin: 14px;">
     נרגשים שאתם איתנו! 
     <br />
-    צוות Video-pro
+    צוות Influencers-pro
   </h3>
 </div>`;
 
@@ -110,7 +110,7 @@ export const geminiTamplate = (data) => {
       </div>
       <div>
         <h3 style="font-size: 14px; color: #333333; margin: 8px 0;">
-        Video-Pro
+        Influencers-Pro
         </h3>
       <div>
     </div>
@@ -129,7 +129,7 @@ export const geminiTamplate = (data) => {
   <h2 style="font-size: 20px; 
   background: linear-gradient(to right,#95dc4f, #2ecc71, #95dc4f); 
   color: white; text-align: center; border-radius: 8px; margin: 0; padding: 10px;">
-    ברוכים הבאים ל Video-pro 😎
+    ברוכים הבאים ל Influencers-pro 😎
   </h2>
 
   <div style="display: flex; align-items: center; margin-top: 20px;">
@@ -151,7 +151,7 @@ export const geminiTamplate = (data) => {
   <h3 style="margin: 20px;">
     נרגשים שאתם איתנו! 
     <br />
-    ערן פרקש וצוות Video-pro
+    ערן פרקש וצוות Influencers-pro
   </h3>
 </div>`;
 
@@ -194,7 +194,7 @@ const gptTamplates = (data) => {
       </div>
 
       <p style="font-size: 14px; margin: 8px 0;">בברכה,</p>
-      <p style="font-size: 14px; margin: 8px 0;">הנהלת Video-Pro</p>
+      <p style="font-size: 14px; margin: 8px 0;">הנהלת Influencers-Pro</p>
     </div>
     `;
 
@@ -242,7 +242,7 @@ const gptTamplates = (data) => {
       <h3 style="font-size: 14px; margin: 10px;">
        אנחנו נרגשים לקבל אותך לשורותינו!
        <br />
-        צוות Video-Pro כאן ללוות אותך בכל שלב במסע שלך להצלחה.
+        צוות Influencers-Pro כאן ללוות אותך בכל שלב במסע שלך להצלחה.
       </h3>
     </div>`;
   return [tamplate1, tamplate2];
@@ -271,12 +271,11 @@ export const leadTemplate = (data) => `
   </div>
   <div>
     <h3 style="font-size: 14px; color: #333333; margin: 8px 0;">
-    Video-Pro
+    Influencers-Pro
     </h3>
   <div>
 </div>
 `;
-
 
 export const feedBackTemplate = (data) => `
   <style>
@@ -307,7 +306,7 @@ export const feedBackTemplate = (data) => `
   </div>
   <div>
     <h3 style="font-size: 14px; color: #333333; margin: 8px 0;">
-    Video-Pro
+    Influencers-Pro
     </h3>
   <div>
 </div>
@@ -326,7 +325,7 @@ export const signupTemaplate = (data) => `
   <h2 style="font-size: 20px; 
   background: linear-gradient(to right,#95dc4f, #2ecc71, #95dc4f); 
   color: white; text-align: center; border-radius: 8px; margin: 0; padding: 10px;">
-    ברוכים הבאים ל Video-pro 😎
+    ברוכים הבאים ל Influencers-pro 😎
   </h2>
 
   <div style="display: flex; align-items: center; margin-top: 20px;">
@@ -349,6 +348,6 @@ export const signupTemaplate = (data) => `
   <h3 style="margin: 20px;">
     נרגשים שאתם איתנו! 
     <br />
-    ערן פרקש וצוות Video-pro
+    ערן פרקש וצוות Influencers-pro
   </h3>
 </div>`;

@@ -40,7 +40,7 @@ export const sendInvoiceEmail = async (data) => {
   await sendEmail({
     data,
     recipients: [data.email],
-    title: 'ברוכים הבאים ל Video-Pro',
+    title: 'ברוכים הבאים ל Influencers-Pro',
     template: htmlContent,
     // attachments,
   }).finally(() => {
@@ -55,7 +55,7 @@ const generateInvoiceTemplate = (data) => {
     hour: '2-digit',
     minute: '2-digit',
   });
-  data.businessName = data.businessName || 'Video-pro';
+  data.businessName = data.businessName || 'Influencers-pro';
   data.businessID = data.businessID || '209221886';
   data.products = data.products || [{ name: 'קורס יצירת תוכן', price: data.totalPrice }];
   data.currency = data.currency || '₪';

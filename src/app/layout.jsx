@@ -63,7 +63,9 @@ export default async function RootLayout({ children, title }) {
           name="twitter:description"
           content="הצטרף ל Influencers-Pro, האקדמיה המקצועית ליצירת תוכן וידאו. למד ליצירת תוכן איכותי, הצטרף לקהילה תומכת, והרוויח מתוכן דיגיטלי."
         />
-        <title>{title || 'influencers-pro - קורס אונליין ליצירת תוכן וידאו ומדיה חברתית | ערן פרקש'}</title>
+        <title>
+          {title || 'influencers-pro - קורס אונליין ליצירת תוכן וידאו ומדיה חברתית | ערן פרקש'}
+        </title>
 
         <link
           href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&amp;display=swap"
@@ -122,7 +124,7 @@ export default async function RootLayout({ children, title }) {
             __html: JSON.stringify({
               '@context': 'http://schema.org',
               '@type': 'Course',
-              name: 'Video-pro',
+              name: 'Influencers-pro',
               description:
                 'קורס אונליין ליצירת תוכן וידאו ומדיה חברתית של ערן פרקש. האקדמיה כוללת קורס אונליין, קהילה בלעדית והדרכות ליצירת הכנסה מתוכן דיגיטלי.',
               provider: {
