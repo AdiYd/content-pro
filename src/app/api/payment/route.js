@@ -8,7 +8,7 @@ import { addPrePayer } from 'src/utils/firebaseFunctions';
 export async function POST(request) {
   try {
     const data = await request.json();
-    console.log('Payment - Message from client: ', data);
+    // console.log('Payment - Message from client: ', data);
     // console.log('calling: ', data.apiUrl);
 
     const res = await fetch(data.apiUrl, {

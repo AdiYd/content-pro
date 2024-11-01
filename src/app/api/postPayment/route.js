@@ -8,12 +8,12 @@ import { addUser, deletePrePayer, getPrePayerByEmail } from 'src/utils/firebaseF
 export async function POST(request) {
   try {
     const data = await request.json();
-    const { Id, Fild1, Fild2, CCode, Amount } = data;
+    const { Id, Fild1, Fild2, CCode, Amount, Order } = data;
     const name = Fild1?.toLowerCase();
-    const email = Fild2?.toLowerCase().trim();
+    const email = Order?.toLowerCase().trim();
     const prePayer = await getPrePayerByEmail(email);
     const isValid = Boolean(prePayer.length) || process.env.NODE_ENV === 'development';
-    console.log('Query prePayer resulted with: ', isValid, prePayer);
+    console.log('Query prePayer resulted with: ', isValid, email, Fild1, Fild2, prePayer);
     if (email && isValid && Number(CCode) === 0 && process.env.NODE_ENV === 'production') {
       // const approve = await fetch();
 

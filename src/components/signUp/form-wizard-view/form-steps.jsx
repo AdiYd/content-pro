@@ -553,12 +553,16 @@ export function StepThree({
     const isCoupon = Cookies.get('counting');
 
     if (e.target.value === 'MasterPro_Gift') {
+      totalPrice.current = 0;
+      setValue('totalPrice', totalPrice.current);
+      setGift();
+      setValidCoupon(true);
+      trackEvent('Coupon Redeem', 'Coupons', `GIFT`);
+      setIsGift(true);
+    } else if (e.target.value === 'TestPaymentAY') {
       totalPrice.current = 1;
       setValue('totalPrice', totalPrice.current);
-      // setGift();
       setValidCoupon(true);
-      // trackEvent('Coupon Redeem', 'Coupons', `GIFT`);
-      // setIsGift(true);
     } else if (
       e.target.value === `MasterPro_${NumOfDiscount}` &&
       !validCoupon &&
