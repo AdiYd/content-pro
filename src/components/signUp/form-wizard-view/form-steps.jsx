@@ -555,10 +555,10 @@ export function StepThree({
     if (e.target.value === 'MasterPro_Gift') {
       totalPrice.current = 1;
       setValue('totalPrice', totalPrice.current);
-      setGift();
+      // setGift();
       setValidCoupon(true);
-      trackEvent('Coupon Redeem', 'Coupons', `GIFT`);
-      setIsGift(true);
+      // trackEvent('Coupon Redeem', 'Coupons', `GIFT`);
+      // setIsGift(true);
     } else if (
       e.target.value === `MasterPro_${NumOfDiscount}` &&
       !validCoupon &&
