@@ -15,20 +15,21 @@ import { varFade, MotionViewport } from 'src/components/animate';
 
 const promoImag = [
   {
-    alt: 'Social media',
-    src: 'promo1.webp',
+    alt: 'Video content',
+    src: 'promo4.jpg',
   },
   {
-    alt: 'Social media',
-    src: 'promo2.webp',
+    alt: 'Video content',
+    src: 'promotion.jpg',
   },
   {
     alt: 'Design',
     src: 'promo3.jpg',
   },
+
   {
-    alt: 'Video content',
-    src: 'promo4.jpg',
+    alt: 'Social media',
+    src: 'fire.jpg',
   },
 ];
 

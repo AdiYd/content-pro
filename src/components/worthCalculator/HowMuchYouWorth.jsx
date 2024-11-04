@@ -7,7 +7,12 @@ import { Circles } from 'react-loader-spinner';
 import { useForm, Controller } from 'react-hook-form';
 import { useRef, useState, useEffect, useContext, useCallback } from 'react';
 
-import { HomeTwoTone, DarkModeTwoTone, LightModeTwoTone } from '@mui/icons-material';
+import {
+  HomeTwoTone,
+  DarkModeTwoTone,
+  LightModeTwoTone,
+  HelpOutlineRounded,
+} from '@mui/icons-material';
 import {
   Box,
   Fab,
@@ -19,12 +24,14 @@ import {
   Dialog,
   colors,
   Divider,
+  Tooltip,
   useTheme,
   MenuItem,
   TextField,
   Container,
   Typography,
   InputLabel,
+  IconButton,
   FormControl,
   DialogTitle,
   DialogContent,
@@ -54,6 +61,9 @@ function HowMuchYouWorth({
   id,
   followers,
   likes,
+  comments,
+  shares,
+  views,
   niche,
   engagementRate,
 }) {
@@ -78,12 +88,20 @@ function HowMuchYouWorth({
   };
 
   const data = (
-    <WorthCalculatorGPT
-      engagementRateCount={engagementRate}
-      followersCount={followers}
-      likesCount={likes}
-      niches={niche}
-    />
+    <>
+      <WorthCalculatorGPT
+        engagementRateCount={engagementRate}
+        followersCount={followers}
+        likesCount={likes}
+        niches={niche}
+      />
+      <RevenueCalculator
+        niches={niche}
+        commentsCount={comments}
+        viewsCount={views}
+        sharesCount={shares}
+      />
+    </>
   );
 
   return (
@@ -882,3 +900,376 @@ const DivPics = ({ path1, path2 }) => {
     </div>
   );
 };
+
+const nicheTranslator = {
+  'DIY / Home': 'עשה זאת בעצמך / בית',
+  Food: 'אוכל',
+  'Sport and health': 'ספורט ובריאות',
+  'Beauty & Lifestyle': 'יופי ואורח חיים',
+  'Business and finance': 'עסקים וכלכלה',
+  other: 'אחר',
+};
+
+function RevenueCalculator({
+  sharesCount,
+  viewsCount,
+  commentsCount,
+  niches,
+  blockAlert = false,
+  hideLink = false,
+  calculationOption = 2,
+}) {
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+    watch,
+    reset,
+  } = useForm({
+    defaultValues: {
+      niche: niches,
+      views: viewsCount,
+      shares: sharesCount,
+      comments: commentsCount,
+    },
+  });
+  const [earnings, setEarnings] = useState();
+  const [open, setOpen] = useState(false);
+  const numOfAlerts = useRef(1);
+  const numOfDays = 60;
+  const niche = watch('niche');
+  const views = watch('views');
+  const shares = watch('shares');
+  const comments = watch('comments');
+
+  useEffect(() => {
+    if (sharesCount && viewsCount && commentsCount && niches) {
+      onSubmit();
+    }
+  }, [sharesCount, viewsCount, commentsCount, niches, onSubmit]);
+
+  function calculateExpectedRevenue() {
+    let nicheMultipliers;
+    let timeAdjustmentFactor;
+    let baseRevenue;
+    let baseRate;
+    let commentBonus;
+    let shareBonus;
+    let multiplier;
+    let expectedRevenue;
+    if (calculationOption === 1) {
+      nicheMultipliers = {
+        'DIY / Home': 0.8,
+        Food: 1.0,
+        'Sport and health': 1.2,
+        'Beauty & Lifestyle': 1.4,
+        'Business and finance': 1.6,
+        other: 0.8,
+      };
+
+      // Calculate a time-adjusted factor
+      timeAdjustmentFactor = 30 / numOfDays;
+
+      // Adjust base revenue with time factor
+      baseRevenue = (views * 0.05 + comments * 0.2 + shares * 0.3) * timeAdjustmentFactor;
+
+      // Apply niche multiplier
+      multiplier = nicheMultipliers[niche] || nicheMultipliers.other;
+      expectedRevenue = baseRevenue * multiplier;
+
+      return Math.ceil(expectedRevenue); // Returns revenue rounded to 2 decimal places
+    }
+    if (calculationOption === 2) {
+      baseRate = 5; // $5 per 1,000 views
+      commentBonus = 0.1;
+      shareBonus = 0.15;
+
+      nicheMultipliers = {
+        'DIY / Home': 1.2,
+        Food: 1.3,
+        'Sport and health': 1.4,
+        'Beauty & Lifestyle': 1.5,
+        'Business and finance': 1.6,
+        other: 1.0,
+      };
+
+      const viewRevenue = (views / 1000) * baseRate;
+      const commentRevenue = comments * commentBonus;
+      const shareRevenue = shares * shareBonus;
+      const totalRevenue =
+        (viewRevenue + commentRevenue + shareRevenue) * nicheMultipliers[niche] * (30 / numOfDays);
+
+      return totalRevenue.toFixed(2); // Returns revenue in a two-decimal format
+    }
+
+    // Base rates per view and engagement for different niches in USD
+    const rates = {
+      'DIY / Home': { baseCPV: 0.015, engagementBonus: 0.1 },
+      Food: { baseCPV: 0.02, engagementBonus: 0.15 },
+      'Sport and health': { baseCPV: 0.018, engagementBonus: 0.12 },
+      'Beauty & Lifestyle': { baseCPV: 0.022, engagementBonus: 0.18 },
+      'Business and finance': { baseCPV: 0.025, engagementBonus: 0.2 },
+      other: { baseCPV: 0.01, engagementBonus: 0.05 },
+    };
+
+    // Get niche-specific rate, or default to 'other'
+    const { baseCPV, engagementBonus } = rates[niche] || rates.other;
+
+    // Calculate base revenue from views, scaled for the period given
+    const revenueFromViews = (views * baseCPV * 30) / numOfDays;
+
+    // Engagement is weighted higher due to influence, adjusted per 'numOfDays'
+    const engagementScore = ((comments + shares) * engagementBonus * 30) / numOfDays;
+
+    // Total estimated revenue
+    const estimatedRevenue = revenueFromViews + engagementScore;
+
+    return Math.ceil(estimatedRevenue); // returns revenue in USD
+  }
+
+  const onSubmit = useCallback(() => {
+    let revenue = calculateExpectedRevenue();
+    revenue *= 3.7;
+    revenue = Math.ceil(revenue);
+    revenue = Math.min(revenue, 10000);
+    revenue = Math.max(revenue, 10);
+    if (typeof revenue === 'number') {
+      setEarnings(revenue);
+      if (numOfAlerts.current <= 3) {
+        numOfAlerts.current += 1;
+        setOpen(true);
+      }
+    }
+    // alert(`Expected Revenue: $${revenue}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <Card
+      sx={{
+        maxWidth: 600,
+        alignContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+        my: 4,
+        mx: { xs: 2, sm: 'auto' },
+        p: 4,
+        pt: 3,
+      }}
+    >
+      <Box id="calculator" display="flex" justifyContent="center" width={1}>
+        <SocialStack spacing={3} width={25} />
+      </Box>
+      <Tooltip
+        arrow
+        title={
+          <Box textAlign="center" mx="auto" maxWidth="300px">
+            <Typography variant="body1">
+              ניתן לראות את הנתונים באיזור האישי תחת Analytics / Metrics
+            </Typography>
+            <div className="w-full flex justify-center">
+              <img
+                src={`${CONFIG.site.basePath}/assets/images/about/analytics.jpg`}
+                alt="Social analytics"
+                width="150"
+                height="120"
+              />
+            </div>
+            <Typography variant="body2">ניתן גם להעריך את הנתונים ולקבל מושג כללי</Typography>
+          </Box>
+        }
+      >
+        <Typography mt={2} variant="body1">
+          ניתן לראות את הנתונים באיזור האישי של הרשת החברתית
+          <IconButton
+            // onClick={handleOpenPopover}
+            // onMouseEnter={handleOpenPopover}
+            // onMouseLeave={handleClosePopover}
+            sx={{
+              color: 'info.main',
+              position: 'relative',
+              '&:hover': { color: 'info.dark' },
+            }}
+          >
+            <HelpOutlineRounded fontSize="small" />
+          </IconButton>
+        </Typography>
+      </Tooltip>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
+        {/* Views */}
+        <Controller
+          name="views"
+          control={control}
+          defaultValue=""
+          rules={{
+            required: 'כמה צפיות היו לפוסטים שלך ב 60 הימים האחרונים?',
+            min: { value: 0, message: 'המספר חייב להיות חיובי' },
+          }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              inputProps={{
+                sx: {
+                  textAlign: 'center',
+                  direction: 'ltr',
+                },
+              }}
+              sx={inputColor(field.value && field.value > 20000 ? '#22C55E' : colors.green[200])}
+              type="number"
+              variant="standard"
+              label="כמות צפיות ב 60 הימים האחרונים"
+              helperText={errors.views ? errors.views.message : 'כמות צפיות כוללת לכל הפוסטים'}
+              error={!!errors.views}
+              fullWidth
+              margin="normal"
+            />
+          )}
+        />
+
+        {/* Comments */}
+        <Controller
+          name="comments"
+          control={control}
+          defaultValue=""
+          rules={{
+            required: 'כמה תגובות היו לפוסטים שלך ב 60 הימים האחרונים?',
+            min: { value: 0, message: 'המספר חייב להיות חיובי' },
+          }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              inputProps={{
+                sx: {
+                  textAlign: 'center',
+                  direction: 'ltr',
+                },
+              }}
+              sx={inputColor(field.value && field.value > 30 ? '#22C55E' : colors.green[200])}
+              type="number"
+              variant="standard"
+              label="כמות התגובות ב 60 הימים האחרונים"
+              helperText={
+                errors.comments ? errors.comments.message : 'כמות התגובות הכוללת לכל הפוסטים'
+              }
+              error={!!errors.comments}
+              fullWidth
+              margin="normal"
+            />
+          )}
+        />
+
+        {/* Shares */}
+        <Controller
+          name="shares"
+          control={control}
+          defaultValue=""
+          rules={{
+            required: 'כמה שיתופים היו לפוסטים שלך ב 60 הימים האחרונים?',
+            min: { value: 0, message: 'המספר חייב להיות חיובי' },
+          }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              inputProps={{
+                sx: {
+                  textAlign: 'center',
+                  direction: 'ltr',
+                },
+              }}
+              sx={inputColor(field.value && field.value > 50 ? '#22C55E' : colors.green[200])}
+              type="number"
+              variant="standard"
+              label="כמות השיתופים ב 60 הימים האחרונים"
+              helperText={
+                errors.shares ? errors.shares.message : 'כמות השיתופים הכוללת לכל הפוסטים'
+              }
+              error={!!errors.shares}
+              fullWidth
+              margin="normal"
+            />
+          )}
+        />
+
+        {/* Niche */}
+        <Controller
+          name="niche"
+          control={control}
+          defaultValue=""
+          rules={{ required: 'יש לבחור תחום עיסוק' }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              select
+              // MenuProps={{ disableScrollLock: true, textAlign: 'center' }}
+              label="בחרו נישה"
+              fullWidth
+              variant="standard"
+              error={!!errors.niche}
+              helperText={errors.niche ? errors.niche.message : 'מהו תחום ההתמחות שלכם?'}
+              margin="normal"
+            >
+              {[
+                'DIY / Home',
+                'Food',
+                'Sport and health',
+                'Beauty & Lifestyle',
+                'Business and finance',
+                'other',
+              ].map((nicheItem) => (
+                <MenuItem
+                  sx={{ color: 'text.primary' }}
+                  disableGutters
+                  disableTouchRipple
+                  key={nicheItem}
+                  value={nicheItem}
+                >
+                  {nicheTranslator[nicheItem]}
+                </MenuItem>
+              ))}
+            </TextField>
+          )}
+        />
+
+        {/* Submit Button */}
+        <Box width={1} display="flex" justifyContent="center" mt={2}>
+          <Button variant="contained" type="submit" fullWidth>
+            כמה מגיע לי?
+          </Button>
+        </Box>
+
+        {earnings && (
+          <Box width={1}>
+            {earnings > 999 && (
+              <Iconify
+                color={colors.amber[600]}
+                width={35}
+                className="animate-pulse mt-4"
+                icon="solar:cup-bold"
+              />
+            )}
+            <Divider variant="middle" sx={{ borderStyle: 'dashed', mt: 2 }} />
+            <Typography variant="h5" sx={{ mt: 3 }}>
+              רווח מוערך לסטורי/סירטון:
+            </Typography>
+            <Typography
+              variant="h4"
+              sx={{
+                ...textGradient(
+                  `45deg, ${COLORS.error?.dark} 25%, ${COLORS.error?.main} 40%, ${COLORS.error?.main} 50%,${COLORS.error?.light} 80%, ${COLORS.error?.main} 95%`
+                ),
+              }}
+            >
+              {Number(earnings).toLocaleString()} ₪
+            </Typography>
+            <Box my={1} width={1} mx="auto">
+              <WhatsAppShareButton token={{ shares, comments, views, niche }} />
+            </Box>
+          </Box>
+        )}
+        {open && earnings && !blockAlert && (
+          <MessageDialog hideLink={hideLink} worth={earnings} open={open} setOpen={setOpen} />
+        )}
+      </form>
+    </Card>
+  );
+}

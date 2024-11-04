@@ -16,7 +16,7 @@ export function ThemeProvider({ children }) {
   const settings = useSettingsContext();
 
   const theme = createTheme({
-    fontFamily: "'Alef','Rubik', sans-serif,'Rubik', Assistant,sans-serif",
+    fontFamily: "'Alef','Rubik', sans-serif, Assistant,sans-serif",
     ...settings,
   });
 

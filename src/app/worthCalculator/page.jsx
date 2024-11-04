@@ -10,7 +10,7 @@ async function Page({ searchParams, ...props }) {
     parsedToken = parseTokenToQueryParams(token);
   }
   console.log('This is token : ', token, 'parsed into: ', parsedToken);
-  const { userId, followers, likes, niche, engagementRate } = parsedToken;
+  const { userId, followers, likes, niche, engagementRate, comments, shares, views } = parsedToken;
 
   return (
     <HowMuchYouWorth
@@ -19,6 +19,9 @@ async function Page({ searchParams, ...props }) {
       followers={followers && followers?.toLocaleString()}
       engagementRate={engagementRate && Number(engagementRate)}
       niche={niche}
+      comments={comments}
+      shares={shares}
+      views={views}
       likes={likes && likes?.toLocaleString()}
     />
   );
