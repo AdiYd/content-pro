@@ -8,7 +8,7 @@ import { Box, Container, useMediaQuery } from '@mui/material';
 import { ColorContext } from 'src/context/colorMain';
 
 import { varBounce, MotionViewport } from 'src/components/animate';
-import { WorthCalculatorGPT } from 'src/components/worthCalculator/HowMuchYouWorth';
+import { RevenueCalculator } from 'src/components/worthCalculator/HowMuchYouWorth';
 
 // ----------------------------------------------------------------------
 
@@ -85,7 +85,8 @@ export function AboutMoney() {
         מחשבון תשלומי סושיאל
       </Typography>
       <m.div variants={varBounce({ duration: 1 }).in}>
-        <WorthCalculatorGPT hideLink direct />
+        {/* <WorthCalculatorGPT hideLink direct /> */}
+        <RevenueCalculator hideLink />
       </m.div>
     </Container>
   );

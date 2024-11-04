@@ -89,12 +89,12 @@ function HowMuchYouWorth({
 
   const data = (
     <>
-      <WorthCalculatorGPT
+      {/* <WorthCalculatorGPT
         engagementRateCount={engagementRate}
         followersCount={followers}
         likesCount={likes}
         niches={niche}
-      />
+      /> */}
       <RevenueCalculator
         niches={niche}
         commentsCount={comments}
@@ -910,7 +910,7 @@ const nicheTranslator = {
   other: 'אחר',
 };
 
-function RevenueCalculator({
+export function RevenueCalculator({
   sharesCount,
   viewsCount,
   commentsCount,
@@ -941,14 +941,15 @@ function RevenueCalculator({
   const views = watch('views');
   const shares = watch('shares');
   const comments = watch('comments');
-
+  console.log('Calculator values : ', { views, shares, comments, niche });
   useEffect(() => {
     if (sharesCount && viewsCount && commentsCount && niches) {
       onSubmit();
     }
-  }, [sharesCount, viewsCount, commentsCount, niches, onSubmit]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sharesCount, viewsCount, commentsCount, niches]);
 
-  function calculateExpectedRevenue() {
+  const calculateExpectedRevenue = useCallback(() => {
     let nicheMultipliers;
     let timeAdjustmentFactor;
     let baseRevenue;
@@ -957,6 +958,7 @@ function RevenueCalculator({
     let shareBonus;
     let multiplier;
     let expectedRevenue;
+    console.log('Calculating expected revenue based on : ', { views, shares, comments, niche });
     if (calculationOption === 1) {
       nicheMultipliers = {
         'DIY / Home': 0.8,
@@ -1025,10 +1027,14 @@ function RevenueCalculator({
     const estimatedRevenue = revenueFromViews + engagementScore;
 
     return Math.ceil(estimatedRevenue); // returns revenue in USD
-  }
+  }, [niche, shares, views, comments, calculationOption]);
 
   const onSubmit = useCallback(() => {
     let revenue = calculateExpectedRevenue();
+    if (Number.isNaN(revenue)) {
+      return;
+    }
+    console.log('Clacualted value: ', revenue);
     revenue *= 3.7;
     revenue = Math.ceil(revenue);
     revenue = Math.min(revenue, 10000);
@@ -1041,8 +1047,7 @@ function RevenueCalculator({
       }
     }
     // alert(`Expected Revenue: $${revenue}`);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [calculateExpectedRevenue]);
 
   return (
     <Card
