@@ -27,7 +27,7 @@ import { StepTwo, Stepper, StepOne, StepThree } from './form-steps';
 
 // ----------------------------------------------------------------------
 
-const steps = ['פרטי התקשרות', 'בחירת נישה', 'תשלום'];
+const steps = ['פרטי התקשרות', 'בחירת נישה', 'סיכום'];
 
 const StepOneSchema = zod.object({
   fullName: zod.string().min(2, { message: 'נא למלא שם מלא' }),

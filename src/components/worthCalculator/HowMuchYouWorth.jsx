@@ -1041,13 +1041,20 @@ export function RevenueCalculator({
     revenue = Math.max(revenue, 10);
     if (typeof revenue === 'number') {
       setEarnings(revenue);
+      trackEvent(
+        'calculatorData',
+        'Form',
+        `V: ${views} ; C: ${comments} ; S: ${shares} ; N: ${niche}`,
+        Math.ceil(revenue)
+      );
       if (numOfAlerts.current <= 3) {
+        trackEvent('calculatorClick', 'Button');
         numOfAlerts.current += 1;
         setOpen(true);
       }
     }
     // alert(`Expected Revenue: $${revenue}`);
-  }, [calculateExpectedRevenue]);
+  }, [calculateExpectedRevenue, comments, views, shares, niche]);
 
   return (
     <Card
@@ -1123,7 +1130,7 @@ export function RevenueCalculator({
               type="number"
               variant="standard"
               label="כמות צפיות ב 60 הימים האחרונים"
-              helperText={errors.views ? errors.views.message : 'כמות צפיות כוללת לכל הפוסטים'}
+              helperText={errors.views ? errors.views.message : 'מספר הצפיות הכולל לכל הפוסטים'}
               error={!!errors.views}
               fullWidth
               margin="normal"
@@ -1152,9 +1159,9 @@ export function RevenueCalculator({
               sx={inputColor(field.value && field.value > 30 ? '#22C55E' : colors.green[200])}
               type="number"
               variant="standard"
-              label="כמות התגובות ב 60 הימים האחרונים"
+              label="כמות תגובות ב 60 הימים האחרונים"
               helperText={
-                errors.comments ? errors.comments.message : 'כמות התגובות הכוללת לכל הפוסטים'
+                errors.comments ? errors.comments.message : 'מספר התגובות הכולל לכל הפוסטים'
               }
               error={!!errors.comments}
               fullWidth
@@ -1184,10 +1191,8 @@ export function RevenueCalculator({
               sx={inputColor(field.value && field.value > 50 ? '#22C55E' : colors.green[200])}
               type="number"
               variant="standard"
-              label="כמות השיתופים ב 60 הימים האחרונים"
-              helperText={
-                errors.shares ? errors.shares.message : 'כמות השיתופים הכוללת לכל הפוסטים'
-              }
+              label="כמות שיתופים ב 60 הימים האחרונים"
+              helperText={errors.shares ? errors.shares.message : 'מספר השיתופים הכולל לכל הפוסטים'}
               error={!!errors.shares}
               fullWidth
               margin="normal"

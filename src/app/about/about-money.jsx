@@ -86,7 +86,7 @@ export function AboutMoney() {
       </Typography>
       <m.div variants={varBounce({ duration: 1 }).in}>
         {/* <WorthCalculatorGPT hideLink direct /> */}
-        <RevenueCalculator hideLink />
+        <RevenueCalculator hideLink direct />
       </m.div>
     </Container>
   );
