@@ -941,7 +941,7 @@ export function RevenueCalculator({
   const views = watch('views');
   const shares = watch('shares');
   const comments = watch('comments');
-  console.log('Calculator values : ', { views, shares, comments, niche });
+  // console.log('Calculator values : ', { views, shares, comments, niche });
   useEffect(() => {
     if (sharesCount && viewsCount && commentsCount && niches) {
       onSubmit();
@@ -979,7 +979,7 @@ export function RevenueCalculator({
       multiplier = nicheMultipliers[niche] || nicheMultipliers.other;
       expectedRevenue = baseRevenue * multiplier;
 
-      return Math.ceil(expectedRevenue); // Returns revenue rounded to 2 decimal places
+      return Math.ceil(expectedRevenue / 2);
     }
     if (calculationOption === 2) {
       baseRate = 5; // $5 per 1,000 views
@@ -1108,6 +1108,46 @@ export function RevenueCalculator({
         </Typography>
       </Tooltip>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
+        {/* Niche */}
+        <Controller
+          name="niche"
+          control={control}
+          defaultValue=""
+          rules={{ required: 'יש לבחור תחום עיסוק' }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              select
+              // MenuProps={{ disableScrollLock: true, textAlign: 'center' }}
+              label="בחרו נישה"
+              fullWidth
+              variant="standard"
+              error={!!errors.niche}
+              helperText={errors.niche ? errors.niche.message : 'מהו תחום ההתמחות שלכם?'}
+              margin="normal"
+            >
+              {[
+                'DIY / Home',
+                'Food',
+                'Sport and health',
+                'Beauty & Lifestyle',
+                'Business and finance',
+                'other',
+              ].map((nicheItem) => (
+                <MenuItem
+                  sx={{ color: 'text.primary' }}
+                  disableGutters
+                  disableTouchRipple
+                  key={nicheItem}
+                  value={nicheItem}
+                >
+                  {nicheTranslator[nicheItem]}
+                </MenuItem>
+              ))}
+            </TextField>
+          )}
+        />
+
         {/* Views */}
         <Controller
           name="views"
@@ -1197,46 +1237,6 @@ export function RevenueCalculator({
               fullWidth
               margin="normal"
             />
-          )}
-        />
-
-        {/* Niche */}
-        <Controller
-          name="niche"
-          control={control}
-          defaultValue=""
-          rules={{ required: 'יש לבחור תחום עיסוק' }}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              select
-              // MenuProps={{ disableScrollLock: true, textAlign: 'center' }}
-              label="בחרו נישה"
-              fullWidth
-              variant="standard"
-              error={!!errors.niche}
-              helperText={errors.niche ? errors.niche.message : 'מהו תחום ההתמחות שלכם?'}
-              margin="normal"
-            >
-              {[
-                'DIY / Home',
-                'Food',
-                'Sport and health',
-                'Beauty & Lifestyle',
-                'Business and finance',
-                'other',
-              ].map((nicheItem) => (
-                <MenuItem
-                  sx={{ color: 'text.primary' }}
-                  disableGutters
-                  disableTouchRipple
-                  key={nicheItem}
-                  value={nicheItem}
-                >
-                  {nicheTranslator[nicheItem]}
-                </MenuItem>
-              ))}
-            </TextField>
           )}
         />
 
