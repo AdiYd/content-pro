@@ -10,7 +10,7 @@ const WhatsAppShareButton = ({ token = {} }) => {
 
   const shareOnWhatsApp = () => {
     // const url = encodeURIComponent(window.location.href); // Current page URL
-    const url = 'https://VideoPro.webly.digital/worthCalculator'; // Current page URL
+    const url = 'https://VideoPro.webly.digital/socialCalculator'; // Current page URL
     const queryToken = createTokenFromQueryParams(token);
     console.log('This is the token: ', queryToken, 'from: ', token);
     // const message = encodeURIComponent(

@@ -36,7 +36,7 @@ export default async function RootLayout({ children, title }) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta
           name="description"
-          content="הצטרף לוידאו-פרו, האקדמיה המקצועית ליצירת תוכן וידאו. למד ליצור תוכן איכותי, הצטרף לקהילה תומכת, והרוויח מתוכן דיגיטלי."
+          content="הצטרפו ל Influencers-Pro, האקדמיה המקצועית ליצירת תוכן וידאו. יצירת תוכן איכותי, קהילה תומכת, ולהרוויח מתוכן דיגיטלי."
         />
         <meta
           name="keywords"
