@@ -9,13 +9,18 @@ import {
   Card,
   Button,
   Dialog,
+  Select,
   Checkbox,
+  MenuItem,
   TextField,
   IconButton,
+  InputLabel,
   DialogTitle,
+  FormControl,
   useMediaQuery,
   DialogActions,
   DialogContent,
+  FormHelperText,
   FormControlLabel,
   CircularProgress,
 } from '@mui/material';
@@ -33,7 +38,14 @@ import terms from '../../utils/terms.json';
 
 // ----------------------------------------------------------------------
 
-export function AboutLead({ showMsg = true }) {
+export function AboutLead({
+  showMsg = true,
+  showTerms = true,
+  showComments = true,
+  showPhone = false,
+  titleDiv,
+  formTitle,
+}) {
   const theme = useTheme();
   const { mainColor, textGradient, mode } = useContext(ColorContext);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -44,6 +56,8 @@ export function AboutLead({ showMsg = true }) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    prefix: '',
+    phoneNumber: '',
     approveTerms: true,
     message: '',
     contactForm: true,
@@ -53,6 +67,8 @@ export function AboutLead({ showMsg = true }) {
     email: '',
     name: '',
     approveTerms: '',
+    prefix: '',
+    phoneNumber: '',
   });
 
   // onChange handler to update form data and validate email
@@ -76,6 +92,11 @@ export function AboutLead({ showMsg = true }) {
       setErrors({
         ...errors,
         name: value.length < 2 ? 'נא למלא שם' : '',
+      });
+    } else if (name === 'phoneNumber') {
+      setErrors({
+        ...errors,
+        phoneNumber: /^\d{7}$/.test(value) ? '' : 'יש למלא מספר טלפון תקין',
       });
     }
   };
@@ -101,6 +122,21 @@ export function AboutLead({ showMsg = true }) {
     // console.log('Lead API res: ', result);
     // console.log('Form Data:', formData);
   };
+
+  const title = titleDiv || (
+    <Typography variant="h3" sx={{ mb: 3 }}>
+      עדיין מתלבטים? השאירו פרטים ונחזור אליכם עם
+      <Box component="a" mx={1} sx={textGradient} color={`${mainColor}.main`}>
+        כל מה שיוצר תוכן מתחיל צריך
+      </Box>
+    </Typography>
+  );
+
+  formTitle = formTitle || (
+    <Typography textAlign="center" variant="h4" gutterBottom>
+      השאירו פרטים
+    </Typography>
+  );
 
   const dialog = (
     <Dialog
@@ -203,10 +239,10 @@ export function AboutLead({ showMsg = true }) {
       </DialogTitle>
 
       <DialogContent dividers sx={{ color: 'text.secondary' }}>
-        <Typography variant="h4">תודה על יצירת הקשר 😀</Typography>
+        <Typography variant="h4"> שמחים שיצרתם קשר 😎</Typography>
         <br />
         <Typography color="text.primary" variant="p">
-          קיבלנו את הפרטים, נחזור אליכם עם פרטים נוספים
+          קיבלנו את הפרטים, נחזור אליכם בקרוב עם פרטים נוספים
         </Typography>
         <br />
       </DialogContent>
@@ -237,7 +273,6 @@ export function AboutLead({ showMsg = true }) {
 
   const checkBox = (
     <div className="flex flex-col gap-2">
-      {dialogThanks}
       <FormControlLabel
         name="approveTerms"
         sx={{ mr: 0 }}
@@ -278,25 +313,96 @@ export function AboutLead({ showMsg = true }) {
     </div>
   );
 
+  const phone = (
+    <>
+      <Typography textAlign="start" variant="body2" sx={{ opacity: 0.85, width: 1 }}>
+        מספר טלפון:
+      </Typography>
+      <Box display="flex" gap={2}>
+        <TextField
+          label="מספר טלפון"
+          name="phoneNumber"
+          type="number"
+          variant="filled"
+          fullWidth
+          required
+          inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+          value={formData.phoneNumber}
+          onChange={handleChange}
+          error={errors.phoneNumber}
+          // helperText={helperText}
+          margin="normal"
+        />
+        <FormControl sx={{ mt: 2, width: 150 }} required variant="filled" error={errors.prefix}>
+          <InputLabel id="phone-prefix-label">קידומת</InputLabel>
+          <Select
+            labelId="phone-prefix-label"
+            id="phone-prefix"
+            name="prefix"
+            label="קידומת"
+            required
+            value={formData.prefix}
+            onChange={handleChange}
+          >
+            <MenuItem value="050">050</MenuItem>
+            <MenuItem value="052">052</MenuItem>
+            <MenuItem value="053">053</MenuItem>
+            {/* Add more prefixes as needed */}
+          </Select>
+          {errors.prefix && <FormHelperText error>נא לבחור קידומת</FormHelperText>}
+        </FormControl>
+      </Box>
+    </>
+  );
+
+  const comments = (
+    <>
+      <Typography component="div" textAlign="start" mt={2} variant="body2">
+        רוצים להוסיף הודעה?
+        <Typography
+          onClick={() => setActiveTxtField((p) => !p)}
+          component="span"
+          variant="body1"
+          sx={{ cursor: 'pointer', '&:hover': { opacity: 0.8 } }}
+          color="text.secondary"
+          mx={1}
+        >
+          {' '}
+          (לא חובה){' '}
+        </Typography>
+      </Typography>
+      {activeTxtfield && (
+        <TextField
+          label="יש לכם שאלות? הערות? הצעות? נשמח לשמוע ממכם..."
+          name="message"
+          variant="filled"
+          fullWidth
+          multiline
+          rows={4}
+          // maxRows={4}
+          value={formData.message}
+          onChange={handleChange}
+          margin="normal"
+        />
+      )}
+    </>
+  );
+
   return (
     <Container
       id="contactUs"
       component={MotionViewport}
       // maxWidth="lg"
       sx={{
-        mb: { md: 10, xs: 8 },
-        pb: { xs: 4, md: 4 },
+        mb: { md: 4, xs: 4 },
+        pb: { xs: 2, md: 2 },
         alignItems: 'center',
         textAlign: { xs: 'center', md: 'unset', direction: 'rtl' },
       }}
     >
+      {dialogThanks}
       <m.div variants={varFade().inDown}>
-        <Typography variant="h3" sx={{ mb: 3 }}>
-          עדיין מתלבטים? השאירו פרטים ונחזור אליכם עם
-          <Box component="a" mx={1} sx={textGradient} color={`${mainColor}.main`}>
-            כל מה שיוצר תוכן מתחיל צריך
-          </Box>
-        </Typography>
+        {title}
 
         <AnimateBorder
           sx={{
@@ -328,9 +434,7 @@ export function AboutLead({ showMsg = true }) {
             }}
           >
             <form onSubmit={handleSubmit} noValidate>
-              <Typography textAlign="center" variant="h4" gutterBottom>
-                השאירו פרטים
-              </Typography>
+              {formTitle}
 
               <TextField
                 label="שם מלא"
@@ -358,36 +462,11 @@ export function AboutLead({ showMsg = true }) {
                 error={Boolean(errors.email)}
                 helperText={errors.email}
               />
-              <Typography component="div" textAlign="start" mt={2} variant="body2">
-                רוצים להוסיף הודעה?
-                <Typography
-                  onClick={() => setActiveTxtField((p) => !p)}
-                  component="span"
-                  variant="body1"
-                  sx={{ cursor: 'pointer', '&:hover': { opacity: 0.8 } }}
-                  color="text.secondary"
-                  mx={1}
-                >
-                  {' '}
-                  (לא חובה){' '}
-                </Typography>
-              </Typography>
-              {activeTxtfield && (
-                <TextField
-                  label="יש לכם שאלות? הערות? הצעות? נשמח לשמוע ממכם..."
-                  name="message"
-                  variant="filled"
-                  fullWidth
-                  multiline
-                  rows={4}
-                  // maxRows={4}
-                  value={formData.message}
-                  onChange={handleChange}
-                  margin="normal"
-                />
-              )}
 
-              {checkBox}
+              {showPhone && phone}
+              {showComments && comments}
+
+              {showTerms && checkBox}
               <div className="w-full flex justify-center">
                 {loading ? (
                   <CircularProgress />
@@ -395,10 +474,16 @@ export function AboutLead({ showMsg = true }) {
                   <Button
                     type="submit"
                     variant="contained"
+                    fullWidth
                     color={mainColor}
-                    sx={{ my: 2 }}
+                    sx={{ my: 2, maxWidth: 500, mx: 4 }}
                     disabled={
-                      !formData.name || !formData.email || !formData.approveTerms || errors.email
+                      !formData.name ||
+                      !formData.email ||
+                      (showTerms && !formData.approveTerms) ||
+                      errors.email ||
+                      (showPhone &&
+                        (!formData.phoneNumber || errors.phoneNumber || !formData.prefix))
                     }
                   >
                     שליחה

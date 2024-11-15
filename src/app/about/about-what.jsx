@@ -345,12 +345,21 @@ export const TwoImageDiv = ({
   url2 = 'pexels-thelazyartist-1467277.jpg',
   alt1 = 'מקצוע גלובלי',
   alt2 = 'יוצרת תוכן',
+  ...props
 }) => {
   const theme = useTheme();
   const { mode, themeColor } = useContext(ColorContext);
 
   return (
-    <Container sx={{ my: 4, display: { md: 'none', xs: 'flex' }, gap: 2, alignItems: 'center' }}>
+    <Container
+      sx={{
+        my: 4,
+        display: { md: 'none', xs: 'flex' },
+        gap: 2,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
       <m.div variants={varFade().inRight}>
         <Image
           alt={alt1}
@@ -364,6 +373,7 @@ export const TwoImageDiv = ({
             borderRadius: 1.5,
             width: { xs: '90%', md: 'inherit' },
             boxShadow: customShadows(mode).dialog,
+            ...props.sx,
             // boxShadow: `-40px 40px 80px ${theme.vars.palette.secondary.main}`,
           }}
         />
@@ -381,6 +391,7 @@ export const TwoImageDiv = ({
             borderRadius: 1.5,
             width: { xs: '90%', md: 'inherit' },
             transform: 'rotate(-5deg)',
+            ...props.sx,
 
             // boxShadow: `-40px 40px 80px ${theme.vars.palette.primary.dark}`,
           }}

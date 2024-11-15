@@ -266,6 +266,7 @@ export const leadTemplate = (data) => `
     <div style="flex: 1;">
       ${data.name ? `<p style="margin: 10px; font-size: 14px;"><b>שם:</b> ${data.name}</p>` : ''}
       ${data.email ? `<p style="margin: 10px; font-size: 14px;"><b>אימייל:</b> ${data.email}</p>` : ''}
+      ${data.prefix && data.phoneNumber ? `<p style="margin: 10px; font-size: 14px;"><b>טלפון:</b> ${data.prefix}-${data.phoneNumber}</p>` : ''}
       ${data.message ? `<p style="margin: 10px; font-size: 14px;"><b>הודעה:</b> ${data.message}</p>` : ''}
     </div>
   </div>

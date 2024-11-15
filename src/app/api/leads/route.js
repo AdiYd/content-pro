@@ -28,10 +28,17 @@ export async function POST(request) {
       await sendEmail({
         data,
         template,
-        title: data.contactForm ? 'מתעניין חדש (טופס צרו קשר)' : 'מתעניין חדש (טופס הצטרפות)',
+        title: data.contactForm ? 'מתעניין חדש (עמוד לידים)' : 'מתעניין חדש (טופס הצטרפות)',
       });
     } else if (isLead) {
       console.log('Lead already exist: ', lead[0]);
+    } else if (process.env.NODE_ENV === 'development'){
+      const template = leadTemplate(data);
+      await sendEmail({
+        data,
+        template,
+        title: data.contactForm ? 'מתעניין חדש (טופס צרו קשר)' : 'מתעניין חדש (טופס הצטרפות)',
+      });
     } else {
       console.log("Lead didn't saved", data?.email);
     }

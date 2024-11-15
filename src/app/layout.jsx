@@ -2,7 +2,6 @@ import 'src/global.css';
 
 // ----------------------------------------------------------------------
 
-
 // eslint-disable-next-line import/no-extraneous-dependencies
 
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -18,17 +17,14 @@ import { getInitColorSchemeScript } from 'src/theme/color-scheme-script';
 import { ProgressBar } from 'src/components/progress-bar';
 import { MotionLazy } from 'src/components/animate/motion-lazy';
 import { detectSettings } from 'src/components/settings/server';
-import { SettingsDrawer, defaultSettings, SettingsProvider } from 'src/components/settings';
+import { defaultSettings, SettingsProvider } from 'src/components/settings';
 
 import { AuthProvider } from 'src/auth/context/jwt';
-
-
 
 // ----------------------------------------------------------------------
 
 export default async function RootLayout({ children, title }) {
   const settings = CONFIG.isStaticExport ? defaultSettings : await detectSettings();
-
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -178,7 +174,7 @@ export default async function RootLayout({ children, title }) {
               <ColorProvider>
                 <MotionLazy>
                   <ProgressBar />
-                  <SettingsDrawer />
+                  {/* <SettingsDrawer /> */}
                   {children}
                 </MotionLazy>
               </ColorProvider>
