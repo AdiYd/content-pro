@@ -245,6 +245,9 @@ export function AboutLead({
           קיבלנו את הפרטים, נחזור אליכם בקרוב עם פרטים נוספים
         </Typography>
         <br />
+        <Typography mt={4} variant="body2">
+          צוות Video-Pro
+        </Typography>
       </DialogContent>
 
       <DialogActions sx={{ display: 'flex', gap: 3, justifyContent: 'center' }}>
@@ -347,6 +350,8 @@ export function AboutLead({
             <MenuItem value="050">050</MenuItem>
             <MenuItem value="052">052</MenuItem>
             <MenuItem value="053">053</MenuItem>
+            <MenuItem value="054">054</MenuItem>
+            <MenuItem value="055">055</MenuItem>
             {/* Add more prefixes as needed */}
           </Select>
           {errors.prefix && <FormHelperText error>נא לבחור קידומת</FormHelperText>}
@@ -476,7 +481,7 @@ export function AboutLead({
                     variant="contained"
                     fullWidth
                     color={mainColor}
-                    sx={{ my: 2, maxWidth: 500, mx: 4 }}
+                    sx={{ mb: 2, mt: 4, maxWidth: 500, mx: 4 }}
                     disabled={
                       !formData.name ||
                       !formData.email ||

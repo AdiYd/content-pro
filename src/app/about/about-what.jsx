@@ -345,6 +345,7 @@ export const TwoImageDiv = ({
   url2 = 'pexels-thelazyartist-1467277.jpg',
   alt1 = 'מקצוע גלובלי',
   alt2 = 'יוצרת תוכן',
+  showDesktop = false,
   ...props
 }) => {
   const theme = useTheme();
@@ -354,7 +355,7 @@ export const TwoImageDiv = ({
     <Container
       sx={{
         my: 4,
-        display: { md: 'none', xs: 'flex' },
+        display: { md: showDesktop ? 'flex' : 'none', xs: 'flex' },
         gap: 2,
         alignItems: 'center',
         justifyContent: 'center',

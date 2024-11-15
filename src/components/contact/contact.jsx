@@ -104,7 +104,7 @@ function Contact({ id }) {
         </m.div>
       </Container>
 
-      <TwoImageDiv url2="Eran2.jpeg" alt2="Eran Farkash" sx={{ width: 130 }} />
+      <TwoImageDiv showDesktop url2="Eran2.jpeg" alt2="Eran Farkash" sx={{ width: 130 }} />
       {data}
       <m.div style={{ width: '100%' }} variants={varScale({ delay: 1, durationIn: 1 }).inX}>
         <Button

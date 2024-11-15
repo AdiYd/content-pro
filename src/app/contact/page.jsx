@@ -4,7 +4,7 @@ import Contact from 'src/components/contact/contact';
 
 function Page({ searchParams, ...props }) {
   const userId = searchParams?.id;
-  console.log('Im here also!');
+  console.log('Contact - Leads - Page');
   return <Contact id={userId} />;
 }
 
